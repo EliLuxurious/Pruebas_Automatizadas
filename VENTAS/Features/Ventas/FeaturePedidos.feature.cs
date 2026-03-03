@@ -173,14 +173,14 @@ this.ScenarioInitialize(scenarioInfo);
 #line 26
  await testRunner.AndAsync("Click en nuevo pedido", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table22 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table21 = new global::Reqnroll.Table(new string[] {
                             "value"});
-                table22.AddRow(new string[] {
+                table21.AddRow(new string[] {
                             "400000891"});
-                table22.AddRow(new string[] {
+                table21.AddRow(new string[] {
                             "400000437"});
 #line 27
- await testRunner.AndAsync("Agregar conceptos para pedido:", ((string)(null)), table22, "And ");
+ await testRunner.AndAsync("Agregar conceptos para pedido:", ((string)(null)), table21, "And ");
 #line hidden
 #line 31
  await testRunner.AndAsync("Agregar cantidad \'2\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

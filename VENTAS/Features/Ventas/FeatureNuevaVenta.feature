@@ -9,11 +9,6 @@ Background:
 
 Scenario: Registro de una nueva venta con pago al contado
 	When Seleccionar Venta y luego "Nueva Venta"
-	And Agregar concepto por 'barra' y valor '108300559'
-	And Ingresa los siguientes datos del producto:
-    | Campo            | Valor |
-    | Cantidad         | 2     |
-    | Precio Unitario  | 30    |
 	And Activar IGV 'SI'
 	And Seleccionar tipo de cliente 'DNI' '72380461'
 	And Seleccionar tipo de comprobante 'NOTA' en el módulo de "Nueva Venta"

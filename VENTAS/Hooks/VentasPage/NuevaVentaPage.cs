@@ -41,6 +41,7 @@ namespace SigesCore.Hooks.VentasPage
                 case "Nueva Venta":
 
                     utilityPage.ClickButton(SalesModule.btnNewSale);
+                    Thread.Sleep(5000);
                     break;
 
                 case "Venta Modo Caja":
