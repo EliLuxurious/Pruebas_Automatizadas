@@ -21,6 +21,8 @@
 
   <ItemGroup>
     <Folder Include="Drivers\" />
+    <Folder Include="Features\Odometro\" />
+    <Folder Include="Features\Vehiculo\" />
     <Folder Include="TestResults\" />
     <Folder Include="Support\" />
   </ItemGroup>
