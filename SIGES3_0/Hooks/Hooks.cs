@@ -58,6 +58,7 @@ namespace SIGES3_0.Hooks
         }
 
         [BeforeScenario(Order = 1)]
+
         public void FirstBeforeScenario(ScenarioContext scenarioContext)
         {
             IWebDriver driver = new ChromeDriver();
@@ -67,6 +68,7 @@ namespace SIGES3_0.Hooks
 
             _scenario = _feature.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
         }
+
 
         [AfterScenario]
         public void AfterScenario()

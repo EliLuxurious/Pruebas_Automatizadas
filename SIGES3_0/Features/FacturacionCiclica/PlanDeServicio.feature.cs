@@ -21,6 +21,7 @@ namespace SIGES3_0.Features.FacturacionCiclica
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("Gestión de Planes de Servicio")]
+    [NUnit.Framework.FixtureLifeCycleAttribute(NUnit.Framework.LifeCycle.InstancePerTestCase)]
     [NUnit.Framework.CategoryAttribute("GestionPlanes")]
     public partial class GestionDePlanesDeServicioFeature
     {
