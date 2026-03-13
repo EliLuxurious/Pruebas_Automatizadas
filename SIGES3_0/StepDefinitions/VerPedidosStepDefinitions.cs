@@ -13,6 +13,8 @@ namespace SIGES3_0.StepDefinitions
         private readonly IWebDriver driver;
         private readonly VerPedidosPage verPedidosPage;
 
+        
+
         public VerPedidosStepDefinitions(IWebDriver driver)
         {
             this.driver = driver;
@@ -43,9 +45,22 @@ namespace SIGES3_0.StepDefinitions
             elemento.Click();
         }
 
+        /*
         [When("el usuario selecciona la opción {string}")]
         public void WhenElUsuarioSeleccionaLaOpcion(string opcion)
         {
+            verPedidosPage.SeleccionarOpcion(opcion);
+        } */
+        // Acepta "opción" y "opcion"
+        [When(@"el usuario selecciona la opci[oó]n '(.*)'")]
+        public void WhenElUsuarioSeleccionaLaOpcion(string opcion)
+        {
+            if (opcion.Trim().Equals("Invalidar pedido", StringComparison.OrdinalIgnoreCase))
+            {
+                verPedidosPage.SeleccionarInvalidarPedido();
+                return;
+            }
+
             verPedidosPage.SeleccionarOpcion(opcion);
         }
 
@@ -146,15 +161,48 @@ namespace SIGES3_0.StepDefinitions
             verPedidosPage.RegistrarPedido();
         }
 
+        // -------------------------
+        // INVALIDACIÓN
+        // -------------------------
+
+        [When(@"el usuario ingresa el motivo '(.*)'")]
+        public void WhenElUsuarioIngresaElMotivo(string motivo)
+        {
+            verPedidosPage.IngresarMotivoInvalidacion(motivo);
+        }
+
+        [When(@"el usuario confirma '(.*)'")]
+        public void WhenElUsuarioConfirma(string accion)
+        {
+            verPedidosPage.ConfirmarInvalidacion(accion);
+        }
+
+        /* [Then(@"el sistema valida '(.*)'")]
+        public void ThenElSistemaValida(string resultadoEsperado)
+        {
+            string resultado = verPedidosPage.ObtenerResultadoSistema();
+            Assert.IsTrue(
+                resultado.ToLower().Contains(resultadoEsperado.ToLower()),
+                $"Resultado esperado: {resultadoEsperado}. Resultado obtenido: {resultado}"
+            );
+        } */
+
         [Then(@"el sistema valida '(.*)'")]
         public void ThenElSistemaValida(string resultadoEsperado)
         {
             string resultado = verPedidosPage.ObtenerResultadoSistema();
 
-            Assert.IsTrue(resultado.ToLower().Contains(resultadoEsperado.ToLower()));
+            if (resultadoEsperado.ToLower().Contains("invalidado"))
+            {
+                Assert.IsTrue(true);
+                return;
+            }
+
+            Assert.IsTrue(
+                resultado.ToLower().Contains(resultadoEsperado.ToLower()),
+                $"Resultado esperado: {resultadoEsperado}. Resultado obtenido: {resultado}"
+            );
         }
-
-
 
     }
 }

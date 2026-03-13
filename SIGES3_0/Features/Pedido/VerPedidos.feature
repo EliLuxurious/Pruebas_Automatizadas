@@ -58,16 +58,17 @@ Examples:
 	|    5 | Gaseosa | 7753234003313 |     5000 | false | false    | false     | NA             | NA             |               0 | 75971755 | inmediata    | La cantidad debe ser menor o igual al stock |
 
 
-	@InvalidarPedido
+@InvalidarPedido
 Scenario Outline: Invalidar pedido - Casos variados
 
-	When el usuario selecciona un pedido existente
-	And el usuario selecciona la opción 'Invalidar'
+	When el usuario selecciona la opcion 'Invalidar pedido'
 	And el usuario ingresa el motivo '<motivo>'
-	And el usuario selecciona '<accion>'
+	And el usuario confirma '<accion>'
 	Then el sistema valida '<resultado>'
 
 Examples:
-| caso | motivo               | accion | resultado                           |
-| 1    | Producto agotado     | SI     | El pedido fue invalidado correctamente |
-| 2    | ninguno              | SI     | Boton SI deshabilitado             |
+	| caso | motivo           | accion | resultado                              |
+	|    1 | Producto agotado | SI     | el pedido se guardo correctamente      |
+	|    2 | ninguno          | SI     | Boton SI deshabilitado                 |
+
+

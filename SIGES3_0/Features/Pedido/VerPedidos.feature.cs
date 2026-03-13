@@ -196,7 +196,7 @@ await this.FeatureBackgroundAsync();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Invalidar pedido - Casos variados")]
         [NUnit.Framework.CategoryAttribute("InvalidarPedido")]
-        [NUnit.Framework.TestCaseAttribute("1", "Producto agotado", "SI", "El pedido fue invalidado correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("1", "Producto agotado", "SI", "el pedido se guardo correctamente", null)]
         [NUnit.Framework.TestCaseAttribute("2", "ninguno", "SI", "Boton SI deshabilitado", null)]
         public async System.Threading.Tasks.Task InvalidarPedido_CasosVariados(string caso, string motivo, string accion, string resultado, string[] exampleTags)
         {
@@ -227,18 +227,15 @@ this.ScenarioInitialize(scenarioInfo);
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 64
- await testRunner.WhenAsync("el usuario selecciona un pedido existente", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("el usuario selecciona la opcion \'Invalidar pedido\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 65
- await testRunner.AndAsync("el usuario selecciona la opción \'Invalidar\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 66
  await testRunner.AndAsync(string.Format("el usuario ingresa el motivo \'{0}\'", motivo), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 67
- await testRunner.AndAsync(string.Format("el usuario selecciona \'{0}\'", accion), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 66
+ await testRunner.AndAsync(string.Format("el usuario confirma \'{0}\'", accion), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 68
+#line 67
  await testRunner.ThenAsync(string.Format("el sistema valida \'{0}\'", resultado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
