@@ -116,53 +116,53 @@ this.ScenarioInitialize(scenarioInfo);
 #line 10
     await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table2 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table17 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table2.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "PLACA",
                             "ANTONI"});
-                table2.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "AREA ASIGNADA",
                             "DPAM"});
-                table2.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "PROPIETARIO",
                             "MIMP"});
-                table2.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "MARCA",
                             "DAEWOO"});
-                table2.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "MODELO",
                             "TICO SL"});
-                table2.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "AÑO",
                             "2026"});
-                table2.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "TIPO DE VEHICULO",
                             "AUTOMOVIL"});
-                table2.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "CLASIFICADOR",
                             "ALTA"});
-                table2.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "COLOR",
                             "ROJO"});
-                table2.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "NUMERO MOTOR",
                             "ENG998877"});
-                table2.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "TIPO COMBUSTIBLE",
                             "G-90"});
-                table2.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "TIPO MOTOR",
                             "COMBUSTIBLE"});
-                table2.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "RANGO CONSUMO",
                             "45"});
-                table2.AddRow(new string[] {
+                table17.AddRow(new string[] {
                             "NUMERO SERIE",
                             "ABCD123456789012A"});
 #line 12
-    await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table2, "When ");
+    await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table17, "When ");
 #line hidden
 #line 29
     await testRunner.ThenAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
@@ -260,50 +260,50 @@ this.ScenarioInitialize(scenarioInfo);
 #line 58
         await testRunner.AndAsync("Se hace clic en editar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table3 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table18 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table3.AddRow(new string[] {
+                table18.AddRow(new string[] {
                             "AREA ASIGNADA",
                             "UPE LIMA ESTE"});
-                table3.AddRow(new string[] {
+                table18.AddRow(new string[] {
                             "PROPIETARIO",
                             "PCM"});
-                table3.AddRow(new string[] {
+                table18.AddRow(new string[] {
                             "MARCA",
                             "KIA"});
-                table3.AddRow(new string[] {
+                table18.AddRow(new string[] {
                             "MODELO",
                             "RIO"});
-                table3.AddRow(new string[] {
+                table18.AddRow(new string[] {
                             "AÑO",
                             "2025"});
-                table3.AddRow(new string[] {
+                table18.AddRow(new string[] {
                             "TIPO DE VEHICULO",
                             "CAMIONETA RURAL"});
-                table3.AddRow(new string[] {
+                table18.AddRow(new string[] {
                             "CLASIFICADOR",
                             "MEDIA"});
-                table3.AddRow(new string[] {
+                table18.AddRow(new string[] {
                             "COLOR",
                             "AZUL"});
-                table3.AddRow(new string[] {
+                table18.AddRow(new string[] {
                             "NUMERO MOTOR",
                             "NUEVOENG123"});
-                table3.AddRow(new string[] {
+                table18.AddRow(new string[] {
                             "TIPO COMBUSTIBLE",
                             "G-95"});
-                table3.AddRow(new string[] {
+                table18.AddRow(new string[] {
                             "TIPO MOTOR",
                             "BI-COMBUSTIBLE"});
-                table3.AddRow(new string[] {
+                table18.AddRow(new string[] {
                             "RANGO CONSUMO",
                             "50"});
-                table3.AddRow(new string[] {
+                table18.AddRow(new string[] {
                             "NUMERO SERIE",
                             "NUEVOSERIE98765A"});
 #line 61
-        await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table3, "When ");
+        await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table18, "When ");
 #line hidden
 #line 78
         await testRunner.ThenAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");

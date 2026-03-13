@@ -1,9 +1,9 @@
-﻿using FLOTA_VEHICULAR.Pages;
+﻿using FLOTA_VEHICULAR.Pages.Odometro;
 using OpenQA.Selenium;
 using Reqnroll;
 using System;
 
-namespace FLOTA_VEHICULAR.StepDefinitions
+namespace FLOTA_VEHICULAR.StepDefinitions.Odometro
 {
     [Binding]
     public class OdometroStepDefinitions
@@ -125,5 +125,58 @@ namespace FLOTA_VEHICULAR.StepDefinitions
         {
             odometroPage.ClicBuscarFiltros();
         }
+
+        [When("Se ingresa la placa {string} sin cargar los datos")]
+        public void WhenSeIngresaLaPlacaSinCargarLosDatos(string placa)
+        {
+            odometroPage.IngresarPlacaSinBuscar(placa);
+        }
+
+        [Then("Se verifica que el boton Guardar esta deshabilitado")]
+        public void ThenSeVerificaQueElBotonGuardarEstaDeshabilitado()
+        {
+            odometroPage.VerificarBotonGuardarDeshabilitado();
+        }
+
+
+        [When("Se mantiene la opción TODAS en {string}")]
+        public void WhenSeMantieneLaOpcionTODASEn(string tipoFiltro)
+        {
+            odometroPage.VerificarOpcionTodasSeleccionada(tipoFiltro);
+        }
+
+        [Then("Se verifica que la grilla muestra resultados")]
+        public void ThenSeVerificaQueLaGrillaMuestraResultados()
+        {
+            odometroPage.VerificarGrillaConResultados();
+        }
+
+        [Then("Se verifica el resultado de la busqueda {string}")]
+        public void ThenSeVerificaElResultadoDeLaBusqueda(string notas)
+        {
+            // Esta lógica inteligente decide qué aserción hacer basada en la tabla del feature
+            if (notas.Contains("sin coincidencias"))
+            {
+                odometroPage.VerificarMensajeSinRegistros();
+            }
+            else
+            {
+                odometroPage.VerificarGrillaConResultados();
+            }
+        }
+
+
+
+        [Then("Se verifica el mensaje de error {string}")]
+        public void ThenSeVerificaElMensajeDeError(string mensajeError)
+        {
+            odometroPage.VerificarMensajeErrorEmergente(mensajeError);
+        }
+
+
+
+
+
+
     }
 }

@@ -83,16 +83,51 @@ namespace FLOTA_VEHICULAR.Features.Soat
             await testRunner.CollectScenarioErrorsAsync();
         }
         
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Registrar un nuevo SOAT para un vehículo")]
-        [NUnit.Framework.CategoryAttribute("RegistroSoat")]
-        public async System.Threading.Tasks.Task RegistrarUnNuevoSOATParaUnVehiculo()
+        public virtual async System.Threading.Tasks.Task FeatureBackgroundAsync()
         {
-            string[] tagsOfScenario = new string[] {
-                    "RegistroSoat"};
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar un nuevo SOAT para un vehículo", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 4
+    #line hidden
 #line 5
+        await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                    "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 6
+        await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                    "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("<Caso> - <Descripcion>")]
+        [NUnit.Framework.CategoryAttribute("RegistroSoat")]
+        [NUnit.Framework.CategoryAttribute("RegistroExitoso")]
+        [NUnit.Framework.TestCaseAttribute("CP-SOAT-05", "Flujo Correcto", "823PL1", "RIMAC", "222-3421", "14", "14", "20604915351", "14", "10:30", "300", "C:\\Users\\MANUEL\\Pictures\\goleto adidas.jpg", null)]
+        [NUnit.Framework.TestCaseAttribute("CP-SOAT-13", "Registro con proveedor OTRO", "467UI1", "OTRO", "4455-6671", "25", "24", "20552103816", "25", "08:00", "220", "C:\\Users\\MANUEL\\Pictures\\goleto adidas.jpg", null)]
+        public async System.Threading.Tasks.Task Caso_Descripcion(string caso, string descripcion, string placa, string proveedor, string poliza, string diaDesde, string diaHasta, string ruc, string diaContratante, string hora, string importe, string rutaArchivo, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "RegistroSoat",
+                    "RegistroExitoso"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("Caso", caso);
+            argumentsOfScenario.Add("Descripcion", descripcion);
+            argumentsOfScenario.Add("Placa", placa);
+            argumentsOfScenario.Add("Proveedor", proveedor);
+            argumentsOfScenario.Add("Poliza", poliza);
+            argumentsOfScenario.Add("DiaDesde", diaDesde);
+            argumentsOfScenario.Add("DiaHasta", diaHasta);
+            argumentsOfScenario.Add("Ruc", ruc);
+            argumentsOfScenario.Add("DiaContratante", diaContratante);
+            argumentsOfScenario.Add("Hora", hora);
+            argumentsOfScenario.Add("Importe", importe);
+            argumentsOfScenario.Add("RutaArchivo", rutaArchivo);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("<Caso> - <Descripcion>", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 12
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -102,45 +137,97 @@ namespace FLOTA_VEHICULAR.Features.Soat
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
-        await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
-                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 7
-        await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
-                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 9
-        await testRunner.AndAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 10
-        await testRunner.AndAsync("Se selecciona Nuevo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 13
-        await testRunner.WhenAsync("Se ingresa la placa \"ONO123\" y se busca en SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line 4
+    await this.FeatureBackgroundAsync();
 #line hidden
 #line 16
-        await testRunner.AndAsync("Se selecciona el proveedor \"LA POSITIVA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+        await testRunner.WhenAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 17
-        await testRunner.AndAsync("Se ingresa la póliza \"12345-6789\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+        await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 18
-        await testRunner.AndAsync("Se selecciona la fecha DESDE el día \"10\" y HASTA el día \"28\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+                global::Reqnroll.Table table2 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table2.AddRow(new string[] {
+                            "PLACA",
+                            string.Format("{0}", placa)});
+                table2.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table2.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table2.AddRow(new string[] {
+                            "MARCA",
+                            "DAEWOO"});
+                table2.AddRow(new string[] {
+                            "MODELO",
+                            "TICO SL"});
+                table2.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table2.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table2.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "ALTA"});
+                table2.AddRow(new string[] {
+                            "COLOR",
+                            "NEGRO"});
+                table2.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "ENG554433"});
+                table2.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table2.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table2.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "45"});
+                table2.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "XYZ9876543210987A"});
+#line 19
+        await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table2, "When ");
 #line hidden
-#line 21
-        await testRunner.AndAsync("Se ingresa el RUC \"72211766\" y se busca", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 36
+        await testRunner.ThenAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 22
-        await testRunner.AndAsync("Se selecciona la fecha del contratante el día \"9\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 41
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 24
-        await testRunner.AndAsync("Se ingresa la hora de emisión \"11:25\" y el importe \"200.00\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 42
+        await testRunner.AndAsync("Se selecciona Nuevo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 27
-        await testRunner.AndAsync("Se adjunta el documento \"C:\\Users\\MANUEL\\Pictures\\goleto adidas.jpg\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 45
+        await testRunner.AndAsync(string.Format("Se ingresa la placa \"{0}\" y se busca en SOAT", placa), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 29
+#line 48
+        await testRunner.AndAsync(string.Format("Se selecciona el proveedor \"{0}\"", proveedor), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 49
+        await testRunner.AndAsync(string.Format("Se ingresa la póliza \"{0}\"", poliza), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 50
+        await testRunner.AndAsync(string.Format("Se selecciona la fecha DESDE el día \"{0}\" y HASTA el día \"{1}\" del próximo año", diaDesde, diaHasta), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 53
+        await testRunner.AndAsync(string.Format("Se ingresa el RUC \"{0}\" y se busca", ruc), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 54
+        await testRunner.AndAsync(string.Format("Se selecciona la fecha del contratante el día \"{0}\"", diaContratante), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 55
+        await testRunner.AndAsync(string.Format("Se ingresa la hora de emisión \"{0}\" y el importe \"{1}\"", hora, importe), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 58
+        await testRunner.AndAsync(string.Format("Se adjunta el documento \"{0}\"", rutaArchivo), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 60
         await testRunner.ThenAsync("Se guarda el SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -148,15 +235,19 @@ namespace FLOTA_VEHICULAR.Features.Soat
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Editar un registro de SOAT existente")]
-        [NUnit.Framework.CategoryAttribute("EditarSoat")]
-        public async System.Threading.Tasks.Task EditarUnRegistroDeSOATExistente()
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-02 - Registro de SOAT sin cargar el documento adjunto")]
+        [NUnit.Framework.CategoryAttribute("RegistroSoat")]
+        [NUnit.Framework.CategoryAttribute("RegistroFallido")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-02")]
+        public async System.Threading.Tasks.Task CP_SOAT_02_RegistroDeSOATSinCargarElDocumentoAdjunto()
         {
             string[] tagsOfScenario = new string[] {
-                    "EditarSoat"};
+                    "RegistroSoat",
+                    "RegistroFallido",
+                    "CP-SOAT-02"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar un registro de SOAT existente", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 35
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-02 - Registro de SOAT sin cargar el documento adjunto", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 75
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -166,48 +257,1900 @@ namespace FLOTA_VEHICULAR.Features.Soat
             else
             {
                 await this.ScenarioStartAsync();
-#line 36
-        await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
-                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line 4
+    await this.FeatureBackgroundAsync();
 #line hidden
-#line 37
-        await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
-                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line 76
+        await testRunner.WhenAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 39
-        await testRunner.AndAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 77
+        await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 42
-        await testRunner.WhenAsync("Se busca el SOAT por placa \"ONO123\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+                global::Reqnroll.Table table3 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table3.AddRow(new string[] {
+                            "PLACA",
+                            "7845K1"});
+                table3.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table3.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table3.AddRow(new string[] {
+                            "MARCA",
+                            "DAEWOO"});
+                table3.AddRow(new string[] {
+                            "MODELO",
+                            "TICO SL"});
+                table3.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table3.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table3.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "ALTA"});
+                table3.AddRow(new string[] {
+                            "COLOR",
+                            "NEGRO"});
+                table3.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "ENG554433"});
+                table3.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table3.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table3.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "45"});
+                table3.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "XYZ9876543210987A"});
+#line 78
+        await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table3, "And ");
 #line hidden
-#line 43
+#line 94
+        await testRunner.ThenAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 96
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 97
+        await testRunner.AndAsync("Se selecciona Nuevo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 98
+        await testRunner.AndAsync("Se ingresa la placa \"7845K1\" y se busca en SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 99
+        await testRunner.AndAsync("Se selecciona el proveedor \"LA POSITIVA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 100
+        await testRunner.AndAsync("Se ingresa la póliza \"1242-651\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 101
+        await testRunner.AndAsync("Se selecciona la fecha DESDE el día \"10\" y HASTA el día \"10\" del próximo año", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 102
+        await testRunner.AndAsync("Se ingresa el RUC \"20538856674\" y se busca", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 103
+        await testRunner.AndAsync("Se selecciona la fecha del contratante el día \"10\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 104
+        await testRunner.AndAsync("Se ingresa la hora de emisión \"17:00\" y el importe \"200.00\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 106
+        await testRunner.ThenAsync("Se verifica que el boton Guardar del SOAT esta deshabilitado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-10 - Intento de registro sin buscar datos del vehículo (sin lupa)")]
+        [NUnit.Framework.CategoryAttribute("RegistroSoat")]
+        [NUnit.Framework.CategoryAttribute("RegistroFallido")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-10")]
+        public async System.Threading.Tasks.Task CP_SOAT_10_IntentoDeRegistroSinBuscarDatosDelVehiculoSinLupa()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroSoat",
+                    "RegistroFallido",
+                    "CP-SOAT-10"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-10 - Intento de registro sin buscar datos del vehículo (sin lupa)", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 109
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 110
+        await testRunner.WhenAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 111
+        await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table4 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table4.AddRow(new string[] {
+                            "PLACA",
+                            "718VB1"});
+                table4.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table4.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table4.AddRow(new string[] {
+                            "MARCA",
+                            "DAEWOO"});
+                table4.AddRow(new string[] {
+                            "MODELO",
+                            "TICO SL"});
+                table4.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table4.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table4.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "ALTA"});
+                table4.AddRow(new string[] {
+                            "COLOR",
+                            "NEGRO"});
+                table4.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "ENG554433"});
+                table4.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table4.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table4.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "45"});
+                table4.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "XYZ9876543210987A"});
+#line 112
+        await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table4, "And ");
+#line hidden
+#line 128
+        await testRunner.ThenAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 130
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 131
+        await testRunner.AndAsync("Se selecciona Nuevo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 133
+        await testRunner.AndAsync("Se ingresa la placa \"718VB1\" sin buscar en SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 134
+        await testRunner.AndAsync("Se selecciona el proveedor \"MAPFRE\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 135
+        await testRunner.AndAsync("Se ingresa la póliza \"5544-3321\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 136
+        await testRunner.AndAsync("Se selecciona la fecha DESDE el día \"12\" y HASTA el día \"12\" del próximo año", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 137
+        await testRunner.AndAsync("Se ingresa el RUC \"20604915351\" y se busca", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 138
+        await testRunner.AndAsync("Se selecciona la fecha del contratante el día \"12\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 139
+        await testRunner.AndAsync("Se ingresa la hora de emisión \"16:00\" y el importe \"250.00\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 140
+        await testRunner.AndAsync("Se adjunta el documento \"C:\\Users\\MANUEL\\Pictures\\goleto adidas.jpg\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 141
+        await testRunner.ThenAsync("Se verifica que el boton Guardar del SOAT esta deshabilitado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-11 - Intento de registro sin buscar datos del contratante (sin lupa RUC)")]
+        [NUnit.Framework.CategoryAttribute("RegistroSoat")]
+        [NUnit.Framework.CategoryAttribute("RegistroFallido")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-11")]
+        public async System.Threading.Tasks.Task CP_SOAT_11_IntentoDeRegistroSinBuscarDatosDelContratanteSinLupaRUC()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroSoat",
+                    "RegistroFallido",
+                    "CP-SOAT-11"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-11 - Intento de registro sin buscar datos del contratante (sin lupa RUC)", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 144
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 145
+        await testRunner.WhenAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 146
+        await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table5 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table5.AddRow(new string[] {
+                            "PLACA",
+                            "892RT1"});
+                table5.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table5.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table5.AddRow(new string[] {
+                            "MARCA",
+                            "DAEWOO"});
+                table5.AddRow(new string[] {
+                            "MODELO",
+                            "TICO SL"});
+                table5.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table5.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table5.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "ALTA"});
+                table5.AddRow(new string[] {
+                            "COLOR",
+                            "NEGRO"});
+                table5.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "ENG554433"});
+                table5.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table5.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table5.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "45"});
+                table5.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "XYZ9876543210987A"});
+#line 147
+        await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table5, "And ");
+#line hidden
+#line 163
+        await testRunner.ThenAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 165
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 166
+        await testRunner.AndAsync("Se selecciona Nuevo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 167
+        await testRunner.AndAsync("Se ingresa la placa \"892RT1\" y se busca en SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 168
+        await testRunner.AndAsync("Se selecciona el proveedor \"PROTECTA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 169
+        await testRunner.AndAsync("Se ingresa la póliza \"7788-9901\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 170
+        await testRunner.AndAsync("Se selecciona la fecha DESDE el día \"15\" y HASTA el día \"14\" del próximo año", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 172
+        await testRunner.AndAsync("Se ingresa el RUC \"20553856451\" sin buscar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 173
+        await testRunner.AndAsync("Se selecciona la fecha del contratante el día \"15\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 174
+        await testRunner.AndAsync("Se ingresa la hora de emisión \"09:30\" y el importe \"175.00\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 175
+        await testRunner.AndAsync("Se adjunta el documento \"C:\\Users\\MANUEL\\Pictures\\goleto adidas.jpg\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 176
+        await testRunner.ThenAsync("Se verifica que el boton Guardar del SOAT esta deshabilitado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-03 - Validación de Integridad Financiera (Prima con letras E110)")]
+        [NUnit.Framework.CategoryAttribute("RegistroSoat")]
+        [NUnit.Framework.CategoryAttribute("RegistroFallido")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-03")]
+        public async System.Threading.Tasks.Task CP_SOAT_03_ValidacionDeIntegridadFinancieraPrimaConLetrasE110()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroSoat",
+                    "RegistroFallido",
+                    "CP-SOAT-03"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-03 - Validación de Integridad Financiera (Prima con letras E110)", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 188
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 189
+        await testRunner.WhenAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 190
+        await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table6 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table6.AddRow(new string[] {
+                            "PLACA",
+                            "912MN1"});
+                table6.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table6.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table6.AddRow(new string[] {
+                            "MARCA",
+                            "DAEWOO"});
+                table6.AddRow(new string[] {
+                            "MODELO",
+                            "TICO SL"});
+                table6.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table6.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table6.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "ALTA"});
+                table6.AddRow(new string[] {
+                            "COLOR",
+                            "NEGRO"});
+                table6.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "ENG554433"});
+                table6.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table6.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table6.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "45"});
+                table6.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "XYZ9876543210987A"});
+#line 191
+        await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table6, "And ");
+#line hidden
+#line 207
+        await testRunner.ThenAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 209
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 210
+        await testRunner.AndAsync("Se selecciona Nuevo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 211
+        await testRunner.AndAsync("Se ingresa la placa \"912MN1\" y se busca en SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 212
+        await testRunner.AndAsync("Se selecciona el proveedor \"LA POSITIVA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 213
+        await testRunner.AndAsync("Se ingresa la póliza \"353-451\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 214
+        await testRunner.AndAsync("Se selecciona la fecha DESDE el día \"10\" y HASTA el día \"10\" del próximo año", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 215
+        await testRunner.AndAsync("Se ingresa el RUC \"20605100016\" y se busca", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 216
+        await testRunner.AndAsync("Se selecciona la fecha del contratante el día \"10\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 217
+        await testRunner.AndAsync("Se ingresa la hora de emisión \"18:00\" y el importe \"E110\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 218
+        await testRunner.AndAsync("Se adjunta el documento \"C:\\Users\\MANUEL\\Pictures\\goleto adidas.jpg\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 220
+        await testRunner.ThenAsync("Se verifica que el boton Guardar del SOAT esta deshabilitado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-07 - Vigencia de póliza con fecha HASTA anterior a fecha DESDE")]
+        [NUnit.Framework.CategoryAttribute("RegistroSoat")]
+        [NUnit.Framework.CategoryAttribute("RegistroFallido")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-07")]
+        public async System.Threading.Tasks.Task CP_SOAT_07_VigenciaDePolizaConFechaHASTAAnteriorAFechaDESDE()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroSoat",
+                    "RegistroFallido",
+                    "CP-SOAT-07"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-07 - Vigencia de póliza con fecha HASTA anterior a fecha DESDE", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 224
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 225
+        await testRunner.WhenAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 226
+        await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table7 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table7.AddRow(new string[] {
+                            "PLACA",
+                            "289HJ1"});
+                table7.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table7.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table7.AddRow(new string[] {
+                            "MARCA",
+                            "DAEWOO"});
+                table7.AddRow(new string[] {
+                            "MODELO",
+                            "TICO SL"});
+                table7.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table7.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table7.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "ALTA"});
+                table7.AddRow(new string[] {
+                            "COLOR",
+                            "NEGRO"});
+                table7.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "ENG554433"});
+                table7.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table7.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table7.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "45"});
+                table7.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "XYZ9876543210987A"});
+#line 227
+        await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table7, "And ");
+#line hidden
+#line 243
+        await testRunner.ThenAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 245
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 246
+        await testRunner.AndAsync("Se selecciona Nuevo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 247
+        await testRunner.AndAsync("Se ingresa la placa \"289HJ1\" y se busca en SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 248
+        await testRunner.AndAsync("Se selecciona el proveedor \"RIMAC\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 249
+        await testRunner.AndAsync("Se ingresa la póliza \"3344-551\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 251
+        await testRunner.AndAsync("Se selecciona solo la fecha DESDE el día \"15\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 252
+        await testRunner.ThenAsync("Se verifica que el día \"14\" está deshabilitado en el calendario HASTA", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-09 - Registro de SOAT con importe de prima = 0")]
+        [NUnit.Framework.CategoryAttribute("RegistroSoat")]
+        [NUnit.Framework.CategoryAttribute("RegistroConMensajeError")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-09")]
+        public async System.Threading.Tasks.Task CP_SOAT_09_RegistroDeSOATConImporteDePrima0()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroSoat",
+                    "RegistroConMensajeError",
+                    "CP-SOAT-09"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-09 - Registro de SOAT con importe de prima = 0", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 256
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 257
+        await testRunner.WhenAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 258
+        await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table8 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table8.AddRow(new string[] {
+                            "PLACA",
+                            "365ZX1"});
+                table8.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table8.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table8.AddRow(new string[] {
+                            "MARCA",
+                            "DAEWOO"});
+                table8.AddRow(new string[] {
+                            "MODELO",
+                            "TICO SL"});
+                table8.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table8.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table8.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "ALTA"});
+                table8.AddRow(new string[] {
+                            "COLOR",
+                            "NEGRO"});
+                table8.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "ENG554433"});
+                table8.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table8.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table8.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "45"});
+                table8.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "XYZ9876543210987A"});
+#line 259
+        await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table8, "And ");
+#line hidden
+#line 275
+        await testRunner.ThenAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 277
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 278
+        await testRunner.AndAsync("Se selecciona Nuevo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 279
+        await testRunner.AndAsync("Se ingresa la placa \"365ZX1\" y se busca en SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 280
+        await testRunner.AndAsync("Se selecciona el proveedor \"INTERSEGURO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 281
+        await testRunner.AndAsync("Se ingresa la póliza \"1122-3341\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 282
+        await testRunner.AndAsync("Se selecciona la fecha DESDE el día \"10\" y HASTA el día \"9\" del próximo año", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 283
+        await testRunner.AndAsync("Se ingresa el RUC \"20552103816\" y se busca", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 284
+        await testRunner.AndAsync("Se selecciona la fecha del contratante el día \"10\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 285
+        await testRunner.AndAsync("Se ingresa la hora de emisión \"11:00\" y el importe \"0\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 286
+        await testRunner.AndAsync("Se adjunta el documento \"C:\\Users\\MANUEL\\Pictures\\goleto adidas.jpg\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 287
+        await testRunner.ThenAsync("Se guarda el SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 289
+        await testRunner.AndAsync("Se verifica el mensaje de error del SOAT \"Los datos ingresados no son correctos!\"" +
+                        "", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-14 - Edición de SOAT cambiando proveedor")]
+        [NUnit.Framework.CategoryAttribute("EditarSoat")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-14")]
+        public async System.Threading.Tasks.Task CP_SOAT_14_EdicionDeSOATCambiandoProveedor()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "EditarSoat",
+                    "CP-SOAT-14"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-14 - Edición de SOAT cambiando proveedor", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 305
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 306
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 308
+        await testRunner.AndAsync("Se busca el SOAT por placa \"MAN111\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 309
         await testRunner.AndAsync("Se hace clic en ver SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 44
+#line 310
         await testRunner.AndAsync("Se hace clic en editar SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 47
+#line 311
+        await testRunner.AndAsync("Se selecciona el proveedor \"RIMAC\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 312
+        await testRunner.ThenAsync("Se guarda el SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-22 - Edición de SOAT cambiando solo el documento adjunto")]
+        [NUnit.Framework.CategoryAttribute("EditarSoat")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-22")]
+        public async System.Threading.Tasks.Task CP_SOAT_22_EdicionDeSOATCambiandoSoloElDocumentoAdjunto()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "EditarSoat",
+                    "CP-SOAT-22"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-22 - Edición de SOAT cambiando solo el documento adjunto", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 315
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 316
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 318
+        await testRunner.AndAsync("Se busca el SOAT por placa \"823PLW\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 319
+        await testRunner.AndAsync("Se hace clic en ver SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 320
+        await testRunner.AndAsync("Se hace clic en editar SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 321
+        await testRunner.AndAsync("Se elimina el documento adjunto", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 322
+        await testRunner.AndAsync("Se adjunta el documento \"C:\\Users\\MANUEL\\Pictures\\adidas 2.png\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 323
+        await testRunner.ThenAsync("Se guarda el SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-23 - Intento de edición sin modificar ningún campo (Validando comportamie" +
+            "nto actual)")]
+        [NUnit.Framework.CategoryAttribute("EditarSoat")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-23")]
+        public async System.Threading.Tasks.Task CP_SOAT_23_IntentoDeEdicionSinModificarNingunCampoValidandoComportamientoActual()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "EditarSoat",
+                    "CP-SOAT-23"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-23 - Intento de edición sin modificar ningún campo (Validando comportamie" +
+                    "nto actual)", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 326
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 327
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 329
+        await testRunner.AndAsync("Se busca el SOAT por placa \"467UIO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 330
+        await testRunner.AndAsync("Se hace clic en ver SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 331
+        await testRunner.AndAsync("Se hace clic en editar SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 333
+        await testRunner.ThenAsync("Se guarda el SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 335
+        await testRunner.AndAsync("Se verifica el mensaje de error del SOAT \"Se actualizo el SOAT Correctamente\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-15 - Eliminación de documento adjunto sin agregar uno nuevo antes de guar" +
+            "dar")]
+        [NUnit.Framework.CategoryAttribute("RegistroSoat")]
+        [NUnit.Framework.CategoryAttribute("RegistroFallido")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-15")]
+        public async System.Threading.Tasks.Task CP_SOAT_15_EliminacionDeDocumentoAdjuntoSinAgregarUnoNuevoAntesDeGuardar()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroSoat",
+                    "RegistroFallido",
+                    "CP-SOAT-15"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-15 - Eliminación de documento adjunto sin agregar uno nuevo antes de guar" +
+                    "dar", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 344
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 346
+        await testRunner.WhenAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 347
+        await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table9 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table9.AddRow(new string[] {
+                            "PLACA",
+                            "649LK2"});
+                table9.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table9.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table9.AddRow(new string[] {
+                            "MARCA",
+                            "DAEWOO"});
+                table9.AddRow(new string[] {
+                            "MODELO",
+                            "TICO SL"});
+                table9.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table9.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table9.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "ALTA"});
+                table9.AddRow(new string[] {
+                            "COLOR",
+                            "NEGRO"});
+                table9.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "ENG554433"});
+                table9.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table9.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table9.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "45"});
+                table9.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "XYZ9876543210987A"});
+#line 348
+        await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table9, "And ");
+#line hidden
+#line 364
+        await testRunner.ThenAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 367
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 368
+        await testRunner.AndAsync("Se selecciona Nuevo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 369
+        await testRunner.AndAsync("Se ingresa la placa \"649LK2\" y se busca en SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 370
         await testRunner.AndAsync("Se selecciona el proveedor \"PACIFICO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 48
-        await testRunner.AndAsync("Se ingresa la póliza \"929313-12984\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 371
+        await testRunner.AndAsync("Se ingresa la póliza \"3344-1120\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 49
-        await testRunner.AndAsync("Se selecciona la fecha DESDE el día \"15\" y HASTA el día \"29\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 372
+        await testRunner.AndAsync("Se selecciona la fecha DESDE el día \"5\" y HASTA el día \"4\" del próximo año", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 50
-        await testRunner.AndAsync("Se selecciona la fecha del contratante el día \"14\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 373
+        await testRunner.AndAsync("Se ingresa el RUC \"20538856674\" y se busca", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 51
-        await testRunner.AndAsync("Se ingresa la hora de emisión \"14:30\" y el importe \"250.00\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 374
+        await testRunner.AndAsync("Se selecciona la fecha del contratante el día \"5\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 54
-        await testRunner.AndAsync("Se elimina el documento existente", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 375
+        await testRunner.AndAsync("Se ingresa la hora de emisión \"17:00\" y el importe \"165\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 55
-        await testRunner.AndAsync("Se adjunta el documento \"C:\\Users\\MANUEL\\Pictures\\adidas.png\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 378
+        await testRunner.AndAsync("Se adjunta el documento \"C:\\Users\\MANUEL\\Pictures\\goleto adidas.jpg\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 58
+#line 381
+        await testRunner.AndAsync("Se elimina el documento adjunto", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 384
+        await testRunner.ThenAsync("Se verifica que el boton Guardar del SOAT esta deshabilitado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-24 - Búsqueda de SOATs sin aplicar ningún filtro")]
+        [NUnit.Framework.CategoryAttribute("FiltrosSoat")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-24")]
+        public async System.Threading.Tasks.Task CP_SOAT_24_BusquedaDeSOATsSinAplicarNingunFiltro()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "FiltrosSoat",
+                    "CP-SOAT-24"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-24 - Búsqueda de SOATs sin aplicar ningún filtro", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 387
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 388
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 390
+        await testRunner.AndAsync("Se hace clic en el boton Buscar Filtros", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 392
+        await testRunner.ThenAsync("Se verifica que la grilla de SOAT muestra resultados", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-17 - Busqueda de SOAT por multiples aseguradoras simultaneamente")]
+        [NUnit.Framework.CategoryAttribute("FiltrosSoat")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-17")]
+        public async System.Threading.Tasks.Task CP_SOAT_17_BusquedaDeSOATPorMultiplesAseguradorasSimultaneamente()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "FiltrosSoat",
+                    "CP-SOAT-17"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-17 - Busqueda de SOAT por multiples aseguradoras simultaneamente", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 396
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 397
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 398
+        await testRunner.AndAsync("Se abre el filtro de \"Aseguradoras\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 399
+        await testRunner.AndAsync("Se desmarca la opcion TODAS", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table10 = new global::Reqnroll.Table(new string[] {
+                            "Aseguradora"});
+                table10.AddRow(new string[] {
+                            "LA POSITIVA"});
+                table10.AddRow(new string[] {
+                            "RIMAC"});
+                table10.AddRow(new string[] {
+                            "PACIFICO"});
+#line 400
+        await testRunner.AndAsync("Se seleccionan las siguientes aseguradoras:", ((string)(null)), table10, "And ");
+#line hidden
+#line 406
+        await testRunner.AndAsync("Se ingresa la fecha de vencimiento DESDE \"01/01/2026\" y HASTA \"31/12/2026\" en los" +
+                        " filtros", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 407
+        await testRunner.AndAsync("Se hace clic en el boton Buscar Filtros", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 408
+        await testRunner.ThenAsync("Se verifica que la grilla de SOAT muestra resultados", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-16 - Búsqueda de SOATs proximos a vencer")]
+        [NUnit.Framework.CategoryAttribute("FiltrosSoat")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-16")]
+        public async System.Threading.Tasks.Task CP_SOAT_16_BusquedaDeSOATsProximosAVencer()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "FiltrosSoat",
+                    "CP-SOAT-16"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-16 - Búsqueda de SOATs proximos a vencer", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 416
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 417
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 418
+        await testRunner.AndAsync("Se abre el filtro de \"Estado\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 419
+        await testRunner.AndAsync("Se desmarca la opcion TODAS", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table11 = new global::Reqnroll.Table(new string[] {
+                            "Opcion"});
+                table11.AddRow(new string[] {
+                            "PRÓXIMO A VENCER"});
+#line 420
+        await testRunner.AndAsync("Se seleccionan las siguientes opciones en el filtro:", ((string)(null)), table11, "And ");
+#line hidden
+#line 424
+        await testRunner.AndAsync("Se ingresa \"30\" en dias para vencer", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 425
+        await testRunner.AndAsync("Se ingresa la fecha de vencimiento DESDE \"05/02/2026\" y HASTA \"05/03/2026\" en los" +
+                        " filtros", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 426
+        await testRunner.ThenAsync("Se verifica que la grilla de SOAT muestra resultados", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-18 - Búsqueda de SOATs caducados por area especifica")]
+        [NUnit.Framework.CategoryAttribute("FiltrosSoat")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-18")]
+        public async System.Threading.Tasks.Task CP_SOAT_18_BusquedaDeSOATsCaducadosPorAreaEspecifica()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "FiltrosSoat",
+                    "CP-SOAT-18"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-18 - Búsqueda de SOATs caducados por area especifica", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 429
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 430
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 431
+        await testRunner.AndAsync("Se abre el filtro de \"Estado\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 432
+        await testRunner.AndAsync("Se desmarca la opcion TODAS", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table12 = new global::Reqnroll.Table(new string[] {
+                            "Opcion"});
+                table12.AddRow(new string[] {
+                            "CADUCADO"});
+#line 433
+        await testRunner.AndAsync("Se seleccionan las siguientes opciones en el filtro:", ((string)(null)), table12, "And ");
+#line hidden
+#line 436
+        await testRunner.AndAsync("Se abre el filtro de \"Áreas\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 437
+        await testRunner.AndAsync("Se desmarca la opcion TODAS", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table13 = new global::Reqnroll.Table(new string[] {
+                            "Opcion"});
+                table13.AddRow(new string[] {
+                            "UPE LIMA NORTE - CALLAO"});
+#line 438
+        await testRunner.AndAsync("Se seleccionan las siguientes opciones en el filtro:", ((string)(null)), table13, "And ");
+#line hidden
+#line 441
+        await testRunner.AndAsync("Se ingresa la fecha de vencimiento DESDE \"04/02/2026\" y HASTA \"04/02/2026\" en los" +
+                        " filtros", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 442
+        await testRunner.AndAsync("Se hace clic en el boton Buscar Filtros", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 443
+        await testRunner.ThenAsync("Se verifica que la grilla de SOAT muestra resultados", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-19 - Consulta de historial de SOAT")]
+        [NUnit.Framework.CategoryAttribute("HistorialSoat")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-19")]
+        public async System.Threading.Tasks.Task CP_SOAT_19_ConsultaDeHistorialDeSOAT()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "HistorialSoat",
+                    "CP-SOAT-19"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-19 - Consulta de historial de SOAT", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 446
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 447
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 448
+        await testRunner.AndAsync("Se hace clic en el boton Historial", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 450
+        await testRunner.AndAsync("Se ingresa la placa \"MAN111\" y se busca en SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 451
+        await testRunner.ThenAsync("Se verifica que la grilla de SOAT muestra resultados", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 452
+        await testRunner.AndAsync("Se cierra el historial del SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-04 - Fecha de contratante posterior a la vigencia")]
+        [NUnit.Framework.CategoryAttribute("RegistroSoat")]
+        [NUnit.Framework.CategoryAttribute("RegistroFallido")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-04")]
+        public async System.Threading.Tasks.Task CP_SOAT_04_FechaDeContratantePosteriorALaVigencia()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroSoat",
+                    "RegistroFallido",
+                    "CP-SOAT-04"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-04 - Fecha de contratante posterior a la vigencia", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 462
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 463
+        await testRunner.WhenAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 464
+        await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table14 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table14.AddRow(new string[] {
+                            "PLACA",
+                            "111AAA"});
+                table14.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table14.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table14.AddRow(new string[] {
+                            "MARCA",
+                            "DAEWOO"});
+                table14.AddRow(new string[] {
+                            "MODELO",
+                            "TICO SL"});
+                table14.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table14.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table14.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "ALTA"});
+                table14.AddRow(new string[] {
+                            "COLOR",
+                            "NEGRO"});
+                table14.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "ENG554433"});
+                table14.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table14.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table14.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "45"});
+                table14.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "XYZ9876543210987A"});
+#line 465
+        await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table14, "And ");
+#line hidden
+#line 481
+        await testRunner.ThenAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 483
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 484
+        await testRunner.AndAsync("Se selecciona Nuevo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 485
+        await testRunner.AndAsync("Se ingresa la placa \"111AAA\" y se busca en SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 486
+        await testRunner.AndAsync("Se selecciona el proveedor \"PACIFICO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 487
+        await testRunner.AndAsync("Se ingresa la póliza \"0404-0000\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 489
+        await testRunner.AndAsync("Se selecciona la fecha DESDE el día \"10\" y HASTA el día \"9\" del próximo año", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 490
+        await testRunner.AndAsync("Se ingresa el RUC \"20538856674\" y se busca", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 492
+        await testRunner.AndAsync("Se selecciona la fecha del contratante el día \"15\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 493
+        await testRunner.AndAsync("Se ingresa la hora de emisión \"10:00\" y el importe \"100.00\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 494
+        await testRunner.ThenAsync("Se verifica que el boton Guardar del SOAT esta deshabilitado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-12 - Fecha contratante exactamente igual al fin de vigencia")]
+        [NUnit.Framework.CategoryAttribute("RegistroSoat")]
+        [NUnit.Framework.CategoryAttribute("RegistroFallido")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-12")]
+        public async System.Threading.Tasks.Task CP_SOAT_12_FechaContratanteExactamenteIgualAlFinDeVigencia()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroSoat",
+                    "RegistroFallido",
+                    "CP-SOAT-12"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-12 - Fecha contratante exactamente igual al fin de vigencia", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 498
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 499
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 500
+        await testRunner.AndAsync("Se selecciona Nuevo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 502
+        await testRunner.AndAsync("Se ingresa la placa \"111AAA\" y se busca en SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 503
+        await testRunner.AndAsync("Se selecciona el proveedor \"RIMAC\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 504
+        await testRunner.AndAsync("Se ingresa la póliza \"1212-0000\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 506
+        await testRunner.AndAsync("Se selecciona la fecha DESDE el día \"21\" y HASTA el día \"20\" del próximo año", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 507
+        await testRunner.AndAsync("Se ingresa el RUC \"20604915351\" y se busca", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 509
+        await testRunner.AndAsync("Se selecciona la fecha del contratante el día \"20\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 510
+        await testRunner.AndAsync("Se ingresa la hora de emisión \"10:00\" y el importe \"120.00\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 511
+        await testRunner.ThenAsync("Se verifica que el boton Guardar del SOAT esta deshabilitado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-20 - Fecha contratante anterior al inicio de vigencia")]
+        [NUnit.Framework.CategoryAttribute("RegistroSoat")]
+        [NUnit.Framework.CategoryAttribute("RegistroFallido")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-20")]
+        public async System.Threading.Tasks.Task CP_SOAT_20_FechaContratanteAnteriorAlInicioDeVigencia()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroSoat",
+                    "RegistroFallido",
+                    "CP-SOAT-20"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-20 - Fecha contratante anterior al inicio de vigencia", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 515
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 516
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 517
+        await testRunner.AndAsync("Se selecciona Nuevo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 518
+        await testRunner.AndAsync("Se ingresa la placa \"111AAA\" y se busca en SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 519
+        await testRunner.AndAsync("Se selecciona el proveedor \"LA POSITIVA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 520
+        await testRunner.AndAsync("Se ingresa la póliza \"2020-0000\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 522
+        await testRunner.AndAsync("Se selecciona la fecha DESDE el día \"25\" y HASTA el día \"24\" del próximo año", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 523
+        await testRunner.AndAsync("Se ingresa el RUC \"20552103816\" y se busca", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 525
+        await testRunner.AndAsync("Se selecciona la fecha del contratante el día \"5\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 526
+        await testRunner.AndAsync("Se ingresa la hora de emisión \"10:00\" y el importe \"150.00\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 527
+        await testRunner.ThenAsync("Se verifica que el boton Guardar del SOAT esta deshabilitado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-21 - Registro de SOAT con vigencia de exactamente 365 días")]
+        [NUnit.Framework.CategoryAttribute("RegistroSoat")]
+        [NUnit.Framework.CategoryAttribute("RegistroExitoso")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-21")]
+        public async System.Threading.Tasks.Task CP_SOAT_21_RegistroDeSOATConVigenciaDeExactamente365Dias()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroSoat",
+                    "RegistroExitoso",
+                    "CP-SOAT-21"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-21 - Registro de SOAT con vigencia de exactamente 365 días", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 531
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 532
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 533
+        await testRunner.AndAsync("Se selecciona Nuevo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 534
+        await testRunner.AndAsync("Se ingresa la placa \"111AAA\" y se busca en SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 535
+        await testRunner.AndAsync("Se selecciona el proveedor \"MAPFRE\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 536
+        await testRunner.AndAsync("Se ingresa la póliza \"2121-0000\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 538
+        await testRunner.AndAsync("Se selecciona la fecha DESDE el día \"10\" y HASTA el día \"9\" del próximo año", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 539
+        await testRunner.AndAsync("Se ingresa el RUC \"20538856674\" y se busca", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 540
+        await testRunner.AndAsync("Se selecciona la fecha del contratante el día \"10\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 541
+        await testRunner.AndAsync("Se ingresa la hora de emisión \"15:00\" y el importe \"200.00\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 542
+        await testRunner.AndAsync("Se adjunta el documento \"C:\\Users\\MANUEL\\Pictures\\goleto adidas.jpg\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 543
+        await testRunner.ThenAsync("Se guarda el SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-25 - Registro de SOAT con vigencia menor a 30 dias")]
+        [NUnit.Framework.CategoryAttribute("RegistroSoat")]
+        [NUnit.Framework.CategoryAttribute("RegistroFallido")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-25")]
+        public async System.Threading.Tasks.Task CP_SOAT_25_RegistroDeSOATConVigenciaMenorA30Dias()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroSoat",
+                    "RegistroFallido",
+                    "CP-SOAT-25"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-25 - Registro de SOAT con vigencia menor a 30 dias", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 547
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 548
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 549
+        await testRunner.AndAsync("Se selecciona Nuevo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 550
+        await testRunner.AndAsync("Se ingresa la placa \"111AAA\" y se busca en SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 551
+        await testRunner.AndAsync("Se selecciona el proveedor \"PROTECTA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 552
+        await testRunner.AndAsync("Se ingresa la póliza \"2525-0000\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 554
+        await testRunner.AndAsync("Se selecciona la fecha DESDE el día \"10\" y HASTA el día \"25\" del mismo mes", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 555
+        await testRunner.AndAsync("Se ingresa el RUC \"20538856674\" y se busca", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 556
+        await testRunner.AndAsync("Se selecciona la fecha del contratante el día \"10\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 557
+        await testRunner.AndAsync("Se ingresa la hora de emisión \"09:00\" y el importe \"50.00\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 558
+        await testRunner.ThenAsync("Se verifica que el boton Guardar del SOAT esta deshabilitado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-06 - Registro de SOAT con vigencia vencida (Año pasado)")]
+        [NUnit.Framework.CategoryAttribute("RegistroSoat")]
+        [NUnit.Framework.CategoryAttribute("RegistroFallido")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-06")]
+        public async System.Threading.Tasks.Task CP_SOAT_06_RegistroDeSOATConVigenciaVencidaAnoPasado()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroSoat",
+                    "RegistroFallido",
+                    "CP-SOAT-06"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-06 - Registro de SOAT con vigencia vencida (Año pasado)", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 562
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 563
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 564
+        await testRunner.AndAsync("Se selecciona Nuevo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 565
+        await testRunner.AndAsync("Se ingresa la placa \"111AAA\" y se busca en SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 566
+        await testRunner.AndAsync("Se selecciona el proveedor \"INTERSEGURO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 567
+        await testRunner.AndAsync("Se ingresa la póliza \"0606-0000\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 568
+        await testRunner.AndAsync("Se selecciona la fecha DESDE el día \"10\" y HASTA el día \"11\" del año pasado", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 569
+        await testRunner.AndAsync("Se ingresa el RUC \"20538856674\" y se busca", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 570
+        await testRunner.AndAsync("Se selecciona la fecha del contratante el día \"10\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 571
+        await testRunner.AndAsync("Se ingresa la hora de emisión \"09:00\" y el importe \"100.00\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 572
+        await testRunner.ThenAsync("Se verifica que el boton Guardar del SOAT esta deshabilitado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-01 - Registro de SOAT sin cargar datos del contratante")]
+        [NUnit.Framework.CategoryAttribute("RegistroSoat")]
+        [NUnit.Framework.CategoryAttribute("RegistroFallido")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-01")]
+        public async System.Threading.Tasks.Task CP_SOAT_01_RegistroDeSOATSinCargarDatosDelContratante()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroSoat",
+                    "RegistroFallido",
+                    "CP-SOAT-01"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-01 - Registro de SOAT sin cargar datos del contratante", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 586
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 587
+        await testRunner.WhenAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 588
+        await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table15 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table15.AddRow(new string[] {
+                            "PLACA",
+                            "345XAB"});
+                table15.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table15.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table15.AddRow(new string[] {
+                            "MARCA",
+                            "DAEWOO"});
+                table15.AddRow(new string[] {
+                            "MODELO",
+                            "TICO SL"});
+                table15.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table15.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table15.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "ALTA"});
+                table15.AddRow(new string[] {
+                            "COLOR",
+                            "NEGRO"});
+                table15.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "ENG554433"});
+                table15.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table15.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table15.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "45"});
+                table15.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "XYZ9876543210987A"});
+#line 589
+        await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table15, "And ");
+#line hidden
+#line 605
+        await testRunner.ThenAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 607
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 608
+        await testRunner.AndAsync("Se selecciona Nuevo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 609
+        await testRunner.AndAsync("Se ingresa la placa \"345XAB\" y se busca en SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 610
+        await testRunner.AndAsync("Se selecciona el proveedor \"PACIFICO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 611
+        await testRunner.AndAsync("Se ingresa la póliza \"555-343\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 612
+        await testRunner.AndAsync("Se selecciona la fecha DESDE el día \"27\" y HASTA el día \"27\" del próximo año", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 615
+        await testRunner.AndAsync("Se ingresa el RUC \"20553856451\" sin buscar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 617
+        await testRunner.AndAsync("Se selecciona la fecha del contratante el día \"27\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 618
+        await testRunner.AndAsync("Se ingresa la hora de emisión \"4:00\" y el importe \"120.00\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 620
+        await testRunner.ThenAsync("Se verifica que el boton Guardar del SOAT esta deshabilitado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP-SOAT-08 - Intento de registro de SOATs superpuestos (Vehículo ya tiene SOAT)")]
+        [NUnit.Framework.CategoryAttribute("RegistroSoat")]
+        [NUnit.Framework.CategoryAttribute("Bug_Activo")]
+        [NUnit.Framework.CategoryAttribute("CP-SOAT-08")]
+        public async System.Threading.Tasks.Task CP_SOAT_08_IntentoDeRegistroDeSOATsSuperpuestosVehiculoYaTieneSOAT()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroSoat",
+                    "Bug_Activo",
+                    "CP-SOAT-08"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP-SOAT-08 - Intento de registro de SOATs superpuestos (Vehículo ya tiene SOAT)", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 626
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 4
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 628
+        await testRunner.WhenAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 629
+        await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table16 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table16.AddRow(new string[] {
+                            "PLACA",
+                            "948JKH"});
+                table16.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table16.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table16.AddRow(new string[] {
+                            "MARCA",
+                            "DAEWOO"});
+                table16.AddRow(new string[] {
+                            "MODELO",
+                            "TICO SL"});
+                table16.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table16.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table16.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "ALTA"});
+                table16.AddRow(new string[] {
+                            "COLOR",
+                            "NEGRO"});
+                table16.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "ENG554433"});
+                table16.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table16.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table16.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "45"});
+                table16.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "XYZ9876543210987A"});
+#line 630
+        await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table16, "And ");
+#line hidden
+#line 646
+        await testRunner.ThenAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 649
+        await testRunner.WhenAsync("Se ingresa al módulo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 650
+        await testRunner.AndAsync("Se selecciona Nuevo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 651
+        await testRunner.AndAsync("Se ingresa la placa \"948JKH\" y se busca en SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 652
+        await testRunner.AndAsync("Se selecciona el proveedor \"MAPFRE\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 653
+        await testRunner.AndAsync("Se ingresa la póliza \"4884-2331\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 654
+        await testRunner.AndAsync("Se selecciona la fecha DESDE el día \"1\" y HASTA el día \"31\" del próximo año", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 655
+        await testRunner.AndAsync("Se ingresa el RUC \"20600439368\" y se busca", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 656
+        await testRunner.AndAsync("Se selecciona la fecha del contratante el día \"5\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 657
+        await testRunner.AndAsync("Se ingresa la hora de emisión \"10:30\" y el importe \"120.00\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 658
+        await testRunner.AndAsync("Se adjunta el documento \"C:\\Users\\MANUEL\\Pictures\\goleto adidas.jpg\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 659
+        await testRunner.ThenAsync("Se guarda el SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 662
+        await testRunner.WhenAsync("Se selecciona Nuevo SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 663
+        await testRunner.AndAsync("Se ingresa la placa \"948JKH\" y se busca en SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 664
+        await testRunner.AndAsync("Se selecciona el proveedor \"PACIFICO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 665
+        await testRunner.AndAsync("Se ingresa la póliza \"9988-7761\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 666
+        await testRunner.AndAsync("Se selecciona la fecha DESDE el día \"1\" y HASTA el día \"31\" del próximo año", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 667
+        await testRunner.AndAsync("Se ingresa el RUC \"20600439368\" y se busca", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 668
+        await testRunner.AndAsync("Se selecciona la fecha del contratante el día \"15\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 669
+        await testRunner.AndAsync("Se ingresa la hora de emisión \"14:30\" y el importe \"180.00\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 670
+        await testRunner.AndAsync("Se adjunta el documento \"C:\\Users\\MANUEL\\Pictures\\goleto adidas.jpg\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 671
         await testRunner.ThenAsync("Se guarda el SOAT", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

@@ -83,6 +83,20 @@ namespace FLOTA_VEHICULAR.Features.Odometro
             await testRunner.CollectScenarioErrorsAsync();
         }
         
+        public virtual async System.Threading.Tasks.Task FeatureBackgroundAsync()
+        {
+#line 5
+    #line hidden
+#line 6
+        await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                    "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 7
+        await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                    "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+        }
+        
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Registrar vehículo nuevo y luego registrar su lectura de odómetro")]
         [NUnit.Framework.CategoryAttribute("FlujoCompletoOdometro")]
@@ -92,7 +106,7 @@ namespace FLOTA_VEHICULAR.Features.Odometro
                     "FlujoCompletoOdometro"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar vehículo nuevo y luego registrar su lectura de odómetro", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 5
+#line 10
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -102,18 +116,13 @@ namespace FLOTA_VEHICULAR.Features.Odometro
             else
             {
                 await this.ScenarioStartAsync();
-#line 9
-        await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
-                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line 5
+    await this.FeatureBackgroundAsync();
 #line hidden
-#line 10
-        await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
-                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 15
+#line 14
         await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 16
+#line 15
         await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
                 global::Reqnroll.Table table1 = new global::Reqnroll.Table(new string[] {
@@ -121,7 +130,7 @@ namespace FLOTA_VEHICULAR.Features.Odometro
                             "Valor"});
                 table1.AddRow(new string[] {
                             "PLACA",
-                            "ONO123"});
+                            "ANT111"});
                 table1.AddRow(new string[] {
                             "AREA ASIGNADA",
                             "DPAM"});
@@ -161,28 +170,28 @@ namespace FLOTA_VEHICULAR.Features.Odometro
                 table1.AddRow(new string[] {
                             "NUMERO SERIE",
                             "ABCD123456789012A"});
-#line 18
+#line 17
         await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table1, "When ");
 #line hidden
-#line 35
+#line 34
         await testRunner.ThenAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 41
+#line 39
         await testRunner.WhenAsync("Se ingresa al módulo Odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 42
+#line 40
         await testRunner.AndAsync("Se selecciona Nuevo Odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 45
-        await testRunner.AndAsync("Se ingresa la placa \"ONO123\" y se cargan los datos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 41
+        await testRunner.AndAsync("Se ingresa la placa \"ANT111\" y se cargan los datos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 47
+#line 42
         await testRunner.AndAsync("Se ingresa la lectura del odómetro \"15500\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 48
+#line 43
         await testRunner.AndAsync("Se selecciona la fecha de lectura día \"15\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 50
+#line 44
         await testRunner.ThenAsync("Se procede a Guardar el odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -190,16 +199,29 @@ namespace FLOTA_VEHICULAR.Features.Odometro
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Editar una lectura de Odómetro existente")]
-        [NUnit.Framework.CategoryAttribute("EditarOdometro")]
-        public async System.Threading.Tasks.Task EditarUnaLecturaDeOdometroExistente()
+        [NUnit.Framework.DescriptionAttribute("Validación de Búsquedas por Área (Específica y Múltiple)")]
+        [NUnit.Framework.CategoryAttribute("FiltrosOdometro")]
+        [NUnit.Framework.CategoryAttribute("CP-ODO-01")]
+        [NUnit.Framework.CategoryAttribute("CP-ODO-02")]
+        [NUnit.Framework.TestCaseAttribute("CP-ODO-01", "UPE LIMA", null)]
+        [NUnit.Framework.TestCaseAttribute("CP-ODO-02", "UPE LIMA, UPE PIURA", null)]
+        public async System.Threading.Tasks.Task ValidacionDeBusquedasPorAreaEspecificaYMultiple(string caso, string areas, string[] exampleTags)
         {
-            string[] tagsOfScenario = new string[] {
-                    "EditarOdometro"};
+            string[] @__tags = new string[] {
+                    "FiltrosOdometro",
+                    "CP-ODO-01",
+                    "CP-ODO-02"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar una lectura de Odómetro existente", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 54
-        this.ScenarioInitialize(scenarioInfo);
+            argumentsOfScenario.Add("Caso", caso);
+            argumentsOfScenario.Add("Areas", areas);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Validación de Búsquedas por Área (Específica y Múltiple)", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 51
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -208,33 +230,396 @@ namespace FLOTA_VEHICULAR.Features.Odometro
             else
             {
                 await this.ScenarioStartAsync();
+#line 5
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 52
+        await testRunner.WhenAsync("Se ingresa al módulo Odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 53
+        await testRunner.AndAsync(string.Format("Se seleccionan las áreas en el filtro \"{0}\"", areas), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 54
+        await testRunner.AndAsync("Se mantiene la opción TODAS en \"Origen\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
 #line 55
-        await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
-                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 56
-        await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
-                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 58
-        await testRunner.AndAsync("Se ingresa al módulo Odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+        await testRunner.AndAsync("Se hace clic en Buscar filtros", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 60
-        await testRunner.WhenAsync("Se busca el odómetro por placa \"ONO123\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+        await testRunner.ThenAsync("Se verifica el resultado de la busqueda \"Búsqueda sin coincidencias\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 61
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Búsqueda sin aplicar filtros (Área = TODAS / Origen = TODAS)")]
+        [NUnit.Framework.CategoryAttribute("FiltrosOdometro")]
+        [NUnit.Framework.CategoryAttribute("CP-ODO-03")]
+        public async System.Threading.Tasks.Task BusquedaSinAplicarFiltrosAreaTODASOrigenTODAS()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "FiltrosOdometro",
+                    "CP-ODO-03"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Búsqueda sin aplicar filtros (Área = TODAS / Origen = TODAS)", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 68
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 5
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 69
+        await testRunner.WhenAsync("Se ingresa al módulo Odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 70
+        await testRunner.AndAsync("Se mantiene la opción TODAS en \"Áreas\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 71
+        await testRunner.AndAsync("Se mantiene la opción TODAS en \"Origen\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 72
+        await testRunner.AndAsync("Se hace clic en Buscar filtros", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 73
+        await testRunner.ThenAsync("Se verifica el resultado de la busqueda \"Búsqueda sin coincidencias\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Búsqueda Combinada y Sin Coincidencias")]
+        [NUnit.Framework.CategoryAttribute("FiltrosOdometro")]
+        [NUnit.Framework.CategoryAttribute("CP-ODO-04")]
+        [NUnit.Framework.CategoryAttribute("CP-ODO-05")]
+        [NUnit.Framework.TestCaseAttribute("CP-ODO-04", "UPE LIMA", "ZZZ999", "Búsqueda sin coincidencias", null)]
+        [NUnit.Framework.TestCaseAttribute("CP-ODO-05", "UPE LIMA", "6287MW", "Búsqueda combinada con datos", null)]
+        public async System.Threading.Tasks.Task BusquedaCombinadaYSinCoincidencias(string caso, string area, string placa, string notas, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "FiltrosOdometro",
+                    "CP-ODO-04",
+                    "CP-ODO-05"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("Caso", caso);
+            argumentsOfScenario.Add("Area", area);
+            argumentsOfScenario.Add("Placa", placa);
+            argumentsOfScenario.Add("Notas", notas);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Búsqueda Combinada y Sin Coincidencias", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 78
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 5
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 79
+        await testRunner.WhenAsync("Se ingresa al módulo Odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 80
+        await testRunner.AndAsync(string.Format("Se seleccionan las áreas en el filtro \"{0}\"", area), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 81
+        await testRunner.AndAsync("Se mantiene la opción TODAS en \"Origen\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 83
+        await testRunner.AndAsync(string.Format("Se busca el odómetro por placa \"{0}\"", placa), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 84
+        await testRunner.ThenAsync(string.Format("Se verifica el resultado de la busqueda \"{0}\"", notas), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("<Caso> - <Descripcion> (Exitoso)")]
+        [NUnit.Framework.CategoryAttribute("RegistroOdometro")]
+        [NUnit.Framework.CategoryAttribute("RegistroExitoso")]
+        [NUnit.Framework.TestCaseAttribute("CP-ODO-06", "Registro Inicial Correcto", "6287MW", "5000", "16", null)]
+        [NUnit.Framework.TestCaseAttribute("CP-ODO-07", "Registro con Reemplazo de Odómetro Existente", "6287MW", "8000", "20", null)]
+        [NUnit.Framework.TestCaseAttribute("CP-ODO-08", "Registro con Fecha Futura", "6287MW", "9000", "10", null)]
+        [NUnit.Framework.TestCaseAttribute("CP-ODO-09", "Registro con Fecha Pasada", "6287MW", "9500", "15", null)]
+        [NUnit.Framework.TestCaseAttribute("CP-ODO-11", "Registro con Valor Decimal (BUG DEL SISTEMA)", "6287MW", "1.8", "16", null)]
+        [NUnit.Framework.TestCaseAttribute("CP-ODO-12", "Registro con Máximo Número de Dígitos (10)", "6287MW", "1000000000", "16", null)]
+        public async System.Threading.Tasks.Task Caso_DescripcionExitoso(string caso, string descripcion, string placa, string lectura, string dia, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "RegistroOdometro",
+                    "RegistroExitoso"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("Caso", caso);
+            argumentsOfScenario.Add("Descripcion", descripcion);
+            argumentsOfScenario.Add("Placa", placa);
+            argumentsOfScenario.Add("Lectura", lectura);
+            argumentsOfScenario.Add("Dia", dia);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("<Caso> - <Descripcion> (Exitoso)", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 96
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 5
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 97
+        await testRunner.WhenAsync("Se ingresa al módulo Odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 98
+        await testRunner.AndAsync("Se selecciona Nuevo Odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 99
+        await testRunner.AndAsync(string.Format("Se ingresa la placa \"{0}\" y se cargan los datos", placa), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 100
+        await testRunner.AndAsync(string.Format("Se ingresa la lectura del odómetro \"{0}\"", lectura), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 101
+        await testRunner.AndAsync(string.Format("Se selecciona la fecha de lectura día \"{0}\"", dia), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 102
+        await testRunner.ThenAsync("Se procede a Guardar el odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("<Caso> - <Descripcion> (Fallido / Restringido)")]
+        [NUnit.Framework.CategoryAttribute("RegistroOdometro")]
+        [NUnit.Framework.CategoryAttribute("RegistroFallido")]
+        [NUnit.Framework.TestCaseAttribute("CP-ODO-10", "Registro con Valor Negativo", "6287MW", "-50", "26", null)]
+        public async System.Threading.Tasks.Task Caso_DescripcionFallidoRestringido(string caso, string descripcion, string placa, string lectura, string dia, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "RegistroOdometro",
+                    "RegistroFallido"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("Caso", caso);
+            argumentsOfScenario.Add("Descripcion", descripcion);
+            argumentsOfScenario.Add("Placa", placa);
+            argumentsOfScenario.Add("Lectura", lectura);
+            argumentsOfScenario.Add("Dia", dia);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("<Caso> - <Descripcion> (Fallido / Restringido)", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 114
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 5
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 115
+        await testRunner.WhenAsync("Se ingresa al módulo Odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 116
+        await testRunner.AndAsync("Se selecciona Nuevo Odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 117
+        await testRunner.AndAsync(string.Format("Se ingresa la placa \"{0}\" y se cargan los datos", placa), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 118
+        await testRunner.AndAsync(string.Format("Se ingresa la lectura del odómetro \"{0}\"", lectura), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 119
+        await testRunner.AndAsync(string.Format("Se selecciona la fecha de lectura día \"{0}\"", dia), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 120
+        await testRunner.ThenAsync("Se verifica que el boton Guardar esta deshabilitado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("<Caso> - <Descripcion> (Error emergente)")]
+        [NUnit.Framework.CategoryAttribute("RegistroOdometro")]
+        [NUnit.Framework.CategoryAttribute("RegistroConMensajeError")]
+        [NUnit.Framework.TestCaseAttribute("CP-ODO-13", "Registro que Excede el Número Máximo (11)", "6287MW", "10000000000", "16", "Registro de odómetro Fallido", null)]
+        public async System.Threading.Tasks.Task Caso_DescripcionErrorEmergente(string caso, string descripcion, string placa, string lectura, string dia, string mensajeError, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "RegistroOdometro",
+                    "RegistroConMensajeError"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("Caso", caso);
+            argumentsOfScenario.Add("Descripcion", descripcion);
+            argumentsOfScenario.Add("Placa", placa);
+            argumentsOfScenario.Add("Lectura", lectura);
+            argumentsOfScenario.Add("Dia", dia);
+            argumentsOfScenario.Add("MensajeError", mensajeError);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("<Caso> - <Descripcion> (Error emergente)", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 128
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 5
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 129
+        await testRunner.WhenAsync("Se ingresa al módulo Odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 130
+        await testRunner.AndAsync("Se selecciona Nuevo Odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 131
+        await testRunner.AndAsync(string.Format("Se ingresa la placa \"{0}\" y se cargan los datos", placa), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 132
+        await testRunner.AndAsync(string.Format("Se ingresa la lectura del odómetro \"{0}\"", lectura), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 133
+        await testRunner.AndAsync(string.Format("Se selecciona la fecha de lectura día \"{0}\"", dia), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 135
+        await testRunner.ThenAsync("Se procede a Guardar el odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 136
+        await testRunner.AndAsync(string.Format("Se verifica el mensaje de error \"{0}\"", mensajeError), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Intento de Registro de odómetro sin Cargar los datos del vehículo")]
+        [NUnit.Framework.CategoryAttribute("CP-ODO-16")]
+        [NUnit.Framework.CategoryAttribute("RegistroFallido")]
+        public async System.Threading.Tasks.Task IntentoDeRegistroDeOdometroSinCargarLosDatosDelVehiculo()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "CP-ODO-16",
+                    "RegistroFallido"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Intento de Registro de odómetro sin Cargar los datos del vehículo", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 143
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 5
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 144
+        await testRunner.WhenAsync("Se ingresa al módulo Odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 145
+        await testRunner.AndAsync("Se selecciona Nuevo Odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 146
+        await testRunner.AndAsync("Se ingresa la placa \"ANT111\" sin cargar los datos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 147
+        await testRunner.AndAsync("Se ingresa la lectura del odómetro \"5000\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 148
+        await testRunner.AndAsync("Se selecciona la fecha de lectura día \"16\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 149
+        await testRunner.ThenAsync("Se verifica que el boton Guardar esta deshabilitado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Edición Correcta de Odómetro Vigente")]
+        [NUnit.Framework.CategoryAttribute("EditarOdometro")]
+        [NUnit.Framework.CategoryAttribute("CP-ODO-14")]
+        public async System.Threading.Tasks.Task EdicionCorrectaDeOdometroVigente()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "EditarOdometro",
+                    "CP-ODO-14"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Edición Correcta de Odómetro Vigente", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 156
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 5
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 157
+        await testRunner.WhenAsync("Se ingresa al módulo Odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 158
+        await testRunner.AndAsync("Se busca el odómetro por placa \"MAN111\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 159
         await testRunner.AndAsync("Se hace clic en ver odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 62
+#line 160
         await testRunner.AndAsync("Se hace clic en editar odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 65
-        await testRunner.AndAsync("Se ingresa la lectura del odómetro \"16800\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 161
+        await testRunner.AndAsync("Se ingresa la lectura del odómetro \"8500\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 66
-        await testRunner.AndAsync("Se selecciona la fecha de lectura día \"19\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 162
+        await testRunner.AndAsync("Se selecciona la fecha de lectura día \"25\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 67
+#line 163
         await testRunner.ThenAsync("Se guarda la edición del odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -242,15 +627,17 @@ namespace FLOTA_VEHICULAR.Features.Odometro
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Dar de baja a una lectura de Odómetro existente")]
+        [NUnit.Framework.DescriptionAttribute("Dar de baja un registro de odómetro")]
         [NUnit.Framework.CategoryAttribute("BajaOdometro")]
-        public async System.Threading.Tasks.Task DarDeBajaAUnaLecturaDeOdometroExistente()
+        [NUnit.Framework.CategoryAttribute("CP-ODO-15")]
+        public async System.Threading.Tasks.Task DarDeBajaUnRegistroDeOdometro()
         {
             string[] tagsOfScenario = new string[] {
-                    "BajaOdometro"};
+                    "BajaOdometro",
+                    "CP-ODO-15"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de baja a una lectura de Odómetro existente", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 71
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de baja un registro de odómetro", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 166
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -260,68 +647,20 @@ namespace FLOTA_VEHICULAR.Features.Odometro
             else
             {
                 await this.ScenarioStartAsync();
-#line 72
-        await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
-                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line 5
+    await this.FeatureBackgroundAsync();
 #line hidden
-#line 73
-        await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
-                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line 167
+        await testRunner.WhenAsync("Se ingresa al módulo Odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 75
-        await testRunner.AndAsync("Se ingresa al módulo Odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 168
+        await testRunner.AndAsync("Se busca el odómetro por placa \"MAN111\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 78
-        await testRunner.WhenAsync("Se busca el odómetro por placa \"ONO123\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 81
+#line 169
         await testRunner.AndAsync("Se hace clic en dar de baja odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 82
+#line 170
         await testRunner.ThenAsync("Se confirma la baja del odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-            }
-            await this.ScenarioCleanupAsync();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Buscar registros de Odómetro usando los filtros")]
-        [NUnit.Framework.CategoryAttribute("FiltrosOdometro")]
-        public async System.Threading.Tasks.Task BuscarRegistrosDeOdometroUsandoLosFiltros()
-        {
-            string[] tagsOfScenario = new string[] {
-                    "FiltrosOdometro"};
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Buscar registros de Odómetro usando los filtros", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 87
-    this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                await this.ScenarioStartAsync();
-#line 88
-        await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
-                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 89
-        await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
-                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 91
-        await testRunner.AndAsync("Se ingresa al módulo Odómetro", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 94
-        await testRunner.WhenAsync("Se seleccionan las áreas en el filtro \"DPAM, UPE LIMA ESTE\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 95
-        await testRunner.AndAsync("Se selecciona el origen en el filtro \"Odómetro\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 97
-        await testRunner.AndAsync("Se hace clic en Buscar filtros", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
