@@ -68,7 +68,7 @@ Scenario Outline: Invalidar pedido - Casos variados
 
 Examples:
 	| caso | motivo           | accion | resultado                              |
-	|    1 | Producto agotado | SI     | el pedido se guardo correctamente      |
+	|    1 | Producto agotado | SI     | el pedido se Invalido correctamente    |
 	|    2 | ninguno          | SI     | Boton SI deshabilitado                 |
 
 

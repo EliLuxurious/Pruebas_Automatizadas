@@ -196,7 +196,7 @@ await this.FeatureBackgroundAsync();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Invalidar pedido - Casos variados")]
         [NUnit.Framework.CategoryAttribute("InvalidarPedido")]
-        [NUnit.Framework.TestCaseAttribute("1", "Producto agotado", "SI", "el pedido se guardo correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("1", "Producto agotado", "SI", "el pedido se Invalido correctamente", null)]
         [NUnit.Framework.TestCaseAttribute("2", "ninguno", "SI", "Boton SI deshabilitado", null)]
         public async System.Threading.Tasks.Task InvalidarPedido_CasosVariados(string caso, string motivo, string accion, string resultado, string[] exampleTags)
         {

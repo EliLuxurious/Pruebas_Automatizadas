@@ -288,9 +288,23 @@ namespace SIGES3_0.Pages
                 accion.Trim().Equals("Si", StringComparison.OrdinalIgnoreCase))
             {
                 var botonSi = wait.Until(
-                    SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(btnSiInvalidar)
+                    SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(btnSiInvalidar)
                 );
-                botonSi.Click();
+
+                bool deshabilitado =
+                    !botonSi.Enabled ||
+                    botonSi.GetAttribute("disabled") != null ||
+                    (botonSi.GetAttribute("class") ?? "").ToLower().Contains("disabled");
+
+                if (deshabilitado)
+                {
+                    Console.WriteLine("El botón SI está deshabilitado, no se hace click.");
+                    return;
+                }
+
+                ((IJavaScriptExecutor)driver)
+                    .ExecuteScript("arguments[0].click();", botonSi);
+
                 return;
             }
 
@@ -299,6 +313,7 @@ namespace SIGES3_0.Pages
                 var botonNo = wait.Until(
                     SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(btnNoInvalidar)
                 );
+
                 botonNo.Click();
             }
         }
@@ -340,16 +355,25 @@ namespace SIGES3_0.Pages
                 }
                 catch { }
 
-                // Invalidación exitosa
+                
+                // invalidación exitosa
                 try
                 {
-                    var mensajeInvalidacion = driver.FindElement(
-                        By.XPath("//*[contains(text(),'El pedido fue invalidado correctamente')]")
-                    );
-                    if (mensajeInvalidacion.Displayed)
-                        return "El pedido fue invalidado correctamente";
+                    WebDriverWait waitEstado = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+
+                    bool invalidado = waitEstado.Until(d =>
+                    {
+                        var estado = d.FindElement(By.XPath("//tbody/tr[1]/td[8]")).Text.Trim().ToUpper();
+                        return estado == "INVALIDADO";
+                    });
+
+                    if (invalidado)
+                        return "el pedido se Invalido correctamente";
                 }
                 catch { }
+
+
+
 
                 // Botón SI deshabilitado
                 try
