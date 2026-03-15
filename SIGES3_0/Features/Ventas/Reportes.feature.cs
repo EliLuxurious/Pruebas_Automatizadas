@@ -88,12 +88,12 @@ namespace SIGES3_0.Features.Ventas
 #line 6
 #line hidden
 #line 7
-    await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                    "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+    await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                    "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 8
-    await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                    "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+    await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                    "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
         }
         
@@ -123,8 +123,8 @@ await this.FeatureBackgroundAsync();
     await testRunner.WhenAsync("Ingresar a Compras - Reportes", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 13
-    await testRunner.AndAsync("Reporte por Tipo, Tipo de comprobante \'NO TRIBUTABLES\' Fecha Inicial \'01/01/2025\'" +
-                        " Fecha Final \'01/02/2025\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(("Reporte por Tipo, Tipo de comprobante \'NO TRIBUTABLES\' Fecha Inicial \'01/01/2025\'" +
+                        " Fecha Final \'01/02/2025\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 14
     await testRunner.ThenAsync("Generar reporte por \'TIPO\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");

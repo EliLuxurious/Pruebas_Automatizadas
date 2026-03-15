@@ -28,8 +28,8 @@ namespace SIGES3_0.Features.Ventas
         
         private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Ventas", "NuevaVenta", "CP001: Factura con cliente DNI sin RUC - Flujo paso a paso con selectores de QA.\r" +
-                "\nCP002: Factura con cliente RUC - Flujo paso a paso con selectores de QA.", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Ventas", "NuevaVenta", ("CP001: Factura con cliente DNI sin RUC - Flujo paso a paso con selectores de QA.\r" +
+                "\nCP002: Factura con cliente RUC - Flujo paso a paso con selectores de QA."), global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
 #line 1 "NuevaVenta.feature"
 #line hidden
@@ -87,12 +87,12 @@ namespace SIGES3_0.Features.Ventas
 #line 6
 #line hidden
 #line 7
-    await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                    "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+    await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                    "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 8
-    await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                    "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+    await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                    "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
         }
         

@@ -105,8 +105,8 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 7
-    await testRunner.GivenAsync("Inicio de sesión con usuario \'administrador\' y contraseña \'calidad\' en \'https://s" +
-                        "igesdev.newfront-dev-qa.sigesonline.com/\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+    await testRunner.GivenAsync(("Inicio de sesión con usuario \'administrador\' y contraseña \'calidad\' en \'https://s" +
+                        "igesdev.newfront-dev-qa.sigesonline.com/\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 8
     await testRunner.AndAsync("Se ingresa al módulo \'Facturación Cíclica\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

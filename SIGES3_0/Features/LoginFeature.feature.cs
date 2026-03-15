@@ -103,12 +103,12 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 8
-    await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+    await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                        "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 9
-    await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+    await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                        "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
