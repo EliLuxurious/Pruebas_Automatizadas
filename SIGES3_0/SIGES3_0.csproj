@@ -25,9 +25,7 @@
     <Folder Include="Features\Cotizacion\" />
     <Folder Include="Features\Pedido\" />
     <Folder Include="Pages\CotizacionPage\" />
-    <Folder Include="Pages\PedidoPage\" />
     <Folder Include="StepDefinitions\CotizacionStep\" />
-    <Folder Include="StepDefinitions\PedidoStep\" />
     <Folder Include="Support\" />
   </ItemGroup>
 
