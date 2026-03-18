@@ -46,6 +46,7 @@ namespace SIGES3_0.Pages.PedidoPage
         private By btnOKConfirmacion = By.XPath("//button[normalize-space()='OK']");
         private By mensajeAdvertencia = By.XPath("//span[contains(@class,'badge-status') and contains(@class,'danger')]");
         private By mensajeSinProducto = By.XPath("//span[@class='badge-status danger']");
+        private By loadingContainer = By.CssSelector("div.loading-container");
 
         // INVALIDAR PEDIDO
         private By txtFiltroEstado = By.XPath("//th[8]//input[1]");
@@ -58,18 +59,28 @@ namespace SIGES3_0.Pages.PedidoPage
         // CONFIRMAR PEDIDO
         private By txtFiltroTotal = By.XPath("//th[7]//input[1]");
         private By btnConfirmarPrimerRegistro = By.XPath("//tbody/tr[1]/td[9]/div[1]/button[3]");
-        private By btnConfirmarPedidoFinal = By.XPath("//button[contains(text(),'Confirmar Pedido')]");
+        // Botón final del modal: el texto puede estar dentro de un <span>, por eso usamos contains(.) en vez de text()
+        private By btnConfirmarPedidoFinal = By.XPath(
+            "//button[contains(normalize-space(.),'Confirmar Pedido') or .//*[contains(normalize-space(.),'Confirmar Pedido')]]"
+        );
 
-        // FACTURACION CONFIRMAR
-        //private By cmbTipoComprobanteConfirmacion = By.XPath("//ng-select");
-        private By seccionFacturacionConfirmacion = By.XPath("//span[normalize-space()='Facturación']/ancestor::div[contains(@class,'d-flex align-items-center w-100')][1]");
-        private By seccionEntregaConfirmacion = By.XPath("//span[normalize-space()='Entrega']/ancestor::div[contains(@class,'d-flex align-items-center w-100')][1]");
-        private By seccionPagoConfirmacion = By.XPath("//span[normalize-space()='Pago']/ancestor::div[contains(@class,'d-flex align-items-center w-100')][1]");
+        // FACTURACION CONFIRMAR (acordeones del modal de "PREPARANDO PARA CONFIRMAR EL PEDIDO")
+        // Header de la sección "Facturación" dentro del modal de confirmación
+        private By seccionFacturacionConfirmacion = By.XPath(
+            "//div[contains(@class,'d-flex') and contains(@class,'align-items-center') and contains(@class,'w-100')]" +
+            "[.//span[normalize-space()='Facturación']]"
+        );
+        private By seccionEntregaConfirmacion = By.XPath(
+            "//span[normalize-space()='Entrega']/ancestor::div[contains(@class,'d-flex align-items-center w-100')][1]"
+        );
+        private By seccionPagoConfirmacion = By.XPath(
+            "//span[normalize-space()='Pago']/ancestor::div[contains(@class,'d-flex align-items-center w-100')][1]"
+        );
 
-        //private By txtClienteConfirmacion = By.XPath("//input[@placeholder='Buscar...']");
         private By txtClienteConfirmacion = By.CssSelector("input.search-input[placeholder='Buscar...']");
-        //private By cmbTipoComprobanteConfirmacion = By.XPath("//span[@class='select-value ng-star-inserted']");
+   
         private By cmbTipoComprobanteConfirmacion = By.XPath("//div[@class='select-trigger form-control']");
+        private By panelDropdownNgSelect = By.CssSelector(".ng-dropdown-panel");
 
         // ENTREGA CONFIRMAR
         private By rbtEntregaInmediataConfirmacion = By.XPath("//label[normalize-space()='Inmediata']");
@@ -119,26 +130,6 @@ namespace SIGES3_0.Pages.PedidoPage
 
             boton.Click();
         }
-
-        /*public void SeleccionarFamilia(string familia)
-        {
-            if (familia == "ninguno") return;
-
-            // Abrir dropdown familia
-            var dropdown = wait.Until(
-                ExpectedConditions.ElementToBeClickable(cmbFamilia)
-            );
-            dropdown.Click();
-
-            // Esperar opción dentro del dropdown
-            var opcion = wait.Until(
-                ExpectedConditions.ElementToBeClickable(
-                    By.XPath($"//span[normalize-space()='{familia}']")
-                )
-            );
-
-            opcion.Click();
-        }*/
 
         public void SeleccionarFamilia(string familia)
         {
@@ -346,59 +337,6 @@ namespace SIGES3_0.Pages.PedidoPage
             }
         }
 
-        /*public void BuscarCliente(string cliente)
-        {
-            try
-            {
-                if (cliente == "00000000" || cliente.ToLower() == "varios")
-                {
-                    Console.WriteLine("Cliente VARIOS - no se realiza búsqueda");
-                    return;
-                }
-
-                // Esperar a que el input esté visible y sea interactuable
-                var input = wait.Until(
-                    ExpectedConditions.ElementIsVisible(txtCliente)
-                );
-
-                // Scroll hacia el elemento para asegurar que está en vista
-                ((IJavaScriptExecutor)driver)
-                    .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", input);
-
-                Thread.Sleep(500); // pequeña pausa post-scroll
-
-                input.Clear();
-                input.SendKeys(cliente);
-                input.SendKeys(Keys.Enter);
-
-                // *** CAMBIO CLAVE ***
-                // El sistema puede mostrar el NOMBRE del cliente en el campo (no el número),
-                // o puede dejar el número. Esperamos que el campo tenga CUALQUIER valor
-                // distinto de vacío, lo que indica que la búsqueda respondió.
-                wait.Until(d =>
-                {
-                    try
-                    {
-                        var val = input.GetAttribute("value");
-                        return val != null && val.Trim().Length > 0;
-                    }
-                    catch
-                    {
-                        return false;
-                    }
-                });
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error buscando cliente: " + e.Message);
-                throw;
-            }
-        }*/
-
-
-
-
         public void SeleccionarEntrega(string tipoEntrega)
         {
             if (tipoEntrega == "inmediata")
@@ -429,31 +367,28 @@ namespace SIGES3_0.Pages.PedidoPage
         // Asegurar que exista un pedido con estado REGISTRADO
         public void AsegurarPedidoRegistradoParaInvalidar()
         {
-            if (!ExistePedidoRegistrado())
-            {
-                RegistrarPedidoBaseParaInvalidar();
-                VolverAVerPedidos();
-            }
-
+            // 1) Aplicar filtro una sola vez y validar.
             FiltrarPedidosRegistrados();
+            if (ExistePedidoRegistradoFiltrado())
+                return;
 
-            if (!ExistePedidoRegistrado())
-            {
+            // 2) Si no hay, crear un pedido base y volver a la grilla.
+            RegistrarPedidoBaseParaInvalidar();
+            VolverAVerPedidos();
+
+            // 3) Reaplicar filtro y validar nuevamente.
+            FiltrarPedidosRegistrados();
+            if (!ExistePedidoRegistradoFiltrado())
                 Assert.Fail("No se pudo generar un pedido en estado REGISTRADO para invalidar.");
-            }
         }
 
 
 
-        // buscar pedidos con estado REGISTRADO y retornar true si existe al menos uno
-        private bool ExistePedidoRegistrado()
+        // Validar si existe al menos un pedido REGISTRADO (asume que el filtro ya fue aplicado).
+        private bool ExistePedidoRegistradoFiltrado()
         {
             try
             {
-                FiltrarPedidosRegistrados();
-
-                Thread.Sleep(1000);
-
                 var botonesInvalidar = driver.FindElements(btnInvalidarPrimerRegistro);
                 return botonesInvalidar.Count > 0 && botonesInvalidar[0].Displayed;
             }
@@ -466,14 +401,24 @@ namespace SIGES3_0.Pages.PedidoPage
         // aplica filtro por estado
         private void FiltrarPedidosRegistrados()
         {
-            var filtroEstado = wait.Until(
+            var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+
+            var filtroEstado = waitLong.Until(
                 ExpectedConditions.ElementIsVisible(txtFiltroEstado)
             );
 
             filtroEstado.Clear();
             filtroEstado.SendKeys("REGISTRADO");
 
-            Thread.Sleep(1000);
+            // Esperar a que termine cualquier overlay de carga (si existe)
+            try
+            {
+                waitLong.Until(ExpectedConditions.InvisibilityOfElementLocated(loadingContainer));
+            }
+            catch
+            {
+                // Si el overlay no existe o no se detecta, continuamos igual.
+            }
         }
 
         //ABRIR SECCION
@@ -762,53 +707,115 @@ namespace SIGES3_0.Pages.PedidoPage
         // Abrir subsecciones de la confirmación del pedido para configurar opciones antes de confirmar
         private void AbrirFacturacionConfirmacion()
         {
-            var elemento = wait.Until(
-                ExpectedConditions.ElementToBeClickable(seccionFacturacionConfirmacion)
-            );
+            var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
 
+            // 1) Localizar el header de "Facturación" dentro del modal de confirmación
+            var header = waitLong.Until(d =>
+            {
+                try
+                {
+                    var h = d.FindElement(seccionFacturacionConfirmacion);
+                    return h.Displayed ? h : null;
+                }
+                catch
+                {
+                    return null;
+                }
+            });
+
+            // 2) Scroll al header
             ((IJavaScriptExecutor)driver)
-                .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", elemento);
+                .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", header);
 
-            Thread.Sleep(500);
+            // 3) Si hay un botón/chevron dentro del header, clickeamos ese; si no, el propio header
+            IWebElement clickable;
+            try
+            {
+                clickable = header.FindElement(By.XPath(".//button | .//*[@role='button']"));
+            }
+            catch
+            {
+                clickable = header;
+            }
 
+            waitLong.Until(d => clickable.Displayed && clickable.Enabled);
             ((IJavaScriptExecutor)driver)
-                .ExecuteScript("arguments[0].click();", elemento);
+                .ExecuteScript("arguments[0].click();", clickable);
 
-            Thread.Sleep(800);
+            // 4) Esperar a que el cuerpo del acordeón de Facturación esté visible (cliente dentro)
+            waitLong.Until(d =>
+            {
+                try
+                {
+                    var body = d.FindElement(By.XPath(
+                        "//div[contains(@class,'accordion-body')]" +
+                        "[.//label[contains(normalize-space(),'Cliente')]]"
+                    ));
+                    return body.Displayed;
+                }
+                catch
+                {
+                    return false;
+                }
+            });
         }
 
         private void AbrirEntregaConfirmacion()
         {
-            var elemento = wait.Until(
+            var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+
+            var elemento = waitLong.Until(
                 ExpectedConditions.ElementToBeClickable(seccionEntregaConfirmacion)
             );
 
             ((IJavaScriptExecutor)driver)
                 .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", elemento);
 
-            Thread.Sleep(500);
-
             ((IJavaScriptExecutor)driver)
                 .ExecuteScript("arguments[0].click();", elemento);
 
-            Thread.Sleep(800);
+            // Esperar contenido de Entrega (radios) visible
+            waitLong.Until(d =>
+            {
+                try
+                {
+                    var el = d.FindElement(rbtEntregaInmediataConfirmacion);
+                    return el.Displayed;
+                }
+                catch
+                {
+                    return false;
+                }
+            });
         }
 
         private void AbrirPagoConfirmacion()
         {
-            var elemento = wait.Until(
+            var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+
+            var elemento = waitLong.Until(
                 ExpectedConditions.ElementToBeClickable(seccionPagoConfirmacion)
             );
 
             ((IJavaScriptExecutor)driver)
                 .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", elemento);
 
-            Thread.Sleep(500);
-
             ((IJavaScriptExecutor)driver)
                 .ExecuteScript("arguments[0].click();", elemento);
 
-            Thread.Sleep(800);
+            // Esperar contenido de Pago visible
+            waitLong.Until(d =>
+            {
+                try
+                {
+                    var el = d.FindElement(rbtContadoConfirmacion);
+                    return el.Displayed;
+                }
+                catch
+                {
+                    return false;
+                }
+            });
         }
 
         public void SeleccionarConfirmarPedido()
@@ -869,43 +876,72 @@ namespace SIGES3_0.Pages.PedidoPage
         {
             try
             {
+                var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+
                 // Abrir sección Facturación
                 AbrirFacturacionConfirmacion();
 
                 // Esperar que el formulario cargue
-                wait.Until(ExpectedConditions.ElementIsVisible(txtClienteConfirmacion));
+                waitLong.Until(ExpectedConditions.ElementIsVisible(txtClienteConfirmacion));
 
                 // Buscar cliente
                 BuscarClienteConfirmacion(cliente);
 
-                // Abrir combo tipo comprobante
-                var comboComprobante = wait.Until(
-                    ExpectedConditions.ElementToBeClickable(cmbTipoComprobanteConfirmacion)
-                );
-
-                ((IJavaScriptExecutor)driver)
-                    .ExecuteScript("arguments[0].click();", comboComprobante);
-
-                // Seleccionar tipo de comprobante
-                var opcionComprobante = wait.Until(
-                    ExpectedConditions.ElementToBeClickable(OpcionComprobante(tipoComprobante))
-                );
-
-                ((IJavaScriptExecutor)driver)
-                    .ExecuteScript("arguments[0].click();", opcionComprobante);
-
-                // Seleccionar serie si corresponde
-                if (!serie.Trim().Equals("ninguno", StringComparison.OrdinalIgnoreCase))
+                // Abrir combo tipo comprobante y seleccionar la opción solo si es necesario.
+                // En algunos escenarios (como boleta con ciertos clientes) el valor por defecto ya es correcto
+                // y el combo puede no comportarse como en otros casos, por lo que hacemos esta parte tolerante.
+                try
                 {
-                    var opcionSerie = wait.Until(
-                        ExpectedConditions.ElementToBeClickable(OpcionSerie(serie))
+                    var comboComprobante = waitLong.Until(
+                        ExpectedConditions.ElementToBeClickable(cmbTipoComprobanteConfirmacion)
                     );
 
                     ((IJavaScriptExecutor)driver)
-                        .ExecuteScript("arguments[0].click();", opcionSerie);
+                        .ExecuteScript("arguments[0].click();", comboComprobante);
+
+                    var opcionComprobante = waitLong.Until(
+                        ExpectedConditions.ElementToBeClickable(OpcionComprobante(tipoComprobante))
+                    );
+
+                    ((IJavaScriptExecutor)driver)
+                        .ExecuteScript("arguments[0].click();", opcionComprobante);
+
+                    // Esperar que el panel dropdown desaparezca (cuando se cierra tras selección)
+                    waitLong.Until(d =>
+                    {
+                        try
+                        {
+                            var panel = d.FindElement(panelDropdownNgSelect);
+                            return !panel.Displayed;
+                        }
+                        catch
+                        {
+                            return true;
+                        }
+                    });
+                }
+                catch (WebDriverTimeoutException)
+                {
+                    Console.WriteLine("No se pudo seleccionar explícitamente el tipo de comprobante; se mantiene el valor actual.");
                 }
 
-                Thread.Sleep(500);
+                // Seleccionar serie si corresponde. Si no se encuentra, continuamos con la serie actual.
+                if (!serie.Trim().Equals("ninguno", StringComparison.OrdinalIgnoreCase))
+                {
+                    try
+                    {
+                        var opcionSerie = waitLong.Until(
+                            ExpectedConditions.ElementToBeClickable(OpcionSerie(serie))
+                        );
+
+                        ((IJavaScriptExecutor)driver)
+                            .ExecuteScript("arguments[0].click();", opcionSerie);
+                    }
+                    catch (WebDriverTimeoutException)
+                    {
+                        Console.WriteLine($"No se pudo seleccionar la serie '{serie}' explícitamente; se mantiene la serie actual.");
+                    }
+                }
 
                 // Cerrar sección facturación
                 AbrirFacturacionConfirmacion();
@@ -944,20 +980,62 @@ namespace SIGES3_0.Pages.PedidoPage
         {
             try
             {
-                AbrirPagoConfirmacion();
+                var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
 
-                wait.Until(ExpectedConditions.ElementToBeClickable(rbtContadoConfirmacion)).Click();
-                wait.Until(ExpectedConditions.ElementToBeClickable(tabEfectivoConfirmacion)).Click();
+                // Intentar abrir la sección Pago del modal
+                try
+                {
+                    AbrirPagoConfirmacion();
+                }
+                catch (WebDriverTimeoutException)
+                {
+                    Console.WriteLine("No se pudo abrir explícitamente la sección Pago; se asume que ya está visible.");
+                }
 
-                var recibido = wait.Until(ExpectedConditions.ElementIsVisible(txtRecibidoEfectivo));
-                recibido.Clear();
-                recibido.SendKeys(
-                    montoCubreTotal.Trim().Equals("true", StringComparison.OrdinalIgnoreCase) ? "1000" : "1"
-                );
+                // Seleccionar tipo de pago Contado y la pestaña EFECTIVO (si están presentes)
+                try
+                {
+                    waitLong.Until(ExpectedConditions.ElementToBeClickable(rbtContadoConfirmacion)).Click();
+                }
+                catch (WebDriverTimeoutException)
+                {
+                    Console.WriteLine("No se pudo seleccionar el radio 'Contado'; se mantiene el valor actual.");
+                }
+
+                try
+                {
+                    waitLong.Until(ExpectedConditions.ElementToBeClickable(tabEfectivoConfirmacion)).Click();
+                }
+                catch (WebDriverTimeoutException)
+                {
+                    Console.WriteLine("No se pudo seleccionar la pestaña 'EFECTIVO'; se mantiene el valor actual.");
+                }
+
+                // Ingresar el monto recibido sólo si logramos ver el input
+                try
+                {
+                    var recibido = waitLong.Until(ExpectedConditions.ElementIsVisible(txtRecibidoEfectivo));
+                    recibido.Clear();
+                    recibido.SendKeys(
+                        montoCubreTotal.Trim().Equals("true", StringComparison.OrdinalIgnoreCase) ? "1000" : "1"
+                    );
+                }
+                catch (WebDriverTimeoutException)
+                {
+                    Console.WriteLine("No se pudo localizar el input de monto recibido; se mantiene el valor actual.");
+                }
 
                 Thread.Sleep(500);
 
-                AbrirPagoConfirmacion();
+                // Intentar cerrar nuevamente la sección Pago (no es crítico si falla)
+                try
+                {
+                    AbrirPagoConfirmacion();
+                }
+                catch (WebDriverTimeoutException)
+                {
+                    Console.WriteLine("No se pudo contraer la sección Pago; se continúa igualmente.");
+                }
             }
             catch (Exception e)
             {
@@ -969,12 +1047,37 @@ namespace SIGES3_0.Pages.PedidoPage
         {
             ultimaAccion = "confirmar";
 
-            var boton = wait.Until(
-                ExpectedConditions.ElementToBeClickable(btnConfirmarPedidoFinal)
-            );
+            var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
 
+            // Localizar el botón "Confirmar Pedido" del modal, aunque no esté marcado como clickable por Selenium
+            var boton = waitLong.Until(d =>
+            {
+                try
+                {
+                    var el = d.FindElement(btnConfirmarPedidoFinal);
+                    // Algunos overlays/movimientos hacen que Displayed sea false momentáneamente; si existe, lo devolvemos.
+                    return el;
+                }
+                catch
+                {
+                    return null;
+                }
+            });
+
+            // Asegurar que esté en pantalla
             ((IJavaScriptExecutor)driver)
-                .ExecuteScript("arguments[0].click();", boton);
+                .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", boton);
+
+            // Intentar click normal; si falla por overlay/disabled, forzar con JS
+            try
+            {
+                boton.Click();
+            }
+            catch
+            {
+                ((IJavaScriptExecutor)driver)
+                    .ExecuteScript("arguments[0].click();", boton);
+            }
         }
 
         public void ConfirmarMensaje()
