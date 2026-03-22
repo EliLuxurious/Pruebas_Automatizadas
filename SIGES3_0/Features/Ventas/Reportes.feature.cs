@@ -21,16 +21,16 @@ namespace SIGES3_0.Features.Ventas
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("Reportes")]
-    [NUnit.Framework.IgnoreAttribute("Ignored feature")]
     public partial class ReportesFeature
     {
         
         private global::Reqnroll.ITestRunner testRunner;
         
-        private static string[] featureTags = new string[] {
-                "ignore"};
+        private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Ventas", "Reportes", "Escenario base para reportes del sistema.", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Ventas", "Reportes", "  Como usuario administrador\r\n  Quiero acceder al menu de Reportes de Ventas\r\n  P" +
+                "ara validar la funcionalidad de generacion de reportes por Comprobantes y Concep" +
+                "tos", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
 #line 1 "Reportes.feature"
 #line hidden
@@ -98,14 +98,29 @@ namespace SIGES3_0.Features.Ventas
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Generar reporte por tipo de comprobante")]
+        [NUnit.Framework.DescriptionAttribute("<Caso> Generar reporte por comprobante")]
         [NUnit.Framework.CategoryAttribute("Reportes")]
-        public async System.Threading.Tasks.Task GenerarReportePorTipoDeComprobante()
+        [NUnit.Framework.CategoryAttribute("Ventas")]
+        [NUnit.Framework.CategoryAttribute("PorComprobante")]
+        [NUnit.Framework.TestCaseAttribute("CP001A", "BOLETA DE VENTA ELECTRONICA", "B002", null)]
+        [NUnit.Framework.TestCaseAttribute("CP001B", "FACTURA ELECTRONICA", "F002", null)]
+        [NUnit.Framework.TestCaseAttribute("CP001C", "NOTA DE VENTA(INTERNA)", "NV02", null)]
+        public async System.Threading.Tasks.Task CasoGenerarReportePorComprobante(string caso, string tipoComprobante, string serie, string[] exampleTags)
         {
-            string[] tagsOfScenario = new string[] {
-                    "Reportes"};
+            string[] @__tags = new string[] {
+                    "Reportes",
+                    "Ventas",
+                    "PorComprobante"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Generar reporte por tipo de comprobante", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            argumentsOfScenario.Add("Caso", caso);
+            argumentsOfScenario.Add("TipoComprobante", tipoComprobante);
+            argumentsOfScenario.Add("Serie", serie);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("<Caso> Generar reporte por comprobante", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 11
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -120,14 +135,129 @@ this.ScenarioInitialize(scenarioInfo);
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 12
-    await testRunner.WhenAsync("Ingresar a Compras - Reportes", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+    await testRunner.WhenAsync("ingresa al modulo de \"Ventas\" y selecciona \"Reportes\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 13
-    await testRunner.AndAsync("Reporte por Tipo, Tipo de comprobante \'NO TRIBUTABLES\' Fecha Inicial \'01/01/2025\'" +
-                        " Fecha Final \'01/02/2025\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync("selecciona la vista \"Comprobantes\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 14
-    await testRunner.ThenAsync("Generar reporte por \'TIPO\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+    await testRunner.AndAsync("ingresa la fecha y hora inicial \"05/03/2026 12:00 a. m.\" y final \"05/03/2026 11:5" +
+                        "9 p. m.\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 15
+    await testRunner.AndAsync(string.Format("selecciona el tipo de comprobante \"{0}\"", tipoComprobante), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 16
+    await testRunner.AndAsync(string.Format("selecciona la serie \"{0}\"", serie), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 17
+    await testRunner.AndAsync("hace clic en \"VER REPORTE\" en la tarjeta \"POR COMPROBANTE\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 18
+    await testRunner.ThenAsync("el sistema genera el reporte exitosamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP002 Validar que no se habilite VER REPORTE en Comprobantes cuando solo se selec" +
+            "ciona el tipo de comprobante y la serie queda pendiente")]
+        [NUnit.Framework.CategoryAttribute("Reportes")]
+        [NUnit.Framework.CategoryAttribute("Ventas")]
+        [NUnit.Framework.CategoryAttribute("CP002")]
+        public async System.Threading.Tasks.Task CP002ValidarQueNoSeHabiliteVERREPORTEEnComprobantesCuandoSoloSeSeleccionaElTipoDeComprobanteYLaSerieQuedaPendiente()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "Reportes",
+                    "Ventas",
+                    "CP002"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP002 Validar que no se habilite VER REPORTE en Comprobantes cuando solo se selec" +
+                    "ciona el tipo de comprobante y la serie queda pendiente", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 27
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 6
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 28
+    await testRunner.WhenAsync("ingresa al modulo de \"Ventas\" y selecciona \"Reportes\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 29
+    await testRunner.AndAsync("selecciona la vista \"Comprobantes\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 30
+    await testRunner.AndAsync("ingresa la fecha y hora inicial \"05/03/2026 12:00 a. m.\" y final \"05/03/2026 11:5" +
+                        "9 p. m.\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 31
+    await testRunner.AndAsync("selecciona el tipo de comprobante \"BOLETA DE VENTA ELECTRONICA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 32
+    await testRunner.ThenAsync("valida que el boton \"VER REPORTE\" en la tarjeta \"POR COMPROBANTE\" este deshabilit" +
+                        "ado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("CP003 Generar reporte por familia en la vista Conceptos filtrando el punto de ven" +
+            "ta vigente CENTRO COMERCIAL CENTRAL para validar consulta exitosa")]
+        [NUnit.Framework.CategoryAttribute("Reportes")]
+        [NUnit.Framework.CategoryAttribute("Ventas")]
+        [NUnit.Framework.CategoryAttribute("CP003")]
+        public async System.Threading.Tasks.Task CP003GenerarReportePorFamiliaEnLaVistaConceptosFiltrandoElPuntoDeVentaVigenteCENTROCOMERCIALCENTRALParaValidarConsultaExitosa()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "Reportes",
+                    "Ventas",
+                    "CP003"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP003 Generar reporte por familia en la vista Conceptos filtrando el punto de ven" +
+                    "ta vigente CENTRO COMERCIAL CENTRAL para validar consulta exitosa", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 35
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 6
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 36
+    await testRunner.WhenAsync("ingresa al modulo de \"Ventas\" y selecciona \"Reportes\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 37
+    await testRunner.AndAsync("selecciona la vista \"Conceptos\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 38
+    await testRunner.AndAsync("ingresa la fecha y hora inicial \"05/03/2026 12:00 a. m.\" y final \"05/03/2026 11:5" +
+                        "9 p. m.\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 39
+    await testRunner.AndAsync("selecciona el punto de venta \"CENTRO COMERCIAL CENTRAL\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 40
+    await testRunner.AndAsync("selecciona la familia \"Gaseosa\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 41
+    await testRunner.AndAsync("hace clic en \"VER REPORTE\" en la tarjeta \"POR FAMILIA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 42
+    await testRunner.ThenAsync("el sistema genera el reporte exitosamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

@@ -188,7 +188,7 @@ namespace SIGES3_0.Pages.VentasPage
             familiaInput.SendKeys(family);
             Thread.Sleep(1000);
 
-            ClickWithoutScroll(VentasLocators.CP001.FamiliaOpcion, By.XPath($"//span[normalize-space()='{char.ToUpper(family[0]) + family.Substring(1)}']"));
+            ClickWithoutScroll(VentasLocators.CP001.FamiliaOpcion);
             Thread.Sleep(1000);
 
             Console.WriteLine("[CP001] Paso 4 - Seleccionar Concepto");
@@ -198,13 +198,9 @@ namespace SIGES3_0.Pages.VentasPage
             var conceptoInput = Find(VentasLocators.CP001.ConceptoSearchInput);
             conceptoInput.Clear();
             conceptoInput.SendKeys(concept); 
-            Thread.Sleep(1500); // Esperamos a que la lista se filtre
+            Thread.Sleep(1000);
 
-            // Hacemos click en la opción visible que contiene el texto de tu Feature
-            ClickWithoutScroll(
-                VentasLocators.CP001.ConceptoOpcionPorTexto(concept), 
-                By.XPath($"//span[contains(translate(normalize-space(), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'), '{concept.ToUpper()}')]"), 
-                By.XPath($"//*[contains(text(), '{concept}')]"));
+            ClickWithoutScroll(VentasLocators.CP001.ConceptoOpcion);
             Thread.Sleep(1000);
         }
 
@@ -225,7 +221,6 @@ namespace SIGES3_0.Pages.VentasPage
         {
             Console.WriteLine("[CP001] Paso 4d - Abrir acordeón Facturación");
             Click(
-                VentasLocators.CP001.AccordionDespuesConcepto,
                 VentasLocators.Voucher.BillingAccordion,
                 VentasLocators.Voucher.BillingAccordionFallback
             );

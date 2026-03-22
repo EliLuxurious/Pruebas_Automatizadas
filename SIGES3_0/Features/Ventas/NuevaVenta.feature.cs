@@ -99,7 +99,7 @@ CP004: Boleta con cliente RUC.", global::Reqnroll.ProgrammingLanguage.CSharp, fe
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Flujo de ventas con diferentes clientes")]
+        [NUnit.Framework.DescriptionAttribute("Flujo de ventas con Nueva venta")]
         [NUnit.Framework.CategoryAttribute("NuevaVenta")]
         [NUnit.Framework.CategoryAttribute("VentaNormal")]
         [NUnit.Framework.TestCaseAttribute("CP001", "gaseosa", "7753234003320", "", "75893616", "FACTURA ELECTRONICA", "F002", "Inmediata", "Completo", "NO", "NO", "", null)]
@@ -107,9 +107,9 @@ CP004: Boleta con cliente RUC.", global::Reqnroll.ProgrammingLanguage.CSharp, fe
         [NUnit.Framework.TestCaseAttribute("CP003", "gaseosa", "7753234003320", "150", "00000000", "BOLETA DE VENTA ELECTRONICA", "B002", "Inmediata", "Completo", "NO", "NO", "total es mayor a 700", null)]
         [NUnit.Framework.TestCaseAttribute("CP004", "gaseosa", "7753234003320", "", "20542245671", "BOLETA DE VENTA ELECTRONICA", "B002", "Inmediata", "Completo", "SI", "SI", "Se registro correctamente", null)]
         [NUnit.Framework.TestCaseAttribute("CP005", "gaseosa", "7753234003313", "50", "75893616", "BOLETA DE VENTA ELECTRONICA", "B002", "Diferida", "Completo", "SI", "SI", "Se registro correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("CP006", "gaseosa", "Inca Kola Gaseosa Botella 1.5L", "150", "00000000", "NOTA DE VENTA(INTERNA)", "NV02", "Inmediata", "Completo", "SI", "SI", "Se registro correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("CP007", "gaseosa", "Inca Kola Gaseosa Botella 1.5L", "150", "75893616", "NOTA DE VENTA(INTERNA)", "NV02", "Inmediata", "Incompleto", "SI", "SI", "insuficiente", null)]
-        public async System.Threading.Tasks.Task FlujoDeVentasConDiferentesClientes(string caso, string familia, string concepto, string cantidad, string documento, string comprobante, string serie, string entrega, string pago, string habilitado, string ejecutar, string mensaje, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("CP006", "gaseosa", "7753234003313", "150", "00000000", "NOTA DE VENTA(INTERNA)", "NV02", "Inmediata", "Completo", "SI", "SI", "Se registro correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("CP007", "gaseosa", "7753234003313", "150", "75893616", "NOTA DE VENTA(INTERNA)", "NV02", "Inmediata", "Incompleto", "SI", "SI", "insuficiente", null)]
+        public async System.Threading.Tasks.Task FlujoDeVentasConNuevaVenta(string caso, string familia, string concepto, string cantidad, string documento, string comprobante, string serie, string entrega, string pago, string habilitado, string ejecutar, string mensaje, string[] exampleTags)
         {
             string[] @__tags = new string[] {
                     "NuevaVenta",
@@ -132,7 +132,7 @@ CP004: Boleta con cliente RUC.", global::Reqnroll.ProgrammingLanguage.CSharp, fe
             argumentsOfScenario.Add("Habilitado", habilitado);
             argumentsOfScenario.Add("Ejecutar", ejecutar);
             argumentsOfScenario.Add("Mensaje", mensaje);
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Flujo de ventas con diferentes clientes", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Flujo de ventas con Nueva venta", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 14
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

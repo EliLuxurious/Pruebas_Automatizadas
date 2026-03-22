@@ -1,85 +1,131 @@
-using SIGES3_0.Pages.Helpers;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using SIGES3_0.Pages.Helpers;
+using System;
+using System.Threading;
 
 namespace SIGES3_0.Pages.VentasPage
 {
     public class ReportesPage
     {
-        private readonly Utilities utilities;
+        private readonly IWebDriver _driver;
+        private readonly Utilities _utilities;
+        private readonly WebDriverWait _wait;
 
         public ReportesPage(IWebDriver driver)
         {
-            utilities = new Utilities(driver);
+            _driver = driver;
+            _utilities = new Utilities(driver);
+            _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
         }
 
-        public void OpenReports()
+        public void NavegarAReportes()
         {
-            utilities.ClickButton(VentasLocators.Reports.PurchaseMenu);
-            utilities.ClickButton(VentasLocators.Reports.PurchaseReports);
+            _utilities.ClickButton(VentasLocators.Navigation.SalesMenu);
+            _utilities.ClickButton(VentasLocators.Navigation.Reports);
+            Thread.Sleep(2000); // Wait for page to load
         }
 
-        public void ConfigureReportByType(string option, string fromDate, string toDate)
+        public void SeleccionarVista(string tabName)
         {
-            utilities.ClearAndEnterText(VentasLocators.Reports.TypeFromDate, fromDate);
-            utilities.ClearAndEnterText(VentasLocators.Reports.TypeToDate, toDate);
-
-            switch (option.Trim().ToUpperInvariant())
+            var tabLocator = VentasLocators.Reportes.TabDinamico(tabName);
+            try
             {
-                case "TODOS":
-                    utilities.ClickButton(VentasLocators.Reports.AllProofs);
-                    break;
+                _utilities.ClickButton(tabLocator);
+            }
+            catch (NoSuchElementException)
+            {
+                // Fallbacks seguros en caso de que el dinámico no lo encuentre directamente
+                switch (tabName.Trim().ToLower())
+                {
+                    case "comprobantes": _utilities.ClickButton(VentasLocators.Reportes.TabComprobantes); break;
+                    case "series": _utilities.ClickButton(VentasLocators.Reportes.TabSeries); break;
+                    case "conceptos": _utilities.ClickButton(VentasLocators.Reportes.TabConceptos); break;
+                    case "vendedor": _utilities.ClickButton(VentasLocators.Reportes.TabVendedor); break;
+                    case "grupos": _utilities.ClickButton(VentasLocators.Reportes.TabGrupos); break;
+                    case "excepciones": _utilities.ClickButton(VentasLocators.Reportes.TabExcepciones); break;
+                    default: throw new Exception($"La vista/tab '{tabName}' no existe en Reportes.");
+                }
+            }
+            Thread.Sleep(1000);
+        }
 
-                case "TRIBUTABLES":
-                    utilities.ClickButton(VentasLocators.Reports.TaxedProofs);
-                    break;
+        public void IngresarFechas(string fechaInicial, string fechaFinal)
+        {
+            _utilities.ClearAndEnterText(VentasLocators.Reportes.FechaHoraInicial, fechaInicial);
+            _utilities.ClearAndEnterText(VentasLocators.Reportes.FechaHoraFinal, fechaFinal);
+            // sometimes it requires pressing enter or clicking outside
+            _driver.FindElement(VentasLocators.Reportes.FechaHoraFinal).SendKeys(Keys.Tab);
+        }
 
-                case "NO TRIBUTABLES":
-                    utilities.ClickButton(VentasLocators.Reports.NoTaxedProofs);
-                    break;
+        public void SeleccionarTipoComprobante(string tipoComprobante)
+        {
+            _utilities.ClickButton(VentasLocators.Reportes.TipoComprobanteDropdown);
+            _utilities.ClearAndEnterText(VentasLocators.Reportes.TipoComprobanteSearch, tipoComprobante);
+            _utilities.ClickButton(VentasLocators.Reportes.TipoComprobanteOption(tipoComprobante));
+            Thread.Sleep(1000); // wait for series to load
+        }
 
-                default:
-                    throw new ArgumentException($"El filtro por tipo '{option}' no esta soportado.");
+        public void SeleccionarSerie(string serie)
+        {
+            _utilities.ClickButton(VentasLocators.Reportes.SerieDropdown);
+            _utilities.ClearAndEnterText(VentasLocators.Reportes.SerieSearch, serie);
+            _utilities.ClickButton(VentasLocators.Reportes.SerieOption(serie));
+        }
+
+        public void ClickVerReporte(string tarjeta)
+        {
+            if (tarjeta.Equals("POR COMPROBANTE", StringComparison.OrdinalIgnoreCase))
+            {
+                _utilities.ClickButton(VentasLocators.Reportes.PorComprobanteVerReporte);
+            }
+            else if (tarjeta.Equals("POR FAMILIA", StringComparison.OrdinalIgnoreCase))
+            {
+                _utilities.ClickButton(VentasLocators.Reportes.PorFamiliaVerReporte);
+            }
+            Thread.Sleep(2000);
+        }
+
+        public bool VerificarReporteGenerado()
+        {
+            try
+            {
+                return _driver.FindElement(VentasLocators.Reportes.HeaderReporteResultado).Displayed;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
             }
         }
 
-        public void ConfigureReport(string reportType, string fromDate, string toDate)
+        public bool VerificarBotonHabilitado(string tarjeta)
         {
-            switch (reportType.Trim().ToUpperInvariant())
+            IWebElement btn = null;
+            if (tarjeta.Equals("POR COMPROBANTE", StringComparison.OrdinalIgnoreCase))
             {
-                case "COMPROBANTE":
-                    utilities.ClearAndEnterText(VentasLocators.Reports.ProofFromDate, fromDate);
-                    utilities.ClearAndEnterText(VentasLocators.Reports.ProofToDate, toDate);
-                    break;
-
-                case "CONCEPTO":
-                    utilities.ClearAndEnterText(VentasLocators.Reports.ConceptFromDate, fromDate);
-                    utilities.ClearAndEnterText(VentasLocators.Reports.ConceptToDate, toDate);
-                    break;
-
-                default:
-                    throw new ArgumentException($"El tipo de reporte '{reportType}' no esta soportado.");
+                btn = _driver.FindElement(VentasLocators.Reportes.PorComprobanteVerReporte);
             }
+            else if (tarjeta.Equals("POR FAMILIA", StringComparison.OrdinalIgnoreCase))
+            {
+                btn = _driver.FindElement(VentasLocators.Reportes.PorFamiliaVerReporte);
+            }
+
+            if (btn == null) return false;
+            return btn.Enabled && btn.GetAttribute("disabled") == null;
         }
 
-        public void Generate(string reportType)
+        public void SeleccionarPuntoVenta(string puntoVenta)
         {
-            switch (reportType.Trim().ToUpperInvariant())
-            {
-                case "TIPO":
-                    utilities.ClickButton(VentasLocators.Reports.ReportByType);
-                    break;
+            _utilities.ClickButton(VentasLocators.Reportes.PuntoVentaDropdown);
+            _utilities.ClearAndEnterText(VentasLocators.Reportes.PuntoVentaSearch, puntoVenta);
+            _utilities.ClickButton(VentasLocators.Reportes.PuntoVentaOption(puntoVenta));
+        }
 
-                case "COMPROBANTE":
-                    utilities.ClickButton(VentasLocators.Reports.ReportByProof);
-                    break;
-
-                case "CONCEPTO":
-                    utilities.ClickButton(VentasLocators.Reports.ReportByConcept);
-                    break;
-
-                default:
-                    throw new ArgumentException($"No se puede generar el reporte '{reportType}'.");
-            }
+        public void SeleccionarFamilia(string familia)
+        {
+            _utilities.ClickButton(VentasLocators.Reportes.FamiliaDropdown);
+            _utilities.ClearAndEnterText(VentasLocators.Reportes.FamiliaSearch, familia);
+            _utilities.ClickButton(VentasLocators.Reportes.FamiliaOption(familia));
         }
     }
 }
