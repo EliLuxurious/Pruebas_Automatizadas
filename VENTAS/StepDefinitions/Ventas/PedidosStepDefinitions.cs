@@ -1,4 +1,4 @@
-锘縰sing System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -137,19 +137,19 @@ namespace SigesCore.StepDefinitions.Ventas
             orders.InvalidateOrder();
         }
 
-        [When("Ingresar la observaci贸n de invalidaci贸n {string}")]
+        [When("Ingresar la observaci髇 de invalidaci髇 {string}")]
         public void WhenIngresarLaObservacionDeInvalidacion(string value)
         {
             orders.AddObservation(value);
         }
 
-        [Then("Click en aceptar invalidaci贸n")]
+        [Then("Click en aceptar invalidaci髇")]
         public void ThenClickEnAceptarInvalidacion()
         {
             orders.ClickAcceptInvalidation();
         }
 
-        [Then("Guardar pedido o cotizaci贸n")]
+        [Then("Guardar pedido o cotizaci髇")]
         public void ThenGuardarPedido()
         {
             orders.SaveOrder();

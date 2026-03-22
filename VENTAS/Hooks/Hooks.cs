@@ -1,11 +1,11 @@
-﻿using AventStack.ExtentReports;
+using AventStack.ExtentReports;
 using AventStack.ExtentReports.Gherkin.Model;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Reqnroll.BoDi;
 using SigesCore.Utility;
 
-namespace AutomatizaciónVentas.Hooks
+namespace Automatizaci�nVentas.Hooks
 {
     [Binding]
     public sealed class Hooks : ExtentReport

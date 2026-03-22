@@ -1,4 +1,4 @@
-﻿using FLOTA_VEHICULAR.Utility;
+using FLOTA_VEHICULAR.Utility;
 using AventStack.ExtentReports;
 using AventStack.ExtentReports.Gherkin.Model;
 using OpenQA.Selenium;

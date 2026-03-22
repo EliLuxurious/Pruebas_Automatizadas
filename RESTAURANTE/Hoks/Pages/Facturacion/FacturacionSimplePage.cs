@@ -1,4 +1,4 @@
-Ôªøusing FluentAssertions.Equivalency;
+using FluentAssertions.Equivalency;
 using NUnit.Framework;
 using NUnit.Framework.Internal.Execution;
 using OpenQA.Selenium;
@@ -89,19 +89,19 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
             // Encuentra todos los botones de radio dentro del contenedor
             var radioButtons = medioPagoContainer.FindElements(By.CssSelector("input[type='radio']"));
 
-            // Itera por cada bot√≥n de radio para verificar cu√°l est√° seleccionado
+            // Itera por cada botÛn de radio para verificar cu·l est· seleccionado
             foreach (var radioButton in radioButtons)
             {
-                if (radioButton.Selected) // Verifica si el bot√≥n est√° seleccionado
+                if (radioButton.Selected) // Verifica si el botÛn est· seleccionado
                 {
-                    // Encuentra el label asociado al bot√≥n de radio seleccionado
+                    // Encuentra el label asociado al botÛn de radio seleccionado
                     var label = driver.FindElement(By.CssSelector($"label[for='{radioButton.GetAttribute("id")}']"));
 
                     // Retorna el texto del label (DEPCU, TRANFON, etc.)
                     return label.Text;
                 }
             }
-            return string.Empty;// Si no se selecciona nada, retorna una cadena vac√≠a o lanza una excepci√≥n si es necesario
+            return string.Empty;// Si no se selecciona nada, retorna una cadena vacÌa o lanza una excepciÛn si es necesario
         }
 
         public void EnterBillingDetails(string _clientType, string _clientValue, string _comprobante, string _observacion, string _moodPago)
@@ -127,7 +127,7 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
                     break;
 
                 default:
-                    throw new ArgumentException($"El {_clientType} no es v√°lido");
+                    throw new ArgumentException($"El {_clientType} no es v·lido");
             }
 
             utilities.InputTextoModal(modalFacturacion, fieldLocator, _clientValue);
@@ -150,7 +150,7 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
             Console.WriteLine("OBSERVACION AGREGADA");
             Thread.Sleep(4000);
 
-            // Diccionario que mapea el modo de pago al bot√≥n correspondiente
+            // Diccionario que mapea el modo de pago al botÛn correspondiente
             var moodPagoButtons = new Dictionary<string, By>
             {
                 { "DEPCU", dpcuButton },
@@ -163,13 +163,13 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
             // Verificar si el modo de pago existe en el diccionario
             if (moodPagoButtons.ContainsKey(_moodPago))
             {
-                // Llamar al m√©todo moodPay con el bot√≥n correspondiente
+                // Llamar al mÈtodo moodPay con el botÛn correspondiente
                 utilities.ClickButtonInModal(modalFacturacion, moodPagoButtons[_moodPago]);
             }
             else
             {
-                // Lanzar excepci√≥n si el modo de pago no es v√°lido
-                throw new ArgumentException($"El {_moodPago} no es v√°lido");
+                // Lanzar excepciÛn si el modo de pago no es v·lido
+                throw new ArgumentException($"El {_moodPago} no es v·lido");
             }
             Console.WriteLine("MODO DE PAGO SELECCIONADA");
             Thread.Sleep(4000);
@@ -215,7 +215,7 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
         // MODO DE PAGO
         public void moodPay(string _moodPago)
         {
-            // Diccionario que mapea el modo de pago al bot√≥n correspondiente
+            // Diccionario que mapea el modo de pago al botÛn correspondiente
             var moodPagoButtons = new Dictionary<string, By>
             {
                 { "DEPCU", dpcuButton },
@@ -228,13 +228,13 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
             // Verificar si el modo de pago existe en el diccionario
             if (moodPagoButtons.ContainsKey(_moodPago))
             {
-                // Llamar al m√©todo moodPay con el bot√≥n correspondiente
+                // Llamar al mÈtodo moodPay con el botÛn correspondiente
                 // facturacionPage.moodPay(moodPagoButtons[_moodPago]);
             }
             else
             {
-                // Lanzar excepci√≥n si el modo de pago no es v√°lido
-                throw new ArgumentException($"El {_moodPago} no es v√°lido");
+                // Lanzar excepciÛn si el modo de pago no es v·lido
+                throw new ArgumentException($"El {_moodPago} no es v·lido");
             }
 
             Thread.Sleep(4000);
@@ -253,7 +253,7 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
             {
                 case "DEPCU":
 
-                    // Llenar los datos bancarios del formulario de facturaci√≥n
+                    // Llenar los datos bancarios del formulario de facturaciÛn
                     // facturacionPage.datosBanco(modalFacturacion, _bankAccountDEPCU, _cuentaBancaria, _infoDEPCU, _info);
 
                     
@@ -266,7 +266,7 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
                     facturacionPage.datosBanco(modalFacturacion, _bankAccountTRANFON, _cuentaBancaria, _infoDEPCU, _info);
                     break;
                 default:
-                    throw new ArgumentException($"El modo de pago {modoPagoSeleccionado} no es v√°lido.");
+                    throw new ArgumentException($"El modo de pago {modoPagoSeleccionado} no es v·lido.");
             }
             Thread.Sleep(4000);
         }
@@ -329,7 +329,7 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
                     IWebElement dropdownElement = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("idEntidadFinancera")));
                     Console.WriteLine("Es visible");
                     var dropdown2 = new SelectElement(modalPago.FindElement(By.Id("idEntidadFinancera")));
-                    Console.WriteLine("Campo selecci√≥n encontrada");
+                    Console.WriteLine("Campo selecciÛn encontrada");
                     Thread.Sleep(4000);
                     dropdown2.SelectByText(_bank);
                     Assert.That(dropdown2.SelectedOption.Text, Is.EqualTo(_bank));
@@ -337,10 +337,10 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
                     */
                     /*
                     IWebElement dropdown = modalPago.FindElement(By.Id("idEntidadFinancera"));
-                    Console.WriteLine("Campo selecci√≥n encontrada");
+                    Console.WriteLine("Campo selecciÛn encontrada");
                     Thread.Sleep(4000);
                     /*
-                    // Espera expl√≠cita para que el dropdown est√© interactuable
+                    // Espera explÌcita para que el dropdown estÈ interactuable
                     WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
                     wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(dropdown));
                     */
@@ -355,7 +355,7 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
                     }
                     catch (NoSuchElementException)
                     {
-                        Console.WriteLine("No se encontr√≥ la opci√≥n por texto, intentando por valor...");
+                        Console.WriteLine("No se encontrÛ la opciÛn por texto, intentando por valor...");
                         select.SelectByValue("385"); // Ajusta el valor correcto
                     }
 
@@ -368,9 +368,9 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
                         js.ExecuteScript("arguments[0].dispatchEvent(new Event('change'))", dropdown);
                     }
 
-                    // Confirmar la selecci√≥n
+                    // Confirmar la selecciÛn
                     string selectedOption = select.SelectedOption.Text;
-                    Console.WriteLine($"Opci√≥n seleccionada: {selectedOption}");
+                    Console.WriteLine($"OpciÛn seleccionada: {selectedOption}");
                     Assert.That(selectedOption, Is.EqualTo(_bank.Trim()));
                     */
 
@@ -388,7 +388,7 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
                     facturacionPage.datosCard(modalFacturacion, _bankTCRED, _bank, _cardTCRED, _card, _infoTCRED, _info);
                     break;
                 default:
-                    throw new ArgumentException($"El modo de pago {modoPagoSeleccionado} no es v√°lido.");
+                    throw new ArgumentException($"El modo de pago {modoPagoSeleccionado} no es v·lido.");
             }
             Thread.Sleep(4000);
         }

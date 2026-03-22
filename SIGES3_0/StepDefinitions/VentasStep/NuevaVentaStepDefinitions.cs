@@ -19,49 +19,42 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             nuevaVentaPage.OpenSalesFlow(salesFlow);
         }
 
-        [When("ejecuta el flujo de nueva venta {string}")]
-        public void WhenEjecutaElFlujoDeNuevaVenta(string caseId)
+        [When("ejecuta el flujo de nueva venta con familia {string}, concepto {string}, cantidad {string}, documento {string}, comprobante {string}, serie {string}, entrega {string} y pago {string}")]
+        public void WhenEjecutaElFlujoDeNuevaVentaDynamic(string familia, string concepto, string cantidad, string documento, string comprobante, string serie, string entrega, string pago)
         {
-            nuevaVentaPage.ExecuteFlow(caseId);
+            nuevaVentaPage.ExecuteFlowDynamic(familia, concepto, cantidad, documento, comprobante, serie, entrega, pago);
         }
 
-        [Then("valida el resultado esperado de la venta:")]
-        public void ThenValidaElResultadoEsperadoDeLaVenta(Table table)
+        [Then("valida que Guardar habilitado sea {string}")]
+        public void ThenValidaQueGuardarHabilitadoSea(string habilitado)
         {
-            var data = ToDictionary(table);
-            var expectation = new SaleExpectation
+            var isEnabled = habilitado.Trim().ToUpperInvariant() is "SI" or "YES" or "TRUE";
+            var expectation = new VentaExpectation
             {
-                SaveShouldBeEnabled = ReadBool(data, "SaveEnabled"),
-                SaveShouldBeExecuted = ReadBool(data, "ExecuteSave"),
-                ExpectedMessage = Read(data, "Mensaje")
+                SaveShouldBeEnabled = isEnabled
             };
             nuevaVentaPage.ValidateSale(expectation);
         }
 
-        private static Dictionary<string, string> ToDictionary(Table table)
+        [Then("valida que Ejecutar guardado sea {string}")]
+        public void ThenValidaQueEjecutarGuardadoSea(string ejecutar)
         {
-            var d = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            foreach (var row in table.Rows)
+            var isExecuted = ejecutar.Trim().ToUpperInvariant() is "SI" or "YES" or "TRUE";
+            var expectation = new VentaExpectation
             {
-                var key = row.Values.FirstOrDefault()?.Trim() ?? "";
-                var value = row.Values.Skip(1).FirstOrDefault()?.Trim() ?? "";
-                if (!string.IsNullOrWhiteSpace(key))
-                    d[key.Replace(" ", "").Replace(".", "")] = value;
-            }
-            return d;
+                SaveShouldBeExecuted = isExecuted
+            };
+            nuevaVentaPage.ValidateSale(expectation);
         }
 
-        private static string Read(Dictionary<string, string> data, string key)
+        [Then("verifica el mensaje de confirmacion {string}")]
+        public void ThenVerificaElMensajeDeConfirmacion(string mensaje)
         {
-            return data.TryGetValue(key.Replace(" ", "").Replace(".", ""), out var v) ? v : "";
-        }
-
-        private static bool? ReadBool(Dictionary<string, string> data, string key)
-        {
-            if (!data.TryGetValue(key.Replace(" ", "").Replace(".", ""), out var v) || string.IsNullOrWhiteSpace(v))
-                return null;
-            var u = v.Trim().ToUpperInvariant();
-            return u is "SI" or "YES" or "TRUE" ? true : u is "NO" or "FALSE" ? false : null;
+            var expectation = new VentaExpectation
+            {
+                ExpectedMessage = mensaje
+            };
+            nuevaVentaPage.ValidateSale(expectation);
         }
     }
 }

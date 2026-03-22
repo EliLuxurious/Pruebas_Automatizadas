@@ -1,4 +1,4 @@
-﻿using SIGES3_0.Pages.Helpers;
+using SIGES3_0.Pages.Helpers;
 using OpenQA.Selenium;
 
 namespace SIGES3_0.Pages.VentasPage
@@ -14,27 +14,27 @@ namespace SIGES3_0.Pages.VentasPage
 
         public void OpenReports()
         {
-            utilities.ClickButton(SalesLocators.Reports.PurchaseMenu);
-            utilities.ClickButton(SalesLocators.Reports.PurchaseReports);
+            utilities.ClickButton(VentasLocators.Reports.PurchaseMenu);
+            utilities.ClickButton(VentasLocators.Reports.PurchaseReports);
         }
 
         public void ConfigureReportByType(string option, string fromDate, string toDate)
         {
-            utilities.ClearAndEnterText(SalesLocators.Reports.TypeFromDate, fromDate);
-            utilities.ClearAndEnterText(SalesLocators.Reports.TypeToDate, toDate);
+            utilities.ClearAndEnterText(VentasLocators.Reports.TypeFromDate, fromDate);
+            utilities.ClearAndEnterText(VentasLocators.Reports.TypeToDate, toDate);
 
             switch (option.Trim().ToUpperInvariant())
             {
                 case "TODOS":
-                    utilities.ClickButton(SalesLocators.Reports.AllProofs);
+                    utilities.ClickButton(VentasLocators.Reports.AllProofs);
                     break;
 
                 case "TRIBUTABLES":
-                    utilities.ClickButton(SalesLocators.Reports.TaxedProofs);
+                    utilities.ClickButton(VentasLocators.Reports.TaxedProofs);
                     break;
 
                 case "NO TRIBUTABLES":
-                    utilities.ClickButton(SalesLocators.Reports.NoTaxedProofs);
+                    utilities.ClickButton(VentasLocators.Reports.NoTaxedProofs);
                     break;
 
                 default:
@@ -47,13 +47,13 @@ namespace SIGES3_0.Pages.VentasPage
             switch (reportType.Trim().ToUpperInvariant())
             {
                 case "COMPROBANTE":
-                    utilities.ClearAndEnterText(SalesLocators.Reports.ProofFromDate, fromDate);
-                    utilities.ClearAndEnterText(SalesLocators.Reports.ProofToDate, toDate);
+                    utilities.ClearAndEnterText(VentasLocators.Reports.ProofFromDate, fromDate);
+                    utilities.ClearAndEnterText(VentasLocators.Reports.ProofToDate, toDate);
                     break;
 
                 case "CONCEPTO":
-                    utilities.ClearAndEnterText(SalesLocators.Reports.ConceptFromDate, fromDate);
-                    utilities.ClearAndEnterText(SalesLocators.Reports.ConceptToDate, toDate);
+                    utilities.ClearAndEnterText(VentasLocators.Reports.ConceptFromDate, fromDate);
+                    utilities.ClearAndEnterText(VentasLocators.Reports.ConceptToDate, toDate);
                     break;
 
                 default:
@@ -66,15 +66,15 @@ namespace SIGES3_0.Pages.VentasPage
             switch (reportType.Trim().ToUpperInvariant())
             {
                 case "TIPO":
-                    utilities.ClickButton(SalesLocators.Reports.ReportByType);
+                    utilities.ClickButton(VentasLocators.Reports.ReportByType);
                     break;
 
                 case "COMPROBANTE":
-                    utilities.ClickButton(SalesLocators.Reports.ReportByProof);
+                    utilities.ClickButton(VentasLocators.Reports.ReportByProof);
                     break;
 
                 case "CONCEPTO":
-                    utilities.ClickButton(SalesLocators.Reports.ReportByConcept);
+                    utilities.ClickButton(VentasLocators.Reports.ReportByConcept);
                     break;
 
                 default:

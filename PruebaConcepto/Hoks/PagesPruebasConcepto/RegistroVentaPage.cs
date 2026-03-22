@@ -1,4 +1,4 @@
-Ôªøusing FluentAssertions.Equivalency;
+using FluentAssertions.Equivalency;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
@@ -84,7 +84,7 @@ namespace PruebaConcepto.Hoks.PagesPruebaConcepto
             driver.FindElement(_button).Click();
         }
 
-        By Almacen = By.XPath("//span[contains(text(),'Almac√©n')]");
+        By Almacen = By.XPath("//span[contains(text(),'AlmacÈn')]");
         By guiasderemision = By.XPath("//body/div[@id='wrapper']/aside[1]/div[1]/section[1]/ul[1]/li[7]/ul[1]/li[4]/a[1]");
         By nuevo = By.XPath("//body/div[@id='wrapper']/div[1]/section[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[6]/button[1]");
         By documento = By.Id("DocumentoIdentidad");
@@ -112,7 +112,7 @@ namespace PruebaConcepto.Hoks.PagesPruebaConcepto
             Thread.Sleep(4000);
 
         }
-        // M√©todo para realizar el inicio de sesi√≥n completo
+        // MÈtodo para realizar el inicio de sesiÛn completo
         public void CompleteFields(string codeBarra, string dni)
         {
             ClickButton(salesButton);
@@ -136,12 +136,12 @@ namespace PruebaConcepto.Hoks.PagesPruebaConcepto
             // Encuentra todos los botones de radio dentro del contenedor
             var radioButtons = medioPagoContainer.FindElements(By.CssSelector("input[type='radio']"));
 
-            // Itera por cada bot√≥n de radio para verificar cu√°l est√° seleccionado
+            // Itera por cada botÛn de radio para verificar cu·l est· seleccionado
             foreach (var radioButton in radioButtons)
             {
-                if (radioButton.Selected) // Verifica si el bot√≥n est√° seleccionado
+                if (radioButton.Selected) // Verifica si el botÛn est· seleccionado
                 {
-                    // Encuentra el label asociado al bot√≥n de radio seleccionado
+                    // Encuentra el label asociado al botÛn de radio seleccionado
                     var label = driver.FindElement(By.CssSelector($"label[for='{radioButton.GetAttribute("id")}']"));
 
                     // Retorna el texto del label (DEPCU, TRANFON, etc.)
@@ -149,7 +149,7 @@ namespace PruebaConcepto.Hoks.PagesPruebaConcepto
                 }
             }
 
-            // Si no se selecciona nada, retorna una cadena vac√≠a o lanza una excepci√≥n si es necesario
+            // Si no se selecciona nada, retorna una cadena vacÌa o lanza una excepciÛn si es necesario
             return string.Empty;
         }
 
@@ -157,24 +157,24 @@ namespace PruebaConcepto.Hoks.PagesPruebaConcepto
         {
             try
             {
-                // Esperar que el men√∫ desplegable sea visible
+                // Esperar que el men˙ desplegable sea visible
                 WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
                 wait.Until(ExpectedConditions.ElementIsVisible(_path));
 
-                // Abre el men√∫ desplegable
+                // Abre el men˙ desplegable
                 IWebElement dropdown = driver.FindElement(_path);
                 dropdown.Click();
 
-                // Espera expl√≠cita para que las opciones sean visibles
+                // Espera explÌcita para que las opciones sean visibles
                 wait.Until(ExpectedConditions.ElementIsVisible(SelecOptions));
 
-                // Selecciona la opci√≥n deseada
+                // Selecciona la opciÛn deseada
                 IWebElement optionElement = driver.FindElement(By.XPath($"//li[contains(text(), '{option}')]"));
                 optionElement.Click();
             }
             catch (NoSuchElementException ex)
             {
-                Console.WriteLine($"Error: No se encontr√≥ la opci√≥n '{option}' en el men√∫ desplegable. Detalle: {ex.Message}");
+                Console.WriteLine($"Error: No se encontrÛ la opciÛn '{option}' en el men˙ desplegable. Detalle: {ex.Message}");
             }
         }
 
@@ -212,7 +212,7 @@ namespace PruebaConcepto.Hoks.PagesPruebaConcepto
 
                     break;
                 default:
-                    throw new ArgumentException($"El tipo de pago {medioPagoSeleccionado} no es v√°lido.");
+                    throw new ArgumentException($"El tipo de pago {medioPagoSeleccionado} no es v·lido.");
             }
         }
 
@@ -241,7 +241,7 @@ namespace PruebaConcepto.Hoks.PagesPruebaConcepto
 
                     break;
                 default:
-                    throw new ArgumentException($"El tipo de pago {medioPagoSeleccionado} no es v√°lido.");
+                    throw new ArgumentException($"El tipo de pago {medioPagoSeleccionado} no es v·lido.");
             }
         }
 
@@ -257,7 +257,7 @@ namespace PruebaConcepto.Hoks.PagesPruebaConcepto
             }
             else
             {
-                throw new ArgumentException($"El tipo de pago {medioPagoSeleccionado} no es v√°lido.");
+                throw new ArgumentException($"El tipo de pago {medioPagoSeleccionado} no es v·lido.");
             }
         }
 
@@ -270,12 +270,12 @@ namespace PruebaConcepto.Hoks.PagesPruebaConcepto
         /*
         public void SelecOption(By _path, string option)
         {
-            // Esperar que el men√∫ desplegable sea visible
+            // Esperar que el men˙ desplegable sea visible
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementIsVisible(_path));
             IWebElement dropdownPath = driver.FindElement(_path);
 
-            // Encuentra el elemento del men√∫ desplegable
+            // Encuentra el elemento del men˙ desplegable
             IWebElement dropdownOptions = driver.FindElement(SelecOptions);
 
             Thread.Sleep(4000);
@@ -284,7 +284,7 @@ namespace PruebaConcepto.Hoks.PagesPruebaConcepto
             ClickButton(saveSaleButton);
             Thread.Sleep(2000);
 
-            // Haz clic en la opci√≥n deseada
+            // Haz clic en la opciÛn deseada
             optionElement.Click();
 
         }

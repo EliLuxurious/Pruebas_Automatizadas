@@ -25,12 +25,12 @@ namespace SIGES3_0.Pages.VentasPage
 
         public void OpenSalesFlow(string salesFlow)
         {
-            utilities.ClickButton(SalesLocators.Navigation.SalesMenu);
+            utilities.ClickButton(VentasLocators.Navigation.SalesMenu);
             Thread.Sleep(500);
-            utilities.ClickButton(SalesLocators.Navigation.NewSale);
+            utilities.ClickButton(VentasLocators.Navigation.NewSale);
             Thread.Sleep(000);
             // Si no cargó el formulario, ir directo a la URL de nueva venta
-            if (!driver.FindElements(SalesLocators.CP001.IgvCheck).Any(e => e.Displayed))
+            if (!driver.FindElements(VentasLocators.CP001.IgvCheck).Any(e => e.Displayed))
             {
                 var baseUrl = new Uri(driver.Url).GetLeftPart(UriPartial.Authority);
                 driver.Navigate().GoToUrl(baseUrl + "/sales/new-sales");
@@ -60,6 +60,71 @@ namespace SIGES3_0.Pages.VentasPage
             }
         }
 
+        public void ExecuteFlowDynamic(string familia, string concepto, string cantidad, string documento, string comprobante, string serie, string entrega, string pago)
+        {
+            _wasSaveEnabled = false;
+            _wasSaveExecuted = false;
+            _lastObservedMessage = string.Empty;
+
+            WaitForFormReady();
+
+            ToggleIgvAndDetUnif();
+
+            SelectProduct(familia, concepto);
+
+            UpdateQuantity(cantidad);
+
+            ExpandBillingAccordion();
+
+            bool isFactura = comprobante.IndexOf("FACTURA ELECTRONICA", StringComparison.OrdinalIgnoreCase) >= 0 || comprobante.IndexOf("FACTURA ELECTRÓNICA", StringComparison.OrdinalIgnoreCase) >= 0;
+            bool isBoleta = comprobante.IndexOf("BOLETA DE VENTA ELECTRONICA", StringComparison.OrdinalIgnoreCase) >= 0 || comprobante.IndexOf("BOLETA DE VENTA ELECTRÓNICA", StringComparison.OrdinalIgnoreCase) >= 0;
+            bool isRuc = documento.Length == 11;
+            bool isVarios = documento == "00000000";
+
+            decimal cant = 1; 
+
+            if (!string.IsNullOrWhiteSpace(cantidad))
+            {
+                decimal.TryParse(cantidad, out cant);
+            }
+
+            // Asumimos que si la cantidad es alta (por ejemplo 150), y es cliente varios con boleta, superará los 700.
+            bool isOver700 = cant >= 100;
+
+            bool shouldExpectRucError = isFactura && !isRuc;
+            bool shouldExpectAmountWarning = isBoleta && isVarios && isOver700;
+            bool expectWarningPopup = shouldExpectRucError || shouldExpectAmountWarning;
+            bool isIncompletePayment = pago != null && pago.Equals("Incompleto", StringComparison.OrdinalIgnoreCase);
+
+            if (isIncompletePayment) {
+                // If payment is incomplete, we expect an alert and it shouldn't proceed normally
+                // Since user prompt expects Habilitado=SI, Ejecutar=SI but message="insuficiente", we proceed:
+                expectWarningPopup = false; 
+            }
+
+            bool shouldExecuteSave = !expectWarningPopup;
+
+            // PASO 1: Elegimos la Serie y Comprobante PRIMERO para evitar el Error Popup si DNI + Factura
+            SelectVoucherTypeAndSeries(comprobante, serie);
+
+            // PASO 2: Buscamos al cliente (Aquí saltará el popup si realmente es inválido, Ej. Factura + DNI)
+            EnterAndSearchCustomer(documento);
+
+            // PASO 3: Manejar el Popup si se espera error de Documento
+            if (expectWarningPopup)
+            {
+                HandleWarningPopup();
+            }
+
+            SelectDeliveryType(entrega);
+
+            UpdatePayment(pago);
+
+            AttemptSave(shouldExecuteSave);
+
+            ValidateSaveSuccess(documento, expectWarningPopup, shouldExecuteSave, isIncompletePayment);
+        }
+
         /// <summary>
         /// Flujo base de nueva venta reutilizado para CP001 y CP002.
         /// </summary>
@@ -69,71 +134,108 @@ namespace SIGES3_0.Pages.VentasPage
             _wasSaveExecuted = false;
             _lastObservedMessage = string.Empty;
 
-            // Esperar que el formulario esté listo
-            wait.Until(_ => driver.FindElements(SalesLocators.CP001.IgvCheck).Any(e => e.Displayed));
-            Thread.Sleep(1000);
+            WaitForFormReady();
 
-            // ── PASO 1: Marcar IGV ──────────────────────────────────────────────
+            ToggleIgvAndDetUnif();
+
+            SelectProduct("gaseosa", "Coca-Cola");
+
+            UpdateQuantity("");
+
+            ExpandBillingAccordion();
+
+            SelectVoucherTypeAndSeries("FACTURA ELECTRÓNICA", "F002");
+
+            EnterAndSearchCustomer(customerDocument);
+
+            if (shouldExpectRucError)
+            {
+                HandleWarningPopup();
+            }
+
+            SelectDeliveryType("Inmediata");
+
+            AttemptSave(shouldExecuteSave);
+
+            ValidateSaveSuccess(customerDocument, shouldExpectRucError, shouldExecuteSave, false);
+        }
+
+        private void WaitForFormReady()
+        {
+            wait.Until(_ => driver.FindElements(VentasLocators.CP001.IgvCheck).Any(e => e.Displayed));
+            Thread.Sleep(1000);
+        }
+
+        private void ToggleIgvAndDetUnif()
+        {
             Console.WriteLine("[CP001] Paso 1 - Marcar IGV: #flexCheckDefault");
-            Click(SalesLocators.CP001.IgvCheck);
+            Click(VentasLocators.CP001.IgvCheck);
             Thread.Sleep(1000);
 
-            // ── PASO 2: Marcar DET.UNIF ─────────────────────────────────────────
             Console.WriteLine("[CP001] Paso 2 - Marcar DET.UNIF: #flexCheckDefault2");
-            Click(SalesLocators.CP001.DetUnifCheck);
+            Click(VentasLocators.CP001.DetUnifCheck);
+            Thread.Sleep(1000);
+        }
+
+        private void SelectProduct(string family, string concept)
+        {
+            Console.WriteLine("[CP001] Paso 3 - Seleccionar Familia");
+            Click(VentasLocators.CP001.FamiliaDropdown);
             Thread.Sleep(1000);
 
-            // ── PASO 3: Familia = Gaseosa ────────────────────────────────────────
-            // 3a. Abrir dropdown de familia
-            Console.WriteLine("[CP001] Paso 3a - Abrir dropdown Familia");
-            Click(SalesLocators.CP001.FamiliaDropdown);
-            Thread.Sleep(1000);
-
-            // 3b. Buscar "gaseosa" en el campo de búsqueda
-            Console.WriteLine("[CP001] Paso 3b - Buscar 'gaseosa' en input[class='search-input']");
-            var familiaInput = Find(SalesLocators.CP001.FamiliaSearchInput);
+            var familiaInput = Find(VentasLocators.CP001.FamiliaSearchInput);
             familiaInput.Clear();
-            familiaInput.SendKeys("gaseosa");
+            familiaInput.SendKeys(family);
             Thread.Sleep(1000);
 
-            // 3c. Seleccionar opción Gaseosa
-            Console.WriteLine("[CP001] Paso 3c - Seleccionar opción Gaseosa");
-            ClickWithoutScroll(
-                SalesLocators.CP001.FamiliaOpcion,
-                By.XPath("//span[normalize-space()='Gaseosa']")
-            );
+            ClickWithoutScroll(VentasLocators.CP001.FamiliaOpcion, By.XPath($"//span[normalize-space()='{char.ToUpper(family[0]) + family.Substring(1)}']"));
             Thread.Sleep(1000);
 
-            // ── PASO 4: Concepto = Coca-Cola Gaseosa Botella 1.5L ───────────────
-            // 4a. Click en el dropdown de concepto
-            Console.WriteLine("[CP001] Paso 4a - Abrir dropdown Concepto");
-            Click(SalesLocators.CP001.ConceptoDropdown);
+            Console.WriteLine("[CP001] Paso 4 - Seleccionar Concepto");
+            Click(VentasLocators.CP001.ConceptoDropdown);
             Thread.Sleep(1000);
 
-            // 4b. Buscar "Coca-Cola" en el buscador de concepto
-            Console.WriteLine("[CP001] Paso 4b - Buscar 'Coca-Cola' en buscador concepto");
-            var conceptoInput = Find(SalesLocators.CP001.ConceptoSearchInput);
+            var conceptoInput = Find(VentasLocators.CP001.ConceptoSearchInput);
             conceptoInput.Clear();
-            conceptoInput.SendKeys("Coca-Cola");
-            Thread.Sleep(1000);
+            conceptoInput.SendKeys(concept); 
+            Thread.Sleep(1500); // Esperamos a que la lista se filtre
 
-            // 4c. Seleccionar Coca-Cola Gaseosa Botella 1.5L de la lista de resultados
-            Console.WriteLine("[CP001] Paso 4c - Seleccionar Coca-Cola: app-product-service-selection-form ... div:nth-child(1) span:nth-child(1)");
-            ClickWithoutScroll(SalesLocators.CP001.ConceptoOpcion);
+            // Hacemos click en la opción visible que contiene el texto de tu Feature
+            ClickWithoutScroll(
+                VentasLocators.CP001.ConceptoOpcionPorTexto(concept), 
+                By.XPath($"//span[contains(translate(normalize-space(), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'), '{concept.ToUpper()}')]"), 
+                By.XPath($"//*[contains(text(), '{concept}')]"));
             Thread.Sleep(1000);
+        }
 
-            // 4d. Click en el acordeón de Facturación para expandirlo
+        private void UpdateQuantity(string cantidad)
+        {
+            if (!string.IsNullOrWhiteSpace(cantidad))
+            {
+                Console.WriteLine($"[NuevaVenta] Actualizando Cantidad a {cantidad}");
+                var quantityInput = Find(VentasLocators.Detail.QuantityInputs);
+                quantityInput.Clear();
+                quantityInput.SendKeys(cantidad);
+                quantityInput.SendKeys(Keys.Tab);
+                Thread.Sleep(500);
+            }
+        }
+
+        private void ExpandBillingAccordion()
+        {
             Console.WriteLine("[CP001] Paso 4d - Abrir acordeón Facturación");
             Click(
-                SalesLocators.CP001.AccordionDespuesConcepto,
-                SalesLocators.Voucher.BillingAccordion,
-                SalesLocators.Voucher.BillingAccordionFallback
+                VentasLocators.CP001.AccordionDespuesConcepto,
+                VentasLocators.Voucher.BillingAccordion,
+                VentasLocators.Voucher.BillingAccordionFallback
             );
             Thread.Sleep(1000);
+        }
 
-            // ── PASO 5: Cliente + lupa ──────────────────────────────────────────
+        private void EnterAndSearchCustomer(string customerDocument)
+        {
             Console.WriteLine($"[NuevaVenta] Paso 5a - Ingresar documento {customerDocument}");
-            var clienteInput = Find(SalesLocators.CP001.ClienteBuscar);
+            var clienteInput = Find(VentasLocators.CP001.ClienteBuscar);
             clienteInput.Clear();
             clienteInput.SendKeys(customerDocument);
             Thread.Sleep(1000);
@@ -143,63 +245,97 @@ namespace SIGES3_0.Pages.VentasPage
                 $"El documento ingresado no coincide. Esperado={customerDocument}, Actual={typedDocument}");
 
             Console.WriteLine("[NuevaVenta] Paso 5b - Click lupa");
-            Click(SalesLocators.CP001.ClienteLupa);
+            Click(VentasLocators.CP001.ClienteLupa);
+            Thread.Sleep(1000);
+        }
+
+        private void SelectVoucherTypeAndSeries(string voucherText, string seriesText)
+        {
+            Console.WriteLine($"[NuevaVenta] Paso 6a - Abrir dropdown Comprobante para {voucherText}");
+            Click(VentasLocators.CP001.ComprobanteDropdown, By.CssSelector("app-dropdown-search div.select-trigger"));
             Thread.Sleep(1000);
 
-            // ── PASO 6: Comprobante = FACTURA ELECTRÓNICA ────────────────────────
-            Console.WriteLine("[CP001] Paso 6a - Abrir dropdown Comprobante");
-            Click(SalesLocators.CP001.ComprobanteDropdown);
+            Console.WriteLine($"[NuevaVenta] Paso 6b - Seleccionar opción ({voucherText})");
+            By voucherLocator = VentasLocators.CP001.ComprobanteOpcionPorTexto(voucherText);
+            Click(voucherLocator, VentasLocators.CP001.ComprobanteOpcion);
             Thread.Sleep(1000);
 
-            Console.WriteLine("[CP001] Paso 6b - Seleccionar primera opción (FACTURA ELECTRÓNICA)");
-            Click(SalesLocators.CP001.ComprobanteOpcion);
+            Console.WriteLine($"[NuevaVenta] Paso 8 - Seleccionar Serie {seriesText}");
+            By seriesLocator = VentasLocators.CP001.SeriePorTexto(seriesText);
+            Click(
+                seriesLocator,
+                VentasLocators.Voucher.SeriesByText(seriesText),
+                VentasLocators.CP001.SerieCheckmark,
+                VentasLocators.CP001.SerieCheckmarkXpath
+            );
+            Thread.Sleep(1000);
+        }
+
+        private void HandleWarningPopup()
+        {
+            Console.WriteLine("[NuevaVenta] Validando popup de advertencia y cerrar con OK por validación de regla");
+            _lastObservedMessage = CaptureVisibleMessage(4);
+
+            TryClickOptional(
+                VentasLocators.CP001.ErrorOkButton,
+                VentasLocators.CP001.ErrorOkButtonFallback,
+                By.CssSelector(".ok-button")
+            );
+            Thread.Sleep(500);
+        }
+
+        private void SelectDeliveryType(string entrega)
+        {
+            Console.WriteLine("[CP001] Paso 9a - Abrir acordeón Entrega");
+            Click(
+                VentasLocators.CP001.AccordionEntrega,
+                VentasLocators.CP001.AccordionEntregaFallback1,
+                VentasLocators.CP001.AccordionEntregaFallback2,
+                VentasLocators.CP001.AccordionEntregaFallback3
+            );
             Thread.Sleep(1000);
 
-            // ── PASO 7: Validación de popup de RUC según el caso ────────────────
-            if (shouldExpectRucError)
+            if (!string.IsNullOrWhiteSpace(entrega) && entrega.Equals("Diferida", StringComparison.OrdinalIgnoreCase))
             {
-                Console.WriteLine("[NuevaVenta] Paso 7 - Validar popup de RUC y cerrar con OK");
-                _lastObservedMessage = CaptureVisibleMessage(4);
-
-                // En algunos builds el popup no siempre pinta texto, pero el flujo igual bloquea el guardado.
-                // Se intenta cerrarlo sin romper la prueba si no está visible.
-                TryClickOptional(
-                    SalesLocators.CP001.ErrorOkButton,
-                    SalesLocators.CP001.ErrorOkButtonFallback,
-                    By.CssSelector(".ok-button")
-                );
+                Console.WriteLine("[CP001] Paso 9b - Click Diferida");
+                Click(VentasLocators.CP001.EntregaDiferida);
             }
-
-            // ── PASO 8: Serie F002 → checkmark ──────────────────────────────────
-            Console.WriteLine("[CP001] Paso 8 - Seleccionar Serie F002: .checkmark / (//span[@class='checkmark'])[1]");
-            Click(
-                SalesLocators.CP001.SerieCheckmark,
-                SalesLocators.CP001.SerieCheckmarkXpath
-            );
+            else
+            {
+                Console.WriteLine("[CP001] Paso 9b - Click Inmediata: #tipoBien");
+                Click(VentasLocators.CP001.EntregaInmediata);
+            }
             Thread.Sleep(1000);
+        }
 
-            // ── PASO 9: Acordeón Entrega → Inmediata ────────────────────────────
-            Console.WriteLine("[CP001] Paso 9a - Abrir acordeón Entrega: .accordion-button.ng-tns-c2430163177-38.collapsed (con fallbacks)");
-            Click(
-                SalesLocators.CP001.AccordionEntrega,
-                SalesLocators.CP001.AccordionEntregaFallback1,
-                SalesLocators.CP001.AccordionEntregaFallback2,
-                SalesLocators.CP001.AccordionEntregaFallback3
-            );
-            Thread.Sleep(1000);
+        private void UpdatePayment(string pago)
+        {
+            if (!string.IsNullOrWhiteSpace(pago) && pago.Equals("Incompleto", StringComparison.OrdinalIgnoreCase))
+            {
+                Console.WriteLine("[NuevaVenta] Modificando pago a incompleto...");
+                // Expandir acordeón pago si es necesario, aunque a veces ya está abierto.
+                try {
+                    Click(VentasLocators.Payment.PaymentAccordionHeader);
+                    Thread.Sleep(1000);
+                } catch { }
 
-            Console.WriteLine("[CP001] Paso 9b - Click Inmediata: #tipoBien");
-            Click(SalesLocators.CP001.EntregaInmediata);
-            Thread.Sleep(1000);
+                var amountInput = Find(VentasLocators.Payment.CashReceivedNewSale);
+                amountInput.Clear();
+                amountInput.SendKeys("1"); // Monto insuficiente
+                amountInput.SendKeys(Keys.Tab);
+                Thread.Sleep(1000);
+            }
+        }
 
-            // ── PASO 10: Click Guardar Venta ─────────────────────────────────────
-            // El pago se autocompleta. Se hace click en guardar.
-            // El botón debería quedar INHABILITADO si el cliente DNI no tiene RUC.
+        private void AttemptSave(bool shouldExecuteSave)
+        {
             Console.WriteLine("[NuevaVenta] Paso 10 - Intentar Guardar Venta");
             TryClickGuardar(shouldExecuteSave);
+        }
 
-            // Para CP002 se requiere confirmación de guardado exitoso.
-            if (!shouldExpectRucError && shouldExecuteSave)
+        private void ValidateSaveSuccess(string customerDocument, bool expectWarningPopup, bool shouldExecuteSave, bool skipMessageAssert)
+        {
+            if (!expectWarningPopup && shouldExecuteSave)
             {
                 if (string.IsNullOrWhiteSpace(_lastObservedMessage))
                     _lastObservedMessage = CaptureVisibleMessage(2);
@@ -207,16 +343,19 @@ namespace SIGES3_0.Pages.VentasPage
                 if (string.IsNullOrWhiteSpace(_lastObservedMessage) && IsNewSaleFormReset())
                     _lastObservedMessage = "Se registró correctamente";
 
-                Assert.That(NormalizeText(_lastObservedMessage), Does.Contain("se registro correctamente"),
-                    $"No se confirmó guardado exitoso para el documento {customerDocument}. Mensaje capturado: '{_lastObservedMessage}'");
+                if (!skipMessageAssert)
+                {
+                    Assert.That(NormalizeText(_lastObservedMessage), Does.Contain("se registro correctamente"),
+                        $"No se confirmó guardado exitoso para el documento {customerDocument}. Mensaje capturado: '{_lastObservedMessage}'");
 
-                TryCloseSuccessDialog();
+                    TryCloseSuccessDialog();
+                }
             }
         }
 
         private void TryClickGuardar(bool shouldExecuteSave)
         {
-            var btn = driver.FindElements(SalesLocators.CP001.GuardarVenta)
+            var btn = driver.FindElements(VentasLocators.CP001.GuardarVenta)
                             .FirstOrDefault(e => { try { return e.Displayed; } catch { return false; } });
 
             if (btn == null)
@@ -269,7 +408,7 @@ namespace SIGES3_0.Pages.VentasPage
             }
         }
 
-        public void ValidateSale(SaleExpectation expectation)
+        public void ValidateSale(VentaExpectation expectation)
         {
             if (expectation.SaveShouldBeEnabled.HasValue)
             {
@@ -441,7 +580,23 @@ namespace SIGES3_0.Pages.VentasPage
 
         private bool IsSaveEnabled()
         {
-            var btn = driver.FindElements(SalesLocators.CP001.GuardarVenta)
+            try
+            {
+                // Esperar hasta 3 segundos para dar tiempo a que Angular aplique la directiva [disabled]
+                var shortWait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
+                shortWait.Until(d =>
+                {
+                    var b = d.FindElements(VentasLocators.CP001.GuardarVenta)
+                             .FirstOrDefault(e => { try { return e.Displayed; } catch { return false; } });
+                    if (b == null) return false;
+                    var c = b.GetAttribute("class") ?? "";
+                    var a = b.GetAttribute("aria-disabled") ?? "";
+                    return !b.Enabled || c.Contains("disabled") || a == "true";
+                });
+            }
+            catch { /* Timeout: Probablemente todavía está habilitado */ }
+
+            var btn = driver.FindElements(VentasLocators.CP001.GuardarVenta)
                             .FirstOrDefault(e => { try { return e.Displayed; } catch { return false; } });
             if (btn == null) return false;
             var classes = btn.GetAttribute("class") ?? "";

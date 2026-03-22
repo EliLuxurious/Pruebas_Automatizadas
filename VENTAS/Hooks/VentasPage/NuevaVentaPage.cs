@@ -1,4 +1,4 @@
-﻿using FluentAssertions.Equivalency;
+using FluentAssertions.Equivalency;
 using NUnit.Framework;
 using NUnit.Framework.Internal.Execution;
 using OpenQA.Selenium;
@@ -31,7 +31,7 @@ namespace SigesCore.Hooks.VentasPage
             this.utilityPage = new UtilityVenta(driver);
         }
 
-        // SELECCIÓN DE MÓDULO Y SUBMÓDULO
+        // SELECCI�N DE M�DULO Y SUBM�DULO
         public void SelectModule(string option)
         {
             utilityPage.ClickButton(SalesModule.btnSalesMenu);
@@ -60,11 +60,11 @@ namespace SigesCore.Hooks.VentasPage
                     break;
 
                 default:
-                    throw new ArgumentException($"El {option} no es válido.");
+                    throw new ArgumentException($"El {option} no es v�lido.");
             }
         }
 
-        // AGREGACIÓN DE CONCEPTO
+        // AGREGACI�N DE CONCEPTO
         public void TypeSelectConcept(string option, string value)
         {
             option = option.ToUpper();
@@ -85,7 +85,7 @@ namespace SigesCore.Hooks.VentasPage
                     break;
 
                 default:
-                    throw new ArgumentException($"El {option} no es válido");
+                    throw new ArgumentException($"El {option} no es v�lido");
             }
         }
 
@@ -123,7 +123,7 @@ namespace SigesCore.Hooks.VentasPage
                 }
                 else
                 {
-                    throw new ArgumentException($"Opción no válida: {option}. Use 'SI' o 'NO'.");
+                    throw new ArgumentException($"Opci�n no v�lida: {option}. Use 'SI' o 'NO'.");
                 }
             }
 
@@ -171,7 +171,7 @@ namespace SigesCore.Hooks.VentasPage
                     break;
 
                 default:
-                    throw new ArgumentException($"La {option} no es válido");
+                    throw new ArgumentException($"La {option} no es v�lido");
             }
             Thread.Sleep(3000);
         }
@@ -191,11 +191,11 @@ namespace SigesCore.Hooks.VentasPage
             }
             else
             {
-                throw new ArgumentException($"Módulo '{module}' no reconocido.");
+                throw new ArgumentException($"M�dulo '{module}' no reconocido.");
             }
         }
 
-        // GUÍA DE REMISIÓN
+        // GU�A DE REMISI�N
         public void ClickDispatchGuide()
         {
             utilityPage.ClickButton(DispatchGuide.DispatchGuideButton);
@@ -215,7 +215,7 @@ namespace SigesCore.Hooks.VentasPage
             utilityPage.ClearAndSetInputField(DispatchGuide.TotalGrossWeightPath, value);
         }
 
-        // NÚMERO DE BULTOS
+        // N�MERO DE BULTOS
         public void NumberOfPackages(string value)
         {
             utilityPage.ClearAndSetInputField(DispatchGuide.NumberOfPackagesPath, value);
@@ -246,44 +246,44 @@ namespace SigesCore.Hooks.VentasPage
             utilityPage.ClearAndSetInputField(DispatchGuide.DriverLicensePath, option);
         }
 
-        // INGRESO DE LA PLACA DEL VEHÍCULO
+        // INGRESO DE LA PLACA DEL VEH�CULO
         public void VehiclePlate(string option)
         {
             utilityPage.ClearAndSetInputField(DispatchGuide.VehiclePlatePath, option);
         }
 
-        // UBIGEO DE DIRECCIÓN DE ORIGEN
+        // UBIGEO DE DIRECCI�N DE ORIGEN
         public void OriginAddressUbigeo(string option)
         {
             utilityPage.OptionsSelector(DispatchGuide.Modal, DispatchGuide.OriginAddressUbigeoPath, option);
         }
 
-        // DETALLE DE DIRECCIÓN DE ORIGEN
+        // DETALLE DE DIRECCI�N DE ORIGEN
         public void OriginAddressDetail(string option)
         {
             utilityPage.ClearAndSetInputField(DispatchGuide.OriginAddressDetailPath, option);
         }
 
-        // UBIGEO DE DIRECCIÓN DE DESTINO
+        // UBIGEO DE DIRECCI�N DE DESTINO
         public void DestinationAddressUbigeo(string option)
         {
             utilityPage.OptionsSelector(DispatchGuide.Modal, DispatchGuide.DestinationAddressUbigeoPath, option);
         }
 
-        // DETALLE DE DIRECCIÓN DE DESTINO
+        // DETALLE DE DIRECCI�N DE DESTINO
         public void DestinationAddressDetail(string option)
         {
             utilityPage.ClearAndSetInputField(DispatchGuide.DestinationAddressDetailPath, option);
         }
 
-        // CLICK EN ACEPTAR REGISTRO DE GUÍA DE REMISIÓN
+        // CLICK EN ACEPTAR REGISTRO DE GU�A DE REMISI�N
         public void AcceptDispatchGuideButton()
         {
             utilityPage.ClickButton(DispatchGuide.AcceptDispatchGuideButtonPath);
             Thread.Sleep(2000);
         }
 
-        // INGRESAR FECHA DE EMISIÓN (PROPIO DE VENTA POR CONTINGENCIA)
+        // INGRESAR FECHA DE EMISI�N (PROPIO DE VENTA POR CONTINGENCIA)
         public void IssueDateContingency(string value) 
         {
             utilityPage.EnterDateClick(Dates.IssueDateFieldContingency, Dates.IssueDateNameContingency, value);
@@ -295,7 +295,7 @@ namespace SigesCore.Hooks.VentasPage
             utilityPage.ClearAndSetInputField(Dates.DocNumberContingency, value);
         }
 
-        // SELECCIÓN DE TIPO DE ENTREGA
+        // SELECCI�N DE TIPO DE ENTREGA
         public void SelectDeliveryType(string option)
         {
             option = option.ToUpper();
@@ -310,7 +310,7 @@ namespace SigesCore.Hooks.VentasPage
             }
             else
             {
-                throw new ArgumentException($"El {option} no es válido");
+                throw new ArgumentException($"El {option} no es v�lido");
             }
         }
 
@@ -337,7 +337,7 @@ namespace SigesCore.Hooks.VentasPage
             }
         }
 
-        // INGRESAR LA INICIAL DEL MONTO A PAGAR (FUNCIÓN PROPIO PARA CRÉDITO RÁPIDO)
+        // INGRESAR LA INICIAL DEL MONTO A PAGAR (FUNCI�N PROPIO PARA CR�DITO R�PIDO)
         public void InitialQuickPayment(string value, string module)
         {
 
@@ -351,7 +351,7 @@ namespace SigesCore.Hooks.VentasPage
             }
             else
             {
-                throw new ArgumentException($"Módulo '{module}' no reconocido.");
+                throw new ArgumentException($"M�dulo '{module}' no reconocido.");
             }
         }
 
@@ -393,7 +393,7 @@ namespace SigesCore.Hooks.VentasPage
                     break;
 
                 default:
-                    throw new ArgumentException($"La opción {option} no es válido");
+                    throw new ArgumentException($"La opci�n {option} no es v�lido");
             }
             Thread.Sleep(4000);
         }
@@ -413,41 +413,41 @@ namespace SigesCore.Hooks.VentasPage
             }
             else
             {
-                throw new ArgumentException($"Módulo '{module}' no reconocido.");
+                throw new ArgumentException($"M�dulo '{module}' no reconocido.");
             }
         }
 
-        // INGRESAR LA INICIAL(PROPIO PARA CRÉDITO CONFIGURADO)
+        // INGRESAR LA INICIAL(PROPIO PARA CR�DITO CONFIGURADO)
         public void Initial(string value)
         {
             utilityPage.WaitModalAndEnterField(ConfiguredCreditPopup.Modal, ConfiguredCreditPopup.InitialField, value);
         }
 
-        // INGRESAR EL NRO DE COUTAS (PROPIO PARA CRÉDITO CONFIGURADO)
+        // INGRESAR EL NRO DE COUTAS (PROPIO PARA CR�DITO CONFIGURADO)
         public void Cuota(string value)
         {
             utilityPage.ClearAndSetInputField(ConfiguredCreditPopup.CoutaField, value);
         }
 
-        //INGRESAR EL NRO DE COUTAS SIN INICIAL (PROPIO PARA CRÉDITO CONFIGURADO)
+        //INGRESAR EL NRO DE COUTAS SIN INICIAL (PROPIO PARA CR�DITO CONFIGURADO)
         public void CoutasWithoutInitial(string value)
         {
             utilityPage.WaitModalAndEnterField(ConfiguredCreditPopup.Modal,ConfiguredCreditPopup.CoutaField, value);
         }
 
-        //INGRESAR EL DÍA DE PAGO DE COUTAS (PROPIO PARA CRÉDITO CONFIGURADO)
+        //INGRESAR EL D�A DE PAGO DE COUTAS (PROPIO PARA CR�DITO CONFIGURADO)
         public void DateCuota(string value)
         {
             utilityPage.OptionsSelector(ConfiguredCreditPopup.Modal, ConfiguredCreditPopup.ExpirationDate, value);
         }
 
-        //GENERAR COUTAS (PROPIO PARA CRÉDITO CONFIGURADO)
+        //GENERAR COUTAS (PROPIO PARA CR�DITO CONFIGURADO)
         public void GenerateQuota()
         {
             utilityPage.ClickButton(ConfiguredCreditPopup.GenerateQuotaButton);
         } 
 
-        //BOTÓN ACEPTAR (PROPIO PARA CRÉDITO CONFIGURADO) 
+        //BOT�N ACEPTAR (PROPIO PARA CR�DITO CONFIGURADO) 
         public void Accept()
         {
             utilityPage.ClickButton(ConfiguredCreditPopup.Accept);

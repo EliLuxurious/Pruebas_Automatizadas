@@ -1,4 +1,4 @@
-ï»¿using OpenQA.Selenium;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SigesCore.Hooks.Utility;
 using SigesCore.Hooks.XPaths;
@@ -27,20 +27,20 @@ namespace SigesCore.Hooks.VentasPage
             this.utilityPage = new UtilityVenta(driverQouta);
         }
 
-        // CLICK EN EL MÃ“DULO DE COTIZACIÃ“N
+        // CLICK EN EL MÓDULO DE COTIZACIÓN
         public void ClickQouta()
         {
             utilityPage.ClickButton(NewQuote.qoute);
             Thread.Sleep(4000);
         }
 
-        // CLICK EN NUEVA COTIZACIÃ“N
+        // CLICK EN NUEVA COTIZACIÓN
         public void ClickNewQouta()
         {
             utilityPage.ClickButton(NewQuote.newQoute);
         }
 
-        // AGREGAR CONCEPTO POR CÃ“DIGO BARRA
+        // AGREGAR CONCEPTO POR CÓDIGO BARRA
         public void ConceptQuota(string value)
         {
             utilityPage.InputAndEnterModal(NewQuote.modal, NewOrders.concept, value);
@@ -58,7 +58,7 @@ namespace SigesCore.Hooks.VentasPage
             utilityPage.CleanFieldModal(NewQuote.modal, NewQuote.unitPrice, value);
         }
 
-        // OPCIÃ“N DE MARCAR O NO EL IGV
+        // OPCIÓN DE MARCAR O NO EL IGV
         public void IGVQuota(string option)
         {
             utilityPage.CheckBox(NewQuote.modal, NewQuote.igv, option);
@@ -107,7 +107,7 @@ namespace SigesCore.Hooks.VentasPage
             Thread.Sleep(2000);
         }
 
-        // GUARDAR EL PEDIDO PREGENERADO DESDE COTIZACIÃ“N
+        // GUARDAR EL PEDIDO PREGENERADO DESDE COTIZACIÓN
         public void SaveOrderFromQuote()
         {
             utilityPage.NewWindow(driverQuota);
@@ -115,7 +115,7 @@ namespace SigesCore.Hooks.VentasPage
             Thread.Sleep(2000);
         }
 
-        // GUARDAR LA VENTA PREGENERADA DESDE COTIZACIÃ“N
+        // GUARDAR LA VENTA PREGENERADA DESDE COTIZACIÓN
         public void SavePregenerateSale()
         {
             utilityPage.NewWindow(driverQuota);

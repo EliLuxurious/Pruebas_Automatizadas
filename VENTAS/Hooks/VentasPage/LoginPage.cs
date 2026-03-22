@@ -1,4 +1,4 @@
-ï»¿using OpenQA.Selenium;
+using OpenQA.Selenium;
 using SIGESLogin.Locators;
 using SIGESLogin.Locators;
 
@@ -13,7 +13,7 @@ namespace SIGESLogin.Pages
             this.driver = driver;
         }
 
-        // MÃ©todos de interacciÃ³n
+        // Métodos de interacción
         public void EnterEmail(string email)
         {
             driver.FindElement(LoginLocators.txtEmail).SendKeys(email);
@@ -34,7 +34,7 @@ namespace SIGESLogin.Pages
             driver.FindElement(LoginLocators.btnConfirm).Click();
         }
 
-        // MÃ©todo compuesto (flujo completo)
+        // Método compuesto (flujo completo)
         public void Login(string email, string password)
         {
             EnterEmail(email);

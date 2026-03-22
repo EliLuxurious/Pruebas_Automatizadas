@@ -1,4 +1,4 @@
-锘縰sing OpenQA.Selenium;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +18,11 @@ namespace PruebaConcepto.Hoks.PagesPruebaConcepto
 
         // Element locators
         By usernameField = By.XPath("//input[@id='Email']"); // campo de usuario
-        By passwordField = By.XPath("//input[@id='Password']"); // campo de contrase帽a
-        By loginButton = By.XPath("//button[contains(text(),'Iniciar')]"); // bot贸n de inicio de sesi贸n 
-        By aceptarButton = By.XPath("//button[contains(text(),'Aceptar')]"); // bot贸n de aceptar
+        By passwordField = By.XPath("//input[@id='Password']"); // campo de contrase馻
+        By loginButton = By.XPath("//button[contains(text(),'Iniciar')]"); // bot髇 de inicio de sesi髇 
+        By aceptarButton = By.XPath("//button[contains(text(),'Aceptar')]"); // bot髇 de aceptar
 
-        // M茅todos para interactuar con los elementos de la p谩gina
+        // M閠odos para interactuar con los elementos de la p醙ina
         public void EnterUsername(string username)
         {
             driver.FindElement(usernameField).SendKeys(username);
@@ -43,7 +43,7 @@ namespace PruebaConcepto.Hoks.PagesPruebaConcepto
             driver.FindElement(aceptarButton).Click();
         }
 
-        // M茅todo para realizar el inicio de sesi贸n completo
+        // M閠odo para realizar el inicio de sesi髇 completo
         public void LoginToApplication(string username, string password)
         {
             EnterUsername(username);

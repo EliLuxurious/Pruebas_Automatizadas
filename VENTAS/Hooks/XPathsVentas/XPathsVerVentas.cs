@@ -1,4 +1,4 @@
-ï»¿using NUnit.Framework;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
@@ -37,7 +37,7 @@ namespace SigesCore.Hooks.XPaths
     {
         public static readonly By modal = By.Id("modal-ver-venta");
 
-        public static readonly By debitNoteButton = By.XPath("//button[contains(text(),'NOTA DE DÃ‰BITO')]");
+        public static readonly By debitNoteButton = By.XPath("//button[contains(text(),'NOTA DE DÉBITO')]");
 
         public static readonly By TypeDebitNotePath = By.Id("tipoDeNota");
 
@@ -54,7 +54,7 @@ namespace SigesCore.Hooks.XPaths
 
     public class CreditNote
     {
-        public static readonly By creditNoteButton = By.XPath("//button[contains(text(),'NOTA DE CRÃ‰DITO')]");
+        public static readonly By creditNoteButton = By.XPath("//button[contains(text(),'NOTA DE CRÉDITO')]");
 
         public static readonly By quantityPath = By.XPath("//tbody/tr[1]/td[8]/input[1]");
 

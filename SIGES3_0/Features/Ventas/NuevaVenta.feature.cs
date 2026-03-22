@@ -28,8 +28,10 @@ namespace SIGES3_0.Features.Ventas
         
         private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Ventas", "NuevaVenta", ("CP001: Factura con cliente DNI sin RUC - Flujo paso a paso con selectores de QA.\r" +
-                "\nCP002: Factura con cliente RUC - Flujo paso a paso con selectores de QA."), global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Ventas", "NuevaVenta", @"CP001: Factura con cliente DNI sin RUC - Flujo paso a paso con selectores de QA.
+CP002: Factura con cliente RUC - Flujo paso a paso con selectores de QA.
+CP003: Boleta con cliente VARIOS y total mayor a 700 para validar inconsistencia.
+CP004: Boleta con cliente RUC.", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
 #line 1 "NuevaVenta.feature"
 #line hidden
@@ -84,76 +86,54 @@ namespace SIGES3_0.Features.Ventas
         
         public virtual async System.Threading.Tasks.Task FeatureBackgroundAsync()
         {
-#line 6
-#line hidden
-#line 7
-    await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                    "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
 #line 8
-    await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                    "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 9
+    await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                    "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 10
+    await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                    "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("CP001 - Factura con cliente DNI sin RUC")]
+        [NUnit.Framework.DescriptionAttribute("Flujo de ventas con diferentes clientes")]
         [NUnit.Framework.CategoryAttribute("NuevaVenta")]
         [NUnit.Framework.CategoryAttribute("VentaNormal")]
-        public async System.Threading.Tasks.Task CP001_FacturaConClienteDNISinRUC()
+        [NUnit.Framework.TestCaseAttribute("CP001", "gaseosa", "7753234003320", "", "75893616", "FACTURA ELECTRONICA", "F002", "Inmediata", "Completo", "NO", "NO", "", null)]
+        [NUnit.Framework.TestCaseAttribute("CP002", "gaseosa", "7753234003320", "", "20542245671", "FACTURA ELECTRONICA", "F002", "Inmediata", "Completo", "SI", "SI", "Se registro correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("CP003", "gaseosa", "7753234003320", "150", "00000000", "BOLETA DE VENTA ELECTRONICA", "B002", "Inmediata", "Completo", "NO", "NO", "total es mayor a 700", null)]
+        [NUnit.Framework.TestCaseAttribute("CP004", "gaseosa", "7753234003320", "", "20542245671", "BOLETA DE VENTA ELECTRONICA", "B002", "Inmediata", "Completo", "SI", "SI", "Se registro correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("CP005", "gaseosa", "7753234003313", "50", "75893616", "BOLETA DE VENTA ELECTRONICA", "B002", "Diferida", "Completo", "SI", "SI", "Se registro correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("CP006", "gaseosa", "Inca Kola Gaseosa Botella 1.5L", "150", "00000000", "NOTA DE VENTA(INTERNA)", "NV02", "Inmediata", "Completo", "SI", "SI", "Se registro correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("CP007", "gaseosa", "Inca Kola Gaseosa Botella 1.5L", "150", "75893616", "NOTA DE VENTA(INTERNA)", "NV02", "Inmediata", "Incompleto", "SI", "SI", "insuficiente", null)]
+        public async System.Threading.Tasks.Task FlujoDeVentasConDiferentesClientes(string caso, string familia, string concepto, string cantidad, string documento, string comprobante, string serie, string entrega, string pago, string habilitado, string ejecutar, string mensaje, string[] exampleTags)
         {
-            string[] tagsOfScenario = new string[] {
+            string[] @__tags = new string[] {
                     "NuevaVenta",
                     "VentaNormal"};
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP001 - Factura con cliente DNI sin RUC", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 12
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            if ((exampleTags != null))
             {
-                testRunner.SkipScenario();
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
             }
-            else
-            {
-                await this.ScenarioStartAsync();
-#line 6
-await this.FeatureBackgroundAsync();
-#line hidden
-#line 13
-    await testRunner.WhenAsync("abre el flujo de ventas \"Nueva Venta\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
+            string[] tagsOfScenario = @__tags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("Caso", caso);
+            argumentsOfScenario.Add("Familia", familia);
+            argumentsOfScenario.Add("Concepto", concepto);
+            argumentsOfScenario.Add("Cantidad", cantidad);
+            argumentsOfScenario.Add("Documento", documento);
+            argumentsOfScenario.Add("Comprobante", comprobante);
+            argumentsOfScenario.Add("Serie", serie);
+            argumentsOfScenario.Add("Entrega", entrega);
+            argumentsOfScenario.Add("Pago", pago);
+            argumentsOfScenario.Add("Habilitado", habilitado);
+            argumentsOfScenario.Add("Ejecutar", ejecutar);
+            argumentsOfScenario.Add("Mensaje", mensaje);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Flujo de ventas con diferentes clientes", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 14
-    await testRunner.AndAsync("ejecuta el flujo de nueva venta \"CP001\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-                global::Reqnroll.Table table6 = new global::Reqnroll.Table(new string[] {
-                            "Campo",
-                            "Valor"});
-                table6.AddRow(new string[] {
-                            "SaveEnabled",
-                            "NO"});
-                table6.AddRow(new string[] {
-                            "ExecuteSave",
-                            "NO"});
-#line 15
-    await testRunner.ThenAsync("valida el resultado esperado de la venta:", ((string)(null)), table6, "Then ");
-#line hidden
-            }
-            await this.ScenarioCleanupAsync();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("CP002 - Factura con cliente RUC 20542245671")]
-        [NUnit.Framework.CategoryAttribute("NuevaVenta")]
-        [NUnit.Framework.CategoryAttribute("VentaNormal")]
-        public async System.Threading.Tasks.Task CP002_FacturaConClienteRUC20542245671()
-        {
-            string[] tagsOfScenario = new string[] {
-                    "NuevaVenta",
-                    "VentaNormal"};
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("CP002 - Factura con cliente RUC 20542245671", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 22
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -163,29 +143,24 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
+#line 8
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 23
+#line 15
     await testRunner.WhenAsync("abre el flujo de ventas \"Nueva Venta\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 24
-    await testRunner.AndAsync("ejecuta el flujo de nueva venta \"CP002\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 16
+    await testRunner.AndAsync(string.Format("ejecuta el flujo de nueva venta con familia \"{0}\", concepto \"{1}\", cantidad \"{2}\"" +
+                            ", documento \"{3}\", comprobante \"{4}\", serie \"{5}\", entrega \"{6}\" y pago \"{7}\"", familia, concepto, cantidad, documento, comprobante, serie, entrega, pago), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table7 = new global::Reqnroll.Table(new string[] {
-                            "Campo",
-                            "Valor"});
-                table7.AddRow(new string[] {
-                            "SaveEnabled",
-                            "SI"});
-                table7.AddRow(new string[] {
-                            "ExecuteSave",
-                            "SI"});
-                table7.AddRow(new string[] {
-                            "Mensaje",
-                            "Se registro correctamente"});
-#line 25
-    await testRunner.ThenAsync("valida el resultado esperado de la venta:", ((string)(null)), table7, "Then ");
+#line 17
+    await testRunner.ThenAsync(string.Format("valida que Guardar habilitado sea \"{0}\"", habilitado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 18
+    await testRunner.AndAsync(string.Format("valida que Ejecutar guardado sea \"{0}\"", ejecutar), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 19
+    await testRunner.AndAsync(string.Format("verifica el mensaje de confirmacion \"{0}\"", mensaje), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

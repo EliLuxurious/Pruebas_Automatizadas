@@ -1,4 +1,4 @@
-ï»¿using FLOTA_VEHICULAR.Pages.Helpers;
+using FLOTA_VEHICULAR.Pages.Helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using System;
@@ -46,7 +46,7 @@ namespace FLOTA_VEHICULAR.Pages
 
             // Comprobar que el login fue exitoso
             var succesElement = driver.FindElement(logo);
-            Assert.IsNotNull(succesElement, "No se encontrÃ³ el elemento de Ã©xito despuÃ©s del login.");
+            Assert.IsNotNull(succesElement, "No se encontró el elemento de éxito después del login.");
         }
     }
 }

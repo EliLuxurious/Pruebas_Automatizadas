@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,7 +59,7 @@ namespace SigesCore.StepDefinitions.Ventas
             viewSale.SelectSale();
         }
 
-        [When(@"Click en el botÃ³n canjear")]
+        [When(@"Click en el botón canjear")]
         public void WhenClickEnElBotonCanjear()
         {
             viewSale.ClickRedeemButton();
@@ -71,7 +71,7 @@ namespace SigesCore.StepDefinitions.Ventas
             viewSale.SetVoucherType(option);
         }
 
-        [When(@"Click en el botÃ³n aceptar")]
+        [When(@"Click en el botón aceptar")]
         public void WhenClickEnElBotonAceptar()
         {
             viewSale.ClickAcceptRedeemButton();
@@ -119,7 +119,7 @@ namespace SigesCore.StepDefinitions.Ventas
             viewSale.DeliveryTypeNoteCredit(option);
         }
 
-        [When(@"Ingresar el interÃ©s total '([^']*)'")]
+        [When(@"Ingresar el interés total '([^']*)'")]
         public void WhenIngresarElInteresTotal(string value)
         {
             viewSale.NoteAmount(value);
@@ -155,31 +155,31 @@ namespace SigesCore.StepDefinitions.Ventas
             viewSale.QuantityCreditNote(value);
         }
 
-        [When(@"Click en el botÃ³n invalidar")]
+        [When(@"Click en el botón invalidar")]
         public void WhenClickEnElBotonInvalidar()
         {
             viewSale.ClickInvalidateDocument();
         }
 
-        [When("Ingresar la observaciÃ³n {string}")]
+        [When("Ingresar la observación {string}")]
         public void WhenIngresarLaObservacion(string value)
         {
             viewSale.Observation(value);
         }
 
-        [When("Click en opciÃ³n sÃ­ para invalidar documento")]
+        [When("Click en opción sí para invalidar documento")]
         public void WhenClickEnOpcionSiParaInvalidarDocumento()
         {
             viewSale.AcceptInvalidation();
         }
 
-        [When(@"Click en el botÃ³n clonar")]
+        [When(@"Click en el botón clonar")]
         public void WhenClickEnElBotonClonar()
         {
             viewSale.CloneSale();
         }
 
-        [Then(@"Click en el botÃ³n imprimir")]
+        [Then(@"Click en el botón imprimir")]
         public void ThenClickEnElBotonImprimir()
         {
             viewSale.PrintDocument();
@@ -191,7 +191,7 @@ namespace SigesCore.StepDefinitions.Ventas
             viewSale.DownloadType(option);
         }
 
-        [When(@"Click en el botÃ³n enviar")]
+        [When(@"Click en el botón enviar")]
         public void WhenClickEnElBotonEnviar()
         {
             viewSale.SendDocument();
@@ -203,7 +203,7 @@ namespace SigesCore.StepDefinitions.Ventas
             viewSale.EmailField(value);
         }
 
-        [When("Click en el botÃ³n agregar el correo")]
+        [When("Click en el botón agregar el correo")]
         public void WhenClickEnElBotonAgregarElCorreo()
         {
             viewSale.AddEmail();

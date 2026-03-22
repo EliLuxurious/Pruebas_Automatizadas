@@ -1,4 +1,4 @@
-ï»¿using SIGES3_0.Pages.Helpers;
+using SIGES3_0.Pages.Helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -26,11 +26,11 @@ namespace SIGES3_0.Pages
         private By loginButton = By.XPath("//button[normalize-space()='Ingresar']");
         private By logo = By.XPath("//img[@alt='Logo']");
 
-        // --- Selectores para NavegaciÃ³n ---
-        private By moduloFacturacionCiclica = By.XPath("//span[normalize-space()='FacturaciÃ³n CÃ­clica']/ancestor::a"); //con IA 
+        // --- Selectores para Navegación ---
+        private By moduloFacturacionCiclica = By.XPath("//span[normalize-space()='Facturación Cíclica']/ancestor::a"); //con IA 
         private By submoduloPlanServicio = By.XPath("//span[normalize-space()='Plan de Servicio']/ancestor::a"); //con IA
 
-        // --- Selectores para Detalles del Plan (LÃ­mites) ---
+        // --- Selectores para Detalles del Plan (Límites) ---
         private By btnDetallesPlan = By.XPath("//span[normalize-space()='Detalles del Plan']/ancestor::button");
         private By txtMinComprobantes = By.Id("min-78"); // ID de f12
         private By txtMaxComprobantes = By.Id("max-78"); // ID de f12
@@ -42,7 +42,7 @@ namespace SIGES3_0.Pages
         // --- Selectores para Datos Generales ---
         private By tabDatosGenerales = By.XPath("//span[normalize-space()='Datos generales']/ancestor::button");
         private By txtNombrePlan =  By.XPath("//input[@placeholder='Nombre del plan']");
-        private By txtDescripcionPlan = By.XPath("//textarea[@placeholder='DescripciÃ³n']");
+        private By txtDescripcionPlan = By.XPath("//textarea[@placeholder='Descripción']");
         private By selectCicloFacturacion = By.CssSelector("select[formcontrolname='billingCycleId']");
         private By txtPrecioPlan = By.XPath("//input[@placeholder='0.00']");
         private By btnGuardar = By.XPath("//button[normalize-space()='Guardar']");
@@ -66,7 +66,7 @@ namespace SIGES3_0.Pages
             Thread.Sleep(4000);
 
             var succesElement = driver.FindElement(logo);
-            Assert.IsNotNull(succesElement, "No se iniciÃ³ sesiÃ³n correctamente.");
+            Assert.IsNotNull(succesElement, "No se inició sesión correctamente.");
         }
 
         public void NavegarAPlanDeServicio()
@@ -100,7 +100,7 @@ namespace SIGES3_0.Pages
 
         public void CompletarDatosGenerales(string nombre, string descripcion, string ciclo, string precio)
         {
-            // 1. Asegurar pestaÃ±a
+            // 1. Asegurar pestaña
             utilities.ClickButton(tabDatosGenerales);
             Thread.Sleep(800); // Angular tabs delay real
 
@@ -140,7 +140,7 @@ namespace SIGES3_0.Pages
                 "TRIMESTRAL" => "1003",
                 "BIMESTRAL" => "1004",
                 "MENSUAL" => "1005",
-                _ => throw new ArgumentException($"Ciclo de facturaciÃ³n no vÃ¡lido: {ciclo}")
+                _ => throw new ArgumentException($"Ciclo de facturación no válido: {ciclo}")
             };
         }
 
@@ -154,7 +154,7 @@ namespace SIGES3_0.Pages
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
-            // Esperar a que aparezca el botÃ³n OK del modal
+            // Esperar a que aparezca el botón OK del modal
             var btnOk = wait.Until(
                 SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(btnOkModal)
             );

@@ -1,4 +1,4 @@
-ï»¿using OpenQA.Selenium;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SigesCore.Hooks.Utility;
 using SigesCore.Hooks.XPaths;
@@ -29,7 +29,7 @@ namespace SigesCore.Hooks.VentasPage
             this.utilityPage = new UtilityVenta(driverOrder);
         }
 
-        // CLICK EN EL MÃ“DULO PEDIDO
+        // CLICK EN EL MÓDULO PEDIDO
         public void ClickOrder()
         {
             utilityPage.ClickButton(NewOrders.order);
@@ -48,7 +48,7 @@ namespace SigesCore.Hooks.VentasPage
             utilityPage.ClickButton(NewOrders.newOrder);
          }
 
-        // AGREGAR CONCEPTO POR CÃ“DIGO BARRA
+        // AGREGAR CONCEPTO POR CÓDIGO BARRA
         public void ConceptOrder(string value)
         {
             utilityPage.InputAndEnterModal(NewOrders.modal, NewOrders.concept, value);
@@ -66,13 +66,13 @@ namespace SigesCore.Hooks.VentasPage
             utilityPage.CleanFieldModal(NewOrders.modal, NewOrders.unitPrice, value);
         }
 
-        // OPCIÃ“N DE MARCAR O NO EL IGV
+        // OPCIÓN DE MARCAR O NO EL IGV
         public void IGVOrder(string option)
         {
             utilityPage.CheckBox(NewOrders.modal, NewOrders.igv, option);
         }
 
-        // OPCIÃ“N DE MARCAR O NO EL DETALLE UNIFICADO
+        // OPCIÓN DE MARCAR O NO EL DETALLE UNIFICADO
         public void UnifiedDetailOrder(string option)
         {
             utilityPage.CheckBox(NewOrders.modal, NewOrders.unifDetail, option);
@@ -135,14 +135,14 @@ namespace SigesCore.Hooks.VentasPage
             utilityPage.ClickButton(InvalidateOrderClass.invalidateOrderButton);
         }
 
-        // INGRESO DE LA OBSERVACIÃ“N PARA INVALIDAR UN PEDIDO
+        // INGRESO DE LA OBSERVACIÓN PARA INVALIDAR UN PEDIDO
         public void AddObservation(string value)
         {
             utilityPage.ClearAndSetInputField(InvalidateOrderClass.observation, value);
             Thread.Sleep(2000);
         }
 
-        // CLICK EN ACEPTAR INVALIDACIÃ“N DE PEDIDO
+        // CLICK EN ACEPTAR INVALIDACIÓN DE PEDIDO
         public void ClickAcceptInvalidation()
         {
             utilityPage.ClickButton(InvalidateOrderClass.accept);

@@ -1,4 +1,4 @@
-Ôªøusing FluentAssertions.Equivalency;
+using FluentAssertions.Equivalency;
 using NUnit.Framework;
 using NUnit.Framework.Internal.Execution;
 using OpenQA.Selenium;
@@ -51,7 +51,7 @@ namespace SigesCore.Hooks.ComprasPage
         public class viewshoppingsection
         {
 
-            //Ingresar a la secci√≥n ver compras
+            //Ingresar a la secciÛn ver compras
 
             public static readonly By PurchaseButton = By.XPath("//span[contains(text(),'Compra')]");
             public static readonly By ViewPurchasesButton = By.XPath("//body/div[@id='wrapper']/aside[1]/div[1]/section[1]/ul[1]/li[5]/ul[1]/li[2]/a[1]");
@@ -68,7 +68,7 @@ namespace SigesCore.Hooks.ComprasPage
             public static readonly By TypeDocumentField = By.XPath("//thead/tr[2]/th[3]/input[1]");
             public static readonly By DocumentField = By.XPath("//thead/tr[2]/th[4]/input[1]");
 
-            //Bot√≥nes
+            //BotÛnes
 
             public static readonly By SearchPurchasesButton = By.XPath("//body/div[@id='wrapper']/div[1]/section[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[3]/button[1]");
             public static readonly By ExportPurchasesSearchButton = By.XPath("//body/div[@id='wrapper']/div[1]/section[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[3]/button[2]\r\n");
@@ -82,16 +82,16 @@ namespace SigesCore.Hooks.ComprasPage
         public void EnterField(By _path, string _field)
         {
             var element = driver.FindElement(_path);
-            element.Click();  // Asegura que el campo est√© activo
+            element.Click();  // Asegura que el campo estÈ activo
 
             // Borra el campo completamente con Ctrl + A y Suprimir
             element.SendKeys(Keys.Control + "a");
             element.SendKeys(Keys.Delete);
 
-            // Espera un momento para asegurarse de que el campo est√© vac√≠o
+            // Espera un momento para asegurarse de que el campo estÈ vacÌo
             Thread.Sleep(100);
 
-            // Verifica si el campo qued√≥ vac√≠o antes de ingresar el nuevo texto
+            // Verifica si el campo quedÛ vacÌo antes de ingresar el nuevo texto
             if (!string.IsNullOrEmpty(element.GetAttribute("value")))
             {
                 element.Clear();
@@ -104,16 +104,16 @@ namespace SigesCore.Hooks.ComprasPage
         public void EnterFieldEspecific(By _path, string _field)
         {
             var element = driver.FindElement(_path);
-            element.Click();  // Asegura que el campo est√© activo
+            element.Click();  // Asegura que el campo estÈ activo
 
             // Borra el campo completamente con Ctrl + A y Suprimir
             element.SendKeys(Keys.Control + "a");
             element.SendKeys(Keys.Delete);
 
-            // Espera un momento para asegurarse de que el campo est√© vac√≠o
+            // Espera un momento para asegurarse de que el campo estÈ vacÌo
             Thread.Sleep(100);
 
-            // Verifica si el campo qued√≥ vac√≠o antes de ingresar el nuevo texto
+            // Verifica si el campo quedÛ vacÌo antes de ingresar el nuevo texto
             if (!string.IsNullOrEmpty(element.GetAttribute("value")))
             {
                 element.Clear();
@@ -162,7 +162,7 @@ namespace SigesCore.Hooks.ComprasPage
                     Thread.Sleep(4000);
                     break;
                 default:
-                    throw new ArgumentException($"La opci√≥n {optionsearch} no es v√°lida.");
+                    throw new ArgumentException($"La opciÛn {optionsearch} no es v·lida.");
             }
         }
 
@@ -198,11 +198,11 @@ namespace SigesCore.Hooks.ComprasPage
                             break;
 
                         default:
-                            throw new ArgumentException($"El filtro {specificoptionsearch} no es v√°lido.");
+                            throw new ArgumentException($"El filtro {specificoptionsearch} no es v·lido.");
                     }
                     break;
                 default:
-                    throw new ArgumentException($"La opci√≥n {optionsearch} no es v√°lida.");
+                    throw new ArgumentException($"La opciÛn {optionsearch} no es v·lida.");
             }
         }
         public void SearchFiltersOneField(string optionsearch, string specificoptionsearch, string datasearch)
@@ -236,12 +236,12 @@ namespace SigesCore.Hooks.ComprasPage
                             Thread.Sleep(4000); break;
 
                         default:
-                            throw new ArgumentException($"El filtro {specificoptionsearch} no es v√°lido.");
+                            throw new ArgumentException($"El filtro {specificoptionsearch} no es v·lido.");
                     }
                     break;
 
                 default:
-                    throw new ArgumentException($"La opci√≥n {optionsearch} no es v√°lida.");
+                    throw new ArgumentException($"La opciÛn {optionsearch} no es v·lida.");
             }
         }
         public void ExportResults()
@@ -250,7 +250,7 @@ namespace SigesCore.Hooks.ComprasPage
             Thread.Sleep(6000);
         }
 
-        By Almacen = By.XPath("//span[contains(text(),'Almac√©n')]");
+        By Almacen = By.XPath("//span[contains(text(),'AlmacÈn')]");
         By guiasderemision = By.XPath("//body/div[@id='wrapper']/aside[1]/div[1]/section[1]/ul[1]/li[7]/ul[1]/li[4]/a[1]");
         By nuevo = By.XPath("//body/div[@id='wrapper']/div[1]/section[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/input[1]");
         By documento = By.XPath("//body/div[@id='wrapper']/div[1]/section[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/input[1]");
@@ -281,7 +281,7 @@ namespace SigesCore.Hooks.ComprasPage
         public class PathsRegisterNewPurchaseFromViewPrchases
         {
 
-            //Ingresar a la secci√≥n ver compras
+            //Ingresar a la secciÛn ver compras
 
             public static readonly By PurchaseButton = By.XPath("//span[contains(text(),'Compra')]");
             public static readonly By ViewPurchasesButton = By.XPath("//body/div[@id='wrapper']/aside[1]/div[1]/section[1]/ul[1]/li[5]/ul[1]/li[2]/a[1]");
@@ -293,19 +293,19 @@ namespace SigesCore.Hooks.ComprasPage
 
             public static readonly By SupplierField = By.XPath("//input[@id='DocumentoIdentidad']");
 
-            //Datos secci√≥n1
+            //Datos secciÛn1
             public static readonly By DateField = By.XPath("//input[@id='fechaRegistro']");
             public static readonly By SeriesField = By.XPath("//input[@ng-model='compra.TipoDeComprobante.SerieIngresada']");
             public static readonly By NumberDocumentField = By.XPath("//input[@ng-model='compra.TipoDeComprobante.NumeroIngresado']");
             public static readonly By ObservationField = By.Id("observacion");
 
-            //Datos secci√≥n2
+            //Datos secciÛn2
 
             //Tipo de entrega
             public static readonly By ImmediateButton = By.XPath("//label[contains(text(),'INMEDIATA')]");
             public static readonly By DiferredButton = By.XPath("//label[contains(text(),'DIFERIDA')]");
 
-            //Almac√©nes
+            //AlmacÈnes
             public static readonly By OneWarehousesButton = By.XPath("//label[@for='radioEntrega3']");
             public static readonly By SeveralWarehousesButton = By.XPath("//label[@for='radioEntrega4']");
 
@@ -388,10 +388,10 @@ namespace SigesCore.Hooks.ComprasPage
             // Crear el objeto SelectElement
             SelectElement dropdown = new SelectElement(selectElement);
 
-            // Seleccionar el ROL pasado como par√°metro
+            // Seleccionar el ROL pasado como par·metro
             dropdown.SelectByText(sexo);
 
-            // Validar que la opci√≥n seleccionada es la esperada
+            // Validar que la opciÛn seleccionada es la esperada
             Assert.That(dropdown.SelectedOption.Text, Is.EqualTo(sexo));
             Thread.Sleep(4000);
 
@@ -430,7 +430,7 @@ namespace SigesCore.Hooks.ComprasPage
             SelectComboBox(PathsRegisterNewPurchaseFromViewPrchases.BrandComboBox, brand);
             Thread.Sleep(2000);
 
-            //Presentaci√≥n
+            //PresentaciÛn
 
             SelectComboBox(PathsRegisterNewPurchaseFromViewPrchases.NameComboBox, name);
             Thread.Sleep(2000);
@@ -463,7 +463,7 @@ namespace SigesCore.Hooks.ComprasPage
             {
                 case "PUBLICO":
 
-                    if (!Public.Selected) // Si no est√° seleccionado, hacer clic
+                    if (!Public.Selected) // Si no est· seleccionado, hacer clic
                     {
                         Public.Click();
                         Thread.Sleep(4000);
@@ -474,7 +474,7 @@ namespace SigesCore.Hooks.ComprasPage
 
                 case "CLIENTE FRECUENTE":
 
-                    if (!FrequentCustomer.Selected) // Si no est√° seleccionado, hacer clic
+                    if (!FrequentCustomer.Selected) // Si no est· seleccionado, hacer clic
                     {
                         FrequentCustomer.Click();
                         Thread.Sleep(4000);
@@ -485,7 +485,7 @@ namespace SigesCore.Hooks.ComprasPage
                     break;
 
                 case "AL POR MAYOR":
-                    if (!Wholesale.Selected) // Si no est√° seleccionado, hacer clic
+                    if (!Wholesale.Selected) // Si no est· seleccionado, hacer clic
                     {
                         Wholesale.Click();
                         Thread.Sleep(4000);
@@ -495,7 +495,7 @@ namespace SigesCore.Hooks.ComprasPage
                     Thread.Sleep(4000);
                     break;
                 default:
-                    throw new ArgumentException($"La opci√≥n {option} no es v√°lido");
+                    throw new ArgumentException($"La opciÛn {option} no es v·lido");
             }
 
             switch (option2)
@@ -518,7 +518,7 @@ namespace SigesCore.Hooks.ComprasPage
                     Thread.Sleep(4000);
                     break;
                 default:
-                    throw new ArgumentException($"La opci√≥n {option2} no es v√°lido");
+                    throw new ArgumentException($"La opciÛn {option2} no es v·lido");
             }
             Save.Click();
         }
@@ -539,7 +539,7 @@ namespace SigesCore.Hooks.ComprasPage
             switch (option)
             {
                 case "BIEN":
-                    if (!goods.Selected) // Si no est√° seleccionado, hacer clic
+                    if (!goods.Selected) // Si no est· seleccionado, hacer clic
                     {
                         goods.Click();
                         Thread.Sleep(2000);
@@ -547,7 +547,7 @@ namespace SigesCore.Hooks.ComprasPage
                     break;
 
                 case "SERVICIO":
-                    if (!services.Selected) // Si no est√° seleccionado, hacer clic
+                    if (!services.Selected) // Si no est· seleccionado, hacer clic
                     {
                         services.Click();
                         Thread.Sleep(2000);
@@ -555,7 +555,7 @@ namespace SigesCore.Hooks.ComprasPage
                     break;
 
                 default:
-                    throw new ArgumentException($"La opci√≥n {option} no es v√°lido");
+                    throw new ArgumentException($"La opciÛn {option} no es v·lido");
             }
 
             EnterField(PathsRegisterNewPurchaseFromViewPrchases.name, name);
@@ -583,7 +583,7 @@ namespace SigesCore.Hooks.ComprasPage
                     break;
 
                 default:
-                    throw new ArgumentException($"La opci√≥n {brand} no es v√°lido");
+                    throw new ArgumentException($"La opciÛn {brand} no es v·lido");
             }
         }
 
@@ -595,14 +595,14 @@ namespace SigesCore.Hooks.ComprasPage
             // Crear el objeto SelectElement
             SelectElement dropdown = new SelectElement(selectElement);
 
-            // Seleccionar el ROL pasado como par√°metro
+            // Seleccionar el ROL pasado como par·metro
             dropdown.SelectByText(data);
 
-            // Validar que la opci√≥n seleccionada es la esperada
+            // Validar que la opciÛn seleccionada es la esperada
             Assert.That(dropdown.SelectedOption.Text, Is.EqualTo(data),
-                $"La opci√≥n seleccionada '{dropdown.SelectedOption.Text}' no coincide con '{data}'");
+                $"La opciÛn seleccionada '{dropdown.SelectedOption.Text}' no coincide con '{data}'");
 
-            // Peque√±a pausa para visualizaci√≥n (opcional)
+            // PequeÒa pausa para visualizaciÛn (opcional)
             Thread.Sleep(1000);
         }
 
@@ -618,7 +618,7 @@ namespace SigesCore.Hooks.ComprasPage
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.CssSelector("div.block-ui-overlay")));
 
-            // Hacer clic en el bot√≥n "NUEVA COMPRA"
+            // Hacer clic en el botÛn "NUEVA COMPRA"
             IWebElement nuevaCompraBtn = driver.FindElement(By.CssSelector("button[title='NUEVA COMPRA']"));
             nuevaCompraBtn.Click();
 
@@ -640,10 +640,10 @@ namespace SigesCore.Hooks.ComprasPage
             // Crear el objeto SelectElement
             SelectElement dropdown = new SelectElement(selectElement);
 
-            // Seleccionar el comprobante pasado como par√°metro
+            // Seleccionar el comprobante pasado como par·metro
             dropdown.SelectByText(comprobante);
 
-            // Validar que la opci√≥n seleccionada es la esperada
+            // Validar que la opciÛn seleccionada es la esperada
             Assert.That(dropdown.SelectedOption.Text, Is.EqualTo(comprobante));
             Thread.Sleep(4000);
 
@@ -673,21 +673,21 @@ namespace SigesCore.Hooks.ComprasPage
             switch (optiondelivery)
             {
                 case "INMEDIATA":
-                    if (!immediateRadioButton.Selected) // Si no est√° seleccionado, hacer clic
+                    if (!immediateRadioButton.Selected) // Si no est· seleccionado, hacer clic
                     {
                         immediateRadioButton.Click();
                         Thread.Sleep(4000);
                     }
                     break;
                 case "DIFERIDA":
-                    if (!deferredRadioButton.Selected) // Si no est√° seleccionado, hacer clic
+                    if (!deferredRadioButton.Selected) // Si no est· seleccionado, hacer clic
                     {
                         deferredRadioButton.Click();
                         Thread.Sleep(2000);
                     }
                     break;
                 default:
-                    throw new ArgumentException($"La opci√≥n '{optiondelivery}' no es v√°lida.");
+                    throw new ArgumentException($"La opciÛn '{optiondelivery}' no es v·lida.");
             }
 
             switch (optionwarehouse)
@@ -707,10 +707,10 @@ namespace SigesCore.Hooks.ComprasPage
                     // Crear el objeto SelectElement
                     SelectElement dropdown = new SelectElement(selectElement);
 
-                    // Seleccionar el ROL pasado como par√°metro
+                    // Seleccionar el ROL pasado como par·metro
                     dropdown.SelectByText(rol);
 
-                    // Validar que la opci√≥n seleccionada es la esperada
+                    // Validar que la opciÛn seleccionada es la esperada
                     Assert.That(dropdown.SelectedOption.Text, Is.EqualTo(rol));
                     Thread.Sleep(4000);
 
@@ -722,10 +722,10 @@ namespace SigesCore.Hooks.ComprasPage
                     // Crear el objeto SelectElement
                     SelectElement dropdown1 = new SelectElement(selectElement1);  // Corregido, antes se usaba selectElement incorrectamente
 
-                    // Seleccionar el ALMAC√âN pasado como par√°metro
+                    // Seleccionar el ALMAC…N pasado como par·metro
                     dropdown1.SelectByText(warehouse);
 
-                    // Validar que la opci√≥n seleccionada es la esperada
+                    // Validar que la opciÛn seleccionada es la esperada
                     Assert.That(dropdown1.SelectedOption.Text, Is.EqualTo(warehouse));
                     Thread.Sleep(4000);
                     break;
@@ -738,7 +738,7 @@ namespace SigesCore.Hooks.ComprasPage
                     }
                     break;
                 default:
-                    throw new ArgumentException($"La opci√≥n '{optionwarehouse}' no es v√°lida.");
+                    throw new ArgumentException($"La opciÛn '{optionwarehouse}' no es v·lida.");
             }
 
             
@@ -757,35 +757,35 @@ namespace SigesCore.Hooks.ComprasPage
             switch (optiontypepurchase)
             {
                 case "EXONERADAS":
-                    if (!ExoneratedRadioButton.Selected) // Si no est√° seleccionado, hacer clic
+                    if (!ExoneratedRadioButton.Selected) // Si no est· seleccionado, hacer clic
                     {
                         ExoneratedRadioButton.Click();
                         Thread.Sleep(4000);
                     }
                     break;
                 case "G":
-                    if (!GRadioButton.Selected) // Si no est√° seleccionado, hacer clic
+                    if (!GRadioButton.Selected) // Si no est· seleccionado, hacer clic
                     {
                         GRadioButton.Click();
                         Thread.Sleep(2000);
                     }
                     break;
                 case "NG":
-                    if (!NGRadioButton.Selected) // Si no est√° seleccionado, hacer clic
+                    if (!NGRadioButton.Selected) // Si no est· seleccionado, hacer clic
                     {
                         NGRadioButton.Click();
                         Thread.Sleep(2000);
                     }
                     break;
                 case "G y NG":
-                    if (!GyNGRadioButton.Selected) // Si no est√° seleccionado, hacer clic
+                    if (!GyNGRadioButton.Selected) // Si no est· seleccionado, hacer clic
                     {
                         GyNGRadioButton.Click();
                         Thread.Sleep(2000);
                     }
                     break;
                 default:
-                    throw new ArgumentException($"La opci√≥n '{optiontypepurchase}' no es v√°lida.");
+                    throw new ArgumentException($"La opciÛn '{optiontypepurchase}' no es v·lida.");
             }
 
 
@@ -839,7 +839,7 @@ namespace SigesCore.Hooks.ComprasPage
             {
                 case "CONTADO":
 
-                    if (!CoRadioButton.Selected) // Si no est√° seleccionado, hacer clic
+                    if (!CoRadioButton.Selected) // Si no est· seleccionado, hacer clic
                     {
                         CoRadioButton.Click();
                         Thread.Sleep(2000);
@@ -848,7 +848,7 @@ namespace SigesCore.Hooks.ComprasPage
 
                 case "CREDITO RAPIDO":
 
-                    if (!CrRadioButton.Selected) // Si no est√° seleccionado, hacer clic
+                    if (!CrRadioButton.Selected) // Si no est· seleccionado, hacer clic
                     {
                         CrRadioButton.Click();
                         Thread.Sleep(2000);
@@ -857,7 +857,7 @@ namespace SigesCore.Hooks.ComprasPage
 
                 case "CREDITO CONFIGURADO":
 
-                    if (!CcRadioButton.Selected) // Si no est√° seleccionado, hacer clic
+                    if (!CcRadioButton.Selected) // Si no est· seleccionado, hacer clic
                     {
                         CcRadioButton.Click();
                         Thread.Sleep(2000);
@@ -889,7 +889,7 @@ namespace SigesCore.Hooks.ComprasPage
             {
                 case "DEPCU":
 
-                    // Seleccionar el m√©todo de pago
+                    // Seleccionar el mÈtodo de pago
                     DepcuRadioButton.Click();
                     Thread.Sleep(2000);
 
@@ -925,7 +925,7 @@ namespace SigesCore.Hooks.ComprasPage
 
                 case "EF":
 
-                    if (!EfectivoRadioButton.Selected) // Si no est√° seleccionado, hacer clic
+                    if (!EfectivoRadioButton.Selected) // Si no est· seleccionado, hacer clic
                     {
                         EfectivoRadioButton.Click();
                         Thread.Sleep(4000);
@@ -941,7 +941,7 @@ namespace SigesCore.Hooks.ComprasPage
 
                     break;
                 default:
-                    throw new ArgumentException($"La opci√≥n {optionmethodpayment} no es v√°lido");
+                    throw new ArgumentException($"La opciÛn {optionmethodpayment} no es v·lido");
             }
         }
 

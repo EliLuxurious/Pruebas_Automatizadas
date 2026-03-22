@@ -1,4 +1,4 @@
-ï»¿using OpenQA.Selenium;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
@@ -59,7 +59,7 @@ namespace FLOTA_VEHICULAR.Pages.Helpers
             }
             catch (NoSuchElementException ex)
             {
-                Console.WriteLine($"Error: No se encontrÃ³ la opciÃ³n '{option}' en el menÃº desplegable. Detalle: {ex.Message}");
+                Console.WriteLine($"Error: No se encontró la opción '{option}' en el menú desplegable. Detalle: {ex.Message}");
             }
             Thread.Sleep(4000);
         }

@@ -1,4 +1,4 @@
-﻿using OpenQA.Selenium;
+using OpenQA.Selenium;
 using SIGES3_0.Pages.VentasPage;
 
 namespace SIGES3_0.StepDefinitions.VentasStep

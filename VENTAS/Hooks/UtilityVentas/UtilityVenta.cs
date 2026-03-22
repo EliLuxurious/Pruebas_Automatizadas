@@ -1,4 +1,4 @@
-Ôªøusing OpenQA.Selenium;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using SigesCore.Hooks.XPaths;
@@ -22,7 +22,7 @@ namespace SigesCore.Hooks.Utility
         }
 
         /// <summary>
-        /// Funci√≥n que espera hasta que el overlay desaparezca de la pantalla.
+        /// FunciÛn que espera hasta que el overlay desaparezca de la pantalla.
         /// </summary>
         /// <param name="overlayLocator">Localizador del overlay a esperar.</param>
         public void WaitForOverlayToDisappear(By overlayLocator)
@@ -43,7 +43,7 @@ namespace SigesCore.Hooks.Utility
         }
 
         /// <summary>
-        /// Funci√≥n que ingresa un valor en un campo de texto asegurando que el campo est√© visible y limpio antes de escribir.
+        /// FunciÛn que ingresa un valor en un campo de texto asegurando que el campo estÈ visible y limpio antes de escribir.
         /// </summary>
         /// <param name="pathComponent">Localizador del campo de texto.</param>
         /// <param name="value">Valor a ingresar en el campo.</param>
@@ -51,7 +51,7 @@ namespace SigesCore.Hooks.Utility
         {
             if (driver.FindElements(pathComponent).Count == 0)
             {
-                throw new NoSuchElementException($"El elemento con el localizador {pathComponent} no se encontr√≥.");
+                throw new NoSuchElementException($"El elemento con el localizador {pathComponent} no se encontrÛ.");
             }
             wait.Until(ExpectedConditions.ElementIsVisible(pathComponent));
             driver.FindElement(pathComponent).SendKeys(Keys.Control + "a");
@@ -62,12 +62,12 @@ namespace SigesCore.Hooks.Utility
 
         /// <summary>
         /// Borra el contenido del campo de entrada y escribe un nuevo valor, 
-        /// luego env√≠a la tecla Enter para confirmar la entrada.
+        /// luego envÌa la tecla Enter para confirmar la entrada.
         /// </summary>
         /// <param name="pathComponent">El localizador del campo de entrada.</param>
-        /// <param name="value">El valor que se ingresar√° en el campo.</param>
+        /// <param name="value">El valor que se ingresar· en el campo.</param>
         /// <remarks>
-        /// Esta funci√≥n invoca <see cref="ClearAndSetInputField(By, string)"/> para borrar y escribir el nuevo valor antes de presionar Enter.
+        /// Esta funciÛn invoca <see cref="ClearAndSetInputField(By, string)"/> para borrar y escribir el nuevo valor antes de presionar Enter.
         /// </remarks>
         public void InputAndEnter(By pathComponent, string value)
         {
@@ -76,7 +76,7 @@ namespace SigesCore.Hooks.Utility
         }
 
         /// <summary>
-        /// Funci√≥n que ingresa un valor en un campo de texto dentro de un modal, asegurando que el campo est√© limpio antes de escribir.
+        /// FunciÛn que ingresa un valor en un campo de texto dentro de un modal, asegurando que el campo estÈ limpio antes de escribir.
         /// </summary>
         /// <param name="pathModal">Localizador del modal donde se encuentra el campo.</param>
         /// <param name="pathComponent">Localizador del campo de texto dentro del modal.</param>
@@ -91,12 +91,12 @@ namespace SigesCore.Hooks.Utility
         }
 
         /// <summary>
-        /// Funci√≥n que limpia un campo de texto dentro de un modal y luego ingresa un nuevo valor.
-        /// Utiliza la funci√≥n EnterField para realizar la acci√≥n de limpieza y escritura.
+        /// FunciÛn que limpia un campo de texto dentro de un modal y luego ingresa un nuevo valor.
+        /// Utiliza la funciÛn EnterField para realizar la acciÛn de limpieza y escritura.
         /// </summary>
         /// <param name="pathModal">Localizador del modal donde se encuentra el campo.</param>
         /// <param name="pathComponent">Localizador del campo de texto dentro del modal.</param>
-        /// <param name="value">Valor a ingresar en el campo despu√©s de limpiarlo.</param>
+        /// <param name="value">Valor a ingresar en el campo despuÈs de limpiarlo.</param>
         public void CleanFieldModal(By pathModal, By pathComponent, string value)
         {
             Thread.Sleep(3000);
@@ -105,12 +105,12 @@ namespace SigesCore.Hooks.Utility
         }
 
         /// <summary>
-        /// Funci√≥n que ingresa un valor en un campo de entrada y luego hace clic en otro componente 
+        /// FunciÛn que ingresa un valor en un campo de entrada y luego hace clic en otro componente 
         /// para asegurar que el dato ingresado se guarde correctamente.
         /// </summary>
-        /// <param name="pathInput">Localizador del campo de entrada donde se ingresar√° el valor.</param>
-        /// <param name="pathName">Localizador del componente en el que se har√° clic despu√©s de ingresar el dato.</param>
-        /// <param name="value">Valor que se ingresar√° en el campo de entrada.</param>
+        /// <param name="pathInput">Localizador del campo de entrada donde se ingresar· el valor.</param>
+        /// <param name="pathName">Localizador del componente en el que se har· clic despuÈs de ingresar el dato.</param>
+        /// <param name="value">Valor que se ingresar· en el campo de entrada.</param>
         public void EnterDateClick(By pathInput, By pathName, string value)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
@@ -122,8 +122,8 @@ namespace SigesCore.Hooks.Utility
         }
 
         /// <summary>
-        /// Funci√≥n que verifica si un elemento existe en la p√°gina dentro del tiempo de espera definido.
-        /// Lanza una excepci√≥n si el elemento no se encuentra dentro del tiempo l√≠mite.
+        /// FunciÛn que verifica si un elemento existe en la p·gina dentro del tiempo de espera definido.
+        /// Lanza una excepciÛn si el elemento no se encuentra dentro del tiempo lÌmite.
         /// </summary>
         /// <param name="pathComponent">Localizador del elemento a verificar.</param>
         public void ElementExists(By pathComponent)
@@ -134,20 +134,20 @@ namespace SigesCore.Hooks.Utility
             }
             catch (WebDriverTimeoutException)
             {
-                throw new NoSuchElementException($"El elemento con el localizador {pathComponent} no se encontr√≥ dentro del tiempo esperado.");
+                throw new NoSuchElementException($"El elemento con el localizador {pathComponent} no se encontrÛ dentro del tiempo esperado.");
             }
         }
 
         /// <summary>
-        /// Funci√≥n que hace clic en un bot√≥n si este es visible y est√° disponible para interactuar.
-        /// Lanza una excepci√≥n si el bot√≥n no se encuentra en la p√°gina.
+        /// FunciÛn que hace clic en un botÛn si este es visible y est· disponible para interactuar.
+        /// Lanza una excepciÛn si el botÛn no se encuentra en la p·gina.
         /// </summary>
-        /// <param name="pathButton">Localizador del bot√≥n a hacer clic.</param>
+        /// <param name="pathButton">Localizador del botÛn a hacer clic.</param>
         public void ClickButton(By pathButton)
         {
             if (driver.FindElements(pathButton).Count == 0)
             {
-                throw new NoSuchElementException($"El elemento con el localizador {pathButton} no se encontr√≥.");
+                throw new NoSuchElementException($"El elemento con el localizador {pathButton} no se encontrÛ.");
             }
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
@@ -156,8 +156,8 @@ namespace SigesCore.Hooks.Utility
         }
 
         /// <summary>
-        /// Funci√≥n que espera hasta que un elemento sea visible en la p√°gina.
-        /// Lanza una excepci√≥n si el elemento no se hace visible dentro del tiempo de espera.
+        /// FunciÛn que espera hasta que un elemento sea visible en la p·gina.
+        /// Lanza una excepciÛn si el elemento no se hace visible dentro del tiempo de espera.
         /// </summary>
         /// <param name="locator">Localizador del elemento a esperar.</param>
         public void WaitForElementVisible(By locator)
@@ -173,7 +173,7 @@ namespace SigesCore.Hooks.Utility
         }
 
         /// <summary>
-        /// Funci√≥n que espera a que un elemento exista y luego a que un overlay sea visible.
+        /// FunciÛn que espera a que un elemento exista y luego a que un overlay sea visible.
         /// Invoca las funciones ElementExists y WaitForElementVisible para verificar la existencia y visibilidad del elemento.
         /// </summary>
         /// <param name="pathExists">Localizador del elemento cuya existencia se debe verificar.</param>
@@ -185,11 +185,11 @@ namespace SigesCore.Hooks.Utility
         }
 
         /// <summary>
-        /// Funci√≥n que selecciona un m√©todo de pago en funci√≥n de la opci√≥n proporcionada.
+        /// FunciÛn que selecciona un mÈtodo de pago en funciÛn de la opciÛn proporcionada.
         /// </summary>
-        /// <param name="path">Localizador del bot√≥n del m√©todo de pago.</param>
-        /// <param name="option">C√≥digo del m√©todo de pago (DEPCU, TRANFON, TDEB, TCRE, EF, PTS).</param>
-        /// <exception cref="ArgumentException">Se lanza si la opci√≥n no es v√°lida.</exception>
+        /// <param name="path">Localizador del botÛn del mÈtodo de pago.</param>
+        /// <param name="option">CÛdigo del mÈtodo de pago (DEPCU, TRANFON, TDEB, TCRE, EF, PTS).</param>
+        /// <exception cref="ArgumentException">Se lanza si la opciÛn no es v·lida.</exception>
         public void PaymentMethodUtility(By pathComponent, string option)
         {
             option = option.ToUpper();
@@ -225,14 +225,14 @@ namespace SigesCore.Hooks.Utility
                     break;
 
                 default:
-                    throw new ArgumentException($"El {pathComponent} no es v√°lido");
+                    throw new ArgumentException($"El {pathComponent} no es v·lido");
             }
         }
 
         /// <summary>
-        /// Funci√≥n que obtiene el m√©todo de pago seleccionado en la interfaz.
+        /// FunciÛn que obtiene el mÈtodo de pago seleccionado en la interfaz.
         /// </summary>
-        /// <returns>El texto del m√©todo de pago seleccionado o una cadena vac√≠a si no hay ninguno seleccionado.</returns>
+        /// <returns>El texto del mÈtodo de pago seleccionado o una cadena vacÌa si no hay ninguno seleccionado.</returns>
         public string ViewPaymentMethod()
         {
             var medioPagoContainer = driver.FindElement(By.Id("medioPago0"));
@@ -251,10 +251,10 @@ namespace SigesCore.Hooks.Utility
         }
 
         /// <summary>
-        /// Funci√≥n que selecciona una opci√≥n dentro de un men√∫ desplegable.
+        /// FunciÛn que selecciona una opciÛn dentro de un men˙ desplegable.
         /// </summary>
         /// <param name="pathComponent">Localizador del elemento desplegable.</param>
-        /// <param name="option">Texto de la opci√≥n que se desea seleccionar.</param>
+        /// <param name="option">Texto de la opciÛn que se desea seleccionar.</param>
         public void SelectOption(By pathComponent, string option)
         {
             try
@@ -272,16 +272,16 @@ namespace SigesCore.Hooks.Utility
             }
             catch (NoSuchElementException ex)
             {
-                Console.WriteLine($"Error: No se encontr√≥ la opci√≥n '{option}' en el men√∫ desplegable. Detalle: {ex.Message}");
+                Console.WriteLine($"Error: No se encontrÛ la opciÛn '{option}' en el men˙ desplegable. Detalle: {ex.Message}");
             }
         }
 
         /// <summary>
-        /// Funci√≥n que selecciona un tipo de comprobante de pago en un men√∫ desplegable.
+        /// FunciÛn que selecciona un tipo de comprobante de pago en un men˙ desplegable.
         /// </summary>
-        /// <param name="path">Localizador del elemento del men√∫ desplegable.</param>
+        /// <param name="path">Localizador del elemento del men˙ desplegable.</param>
         /// <param name="option">Tipo de comprobante a seleccionar (BOLETA, FACTURA o NOTA).</param>
-        /// <exception cref="ArgumentException">Se lanza si la opci√≥n ingresada no es v√°lida.</exception>
+        /// <exception cref="ArgumentException">Se lanza si la opciÛn ingresada no es v·lida.</exception>
         public void SelectInvoiceType(By pathComponent, string option)
         {
             option = option.ToUpper();
@@ -308,18 +308,18 @@ namespace SigesCore.Hooks.Utility
                     break;
 
                 default:
-                    throw new ArgumentException($"El {option} no es v√°lido");
+                    throw new ArgumentException($"El {option} no es v·lido");
             }
         }
 
         /// <summary>
-        /// Ingresa los detalles de pago seg√∫n los medios de pago seleccionado.
+        /// Ingresa los detalles de pago seg˙n los medios de pago seleccionado.
         /// </summary>
-        /// <param name="context">Indica si la venta es en modo Contingencia o Nueva Venta y Modo Caja, estos dos √∫ltimos son totalmente iguales.</param>
+        /// <param name="context">Indica si la venta es en modo Contingencia o Nueva Venta y Modo Caja, estos dos ˙ltimos son totalmente iguales.</param>
         /// <param name="bankAccount">Cuenta bancaria seleccionado.</param>
         /// <param name="typeCard">Tipo de tarjeta (solo aplica para pagos con tarjeta).</param>
-        /// <param name="info">Informaci√≥n adicional requerida seg√∫n el m√©todo de pago.</param>
-        /// <exception cref="ArgumentException">Se lanza si el tipo de pago no es v√°lido.</exception>
+        /// <param name="info">InformaciÛn adicional requerida seg˙n el mÈtodo de pago.</param>
+        /// <exception cref="ArgumentException">Se lanza si el tipo de pago no es v·lido.</exception>
         public void EnterCardDetails(string context, string bankAccount, string typeCard, string info)
         {
             string option = ViewPaymentMethod().ToUpper();
@@ -357,18 +357,18 @@ namespace SigesCore.Hooks.Utility
                     break;
 
                 default:
-                    throw new ArgumentException($"El tipo de pago {option} no es v√°lido.");
+                    throw new ArgumentException($"El tipo de pago {option} no es v·lido.");
             }
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(4));
             wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.CssSelector(".loading")));
         }
 
         /// <summary>
-        /// Selecciona una opci√≥n dentro de un componente desplegable dentro de un modal espec√≠fico.
+        /// Selecciona una opciÛn dentro de un componente desplegable dentro de un modal especÌfico.
         /// </summary>
         /// <param name="pathModal">Localizador del modal contenedor del componente.</param>
         /// <param name="pathComponent">Localizador del componente desplegable dentro del modal.</param>
-        /// <param name="value">Texto de la opci√≥n que se desea seleccionar.</param>
+        /// <param name="value">Texto de la opciÛn que se desea seleccionar.</param>
         public void OptionsSelector(By pathModal, By pathComponent, string value)
         {
             Thread.Sleep(4000);
@@ -383,7 +383,7 @@ namespace SigesCore.Hooks.Utility
         }
 
         /// <summary>
-        /// Espera a que un modal est√© presente y verifica que un campo espec√≠fico dentro de √©l exista.
+        /// Espera a que un modal estÈ presente y verifica que un campo especÌfico dentro de Èl exista.
         /// </summary>
         /// <param name="pathModal">Localizador del modal contenedor.</param>
         /// <param name="pathComponent">Localizador del componente dentro del modal que debe verificarse.</param>
@@ -395,10 +395,10 @@ namespace SigesCore.Hooks.Utility
         }
 
         /// <summary>
-        /// Espera a que un modal est√© presente, verifica que un campo espec√≠fico exista y luego ingresa un valor en dicho campo.
+        /// Espera a que un modal estÈ presente, verifica que un campo especÌfico exista y luego ingresa un valor en dicho campo.
         /// </summary>
         /// <param name="pathModal">Localizador del modal contenedor.</param>
-        /// <param name="pathComponent">Localizador del campo dentro del modal donde se ingresar√° el valor.</param>
+        /// <param name="pathComponent">Localizador del campo dentro del modal donde se ingresar· el valor.</param>
         /// <param name="value">Valor a ingresar en el campo.</param>
         public void WaitModalAndEnterField(By pathModal, By pathComponent, string value)
         {
@@ -407,10 +407,10 @@ namespace SigesCore.Hooks.Utility
         }
 
         /// <summary>
-        /// Maneja el ingreso de datos seg√∫n el tipo de cliente seleccionado en un modal.
+        /// Maneja el ingreso de datos seg˙n el tipo de cliente seleccionado en un modal.
         /// </summary>
         /// <param name="pathModal">Localizador del modal contenedor.</param>
-        /// <param name="pathCustomer">Localizador del campo de identificaci√≥n del cliente (DNI/RUC).</param>
+        /// <param name="pathCustomer">Localizador del campo de identificaciÛn del cliente (DNI/RUC).</param>
         /// <param name="pathAlias">Localizador del campo de alias del cliente.</param>
         /// <param name="option">Tipo de cliente (DNI, RUC, ALIAS, VARIOS).</param>
         /// <param name="value">Valor a ingresar en el campo correspondiente.</param>
@@ -431,16 +431,16 @@ namespace SigesCore.Hooks.Utility
             }
             else
             {
-                throw new ArgumentException($"El {option} no es v√°lido");
+                throw new ArgumentException($"El {option} no es v·lido");
             }
         }
 
         /// <summary>
-        /// Maneja la selecci√≥n de un checkbox dentro de un modal seg√∫n la opci√≥n proporcionada.
+        /// Maneja la selecciÛn de un checkbox dentro de un modal seg˙n la opciÛn proporcionada.
         /// </summary>
         /// <param name="pathModal">Localizador del modal contenedor.</param>
         /// <param name="pathComponent">Localizador del checkbox a seleccionar.</param>
-        /// <param name="option">Opci√≥n que indica si se debe marcar el checkbox ("SI") o dejarlo sin cambios ("NO").</param>
+        /// <param name="option">OpciÛn que indica si se debe marcar el checkbox ("SI") o dejarlo sin cambios ("NO").</param>
         public void CheckBox(By pathModal, By pathComponent, string option)
         {
             IWebElement orderModal = driver.FindElement(pathModal);
@@ -455,17 +455,17 @@ namespace SigesCore.Hooks.Utility
             }
             else
             {
-                throw new ArgumentException($"El {option} no es v√°lido");
+                throw new ArgumentException($"El {option} no es v·lido");
             }
         }
 
         /// <summary>
-        /// Selecciona el tipo de entrega dentro de un modal seg√∫n la opci√≥n proporcionada.
+        /// Selecciona el tipo de entrega dentro de un modal seg˙n la opciÛn proporcionada.
         /// </summary>
         /// <param name="pathModal">Localizador del modal contenedor.</param>
-        /// <param name="pathImmediate">Localizador del bot√≥n de entrega inmediata.</param>
-        /// <param name="pathDeferred">Localizador del bot√≥n de entrega diferida.</param>
-        /// <param name="option">Opci√≥n de entrega a seleccionar: "INMEDIATA" o "DIFERIDA".</param>
+        /// <param name="pathImmediate">Localizador del botÛn de entrega inmediata.</param>
+        /// <param name="pathDeferred">Localizador del botÛn de entrega diferida.</param>
+        /// <param name="option">OpciÛn de entrega a seleccionar: "INMEDIATA" o "DIFERIDA".</param>
         public void SelectDeliveryType(By pathModal, By pathImmediate, By pathDeferred, string option)
         {
             IWebElement orderModal = driver.FindElement(pathModal);
@@ -480,14 +480,14 @@ namespace SigesCore.Hooks.Utility
             }
             else
             {
-                throw new ArgumentException($"El {option} no es v√°lido");
+                throw new ArgumentException($"El {option} no es v·lido");
             }
         }
 
         /// <summary>
         /// Cambia el foco del WebDriver a una nueva ventana cuando se abre una.
         /// </summary>
-        /// <param name="driverType">Instancia del WebDriver utilizada para la automatizaci√≥n.</param>
+        /// <param name="driverType">Instancia del WebDriver utilizada para la automatizaciÛn.</param>
         public void NewWindow(IWebDriver driverType)
         {
             WebDriverWait wait = new WebDriverWait(driverType, TimeSpan.FromSeconds(10));
