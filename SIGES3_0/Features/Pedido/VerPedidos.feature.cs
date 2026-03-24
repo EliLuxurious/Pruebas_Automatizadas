@@ -186,8 +186,8 @@ await this.FeatureBackgroundAsync();
 #line 48
  await testRunner.AndAsync("el usuario registra el pedido", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 49
- await testRunner.ThenAsync(string.Format("el sistema valida \'{0}\'", resultado_Esperado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line 50
+ await testRunner.ThenAsync(string.Format("el sistema valida el resultado del pedido \'{0}\'", resultado_Esperado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -198,7 +198,7 @@ await this.FeatureBackgroundAsync();
         [NUnit.Framework.CategoryAttribute("InvalidarPedido")]
         [NUnit.Framework.TestCaseAttribute("1", "Producto agotado", "SI", "el pedido se Invalido correctamente", null)]
         [NUnit.Framework.TestCaseAttribute("2", "ninguno", "SI", "Boton SI deshabilitado", null)]
-        public async System.Threading.Tasks.Task InvalidarPedido_CasosVariados(string caso, string motivo, string accion, string resultado, string[] exampleTags)
+        public async System.Threading.Tasks.Task InvalidarPedido_CasosVariados(string caso, string motivo, string accion, string resultado_Esperado, string[] exampleTags)
         {
             string[] @__tags = new string[] {
                     "InvalidarPedido"};
@@ -211,9 +211,9 @@ await this.FeatureBackgroundAsync();
             argumentsOfScenario.Add("caso", caso);
             argumentsOfScenario.Add("motivo", motivo);
             argumentsOfScenario.Add("accion", accion);
-            argumentsOfScenario.Add("resultado", resultado);
+            argumentsOfScenario.Add("resultado_esperado", resultado_Esperado);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Invalidar pedido - Casos variados", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 61
+#line 62
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -226,20 +226,20 @@ this.ScenarioInitialize(scenarioInfo);
 #line 8
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 63
+#line 64
  await testRunner.GivenAsync("existe un pedido en estado registrado para invalidar", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 64
+#line 65
  await testRunner.WhenAsync("el usuario selecciona la opción \'Invalidar pedido\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 65
+#line 66
  await testRunner.AndAsync(string.Format("el usuario ingresa el motivo \'{0}\'", motivo), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 66
+#line 67
  await testRunner.AndAsync(string.Format("el usuario confirma \'{0}\'", accion), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 67
- await testRunner.ThenAsync(string.Format("el sistema valida \'{0}\'", resultado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line 69
+ await testRunner.ThenAsync(string.Format("el sistema valida el resultado del pedido \'{0}\'", resultado_Esperado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -248,18 +248,39 @@ await this.FeatureBackgroundAsync();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Confirmar pedido - Casos variados")]
         [NUnit.Framework.CategoryAttribute("ConfirmarPedido")]
-        [NUnit.Framework.TestCaseAttribute("1", "false", "factura electronica", "F002", "20542245671", "inmediata", "true", "true", "Pedido confirmado correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("2", "false", "factura electronica", "F002", "75971755", "inmediata", "false", "true", "Para emitir Factura Electrónica, el cliente debe tener RUC (11 dígitos)", null)]
-        [NUnit.Framework.TestCaseAttribute("3", "false", "factura electronica", "ninguno", "20542245671", "diferida", "false", "true", "Ingrese el numero de serie", null)]
-        [NUnit.Framework.TestCaseAttribute("4", "false", "factura electronica", "F002", "20542245671", "inmediata", "false", "false", "Monto insuficiente", null)]
-        [NUnit.Framework.TestCaseAttribute("5", "true", "boleta de venta electronica", "B002", "75971635", "diferida", "false", "true", "Pedido confirmado correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("6", "false", "boleta de venta electronica", "B002", "00000000", "inmediata", "false", "true", "Pedido confirmado correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("7", "true", "boleta de venta electronica", "B002", "00000000", "inmediata", "false", "true", "Es necesario identificar al cliente, el total es mayor a S/.700", null)]
-        [NUnit.Framework.TestCaseAttribute("8", "false", "nota de venta", "NV02", "75971755", "diferida", "false", "true", "Pedido confirmado correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("9", "false", "nota de venta", "NV02", "20602945589", "inmediata", "false", "true", "Pedido confirmado correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("10", "false", "nota de venta", "NV02", "20602945589", "inmediata", "false", "false", "Monto insuficiente", null)]
-        [NUnit.Framework.TestCaseAttribute("11", "false", "boleta de venta electronica", "B002", "00000000", "inmediata", "true", "true", "Para guia de remision Necesita identificar al cliente con RUC o DNI", null)]
-        public async System.Threading.Tasks.Task ConfirmarPedido_CasosVariados(string caso, string total_Mayor_700, string tipo_Comprobante, string serie, string cliente, string tipo_Entrega, string guia_Remision, string monto_Cubre_Total, string resultado, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("1", "false", "factura electronica", "F002", "20542245671", "inmediata", "true", "Hoy", "100", "10", "Publico", "20602945589", "NA", "NA", "NA", "Huanuco-Leoncio-Rupa Rupa", "Lima-Lima-Lima", "true", "Pedido confirmado correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("2", "false", "factura electronica", "F002", "75971755", "inmediata", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Para emitir Factura Electrónica, el cliente debe tener RUC (11 dígitos)", null)]
+        [NUnit.Framework.TestCaseAttribute("3", "false", "factura electronica", "ninguno", "20542245671", "diferida", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Ingrese el numero de serie", null)]
+        [NUnit.Framework.TestCaseAttribute("4", "false", "factura electronica", "F002", "20542245671", "inmediata", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "false", "Monto insuficiente", null)]
+        [NUnit.Framework.TestCaseAttribute("5", "true", "boleta de venta electronica", "B002", "75971635", "diferida", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Pedido confirmado correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("6", "false", "boleta de venta electronica", "B002", "00000000", "inmediata", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Pedido confirmado correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("7", "true", "boleta de venta electronica", "B002", "00000000", "inmediata", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Es necesario identificar al cliente, el total es mayor a S/.700", null)]
+        [NUnit.Framework.TestCaseAttribute("8", "false", "nota de venta", "NV02", "75971755", "diferida", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Pedido confirmado correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("9", "false", "nota de venta", "NV02", "20602945589", "inmediata", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Pedido confirmado correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("10", "false", "nota de venta", "NV02", "20602945589", "inmediata", "false", "NA", "NA", "NA", "NA", "20602945589", "NA", "NA", "NA", "NA", "NA", "false", "Monto insuficiente", null)]
+        [NUnit.Framework.TestCaseAttribute("11", "false", "boleta de venta electronica", "B002", "00000000", "inmediata", "true", "Hoy", "100", "10", "Privado", "NA", "71310154", "M-71310154", "2770XS", "Arequipa-Arequipa-Arequipa", "Lima-Lima-Lima", "true", "Boton de guia de remision inhabilitado \"Para guia de remision Necesita identifica" +
+            "r al cliente con RUC o DNI\"", null)]
+        public async System.Threading.Tasks.Task ConfirmarPedido_CasosVariados(
+                    string caso, 
+                    string total_Mayor_700, 
+                    string tipo_Comprobante, 
+                    string serie, 
+                    string cliente, 
+                    string tipo_Entrega, 
+                    string guia_Remision, 
+                    string fecha_De_Inicio_Traslado, 
+                    string peso_Bruto, 
+                    string cantidad_Bultos, 
+                    string tipo_Transporte, 
+                    string transportista_Ruc, 
+                    string dni_Conductor, 
+                    string numero_Licencia, 
+                    string numero_Placa, 
+                    string direccion_Origen, 
+                    string direccion_Destino, 
+                    string monto_Cubre_Total, 
+                    string resultado_Esperado, 
+                    string[] exampleTags)
         {
             string[] @__tags = new string[] {
                     "ConfirmarPedido"};
@@ -276,10 +297,20 @@ await this.FeatureBackgroundAsync();
             argumentsOfScenario.Add("cliente", cliente);
             argumentsOfScenario.Add("tipo_entrega", tipo_Entrega);
             argumentsOfScenario.Add("guia_remision", guia_Remision);
+            argumentsOfScenario.Add("fecha_de_inicio_traslado", fecha_De_Inicio_Traslado);
+            argumentsOfScenario.Add("peso_bruto", peso_Bruto);
+            argumentsOfScenario.Add("cantidad_bultos", cantidad_Bultos);
+            argumentsOfScenario.Add("tipo_transporte", tipo_Transporte);
+            argumentsOfScenario.Add("transportista_ruc", transportista_Ruc);
+            argumentsOfScenario.Add("dni_conductor", dni_Conductor);
+            argumentsOfScenario.Add("numero_licencia", numero_Licencia);
+            argumentsOfScenario.Add("numero_placa", numero_Placa);
+            argumentsOfScenario.Add("direccion_origen", direccion_Origen);
+            argumentsOfScenario.Add("direccion_destino", direccion_Destino);
             argumentsOfScenario.Add("monto_cubre_total", monto_Cubre_Total);
-            argumentsOfScenario.Add("resultado", resultado);
+            argumentsOfScenario.Add("resultado_esperado", resultado_Esperado);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Confirmar pedido - Casos variados", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 76
+#line 116
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -292,26 +323,82 @@ this.ScenarioInitialize(scenarioInfo);
 #line 8
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 78
+#line 118
  await testRunner.GivenAsync(string.Format("existe un pedido base registrado para confirmar con total mayor a 700 \'{0}\'", total_Mayor_700), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 79
+#line 119
  await testRunner.WhenAsync("el usuario selecciona la opción \'Confirmar pedido\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 80
+#line 120
  await testRunner.AndAsync(string.Format("el usuario configura la facturacion \'{0}\' \'{1}\' \'{2}\'", tipo_Comprobante, serie, cliente), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 81
+#line 121
  await testRunner.AndAsync(string.Format("el usuario configura la entrega \'{0}\' \'{1}\'", tipo_Entrega, guia_Remision), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 82
+#line 123
+ await testRunner.AndAsync(string.Format("el usuario completa la guia de remision \'{0}\' \'{1}\' \'{2}\' \'{3}\' \'{4}\' \'{5}\' \'{6}\'" +
+                            " \'{7}\' \'{8}\' \'{9}\' \'{10}\'", guia_Remision, fecha_De_Inicio_Traslado, peso_Bruto, cantidad_Bultos, tipo_Transporte, transportista_Ruc, dni_Conductor, numero_Licencia, numero_Placa, direccion_Origen, direccion_Destino), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 124
  await testRunner.AndAsync(string.Format("el usuario configura el pago \'efectivo\' \'{0}\'", monto_Cubre_Total), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 83
+#line 125
  await testRunner.AndAsync("el usuario confirma el pedido preparado", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 84
- await testRunner.ThenAsync(string.Format("el sistema valida \'{0}\'", resultado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line 127
+ await testRunner.ThenAsync(string.Format("el sistema valida el resultado del pedido \'{0}\'", resultado_Esperado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Editar pedido - Casos variados")]
+        [NUnit.Framework.CategoryAttribute("EditarPedido")]
+        [NUnit.Framework.TestCaseAttribute("1", "cambio_valido", "Se registró correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("2", "sin_cambios", "Debe realizar alguna modificación", null)]
+        [NUnit.Framework.TestCaseAttribute("3", "datos_invalidos", "Error de validación en los datos", null)]
+        public async System.Threading.Tasks.Task EditarPedido_CasosVariados(string caso, string tipo_Cambio, string resultado_Esperado, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "EditarPedido"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("caso", caso);
+            argumentsOfScenario.Add("tipo_cambio", tipo_Cambio);
+            argumentsOfScenario.Add("resultado_esperado", resultado_Esperado);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar pedido - Casos variados", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 145
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 8
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 147
+ await testRunner.GivenAsync("existe un pedido base registrado para editar", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 148
+ await testRunner.WhenAsync("el usuario selecciona la opción \'Editar pedido\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 149
+ await testRunner.AndAsync(string.Format("el usuario realiza el cambio \'{0}\'", tipo_Cambio), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 150
+ await testRunner.AndAsync("el usuario hace clic en \'Editar pedido\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 152
+ await testRunner.ThenAsync(string.Format("el sistema valida el resultado del pedido \'{0}\'", resultado_Esperado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

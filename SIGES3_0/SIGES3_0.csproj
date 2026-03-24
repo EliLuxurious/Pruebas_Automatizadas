@@ -23,6 +23,7 @@
     <Folder Include="Drivers\" />
     <Folder Include="Features\FacturacionCiclica\" />
     <Folder Include="Features\Cotizacion\" />
+    <Folder Include="Features\ComponentesReut\" />
     <Folder Include="Features\Pedido\" />
     <Folder Include="Pages\CotizacionPage\" />
     <Folder Include="StepDefinitions\CotizacionStep\" />

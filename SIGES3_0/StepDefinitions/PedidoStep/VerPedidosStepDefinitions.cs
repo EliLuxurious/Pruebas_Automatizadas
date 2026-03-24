@@ -2,6 +2,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using Reqnroll;
+using SIGES3_0.Pages.Componentes;
 using SIGES3_0.Pages.PedidoPage;
 using System;
 
@@ -12,13 +13,15 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
     {
         private readonly IWebDriver driver;
         private readonly VerPedidosPage verPedidosPage;
+        private readonly GuiaRemisionPage guiaRemisionPage;
 
-        
+
 
         public VerPedidosStepDefinitions(IWebDriver driver)
         {
             this.driver = driver;
             verPedidosPage = new VerPedidosPage(driver);
+            guiaRemisionPage = new GuiaRemisionPage(driver); // ← agregar
         }
 
         // -------------------------
@@ -117,7 +120,7 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
         // CLIENTE
         // -------------------------
 
-        [When(@"el usuario abre la sección '(.*)'")]
+        /*[When(@"el usuario abre la sección '(.*)'")]
         public void WhenElUsuarioAbreLaSeccion(string seccion)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
@@ -133,6 +136,12 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
 
             ((IJavaScriptExecutor)driver)
                 .ExecuteScript("arguments[0].click();", elemento);
+        }*/
+
+        [When("el usuario abre la sección {string}")]
+        public void WhenElUsuarioAbreLaSeccion(string seccion)
+        {
+            verPedidosPage.AbrirSeccion(seccion);
         }
 
 
@@ -206,6 +215,46 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
             verPedidosPage.ConfigurarEntregaConfirmacion(tipoEntrega, guiaRemision);
         }
 
+        //GUIA DE REMISION
+        [When(@"el usuario completa la guia de remision '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)'")]
+        public void WhenElUsuarioCompletaLaGuiaDeRemision(
+        string guiaRemision,
+        string fechaTraslado,
+        string pesoBruto,
+        string cantidadBultos,
+        string tipoTransporte,
+        string transportistaRuc,
+        string dniConductor,
+        string numeroLicencia,
+        string numeroPlaca,
+        string direccionOrigen,
+        string direccionDestino)
+        {
+            // Si no aplica guía, no hacer nada
+            if (!guiaRemision.Trim().Equals("true", StringComparison.OrdinalIgnoreCase))
+            {
+                Console.WriteLine("[GuiaRemision] No aplica, se omite.");
+                return;
+            }
+
+            guiaRemisionPage.ExpandirDatosGenerales();
+            guiaRemisionPage.ValidarDestinatarioAutocompletado();
+            guiaRemisionPage.IngresarFechaTraslado(fechaTraslado);
+            guiaRemisionPage.IngresarPesoBruto(pesoBruto);
+            guiaRemisionPage.IngresarNumeroBultos(cantidadBultos);
+
+            guiaRemisionPage.ExpandirDatosTransporte();
+            guiaRemisionPage.SeleccionarTipoTransporte(tipoTransporte);
+            guiaRemisionPage.IngresarTransportistaPublico(transportistaRuc);
+            guiaRemisionPage.IngresarConductorPrivado(dniConductor);
+            guiaRemisionPage.IngresarNumeroLicencia(numeroLicencia);
+            guiaRemisionPage.IngresarNumeroPlaca(numeroPlaca);
+            guiaRemisionPage.SeleccionarDireccionOrigen(direccionOrigen);
+            guiaRemisionPage.SeleccionarDireccionDestino(direccionDestino);
+
+            guiaRemisionPage.GuardarGuia();
+        }
+
         [When(@"el usuario configura el pago '(.*)' '(.*)'")]
         public void WhenElUsuarioConfiguraElPago(string tipoPago, string montoCubreTotal)
         {
@@ -218,13 +267,18 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
             verPedidosPage.ConfirmarPedidoPreparado();
         }
 
-        [Then(@"el sistema valida '(.*)'")]
-        public void ThenElSistemaValida(string resultadoEsperado)
+        
+        [Then(@"el sistema valida el resultado del pedido '(.*)'")]
+        public void ThenElSistemaValidaElResultadoDelPedido(string resultadoEsperado)
         {
-            string resultado = verPedidosPage.ObtenerResultadoSistema();
+            string resultado = verPedidosPage.ObtenerResultadoSistema()?.Trim() ?? string.Empty;
+            string esperado = resultadoEsperado?.Trim() ?? string.Empty;
 
-            Assert.IsTrue(
-                resultado.ToLower().Contains(resultadoEsperado.ToLower()),
+            Assert.That(resultado, Is.Not.Empty, "El sistema no devolvió ningún mensaje o resultado visible.");
+
+            Assert.That(
+                resultado,
+                Does.Contain(esperado).IgnoreCase,
                 $"Resultado esperado: {resultadoEsperado}. Resultado obtenido: {resultado}"
             );
         }

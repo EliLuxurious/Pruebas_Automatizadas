@@ -1,8 +1,9 @@
-using SIGES3_0.Pages.Helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
+using SIGES3_0.Pages.Componentes;
+using SIGES3_0.Pages.Helpers;
 using System;
 using System.Linq;
 
@@ -12,6 +13,7 @@ namespace SIGES3_0.Pages.PedidoPage
     {
         private readonly IWebDriver driver;
         private readonly WebDriverWait wait;
+       
 
 
         public VerPedidosPage(IWebDriver driver)
@@ -19,6 +21,8 @@ namespace SIGES3_0.Pages.PedidoPage
             this.driver = driver;
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
+
+        
         // --- Navegación ---
         private By moduloPedido = By.XPath("//span[normalize-space()='Pedidos']/ancestor::a");
         private By submoduloVerPedidos = By.XPath("//span[normalize-space()='Ver Pedidos']");
@@ -85,7 +89,7 @@ namespace SIGES3_0.Pages.PedidoPage
         // ENTREGA CONFIRMAR
         private By rbtEntregaInmediataConfirmacion = By.XPath("//label[normalize-space()='Inmediata']");
         private By rbtEntregaDiferidaConfirmacion = By.XPath("//label[normalize-space()='Diferida']");
-        private By btnGuiaRemisionConfirmacion = By.XPath("//button[contains(text(),'Guía de remisión') or contains(text(),'Guia de remisión')]");
+        private By btnGuiaRemisionConfirmacion = By.XPath("//span[normalize-space()='Guia de remisión']");
         private By btnCerrarEntregaConfirmacion = By.XPath("(//*[contains(@class,'ri-arrow-up-s-line') or contains(@class,'ri-arrow-down-s-line')])[2]");
 
         // PAGO CONFIRMAR
@@ -339,13 +343,30 @@ namespace SIGES3_0.Pages.PedidoPage
 
         public void SeleccionarEntrega(string tipoEntrega)
         {
-            if (tipoEntrega == "inmediata")
-                driver.FindElement(rbtEntregaInmediata).Click();
+            var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
 
-            if (tipoEntrega == "diferida")
-                driver.FindElement(rbtEntregaDiferida).Click();
+            string xpathOpcion = tipoEntrega.Trim().Equals("inmediata", StringComparison.OrdinalIgnoreCase)
+                ? "//label[normalize-space()='Inmediata']"
+                : "//label[normalize-space()='Diferida']";
+
+            var opcion = waitLong.Until(d =>
+            {
+                try
+                {
+                    var elementos = d.FindElements(By.XPath(xpathOpcion));
+                    return elementos.FirstOrDefault(e => e.Displayed);
+                }
+                catch { return null; }
+            });
+
+            ((IJavaScriptExecutor)driver)
+                .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", opcion);
+
+            ((IJavaScriptExecutor)driver)
+                .ExecuteScript("arguments[0].click();", opcion);
         }
 
+        
 
         public void RegistrarPedido()
         {
@@ -422,13 +443,18 @@ namespace SIGES3_0.Pages.PedidoPage
         }
 
         //ABRIR SECCION
-
-        private void AbrirSeccion(string seccion)
+        public void AbrirSeccion(string seccion)
         {
             var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(25));
 
-            // Importante: anclar el click al header del acordeón (evita clics en el menú lateral u otros textos)
-            // HTML real muestra: h2.accordion-header con id "heading-collapse-facturación"
+            // Esperar que no haya overlay activo
+            try
+            {
+                waitLong.Until(ExpectedConditions.InvisibilityOfElementLocated(loadingContainer));
+            }
+            catch { }
+
+            // Localizar el h2 header del acordeón
             var header = waitLong.Until(d =>
             {
                 try
@@ -438,17 +464,25 @@ namespace SIGES3_0.Pages.PedidoPage
                     ));
                     return h2.Displayed ? h2 : null;
                 }
-                catch
-                {
-                    return null;
-                }
+                catch { return null; }
             });
 
-            ((IJavaScriptExecutor)driver)
-                .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", header);
+            // Verificar si el contenido YA está visible (acordeón abierto)
+            bool yaEstaAbierto = EsContenidoVisible(seccion);
 
-            // Si existe un botón dentro del header (patrón típico accordion), clickeamos ese botón.
-            IWebElement clickable = null;
+            if (yaEstaAbierto)
+            {
+                Console.WriteLine($"[AbrirSeccion] Sección '{seccion}' ya está abierta, no se hace click.");
+                return;
+            }
+
+    // Scroll y click en el header
+    ((IJavaScriptExecutor)driver)
+        .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", header);
+
+            Thread.Sleep(300);
+
+            IWebElement clickable;
             try
             {
                 clickable = header.FindElement(By.XPath(".//button | .//*[@role='button']"));
@@ -458,38 +492,92 @@ namespace SIGES3_0.Pages.PedidoPage
                 clickable = header;
             }
 
-            waitLong.Until(d => clickable.Displayed && clickable.Enabled);
+    ((IJavaScriptExecutor)driver)
+        .ExecuteScript("arguments[0].click();", clickable);
 
-            ((IJavaScriptExecutor)driver)
-                .ExecuteScript("arguments[0].click();", clickable);
+            // Esperar que el contenido quede visible
+            waitLong.Until(d => EsContenidoVisible(seccion));
+        }
 
-            // Esperar a que el acordeón quede expandido (la clase "is-expanded" aparece en app-form-accordion)
-            waitLong.Until(d =>
+        // Verifica si el contenido de la sección está visible buscando en todo el DOM
+        private bool EsContenidoVisible(string seccion)
+        {
+            try
             {
-                try
+                if (seccion.Trim().Equals("Facturación", StringComparison.OrdinalIgnoreCase))
                 {
-                    var accordion = d.FindElement(By.XPath(
-                        $"//app-form-accordion[contains(@class,'is-expanded')][.//h2[contains(@class,'accordion-header')][.//*[contains(normalize-space(.),'{seccion}')]]]"
-                    ));
-                    return accordion.Displayed;
+                    return driver.FindElements(
+                        By.CssSelector("input.search-input[placeholder='Buscar...']")
+                    ).Any(e => e.Displayed);
                 }
-                catch
-                {
-                    return false;
-                }
-            });
 
-            // Esperas específicas por sección para asegurar que el contenido ya renderizó
-            if (seccion.Trim().Equals("Facturación", StringComparison.OrdinalIgnoreCase))
-            {
-                waitLong.Until(ExpectedConditions.ElementIsVisible(txtCliente));
+                if (seccion.Trim().Equals("Entrega", StringComparison.OrdinalIgnoreCase))
+                {
+                    return driver.FindElements(
+                        By.XPath("//label[normalize-space()='Inmediata' or normalize-space()='Diferida']")
+                    ).Any(e => e.Displayed);
+                }
+
+                // Genérico: busca el app-form-accordion con clase is-expanded
+                return driver.FindElements(By.XPath(
+                    $"//app-form-accordion[contains(@class,'is-expanded')]" +
+                    $"[.//h2[contains(@class,'accordion-header')][.//*[contains(normalize-space(.),'{seccion}')]]]"
+                )).Any(e => e.Displayed);
             }
-            else if (seccion.Trim().Equals("Entrega", StringComparison.OrdinalIgnoreCase))
+            catch
             {
-                waitLong.Until(ExpectedConditions.ElementToBeClickable(rbtEntregaInmediata));
+                return false;
             }
         }
 
+        private IWebElement ObtenerAccordion(string seccion)
+        {
+            var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+
+            return waitLong.Until(d =>
+            {
+                try
+                {
+                    var acc = d.FindElement(By.XPath(
+                        $"//app-form-accordion[.//h2[contains(@class,'accordion-header') and contains(normalize-space(.),'{seccion}')]]"
+                    ));
+
+                    return acc.Displayed ? acc : null;
+                }
+                catch
+                {
+                    return null;
+                }
+            });
+        }
+
+        private bool ContenidoVisible(IWebElement accordion, string seccion)
+        {
+            try
+            {
+                if (seccion.Trim().Equals("Facturación", StringComparison.OrdinalIgnoreCase))
+                {
+                    return accordion.FindElements(By.CssSelector("input.search-input[placeholder='Buscar...']"))
+                                    .Any(e => e.Displayed);
+                }
+
+                if (seccion.Trim().Equals("Entrega", StringComparison.OrdinalIgnoreCase))
+                {
+                    return accordion.FindElements(By.XPath(
+                        ".//label[normalize-space()='Inmediata' or normalize-space()='Diferida']"
+                    )).Any(e => e.Displayed);
+                }
+
+                return accordion.FindElements(By.XPath(".//div[contains(@class,'accordion-body')]"))
+                                .Any(e => e.Displayed);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+       
 
 
         // Crea un nuevo pedido
@@ -552,18 +640,45 @@ namespace SIGES3_0.Pages.PedidoPage
             }
         }
 
+        //public void IngresarMotivoInvalidacion(string motivo)
+        //{
+        //    if (motivo.Trim().Equals("ninguno", StringComparison.OrdinalIgnoreCase))
+        //        return;
+
+        //    var input = wait.Until(
+        //        ExpectedConditions.ElementIsVisible(txtMotivoInvalidacion)
+        //    );
+
+        //    input.Clear();
+        //    input.SendKeys(motivo);
+        //}
         public void IngresarMotivoInvalidacion(string motivo)
         {
             if (motivo.Trim().Equals("ninguno", StringComparison.OrdinalIgnoreCase))
                 return;
 
             var input = wait.Until(
-                ExpectedConditions.ElementIsVisible(txtMotivoInvalidacion)
+                SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(txtMotivoInvalidacion)
             );
 
             input.Clear();
             input.SendKeys(motivo);
+
+            wait.Until(d =>
+            {
+                try
+                {
+                    var valor = input.GetAttribute("value") ?? "";
+                    return valor.Trim().Equals(motivo.Trim(), StringComparison.OrdinalIgnoreCase);
+                }
+                catch
+                {
+                    return false;
+                }
+            });
         }
+
+
 
         public void ConfirmarInvalidacion(string accion)
         {
@@ -572,7 +687,7 @@ namespace SIGES3_0.Pages.PedidoPage
                 accion.Trim().Equals("Si", StringComparison.OrdinalIgnoreCase))
             {
                 var botonSi = wait.Until(
-                    ExpectedConditions.ElementExists(btnSiInvalidar)
+                    ExpectedConditions.ElementIsVisible(btnSiInvalidar)
                 );
 
                 bool deshabilitado =
@@ -583,14 +698,30 @@ namespace SIGES3_0.Pages.PedidoPage
                 if (deshabilitado)
                 {
                     Console.WriteLine("El botón SI está deshabilitado, no se hace click.");
+                    ultimaAccion = "invalidar_deshabilitado";
                     return;
                 }
 
+                var inputMotivo = wait.Until(
+                    ExpectedConditions.ElementIsVisible(txtMotivoInvalidacion)
+                );
+
+                wait.Until(d =>
+                {
+                    try
+                    {
+                        var valor = inputMotivo.GetAttribute("value") ?? "";
+                        return valor.Trim().Length > 0;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                });
+
                 ultimaAccion = "invalidar";
 
-                ((IJavaScriptExecutor)driver)
-                    .ExecuteScript("arguments[0].click();", botonSi);
-
+                ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", botonSi);
                 return;
             }
 
@@ -600,7 +731,7 @@ namespace SIGES3_0.Pages.PedidoPage
                     ExpectedConditions.ElementToBeClickable(btnNoInvalidar)
                 );
 
-                botonNo.Click();
+                ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", botonNo);
             }
         }
 
@@ -760,34 +891,120 @@ namespace SIGES3_0.Pages.PedidoPage
             });
         }
 
+        //private void AbrirEntregaConfirmacion()
+        //{
+        //    var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+
+        //    var elemento = waitLong.Until(
+        //        ExpectedConditions.ElementToBeClickable(seccionEntregaConfirmacion)
+        //    );
+
+        //    ((IJavaScriptExecutor)driver)
+        //        .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", elemento);
+
+        //    ((IJavaScriptExecutor)driver)
+        //        .ExecuteScript("arguments[0].click();", elemento);
+
+        //    // Esperar contenido de Entrega (radios) visible
+        //    waitLong.Until(d =>
+        //    {
+        //        try
+        //        {
+        //            var el = d.FindElement(rbtEntregaInmediataConfirmacion);
+        //            return el.Displayed;
+        //        }
+        //        catch
+        //        {
+        //            return false;
+        //        }
+        //    });
+        //}
+
         private void AbrirEntregaConfirmacion()
         {
-            var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(25));
 
-            var elemento = waitLong.Until(
-                ExpectedConditions.ElementToBeClickable(seccionEntregaConfirmacion)
-            );
+            // Si los radios ya están visibles, no hacer nada
+            bool yaVisible = driver.FindElements(By.XPath(
+                "//label[normalize-space()='Inmediata' or normalize-space()='Diferida']"
+            )).Any(e => e.Displayed);
 
-            ((IJavaScriptExecutor)driver)
-                .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", elemento);
+            if (yaVisible)
+            {
+                Console.WriteLine("[AbrirEntregaConfirmacion] Ya está visible, no se hace click.");
+                return;
+            }
 
-            ((IJavaScriptExecutor)driver)
-                .ExecuteScript("arguments[0].click();", elemento);
-
-            // Esperar contenido de Entrega (radios) visible
-            waitLong.Until(d =>
+            // Buscar el header de Entrega y hacer click
+            var header = waitLong.Until(d =>
             {
                 try
                 {
-                    var el = d.FindElement(rbtEntregaInmediataConfirmacion);
-                    return el.Displayed;
+                    var candidatos = d.FindElements(By.XPath(
+                        "//*[.//span[normalize-space()='Entrega'] or normalize-space()='Entrega']" +
+                        "[self::div or self::button or self::h2 or self::h3]"
+                    ));
+                    return candidatos.FirstOrDefault(e => e.Displayed && e.Enabled);
                 }
-                catch
-                {
-                    return false;
-                }
+                catch { return null; }
             });
+
+            ((IJavaScriptExecutor)driver)
+                .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", header);
+            Thread.Sleep(300);
+            ((IJavaScriptExecutor)driver)
+                .ExecuteScript("arguments[0].click();", header);
+
+            // Esperar radios visibles
+            waitLong.Until(d =>
+                d.FindElements(By.XPath(
+                    "//label[normalize-space()='Inmediata' or normalize-space()='Diferida']"
+                )).Any(e => e.Displayed)
+            );
         }
+
+        public void ConfigurarEntregaConfirmacion(string tipoEntrega, string guiaRemision)
+        {
+            try
+            {
+                var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(25));
+
+                AbrirEntregaConfirmacion();
+
+                if (tipoEntrega.Trim().Equals("inmediata", StringComparison.OrdinalIgnoreCase))
+                {
+                    var radio = waitLong.Until(d =>
+                        d.FindElements(By.XPath("//label[normalize-space()='Inmediata']"))
+                         .FirstOrDefault(e => e.Displayed)
+                    );
+                    ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", radio);
+                }
+
+                if (tipoEntrega.Trim().Equals("diferida", StringComparison.OrdinalIgnoreCase))
+                {
+                    var radio = waitLong.Until(d =>
+                        d.FindElements(By.XPath("//label[normalize-space()='Diferida']"))
+                         .FirstOrDefault(e => e.Displayed)
+                    );
+                    ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", radio);
+                }
+
+                if (guiaRemision.Trim().Equals("true", StringComparison.OrdinalIgnoreCase))
+                {
+                    var btnGuia = waitLong.Until(
+                        ExpectedConditions.ElementToBeClickable(btnGuiaRemisionConfirmacion)
+                    );
+                    ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", btnGuia);
+                }
+
+                Thread.Sleep(500);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("Error configurando entrega de confirmación: " + e.Message);
+            }
+        }
+
 
         private void AbrirPagoConfirmacion()
         {
@@ -951,30 +1168,7 @@ namespace SIGES3_0.Pages.PedidoPage
                 Assert.Fail("Error configurando facturación de confirmación: " + e.Message);
             }
         }
-        public void ConfigurarEntregaConfirmacion(string tipoEntrega, string guiaRemision)
-        {
-            try
-            {
-                AbrirEntregaConfirmacion();
-
-                if (tipoEntrega.Trim().Equals("inmediata", StringComparison.OrdinalIgnoreCase))
-                    wait.Until(ExpectedConditions.ElementToBeClickable(rbtEntregaInmediataConfirmacion)).Click();
-
-                if (tipoEntrega.Trim().Equals("diferida", StringComparison.OrdinalIgnoreCase))
-                    wait.Until(ExpectedConditions.ElementToBeClickable(rbtEntregaDiferidaConfirmacion)).Click();
-
-                if (guiaRemision.Trim().Equals("true", StringComparison.OrdinalIgnoreCase))
-                    wait.Until(ExpectedConditions.ElementToBeClickable(btnGuiaRemisionConfirmacion)).Click();
-
-                Thread.Sleep(500);
-
-                AbrirEntregaConfirmacion();
-            }
-            catch (Exception e)
-            {
-                Assert.Fail("Error configurando entrega de confirmación: " + e.Message);
-            }
-        }
+       
 
         public void ConfigurarPagoConfirmacion(string tipoPago, string montoCubreTotal)
         {
@@ -1131,9 +1325,15 @@ namespace SIGES3_0.Pages.PedidoPage
                 }
                 catch { }
 
-                // Botón SI deshabilitado
+                // Invalidación: botón SI deshabilitado
                 try
                 {
+                    if (ultimaAccion == "invalidar_deshabilitado")
+                    {
+                        ultimaAccion = "";
+                        return "Boton SI deshabilitado";
+                    }
+
                     var botonSi = driver.FindElement(btnSiInvalidar);
                     bool deshabilitado =
                         !botonSi.Enabled ||
