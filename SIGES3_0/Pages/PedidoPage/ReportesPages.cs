@@ -129,6 +129,8 @@ namespace SIGES3_0.Pages.PedidoPages
             }
         }
 
+        private bool fechaFinalInvalidaOBloqueada = false;
+
         public void IngresarFechaHoraInicial(string fechaHora)
         {
             try
@@ -146,11 +148,23 @@ namespace SIGES3_0.Pages.PedidoPages
         {
             try
             {
+                fechaFinalInvalidaOBloqueada = false;
+
                 CerrarDatePickerSiEstaAbierto();
                 SeleccionarFechaHoraDesdePicker(inputFechaHoraFinal, fechaHora);
             }
             catch (Exception ex)
             {
+                string mensaje = ex.Message.ToLower();
+
+                if (mensaje.Contains("no se logró seleccionar el día correcto") ||
+                    mensaje.Contains("falló seleccionando día"))
+                {
+                    fechaFinalInvalidaOBloqueada = true;
+                    Console.WriteLine("La fecha final no pudo seleccionarse porque el sistema la bloqueó: " + ex.Message);
+                    return;
+                }
+
                 Assert.Fail("Error al ingresar fecha y hora final: " + ex.Message);
             }
         }
@@ -159,6 +173,12 @@ namespace SIGES3_0.Pages.PedidoPages
         {
             try
             {
+                if (fechaFinalInvalidaOBloqueada)
+                {
+                    Console.WriteLine("No se hace clic en Ver Reporte porque la fecha es inválida.");
+                    return;
+                }
+
                 Console.WriteLine("Fecha inicial antes de consultar: " + ObtenerValorSeguro(inputFechaHoraInicial));
                 Console.WriteLine("Fecha final antes de consultar: " + ObtenerValorSeguro(inputFechaHoraFinal));
 
@@ -182,6 +202,7 @@ namespace SIGES3_0.Pages.PedidoPages
 
                 Console.WriteLine("Resultado esperado: " + resultadoEsperado);
                 Console.WriteLine("Resultado actual: " + resultadoActual);
+                Console.WriteLine("fechaFinalInvalidaOBloqueada: " + fechaFinalInvalidaOBloqueada);
 
                 switch (resultadoEsperado.Trim().ToLower())
                 {
@@ -196,6 +217,16 @@ namespace SIGES3_0.Pages.PedidoPages
                             $"Se esperaba un mensaje de error por fecha inválida, pero se obtuvo: {resultadoActual}"
                         );
                         break;
+
+                    case "no permite aplicar el filtro inhabilitado":
+                        Assert.That(
+                            fechaFinalInvalidaOBloqueada,
+                            Is.True,
+                            "Se esperaba que el sistema bloquee la fecha final inválida, pero no ocurrió."
+                        );
+
+                        Console.WriteLine("Validación correcta: el sistema bloqueó la selección de fecha final inválida.");
+                        return;
 
                     case "aplica el filtro correctamente":
                         Assert.That(
@@ -218,7 +249,6 @@ namespace SIGES3_0.Pages.PedidoPages
                 Assert.Fail("Error validando resultado del reporte: " + ex.Message);
             }
         }
-
         // =========================
         // RESULTADO
         // =========================
