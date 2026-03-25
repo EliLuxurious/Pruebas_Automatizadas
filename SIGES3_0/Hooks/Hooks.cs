@@ -54,6 +54,7 @@ namespace SIGES3_0.Hooks
         }
 
         [BeforeScenario(Order = 1)]
+
         public void FirstBeforeScenario(ScenarioContext scenarioContext)
         {
             IWebDriver driver = CreateChromeDriver();
@@ -64,6 +65,7 @@ namespace SIGES3_0.Hooks
             var feature = _feature ?? throw new InvalidOperationException("El feature actual no fue inicializado.");
             _scenario = feature.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
         }
+
 
         [AfterScenario]
         public void AfterScenario(ScenarioContext scenarioContext)

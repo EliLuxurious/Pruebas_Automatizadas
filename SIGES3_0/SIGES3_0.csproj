@@ -12,7 +12,7 @@
     <PackageReference Include="ExtentReports" Version="5.0.4" />
     <PackageReference Include="FluentAssertions" Version="8.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
-    <PackageReference Include="Reqnroll.NUnit" Version="2.2.1" />
+    <PackageReference Include="Reqnroll.NUnit" Version="2.3.0" />
     <PackageReference Include="nunit" Version="3.14.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
     <PackageReference Include="Selenium.Support" Version="4.35.0" />
@@ -23,6 +23,11 @@
   <ItemGroup>
     <Folder Include="Drivers\" />
     <Folder Include="Features\FacturacionCiclica\" />
+    <Folder Include="Features\Cotizacion\" />
+    <Folder Include="Features\ComponentesReut\" />
+    <Folder Include="Features\Pedido\" />
+    <Folder Include="Pages\CotizacionPage\" />
+    <Folder Include="StepDefinitions\CotizacionStep\" />
     <Folder Include="Support\" />
   </ItemGroup>
 
