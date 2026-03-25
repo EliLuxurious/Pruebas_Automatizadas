@@ -11,7 +11,7 @@ Background:
 
 @NuevaVenta
 @VentaNormal
-Scenario Outline: Flujo de ventas con Nueva venta 
+Scenario Outline: Flujo de ventas con Venta Normal 
     When abre el flujo de ventas "Nueva Venta"
     And ejecuta el flujo de nueva venta con familia "<Familia>", concepto "<Concepto>", cantidad "<Cantidad>", documento "<Documento>", comprobante "<Comprobante>", serie "<Serie>", entrega "<Entrega>" y pago "<Pago>"
     Then valida que Guardar habilitado sea "<Habilitado>"
