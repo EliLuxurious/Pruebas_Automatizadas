@@ -96,6 +96,12 @@ namespace SIGES3_0.Features.Ventas
     await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
                     "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
+#line 9
+    await testRunner.AndAsync("el usuario accede al módulo \'Ventas\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 10
+    await testRunner.AndAsync("el usuario accede al submodulo \'Ver Ventas\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
@@ -107,7 +113,7 @@ namespace SIGES3_0.Features.Ventas
                     "CanjearComprobante"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Canjear comprobante", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 11
+#line 13
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -120,37 +126,34 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 12
-    await testRunner.WhenAsync("abre el flujo de ventas \"Ver Ventas\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 13
-    await testRunner.AndAsync("Ingresar fecha inicial \"27/01/2025\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
 #line 14
-    await testRunner.AndAsync("Ingresar fecha final \"20/02/2025\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.WhenAsync("Ingresar fecha inicial \"27/01/2025\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 15
-    await testRunner.AndAsync("Click en consultar ventas", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync("Ingresar fecha final \"20/02/2025\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 16
-    await testRunner.AndAsync("Buscar venta \'NV02-53\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync("Click en consultar ventas", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 17
-    await testRunner.AndAsync("Activar canje", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync("Buscar venta \'NV02-53\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 18
-    await testRunner.AndAsync("Seleccionar venta", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync("Activar canje", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 19
-    await testRunner.AndAsync("Click en el boton canjear", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync("Seleccionar venta", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 20
-    await testRunner.AndAsync("Seleccionar el tipo de comprobante \"BOLETA DE VENTA ELECTRONICA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync("Click en el boton canjear", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 21
-    await testRunner.AndAsync("Click en el boton aceptar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync("Seleccionar el tipo de comprobante \"BOLETA DE VENTA ELECTRONICA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 22
+    await testRunner.AndAsync("Click en el boton aceptar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 23
     await testRunner.ThenAsync("Ver comprobante", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -166,7 +169,7 @@ await this.FeatureBackgroundAsync();
                     "NotaDebito"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Emitir nota de debito con aumento en el valor", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 25
+#line 26
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -179,11 +182,8 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 26
-    await testRunner.WhenAsync("abre el flujo de ventas \"Ver Ventas\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
 #line 27
-    await testRunner.AndAsync("Ingresar fecha inicial \"27/01/2025\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.WhenAsync("Ingresar fecha inicial \"27/01/2025\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 28
     await testRunner.AndAsync("Ingresar fecha final \"19/02/2025\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -245,33 +245,30 @@ this.ScenarioInitialize(scenarioInfo);
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 42
-    await testRunner.WhenAsync("abre el flujo de ventas \"Ver Ventas\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+    await testRunner.WhenAsync("Ingresar fecha inicial \"27/01/2025\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 43
-    await testRunner.AndAsync("Ingresar fecha inicial \"27/01/2025\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 44
     await testRunner.AndAsync("Ingresar fecha final \"13/02/2025\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 45
+#line 44
     await testRunner.AndAsync("Click en consultar ventas", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 46
+#line 45
     await testRunner.AndAsync("Buscar venta \'B002-27909\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 47
+#line 46
     await testRunner.AndAsync("Ver venta buscada", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 48
+#line 47
     await testRunner.AndAsync("Click en el boton enviar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 49
+#line 48
     await testRunner.AndAsync("Ingresar correo \'kevinsanchezcabrerakevin@gmail.com\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 50
+#line 49
     await testRunner.AndAsync("Click en el boton agregar el correo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 51
+#line 50
     await testRunner.ThenAsync("Enviar comprobante de venta", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

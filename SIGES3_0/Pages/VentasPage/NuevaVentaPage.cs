@@ -23,43 +23,6 @@ namespace SIGES3_0.Pages.VentasPage
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
         }
 
-        public void OpenSalesFlow(string salesFlow)
-        {
-            utilities.ClickButton(VentasLocators.Navigation.SalesMenu);
-            Thread.Sleep(500);
-            utilities.ClickButton(VentasLocators.Navigation.NewSale);
-            Thread.Sleep(000);
-            // Si no cargó el formulario, ir directo a la URL de nueva venta
-            if (!driver.FindElements(VentasLocators.CP001.IgvCheck).Any(e => e.Displayed))
-            {
-                var baseUrl = new Uri(driver.Url).GetLeftPart(UriPartial.Authority);
-                driver.Navigate().GoToUrl(baseUrl + "/sales/new-sales");
-                Thread.Sleep(3000);
-            }
-        }
-
-        public void ExecuteFlow(string caseId)
-        {
-            var normalized = (caseId ?? string.Empty).Trim().ToUpperInvariant();
-            switch (normalized)
-            {
-                case "CP001":
-                    ExecuteSaleFlow(
-                        customerDocument: "75893616",
-                        shouldExpectRucError: true,
-                        shouldExecuteSave: false);
-                    break;
-                case "CP002":
-                    ExecuteSaleFlow(
-                        customerDocument: "20542245671",
-                        shouldExpectRucError: false,
-                        shouldExecuteSave: true);
-                    break;
-                default:
-                    throw new ArgumentException($"Caso no soportado: '{caseId}'. Use CP001 o CP002.");
-            }
-        }
-
         public void ExecuteFlowDynamic(string familia, string concepto, string cantidad, string documento, string comprobante, string serie, string entrega, string pago)
         {
             _wasSaveEnabled = false;
@@ -125,61 +88,32 @@ namespace SIGES3_0.Pages.VentasPage
             ValidateSaveSuccess(documento, expectWarningPopup, shouldExecuteSave, isIncompletePayment);
         }
 
-        /// <summary>
-        /// Flujo base de nueva venta reutilizado para CP001 y CP002.
-        /// </summary>
-        private void ExecuteSaleFlow(string customerDocument, bool shouldExpectRucError, bool shouldExecuteSave)
-        {
-            _wasSaveEnabled = false;
-            _wasSaveExecuted = false;
-            _lastObservedMessage = string.Empty;
-
-            WaitForFormReady();
-
-            ToggleIgvAndDetUnif();
-
-            SelectProduct("gaseosa", "Coca-Cola");
-
-            UpdateQuantity("");
-
-            ExpandBillingAccordion();
-
-            SelectVoucherTypeAndSeries("FACTURA ELECTRÓNICA", "F002");
-
-            EnterAndSearchCustomer(customerDocument);
-
-            if (shouldExpectRucError)
-            {
-                HandleWarningPopup();
-            }
-
-            SelectDeliveryType("Inmediata");
-
-            AttemptSave(shouldExecuteSave);
-
-            ValidateSaveSuccess(customerDocument, shouldExpectRucError, shouldExecuteSave, false);
-        }
-
         private void WaitForFormReady()
         {
+            if (!driver.FindElements(VentasLocators.CP001.IgvCheck).Any(e => e.Displayed))
+            {
+                var baseUrl = new Uri(driver.Url).GetLeftPart(UriPartial.Authority);
+                driver.Navigate().GoToUrl(baseUrl + "/sales/new-sales");
+                Thread.Sleep(3000);
+            }
             wait.Until(_ => driver.FindElements(VentasLocators.CP001.IgvCheck).Any(e => e.Displayed));
             Thread.Sleep(1000);
         }
 
         private void ToggleIgvAndDetUnif()
         {
-            Console.WriteLine("[CP001] Paso 1 - Marcar IGV: #flexCheckDefault");
+            Console.WriteLine("[NuevaVenta] Marcar IGV");
             Click(VentasLocators.CP001.IgvCheck);
             Thread.Sleep(1000);
 
-            Console.WriteLine("[CP001] Paso 2 - Marcar DET.UNIF: #flexCheckDefault2");
+            Console.WriteLine("[NuevaVenta] Marcar DET.UNIF");
             Click(VentasLocators.CP001.DetUnifCheck);
             Thread.Sleep(1000);
         }
 
         private void SelectProduct(string family, string concept)
         {
-            Console.WriteLine("[CP001] Paso 3 - Seleccionar Familia");
+            Console.WriteLine("[NuevaVenta] Seleccionar Familia");
             Click(VentasLocators.CP001.FamiliaDropdown);
             Thread.Sleep(1000);
 
@@ -191,7 +125,7 @@ namespace SIGES3_0.Pages.VentasPage
             ClickWithoutScroll(VentasLocators.CP001.FamiliaOpcion);
             Thread.Sleep(1000);
 
-            Console.WriteLine("[CP001] Paso 4 - Seleccionar Concepto");
+            Console.WriteLine("[NuevaVenta] Seleccionar Concepto");
             Click(VentasLocators.CP001.ConceptoDropdown);
             Thread.Sleep(1000);
 
@@ -219,7 +153,7 @@ namespace SIGES3_0.Pages.VentasPage
 
         private void ExpandBillingAccordion()
         {
-            Console.WriteLine("[CP001] Paso 4d - Abrir acordeón Facturación");
+            Console.WriteLine("[NuevaVenta] Abrir acordeón Facturación");
             Click(
                 VentasLocators.Voucher.BillingAccordion,
                 VentasLocators.Voucher.BillingAccordionFallback
@@ -281,7 +215,7 @@ namespace SIGES3_0.Pages.VentasPage
 
         private void SelectDeliveryType(string entrega)
         {
-            Console.WriteLine("[CP001] Paso 9a - Abrir acordeón Entrega");
+            Console.WriteLine("[NuevaVenta] Abrir acordeón Entrega");
             Click(
                 VentasLocators.CP001.AccordionEntrega,
                 VentasLocators.CP001.AccordionEntregaFallback1,
@@ -292,12 +226,12 @@ namespace SIGES3_0.Pages.VentasPage
 
             if (!string.IsNullOrWhiteSpace(entrega) && entrega.Equals("Diferida", StringComparison.OrdinalIgnoreCase))
             {
-                Console.WriteLine("[CP001] Paso 9b - Click Diferida");
+                Console.WriteLine("[NuevaVenta] Click Diferida");
                 Click(VentasLocators.CP001.EntregaDiferida);
             }
             else
             {
-                Console.WriteLine("[CP001] Paso 9b - Click Inmediata: #tipoBien");
+                Console.WriteLine("[NuevaVenta] Click Inmediata");
                 Click(VentasLocators.CP001.EntregaInmediata);
             }
             Thread.Sleep(1000);
@@ -372,7 +306,7 @@ namespace SIGES3_0.Pages.VentasPage
             if (!shouldExecuteSave)
             {
                 // Comportamiento original para CP001: tratar de darle click para demostrar que estaba habilitado erróneamente
-                Console.WriteLine("[CP001] ADVERTENCIA: Botón Guardar está HABILITADO. Se procede a Guardar la venta (no debería permitirlo).");
+                Console.WriteLine("[NuevaVenta] ADVERTENCIA: Botón Guardar está HABILITADO. Se procede a Guardar la venta (no debería permitirlo).");
                 try
                 {
                     utilities.ScrollViewElement(btn);
@@ -410,7 +344,7 @@ namespace SIGES3_0.Pages.VentasPage
                 var esperado = expectation.SaveShouldBeEnabled.Value;
                 if (_wasSaveEnabled && !esperado)
                 {
-                    Console.WriteLine("[CP001] ERROR: La venta se GUARDÓ. El botón estaba HABILITADO cuando debería estar INHABILITADO (Factura a cliente DNI sin RUC).");
+                    Console.WriteLine("[NuevaVenta] ERROR: La venta se GUARDÓ. El botón estaba HABILITADO cuando debería estar INHABILITADO (Factura a cliente DNI sin RUC).");
                 }
                 
                 Assert.That(_wasSaveEnabled, Is.EqualTo(esperado),
@@ -523,7 +457,7 @@ namespace SIGES3_0.Pages.VentasPage
                 var el = driver.FindElements(loc).FirstOrDefault(e => { try { return e.Displayed; } catch { return false; } });
                 if (el != null) return el;
             }
-            throw new NoSuchElementException($"[CP001] No se encontró: {string.Join(" | ", locators.Select(l => l.ToString()))}");
+            throw new NoSuchElementException($"[NuevaVenta] No se encontró: {string.Join(" | ", locators.Select(l => l.ToString()))}");
         }
 
         private void Click(params By[] locators)
@@ -547,7 +481,7 @@ namespace SIGES3_0.Pages.VentasPage
                 }
                 catch { continue; }
             }
-            throw new NoSuchElementException($"[CP001] No se pudo hacer clic: {string.Join(" | ", locators.Select(l => l.ToString()))}");
+            throw new NoSuchElementException($"[NuevaVenta] No se pudo hacer clic: {string.Join(" | ", locators.Select(l => l.ToString()))}");
         }
 
         private void ClickWithoutScroll(params By[] locators)
@@ -570,7 +504,7 @@ namespace SIGES3_0.Pages.VentasPage
                 }
                 catch { continue; }
             }
-            throw new NoSuchElementException($"[CP001] No se pudo hacer clic (sin scroll): {string.Join(" | ", locators.Select(l => l.ToString()))}");
+            throw new NoSuchElementException($"[NuevaVenta] No se pudo hacer clic (sin scroll): {string.Join(" | ", locators.Select(l => l.ToString()))}");
         }
 
         private bool IsSaveEnabled()

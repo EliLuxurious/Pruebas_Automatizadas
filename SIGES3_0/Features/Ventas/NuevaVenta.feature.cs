@@ -97,6 +97,12 @@ CP004: Boleta con cliente RUC.", global::Reqnroll.ProgrammingLanguage.CSharp, fe
     await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
                     "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
+#line 11
+    await testRunner.AndAsync("el usuario accede al módulo \'Ventas\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 12
+    await testRunner.AndAsync("el usuario accede al submodulo \'Nueva Venta\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
@@ -134,7 +140,7 @@ CP004: Boleta con cliente RUC.", global::Reqnroll.ProgrammingLanguage.CSharp, fe
             argumentsOfScenario.Add("Ejecutar", ejecutar);
             argumentsOfScenario.Add("Mensaje", mensaje);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Flujo de ventas con Venta Normal", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 14
+#line 16
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -147,20 +153,17 @@ this.ScenarioInitialize(scenarioInfo);
 #line 8
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 15
-    await testRunner.WhenAsync("abre el flujo de ventas \"Nueva Venta\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 16
-    await testRunner.AndAsync(string.Format("ejecuta el flujo de nueva venta con familia \"{0}\", concepto \"{1}\", cantidad \"{2}\"" +
-                            ", documento \"{3}\", comprobante \"{4}\", serie \"{5}\", entrega \"{6}\" y pago \"{7}\"", familia, concepto, cantidad, documento, comprobante, serie, entrega, pago), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
 #line 17
-    await testRunner.ThenAsync(string.Format("valida que Guardar habilitado sea \"{0}\"", habilitado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+    await testRunner.WhenAsync(string.Format("ejecuta el flujo de nueva venta con familia \"{0}\", concepto \"{1}\", cantidad \"{2}\"" +
+                            ", documento \"{3}\", comprobante \"{4}\", serie \"{5}\", entrega \"{6}\" y pago \"{7}\"", familia, concepto, cantidad, documento, comprobante, serie, entrega, pago), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 18
-    await testRunner.AndAsync(string.Format("valida que Ejecutar guardado sea \"{0}\"", ejecutar), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.ThenAsync(string.Format("valida que Guardar habilitado sea \"{0}\"", habilitado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
 #line 19
+    await testRunner.AndAsync(string.Format("valida que Ejecutar guardado sea \"{0}\"", ejecutar), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 20
     await testRunner.AndAsync(string.Format("verifica el mensaje de confirmacion \"{0}\"", mensaje), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }

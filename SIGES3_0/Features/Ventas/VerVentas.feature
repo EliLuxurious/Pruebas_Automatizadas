@@ -6,11 +6,12 @@ Cobertura base para acciones disponibles en ver ventas.
 Background:
     Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'
     When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña 'calidad'
+    And el usuario accede al módulo 'Ventas'
+    And el usuario accede al submodulo 'Ver Ventas'
 
 @CanjearComprobante
 Scenario: Canjear comprobante
-    When abre el flujo de ventas "Ver Ventas"
-    And Ingresar fecha inicial "27/01/2025"
+    When Ingresar fecha inicial "27/01/2025"
     And Ingresar fecha final "20/02/2025"
     And Click en consultar ventas
     And Buscar venta 'NV02-53'
@@ -23,8 +24,7 @@ Scenario: Canjear comprobante
 
 @NotaDebito
 Scenario: Emitir nota de debito con aumento en el valor
-    When abre el flujo de ventas "Ver Ventas"
-    And Ingresar fecha inicial "27/01/2025"
+    When Ingresar fecha inicial "27/01/2025"
     And Ingresar fecha final "19/02/2025"
     And Click en consultar ventas
     And Buscar venta 'B002-27905'
@@ -39,8 +39,7 @@ Scenario: Emitir nota de debito con aumento en el valor
 
 @EnviarComprobante
 Scenario: Enviar comprobante
-    When abre el flujo de ventas "Ver Ventas"
-    And Ingresar fecha inicial "27/01/2025"
+    When Ingresar fecha inicial "27/01/2025"
     And Ingresar fecha final "13/02/2025"
     And Click en consultar ventas
     And Buscar venta 'B002-27909'

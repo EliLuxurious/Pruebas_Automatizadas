@@ -8,16 +8,16 @@ CP004: Boleta con cliente RUC.
 Background:
     Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'
     When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña 'calidad'
+    And el usuario accede al módulo 'Ventas'
+    And el usuario accede al submodulo 'Nueva Venta'
 
 @NuevaVenta
 @VentaNormal
 Scenario Outline: Flujo de ventas con Venta Normal 
-    When abre el flujo de ventas "Nueva Venta"
-    And ejecuta el flujo de nueva venta con familia "<Familia>", concepto "<Concepto>", cantidad "<Cantidad>", documento "<Documento>", comprobante "<Comprobante>", serie "<Serie>", entrega "<Entrega>" y pago "<Pago>"
+    When ejecuta el flujo de nueva venta con familia "<Familia>", concepto "<Concepto>", cantidad "<Cantidad>", documento "<Documento>", comprobante "<Comprobante>", serie "<Serie>", entrega "<Entrega>" y pago "<Pago>"
     Then valida que Guardar habilitado sea "<Habilitado>"
     And valida que Ejecutar guardado sea "<Ejecutar>"
     And verifica el mensaje de confirmacion "<Mensaje>"
-
     Examples:
       | Caso  | Familia | Concepto                   | Cantidad | Documento   | Comprobante                 | Serie | Entrega   | Pago       | Habilitado | Ejecutar | Mensaje                   |
       | CP001 | gaseosa | 7753234003320              |          | 75893616    | FACTURA ELECTRONICA         | F002  | Inmediata | Completo   | NO         | NO       |                           |

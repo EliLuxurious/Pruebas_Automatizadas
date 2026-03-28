@@ -24,30 +24,6 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
             guiaRemisionPage = new GuiaRemisionPage(driver); // ← agregar
         }
 
-        // -------------------------
-        // NAVEGACIÓN
-        // ------------------------
-
-        [When(@"el usuario accede al módulo '(.*)'")]
-        public void WhenElUsuarioAccedeAlModulo(string modulo)
-        {
-            driver.FindElement(By.XPath($"//span[normalize-space()='{modulo}']/ancestor::a")).Click();
-        }
-
-        [When(@"el usuario accede al submodulo '(.*)'")]
-        public void WhenElUsuarioAccedeAlSubmodulo(string submodulo)
-        {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-
-            var elemento = wait.Until(
-                SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(
-                    By.XPath($"//span[contains(text(),'{submodulo}')]")
-                )
-            );
-
-            elemento.Click();
-        }
-
         [When(@"el usuario selecciona la opci[oó]n '(.*)'")]
         public void WhenElUsuarioSeleccionaLaOpcion(string opcion)
         {

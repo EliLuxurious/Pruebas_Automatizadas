@@ -289,9 +289,9 @@ namespace SIGES3_0.Pages.PedidoPages
 
             IWebElement input = wait.Until(ExpectedConditions.ElementToBeClickable(inputLocator));
             ScrollToElement(input);
-            Thread.Sleep(300);
+            Thread.Sleep(10);
             ClickSeguro(input);
-            Thread.Sleep(800);
+            Thread.Sleep(10);
 
             string valorAntes = ObtenerValorSeguro(inputLocator);
 

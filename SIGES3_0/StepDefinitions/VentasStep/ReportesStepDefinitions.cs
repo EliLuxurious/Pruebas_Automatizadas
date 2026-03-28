@@ -14,11 +14,7 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             _reportesPage = new ReportesPage(driver);
         }
 
-        [When(@"ingresa al modulo de ""(.*)"" y selecciona ""(.*)""")]
-        public void WhenIngresaAlModuloDeYSelecciona(string modulo, string submenu)
-        {
-            _reportesPage.NavegarAReportes();
-        }
+        // ── Compartido (todas las vistas) ────────────────────────────────────────
 
         [When(@"selecciona la vista ""(.*)""")]
         public void WhenSeleccionaLaVista(string tabName)
@@ -26,11 +22,13 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             _reportesPage.SeleccionarVista(tabName);
         }
 
-        [When(@"ingresa la fecha y hora inicial ""(.*)"" y final ""(.*)""")]
-        public void WhenIngresaLaFechaYHoraInicialYFinal(string fechaInicial, string fechaFinal)
+        [When(@"hace clic en ""(.*)"" en la tarjeta ""(.*)""")]
+        public void WhenHaceClicEnEnLaTarjeta(string btn, string tarjeta)
         {
-            _reportesPage.IngresarFechas(fechaInicial, fechaFinal);
+            _reportesPage.ClickVerReporte(tarjeta);
         }
+
+        // ── Tab: Comprobantes ────────────────────────────────────────────────────
 
         [When(@"selecciona el tipo de comprobante ""(.*)""")]
         public void WhenSeleccionaElTipoDeComprobante(string tipoComprobante)
@@ -44,23 +42,15 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             _reportesPage.SeleccionarSerie(serie);
         }
 
-        [When(@"hace clic en ""(.*)"" en la tarjeta ""(.*)""")]
-        public void WhenHaceClicEnEnLaTarjeta(string btn, string tarjeta)
+        // ── Tab: Series ──────────────────────────────────────────────────────────
+
+        [When(@"selecciona el comprobante y serie ""(.*)""")]
+        public void WhenSeleccionaElComprobanteSerie(string valor)
         {
-            _reportesPage.ClickVerReporte(tarjeta);
+            _reportesPage.SeleccionarComprobanteSerie(valor);
         }
 
-        [Then(@"el sistema genera el reporte exitosamente")]
-        public void ThenElSistemaGeneraElReporteExitosamente()
-        {
-            Assert.IsTrue(_reportesPage.VerificarReporteGenerado(), "El reporte no se generó exitosamente.");
-        }
-
-        [Then(@"valida que el boton ""(.*)"" en la tarjeta ""(.*)"" este deshabilitado")]
-        public void ThenValidaQueElBotonEnLaTarjetaEsteDeshabilitado(string btn, string tarjeta)
-        {
-            Assert.IsFalse(_reportesPage.VerificarBotonHabilitado(tarjeta), $"El boton {btn} en la tarjeta {tarjeta} deberia estar deshabilitado.");
-        }
+        // ── Tab: Conceptos ───────────────────────────────────────────────────────
 
         [When(@"selecciona el punto de venta ""(.*)""")]
         public void WhenSeleccionaElPuntoDeVenta(string puntoVenta)
@@ -72,6 +62,29 @@ namespace SIGES3_0.StepDefinitions.VentasStep
         public void WhenSeleccionaLaFamilia(string familia)
         {
             _reportesPage.SeleccionarFamilia(familia);
+        }
+
+        [When(@"selecciona la característica ""(.*)"" en la tarjeta ""(.*)""")]
+        public void WhenSeleccionaLaCaracteristicaEnLaTarjeta(string caracteristica, string tarjeta)
+        {
+            _reportesPage.SeleccionarCaracteristica(caracteristica, tarjeta);
+        }
+
+        // ── Verificaciones ───────────────────────────────────────────────────────
+
+        // Usado por: @FiltroFechas — valida si el reporte se generó o el sistema bloqueó las fechas inválidas
+        [Then(@"el sistema muestra el resultado esperado del reporte ""(.*)""")]
+        [Scope(Tag = "FiltroFechas")]
+        public void ThenElSistemaMuestraElResultadoEsperadoDelReporte(string resultadoEsperado)
+        {
+            _reportesPage.ValidarResultadoReporte(resultadoEsperado);
+        }
+
+        // Usado por: @PorComprobante, @PorSerie, @PorConceptos, @PorFamilia, @PorCaracteristica
+        [Then(@"el sistema genera el reporte exitosamente")]
+        public void ThenElSistemaGeneraElReporteExitosamente()
+        {
+            Assert.IsTrue(_reportesPage.VerificarReporteGenerado(), "El reporte no se generó exitosamente.");
         }
     }
 }

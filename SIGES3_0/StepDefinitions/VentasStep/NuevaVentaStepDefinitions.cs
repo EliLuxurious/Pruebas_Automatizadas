@@ -13,12 +13,6 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             nuevaVentaPage = new NuevaVentaPage(driver);
         }
 
-        [When("abre el flujo de ventas {string}")]
-        public void WhenAbreElFlujoDeVentas(string salesFlow)
-        {
-            nuevaVentaPage.OpenSalesFlow(salesFlow);
-        }
-
         [When("ejecuta el flujo de nueva venta con familia {string}, concepto {string}, cantidad {string}, documento {string}, comprobante {string}, serie {string}, entrega {string} y pago {string}")]
         public void WhenEjecutaElFlujoDeNuevaVentaDynamic(string familia, string concepto, string cantidad, string documento, string comprobante, string serie, string entrega, string pago)
         {
