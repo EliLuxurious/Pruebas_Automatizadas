@@ -43,28 +43,9 @@ Scenario Outline: <Caso> Generar reporte por comprobante
       | CP0000 | BOLETA DE VENTA ELECTRONICA | B002  |05/03/2026 12:00 am  | 25/03/2026 11:59 pm |
       | CP0000 | FACTURA ELECTRONICA         | F002  |05/03/2026 12:00 am  | 25/03/2026 11:59 pm |
       | CP0000 | NOTA DE VENTA(INTERNA)      | NV02  |05/03/2026 12:00 am  | 25/03/2026 11:59 pm |
-      | CP0000 | NOTA DE CRÉDITO             | B002  |05/03/2026 12:00 am  | 25/03/2026 11:59 pm |
-      | CP0000 | NOTA DE DÉBITO              | B002  |05/03/2026 12:00 am  | 25/03/2026 11:59 pm |
+      | CP0000 | NOTA DE CREDITO             | B002  |05/03/2026 12:00 am  | 25/03/2026 11:59 pm |
+      | CP0000 | NOTA DE DEBITO              | B002  |05/03/2026 12:00 am  | 25/03/2026 11:59 pm |
 
-
-
-#@Reportes @PorSerie
-#Scenario: CP002 Validar que no se habilite VER REPORTE en Comprobantes cuando solo se selecciona el tipo de comprobante y la serie queda pendiente
-#    When ingresa al modulo de "Ventas" y selecciona "Reportes"
-#    And selecciona la vista "Comprobantes"
-#    And ingresa la fecha y hora inicial "05/03/2026 12:00 a. m." y final "05/03/2026 11:59 p. m."
-#    And selecciona el tipo de comprobante "BOLETA DE VENTA ELECTRONICA"
-#    Then valida que el boton "VER REPORTE" en la tarjeta "POR COMPROBANTE" este deshabilitado
-#
-#@Reportes @Ventas @CP003
-#Scenario: CP003 Generar reporte por familia en la vista Conceptos filtrando el punto de venta vigente CENTRO COMERCIAL CENTRAL para validar consulta exitosa
-#    When ingresa al modulo de "Ventas" y selecciona "Reportes"
-#    And selecciona la vista "Conceptos"
-#    And ingresa la fecha y hora inicial "05/03/2026 12:00 a. m." y final "05/03/2026 11:59 p. m."
-#    And selecciona el punto de venta "CENTRO COMERCIAL CENTRAL"
-#    And selecciona la familia "Gaseosa"
-#    And hace clic en "VER REPORTE" en la tarjeta "POR FAMILIA"
-#    Then el sistema genera el reporte exitosamente
 
 @Reportes
 @PorSerie
@@ -117,7 +98,7 @@ Scenario Outline: <Caso> Generar reporte por familia en la vista Conceptos
 @Reportes
 @PorConceptos
 @PorCaracteristica
-Scenario Outline: <Caso> Generar reporte por característica en la vista Conceptos
+ Scenario Outline: <Caso> Generar reporte por característica en la vista Conceptos
     When selecciona la vista "Conceptos"
     And el usuario ingresa la fecha y hora inicial "<fechaHoraInicial>"
     And el usuario ingresa la fecha y hora final "<fechaHoraFinal>"
@@ -130,3 +111,83 @@ Scenario Outline: <Caso> Generar reporte por característica en la vista Concept
       | Caso   | PuntoVenta                 | Caracteristica | Tarjeta                                            | fechaHoraInicial    | fechaHoraFinal      |
       | CP084  | CENTRO COMERCIAL CENTRAL   | MARCA          | POR CONCEPTO, CARACTERISTICAS Y FORMA DE PAGO      | 05/03/2026 12:00 am | 05/03/2026 11:59 pm |
       | CP085  | CENTRO COMERCIAL CENTRAL   | TAMAÑO         | POR CARACTERISTICAS                                | 05/03/2026 12:00 am | 05/03/2026 11:59 pm |
+
+@Reportes
+@PorVendedor
+Scenario Outline: <Caso> Generar reporte por vendedor en la vista Vendedor
+    When selecciona la vista "Vendedor"
+    And el usuario ingresa la fecha y hora inicial "<fechaHoraInicial>"
+    And el usuario ingresa la fecha y hora final "<fechaHoraFinal>"
+    And selecciona el vendedor "<Vendedor>"
+    And selecciona "<Familia>" en el filtro "Familias" de la tarjeta "Por Vendedor"
+    And selecciona "<Concepto>" en el filtro "Conceptos" de la tarjeta "Por Vendedor"
+    And hace clic en "VER REPORTE" en la tarjeta "Por Vendedor"
+    Then el sistema genera el reporte exitosamente
+
+    Examples:
+      | Caso   | Vendedor                   | Familia | Concepto  | fechaHoraInicial    | fechaHoraFinal      |
+      | CP090  | FRANKLIN MARTINEZ HURTADO  | Gaseosa | Inka Kola | 05/03/2026 12:00 am | 05/03/2026 11:59 pm |
+
+@Reportes
+@PorVendedor
+@PorModalidadConcepto
+Scenario Outline: <Caso> Generar reporte por modalidad y concepto en la vista Vendedor
+    When selecciona la vista "Vendedor"
+    And el usuario ingresa la fecha y hora inicial "<fechaHoraInicial>"
+    And el usuario ingresa la fecha y hora final "<fechaHoraFinal>"
+    And selecciona el vendedor "<Vendedor>"
+    And selecciona "<Modalidad>" en el filtro "Modalidad" de la tarjeta "Por Modalidad y Concepto"
+    And hace clic en "VER REPORTE" en la tarjeta "Por Modalidad y Concepto"
+    Then el sistema genera el reporte exitosamente
+
+    Examples:
+      | Caso   | Vendedor                   | Modalidad    | fechaHoraInicial    | fechaHoraFinal      |
+      | CP091  | FRANKLIN MARTINEZ HURTADO  | VENTA NORMAL | 05/03/2026 12:00 am | 05/03/2026 11:59 pm |
+
+@Reportes
+@PorVendedor
+@PorFamiliaVendedor
+Scenario Outline: <Caso> Generar reporte por familia y vendedor en la vista Vendedor
+    When selecciona la vista "Vendedor"
+    And el usuario ingresa la fecha y hora inicial "<fechaHoraInicial>"
+    And el usuario ingresa la fecha y hora final "<fechaHoraFinal>"
+    And selecciona el vendedor "<Vendedor>"
+    And hace clic en "VER REPORTE" en la tarjeta "Por Familia y Vendedor"
+    Then el sistema genera el reporte exitosamente
+
+    Examples:
+      | Caso   | Vendedor                   | fechaHoraInicial    | fechaHoraFinal      |
+      | CP092  | FRANKLIN MARTINEZ HURTADO  | 05/03/2026 12:00 am | 05/03/2026 11:59 pm |
+
+@Reportes
+@PorGrupos
+Scenario Outline: <Caso> Generar reporte en la vista Grupos
+    When selecciona la vista "Grupos"
+    And el usuario ingresa la fecha y hora inicial "<fechaHoraInicial>"
+    And el usuario ingresa la fecha y hora final "<fechaHoraFinal>"
+    And selecciona el establecimiento "<Establecimiento>"
+    And selecciona el punto de venta "<PuntoVenta>"
+    And hace clic en "VER REPORTE" en la tarjeta "<Tarjeta>"
+    Then el sistema genera el reporte exitosamente
+
+    Examples:
+      | Caso   | Establecimiento | PuntoVenta               | Tarjeta             | fechaHoraInicial    | fechaHoraFinal      |
+      | CP093  | RECSA - CENTRAL | CENTRO COMERCIAL CENTRAL | Por Grupo           | 05/03/2026 12:00 am | 05/03/2026 11:59 pm |
+      | CP094  | RECSA - CENTRAL | CENTRO COMERCIAL CENTRAL | Por Familia y Grupo | 05/03/2026 12:00 am | 05/03/2026 11:59 pm |
+      | CP095  | RECSA - CENTRAL | CENTRO COMERCIAL CENTRAL | Por Grupo Detallado | 05/03/2026 12:00 am | 05/03/2026 11:59 pm |
+
+@Reportes
+@PorExcepciones
+Scenario Outline: <Caso> Generar reporte en la vista Excepciones
+    When selecciona la vista "Excepciones"
+    And el usuario ingresa la fecha y hora inicial "<fechaHoraInicial>"
+    And el usuario ingresa la fecha y hora final "<fechaHoraFinal>"
+    And selecciona el punto de venta "<PuntoVenta>"
+    And hace clic en "VER REPORTE" en la tarjeta "<Tarjeta>"
+    Then el sistema genera el reporte exitosamente
+
+    Examples:
+      | Caso   | PuntoVenta               | Tarjeta               | fechaHoraInicial    | fechaHoraFinal      |
+      | CP096  | CENTRO COMERCIAL CENTRAL | Por Notas de Credito  | 05/03/2026 12:00 am | 05/03/2026 11:59 pm |
+      | CP097  | CENTRO COMERCIAL CENTRAL | Por Invalidaciones    | 05/03/2026 12:00 am | 05/03/2026 11:59 pm |
+      | CP098  | CENTRO COMERCIAL CENTRAL | Por Notas de Debito   | 05/03/2026 12:00 am | 05/03/2026 11:59 pm |

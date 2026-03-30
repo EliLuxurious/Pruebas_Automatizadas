@@ -70,15 +70,32 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             _reportesPage.SeleccionarCaracteristica(caracteristica, tarjeta);
         }
 
-        // ── Verificaciones ───────────────────────────────────────────────────────
+        // ── Tab: Vendedor ────────────────────────────────────────────────────────
+
+        [When(@"selecciona el vendedor ""(.*)""")]
+        public void WhenSeleccionaElVendedor(string vendedor)
+        {
+            _reportesPage.SeleccionarVendedor(vendedor);
+        }
+
+        [When(@"selecciona ""(.*)"" en el filtro ""(.*)"" de la tarjeta ""(.*)""")]
+        public void WhenSeleccionaEnElFiltroDeLaTarjeta(string valor, string filtro, string tarjeta)
+        {
+            _reportesPage.SeleccionarFiltroEnTarjeta(valor, filtro, tarjeta);
+        }
+
+        // ── Tab: Grupos ──────────────────────────────────────────────────────────
+
+        [When(@"selecciona el establecimiento ""(.*)""")]
+        public void WhenSeleccionaElEstablecimiento(string establecimiento)
+        {
+            _reportesPage.SeleccionarEstablecimiento(establecimiento);
+        }
+
+
 
         // Usado por: @FiltroFechas — valida si el reporte se generó o el sistema bloqueó las fechas inválidas
-        [Then(@"el sistema muestra el resultado esperado del reporte ""(.*)""")]
-        [Scope(Tag = "FiltroFechas")]
-        public void ThenElSistemaMuestraElResultadoEsperadoDelReporte(string resultadoEsperado)
-        {
-            _reportesPage.ValidarResultadoReporte(resultadoEsperado);
-        }
+        //La funcion se recicla de fechas de reporte, entonces, la diferencia es que este reporte te permite continuar para completar el flujo.
 
         // Usado por: @PorComprobante, @PorSerie, @PorConceptos, @PorFamilia, @PorCaracteristica
         [Then(@"el sistema genera el reporte exitosamente")]

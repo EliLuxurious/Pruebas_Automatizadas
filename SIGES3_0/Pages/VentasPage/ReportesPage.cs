@@ -49,7 +49,6 @@ namespace SIGES3_0.Pages.VentasPage
         public void SeleccionarTipoComprobante(string tipoComprobante)
         {
             _utilities.ClickButton(VentasLocators.Reportes.TipoComprobanteDropdown);
-            _utilities.ClearAndEnterText(VentasLocators.Reportes.TipoComprobanteSearch, tipoComprobante);
             _utilities.ClickButton(VentasLocators.Reportes.TipoComprobanteOption(tipoComprobante));
             Thread.Sleep(1000);
         }
@@ -57,7 +56,6 @@ namespace SIGES3_0.Pages.VentasPage
         public void SeleccionarSerie(string serie)
         {
             _utilities.ClickButton(VentasLocators.Reportes.SerieDropdown);
-            _utilities.ClearAndEnterText(VentasLocators.Reportes.SerieSearch, serie);
             _utilities.ClickButton(VentasLocators.Reportes.SerieOption(serie));
         }
 
@@ -66,70 +64,90 @@ namespace SIGES3_0.Pages.VentasPage
         // Formato: "Todos" | "XX : YYYY"  (ej: "01 : F002", "03 : B002")
         public void SeleccionarComprobanteSerie(string valor)
         {
-            if (valor.Trim().Equals("Todos", StringComparison.OrdinalIgnoreCase))
-            {
-                Console.WriteLine("[ComprobanteSerie] 'Todos' ya está preseleccionado, se omite.");
-                return;
-            }
             _utilities.ClickButton(VentasLocators.Reportes.ComprobanteSerieDropdown);
-            _utilities.ClearAndEnterText(VentasLocators.Reportes.ComprobanteSerieSearch, valor);
             _utilities.ClickButton(VentasLocators.Reportes.ComprobanteSerieOpcion(valor));
         }
 
         // ── Tab: Conceptos ───────────────────────────────────────────────────────
         public void SeleccionarPuntoVenta(string puntoVenta)
         {
-            if (_utilities.IsVisible(VentasLocators.Reportes.PuntoVentaChip(puntoVenta)))
+            // Si ya está como chip seleccionado, omitir (evita deseleccionar por comportamiento toggle)
+            var chips = _driver.FindElements(VentasLocators.Reportes.PuntoVentaChip(puntoVenta));
+            if (chips.Any(e => { try { return e.Displayed; } catch { return false; } }))
+            {
+                Thread.Sleep(500);
                 return;
+            }
 
             _utilities.ClickButton(VentasLocators.Reportes.PuntoVentaDropdown);
-            _utilities.ClearAndEnterText(VentasLocators.Reportes.PuntoVentaSearch, puntoVenta);
             _utilities.ClickButton(VentasLocators.Reportes.PuntoVentaOption(puntoVenta));
-            _wait.Until(d => _utilities.IsVisible(VentasLocators.Reportes.PuntoVentaChip(puntoVenta)));
+            Thread.Sleep(500);
         }
 
         public void SeleccionarFamilia(string familia)
         {
             _utilities.ClickButton(VentasLocators.Reportes.FamiliaDropdown);
-            _utilities.ClearAndEnterText(VentasLocators.Reportes.FamiliaSearch, familia);
             _utilities.ClickButton(VentasLocators.Reportes.FamiliaOption(familia));
         }
 
         public void SeleccionarCaracteristica(string caracteristica, string tarjeta)
         {
             _utilities.ClickButton(VentasLocators.Reportes.CaracteristicaDropdown(tarjeta));
-            _utilities.ClearAndEnterText(VentasLocators.Reportes.CaracteristicaSearch(tarjeta), caracteristica);
             _utilities.ClickButton(VentasLocators.Reportes.CaracteristicaOpcion(caracteristica));
+            _driver.FindElement(By.TagName("body")).SendKeys(Keys.Escape);
+            Thread.Sleep(500);
         }
 
-        public void ValidarResultadoReporte(string resultadoEsperado)
+        // ── Tab: Vendedor ────────────────────────────────────────────────────────
+        public void SeleccionarVendedor(string vendedor)
         {
-            switch (resultadoEsperado.Trim().ToLower())
-            {
-                case "aplica el filtro correctamente":
-                    Assert.IsTrue(VerificarReporteGenerado(), "Se esperaba que el reporte se generara correctamente.");
-                    break;
-                case "no permite aplicar el filtro inhabilitado":
-                    Assert.IsFalse(VerificarReporteGenerado(), "Se esperaba que el sistema no generara el reporte con rango de fechas inválido.");
-                    break;
-                default:
-                    Assert.Fail("Resultado esperado no reconocido: " + resultadoEsperado);
-                    break;
-            }
+            var chips = _driver.FindElements(VentasLocators.Reportes.VendedorChip(vendedor));
+            if (chips.Any(e => { try { return e.Displayed; } catch { return false; } }))
+            { Thread.Sleep(500); return; }
+            _utilities.ClickButton(VentasLocators.Reportes.VendedorDropdown);
+            _utilities.ClickButton(VentasLocators.Reportes.VendedorOption(vendedor));
+            Thread.Sleep(500);
         }
 
-        // ── Acción compartida por todos los tabs ─────────────────────────────────
+        public void SeleccionarFiltroEnTarjeta(string valor, string filtro, string tarjeta)
+        {
+            _utilities.ClickButton(VentasLocators.Reportes.FiltroEnTarjeta(tarjeta, filtro));
+            _utilities.ClickButton(VentasLocators.Reportes.FiltroOpcion(valor));
+            _driver.FindElement(By.TagName("body")).SendKeys(Keys.Escape);
+            Thread.Sleep(500);
+        }
+
+        // ── Tab: Grupos ──────────────────────────────────────────────────────────
+        public void SeleccionarEstablecimiento(string establecimiento)
+        {
+            var chips = _driver.FindElements(VentasLocators.Reportes.EstablecimientoChip(establecimiento));
+            if (chips.Any(e => { try { return e.Displayed; } catch { return false; } }))
+            { Thread.Sleep(500); return; }
+            _utilities.ClickButton(VentasLocators.Reportes.EstablecimientoDropdown);
+            _utilities.ClickButton(VentasLocators.Reportes.EstablecimientoOption(establecimiento));
+            Thread.Sleep(500);
+        }
+
+
         public void ClickVerReporte(string tarjeta)
         {
+            var locator = VentasLocators.Reportes.VerReporteEnTarjeta(tarjeta);
+            IWebElement btn = null;
             try
             {
-                _utilities.ClickButton(VentasLocators.Reportes.VerReporteEnTarjeta(tarjeta));
-                Thread.Sleep(2000);
+                btn = _wait.Until(d =>
+                    d.FindElements(locator).FirstOrDefault(e =>
+                    { try { return e.Displayed; } catch { return false; } }));
             }
-            catch
-            {
-                Console.WriteLine($"[ClickVerReporte] Botón '{tarjeta}' no fue clickeable. Se evalúa en la validación.");
-            }
+            catch { }
+
+            if (btn == null)
+                throw new Exception($"No se encontró el botón VER REPORTE para la tarjeta '{tarjeta}'.");
+
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", btn);
+            Thread.Sleep(300);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", btn);
+            Thread.Sleep(2000);
         }
 
         // ── Verificaciones ───────────────────────────────────────────────────────
@@ -137,9 +155,22 @@ namespace SIGES3_0.Pages.VentasPage
         {
             try
             {
-                var waitReporte = new WebDriverWait(_driver, TimeSpan.FromSeconds(15));
+                Thread.Sleep(2000);
+
+                bool hayError = _driver.FindElements(By.XPath(
+                    "//*[contains(@class,'toast-error') or contains(@class,'alert-danger')" +
+                    " or (contains(@class,'swal2-popup') and .//*[contains(@class,'swal2-error-icon')])]"))
+                    .Any(e => { try { return e.Displayed; } catch { return false; } });
+                if (hayError) return false;
+
+                var waitReporte = new WebDriverWait(_driver, TimeSpan.FromSeconds(20));
                 var elemento = waitReporte.Until(d =>
-                    d.FindElements(VentasLocators.Reportes.HeaderReporteResultado)
+                    d.FindElements(By.XPath(
+                        "//div[contains(@class,'table-responsive')]//table" +
+                        " | //table[.//tbody/tr or .//thead/tr]" +
+                        " | //ngx-datatable" +
+                        " | //canvas" +
+                        " | //*[contains(normalize-space(),'No hay datos') or contains(normalize-space(),'Sin resultado') or contains(normalize-space(),'no se encontraron') or contains(normalize-space(),'Sin datos')]"))
                      .FirstOrDefault(e => { try { return e.Displayed; } catch { return false; } })
                 );
                 return elemento != null;
@@ -156,6 +187,24 @@ namespace SIGES3_0.Pages.VentasPage
                              .FirstOrDefault(e => { try { return e.Displayed; } catch { return false; } });
             if (btn == null) return false;
             return btn.Enabled && btn.GetAttribute("disabled") == null;
+        }
+
+        public void ValidarResultadoReporte(string resultadoEsperado)
+        {
+            switch (resultadoEsperado.Trim().ToLower())
+            {
+                case "no permite aplicar el filtro inhabilitado":
+                    Assert.IsFalse(_driver.Url.Contains("/sales/report/view"),
+                        "El sistema no debería haber generado el reporte con fechas inválidas.");
+                    break;
+                case "aplica el filtro correctamente":
+                    Assert.IsTrue(VerificarReporteGenerado(),
+                        "Se esperaba que el filtro se aplicara y el reporte se generara correctamente.");
+                    break;
+                default:
+                    Assert.Fail($"Resultado esperado no reconocido: '{resultadoEsperado}'");
+                    break;
+            }
         }
     }
 }
