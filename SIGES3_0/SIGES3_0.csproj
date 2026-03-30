@@ -22,6 +22,19 @@
   <ItemGroup>
     <Folder Include="Drivers\" />
     <Folder Include="Features\FacturacionCiclica\" />
+    <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Category\EditCategory\" />
+    <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Category\DeleteCategory\" />
+    <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Characteristic Value\EditCharacteristicValue\" />
+    <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Characteristic Value\DeleteCharacteristicValue\" />
+    <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Characteristic Value\RegisterCharacteristicValue\" />
+    <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Characteristic\Common\EditCharacteristicCommon\" />
+    <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Characteristic\Common\RegisterCharacteristicCommon\" />
+    <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Characteristic\Distinctive\EditCharacteristicDistinctive\" />
+    <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Characteristic\Distinctive\RegisterCharacteristicDistinctive\" />
+    <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Family\DeleteFamily\" />
+    <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Presentation\EditPresentation\" />
+    <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Presentation\DeletePresentation\" />
+    <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Presentation\RegisterPresentation\" />
     <Folder Include="Support\" />
   </ItemGroup>
 

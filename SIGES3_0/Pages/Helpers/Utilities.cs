@@ -34,7 +34,9 @@ namespace SIGES3_0.Pages.Helpers
                 }
             }
 
-            throw new NoSuchElementException($"No se encontro ningun elemento visible para los localizadores: {string.Join(", ", locators.Select(locator => locator?.ToString()))}");
+            throw new NoSuchElementException(
+                $"No se encontro ningun elemento visible para los localizadores: {string.Join(", ", locators.Select(locator => locator?.ToString()))}"
+            );
         }
 
         public IReadOnlyCollection<IWebElement> FindAll(By locator)
