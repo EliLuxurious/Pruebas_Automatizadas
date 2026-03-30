@@ -23,6 +23,16 @@
     <Folder Include="Drivers\" />
     <Folder Include="Features\FacturacionCiclica\" />
     <Folder Include="Support\" />
+    <Folder Include="TestResults\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Features\Adquisicion\NuevaAdquisicionNota.feature.cs">
+      <DependentUpon>NuevaAdquisicionNota.feature</DependentUpon>
+    </Compile>
+    <Compile Update="Features\Adquisicion\NuevaAdquisiciónBoleta.feature.cs">
+      <DependentUpon>NuevaAdquisiciónBoleta.feature</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>
