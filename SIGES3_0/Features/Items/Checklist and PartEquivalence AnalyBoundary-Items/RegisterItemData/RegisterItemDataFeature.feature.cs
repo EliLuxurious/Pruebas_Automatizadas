@@ -696,10 +696,10 @@ await testRunner.AndAsync("el usuario selecciona la opcion Asignar Valor de Cara
 await testRunner.AndAsync("el usuario selecciona la Familia a asignar \"Cuaderno\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 159
-await testRunner.AndAsync("el usuario ingresa el valor a asignar \"PRUEBA1\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario ingresa el valor a asignar \"PRUEBA2\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 160
-await testRunner.AndAsync("el usuario arrastra el valor \"PRUEBA1\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario arrastra el valor \"PRUEBA2\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 161
 await testRunner.ThenAsync("se guarda la asignacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");

@@ -413,7 +413,7 @@ await testRunner.AndAsync("el usuario selecciona el Módulo a Mostrar \"MOD0001\
 await testRunner.AndAsync("el usuario selecciona la Marca \"KR\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 91
-await testRunner.AndAsync("el usuario selecciona la Presentación \"BOTELLA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario selecciona la Presentación \"BOTELLAS\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 92
 await testRunner.AndAsync("el usuario ingresa la Cantidad \"196\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

@@ -156,7 +156,7 @@ And el usuario accede al módulo Conceptos
 And el usuario selecciona Registrar Datos de Concepto
 And el usuario selecciona la opcion Asignar Valor de Caracteristica
 And el usuario selecciona la Familia a asignar "Cuaderno"
-And el usuario ingresa el valor a asignar "PRUEBA1"
-And el usuario arrastra el valor "PRUEBA1"
+And el usuario ingresa el valor a asignar "PRUEBA2"
+And el usuario arrastra el valor "PRUEBA2"
 Then se guarda la asignacion
 
