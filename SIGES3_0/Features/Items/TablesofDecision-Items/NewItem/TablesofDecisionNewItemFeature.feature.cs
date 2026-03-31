@@ -104,7 +104,7 @@ await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(nu
         [NUnit.Framework.TestCaseAttribute("Item Comercial", "SILLA", "IC0001", "Ergonómica", "", "", "MOD0001", "", "CAJA", "15", "PORMA", "60", null)]
         [NUnit.Framework.TestCaseAttribute("Insumo", "Harina", "HA0001", "Refinada", "KG", "KG", "MOD0001", "", "SP", "", "POR UNIDAD", "45", null)]
         [NUnit.Framework.TestCaseAttribute("Item Comercial", "Cuaderno", "CU0001", "Triple renglón", "", "", "MOD0001", "", "SP", "", "POR UNIDAD", "5", null)]
-        [NUnit.Framework.TestCaseAttribute("Insumo", "ACEITE", "AC0001", "Vegetal Premium", "ML", "ML", "MOD0001", "", "BOTELLA", "840", "POR UNIDAD", "15", null)]
+        [NUnit.Framework.TestCaseAttribute("Insumo", "ACEITE", "AC0001", "Vegetal Premium", "ML", "ML", "MOD0001", "", "BOTELLAS", "840", "POR UNIDAD", "15", null)]
         public async System.Threading.Tasks.Task RegistroExitosoDeConcepto(string rol, string familia, string codigo, string sufijo, string umcomercial, string ummedida, string modulo, string marca, string presentacion, string cantidad, string tarifa, string precio, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -187,7 +187,7 @@ await testRunner.ThenAsync("Guardar concepto", ((string)(null)), ((global::Reqnr
         [NUnit.Framework.TestCaseAttribute("Item Comercial", "Shampoo", "SH0001", "Rizos dorados", "", "", "MOD0003", "", "SP", "", "BIMONTHLY", "", null)]
         [NUnit.Framework.TestCaseAttribute("Insumo", "Azúcar", "AZ0001", "Blanca en polvo", "", "", "VACIO", "", "SP", "", "POR UNIDAD", "5", null)]
         [NUnit.Framework.TestCaseAttribute("Item Comercial", "", "INS0005", "Validación", "", "", "MOD0001", "", "SP", "", "PORMA", "", null)]
-        [NUnit.Framework.TestCaseAttribute("Insumo", "ACEITE", "AC0001", "Vegetal Premium", "ML", "ML", "MOD0001", "", "BOTELLA", "-50", "POR UNIDAD", "", null)]
+        [NUnit.Framework.TestCaseAttribute("Insumo", "ACEITE", "AC0001", "Vegetal Premium", "ML", "ML", "MOD0001", "", "BOTELLAS", "-50", "POR UNIDAD", "", null)]
         [NUnit.Framework.TestCaseAttribute("Item Comercial", "Shampoo", "SH0006", "Rizos dorados", "", "", "VACIO", "H&S", "SP", "", "", "", null)]
         [NUnit.Framework.TestCaseAttribute("Insumo", "", "INS00020", "Otra validación", "", "", "MOD0001", "", "Frasco", "13", "", "", null)]
         [NUnit.Framework.TestCaseAttribute("Item Comercial", "Cuaderno", "CU0005", "Doble Raya", "", "", "MOD0001", "", "CAJA", "0", "", "", null)]

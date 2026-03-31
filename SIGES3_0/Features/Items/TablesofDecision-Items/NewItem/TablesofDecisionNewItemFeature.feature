@@ -30,7 +30,7 @@ Examples:
 | Item Comercial | SILLA | IC0001 | Ergonómica |  |  | MOD0001 |  | CAJA | 15 | PORMA | 60 |
 | Insumo | Harina | HA0001 | Refinada | KG | KG | MOD0001 |  | SP |  | POR UNIDAD | 45 |
 | Item Comercial | Cuaderno | CU0001 | Triple renglón |  |  | MOD0001 |  | SP |  | POR UNIDAD | 5 |
-| Insumo | ACEITE | AC0001 | Vegetal Premium | ML | ML | MOD0001 |  | BOTELLA | 840 | POR UNIDAD | 15 |
+| Insumo | ACEITE | AC0001 | Vegetal Premium | ML | ML | MOD0001 |  | BOTELLAS | 840 | POR UNIDAD | 15 |
 
 
 
@@ -57,7 +57,7 @@ Scenario Outline: Registro inválido de concepto
     | Item Comercial | Shampoo  | SH0001   | Rizos dorados              |             |          | MOD0003 |            | SP           |          | BIMONTHLY  |        |
     | Insumo         | Azúcar   | AZ0001   | Blanca en polvo            |             |          | VACIO   |            | SP           |          | POR UNIDAD | 5      |
     | Item Comercial |          | INS0005  | Validación                 |             |          | MOD0001 |            | SP           |          | PORMA      |        |
-    | Insumo         | ACEITE   | AC0001   | Vegetal Premium            | ML          | ML       | MOD0001 |            | BOTELLA      | -50      | POR UNIDAD |        |
+    | Insumo         | ACEITE   | AC0001   | Vegetal Premium            | ML          | ML       | MOD0001 |            | BOTELLAS     | -50      | POR UNIDAD |        |
     | Item Comercial | Shampoo  | SH0006   | Rizos dorados              |             |          | VACIO   | H&S        | SP           |          |            |        |
     | Insumo         |          | INS00020 | Otra validación            |             |          | MOD0001 |            | Frasco       | 13       |            |        |
     | Item Comercial | Cuaderno | CU0005   | Doble Raya                 |             |          | MOD0001 |            | CAJA         | 0        |            |        |
