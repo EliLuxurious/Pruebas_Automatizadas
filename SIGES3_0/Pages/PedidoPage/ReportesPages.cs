@@ -76,7 +76,7 @@ namespace SIGES3_0.Pages.PedidoPages
         {
             try
             {
-                IWebElement reporte = wait.Until(d =>
+                IWebElement? reporte = wait.Until(d =>
                     d.FindElements(submoduloReportes).FirstOrDefault(e => EsVisible(e) && e.Enabled));
 
                 if (reporte == null)
@@ -257,15 +257,15 @@ namespace SIGES3_0.Pages.PedidoPages
         {
             try
             {
-                IWebElement error = driver.FindElements(toastError).FirstOrDefault(EsVisible);
+                IWebElement? error = driver.FindElements(toastError).FirstOrDefault(EsVisible);
                 if (error != null)
                     return error.Text.Trim();
 
-                IWebElement tabla = driver.FindElements(tablaResultados).FirstOrDefault(EsVisible);
+                IWebElement? tabla = driver.FindElements(tablaResultados).FirstOrDefault(EsVisible);
                 if (tabla != null)
                     return "tabla visible";
 
-                IWebElement vacio = driver.FindElements(mensajeSinResultados).FirstOrDefault(EsVisible);
+                IWebElement? vacio = driver.FindElements(mensajeSinResultados).FirstOrDefault(EsVisible);
                 if (vacio != null)
                     return "sin resultados";
 
@@ -366,7 +366,7 @@ namespace SIGES3_0.Pages.PedidoPages
 
             for (int i = 0; i < 24; i++)
             {
-                IWebElement mesElemento = wait.Until(d =>
+                IWebElement? mesElemento = wait.Until(d =>
                 {
                     var elementos = d.FindElements(lblMesPicker);
 
@@ -382,7 +382,7 @@ namespace SIGES3_0.Pages.PedidoPages
                 string mesActual = mesElemento.Text.Trim();
 
                 int anioActual = anioObjetivo;
-                IWebElement anioElemento = driver.FindElements(lblAnioPicker)
+                IWebElement? anioElemento = driver.FindElements(lblAnioPicker)
                     .Where(e => EsVisible(e))
                     .OrderByDescending(e => e.Location.Y)
                     .FirstOrDefault();
@@ -398,7 +398,7 @@ namespace SIGES3_0.Pages.PedidoPages
 
                 if (actual < objetivo)
                 {
-                    IWebElement next = wait.Until(d =>
+                    IWebElement? next = wait.Until(d =>
                         d.FindElements(btnMesSiguiente).FirstOrDefault(EsVisible));
 
                     if (next == null)
@@ -408,7 +408,7 @@ namespace SIGES3_0.Pages.PedidoPages
                 }
                 else
                 {
-                    IWebElement prev = wait.Until(d =>
+                    IWebElement? prev = wait.Until(d =>
                         d.FindElements(btnMesAnterior).FirstOrDefault(EsVisible));
 
                     if (prev == null)
@@ -428,7 +428,7 @@ namespace SIGES3_0.Pages.PedidoPages
             string textoDia = fechaEsperada.Day.ToString();
             string fechaEsperadaTexto = fechaEsperada.ToString("dd/MM/yyyy");
 
-            IWebElement mesVisible = driver.FindElements(lblMesPicker)
+            IWebElement? mesVisible = driver.FindElements(lblMesPicker)
                 .Where(e => EsVisible(e))
                 .OrderByDescending(e => e.Location.Y)
                 .FirstOrDefault();
@@ -500,7 +500,7 @@ namespace SIGES3_0.Pages.PedidoPages
 
             var columnaHora = columnas[0];
 
-            IWebElement horaElemento = columnaHora
+            IWebElement? horaElemento = columnaHora
                 .FirstOrDefault(e => (e.Text ?? "").Trim() == hora);
 
             if (horaElemento == null)
@@ -529,7 +529,7 @@ namespace SIGES3_0.Pages.PedidoPages
 
             var columnaMinuto = columnas[1];
 
-            IWebElement minutoElemento = columnaMinuto
+            IWebElement? minutoElemento = columnaMinuto
                 .FirstOrDefault(e => (e.Text ?? "").Trim() == minuto);
 
             if (minutoElemento == null)
@@ -553,7 +553,7 @@ namespace SIGES3_0.Pages.PedidoPages
 
             By opcionObjetivo = esAm ? opcionAmPicker : opcionPmPicker;
 
-            IWebElement ampmElemento = wait.Until(d =>
+            IWebElement? ampmElemento = wait.Until(d =>
                 d.FindElements(opcionObjetivo).FirstOrDefault(e => EsVisible(e)));
 
             if (ampmElemento == null)
@@ -598,7 +598,7 @@ namespace SIGES3_0.Pages.PedidoPages
             ClickSeguro(combo);
             Thread.Sleep(700);
 
-            IWebElement item = wait.Until(d =>
+            IWebElement? item = wait.Until(d =>
                 d.FindElements(opcionesCombo).FirstOrDefault(e =>
                     EsVisible(e) &&
                     e.Text.Trim().Equals(opcion, StringComparison.OrdinalIgnoreCase)));

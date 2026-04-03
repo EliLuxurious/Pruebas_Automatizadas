@@ -1,4 +1,3 @@
-@ignore
 Feature: VerVentas
 
 Cobertura base para acciones disponibles en ver ventas.
@@ -7,44 +6,39 @@ Background:
     Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'
     When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña 'calidad'
     And el usuario accede al módulo 'Ventas'
-    And el usuario accede al submodulo 'Ver Ventas'
 
-@CanjearComprobante
-Scenario: Canjear comprobante
-    When Ingresar fecha inicial "27/01/2025"
-    And Ingresar fecha final "20/02/2025"
-    And Click en consultar ventas
-    And Buscar venta 'NV02-53'
-    And Activar canje
-    And Seleccionar venta
-    And Click en el boton canjear
-    And Seleccionar el tipo de comprobante "BOLETA DE VENTA ELECTRONICA"
-    And Click en el boton aceptar
-    Then Ver comprobante
+@CanjearNV
+Scenario Outline: <Caso> Canjear NV con comprobante destino <ComprobanteDestino>
+    Given el usuario accede al submodulo 'Nueva Venta'
+    And crea <CantidadNV> notas de venta con familia "<Familia>", concepto "<Concepto>", cantidad "<Cantidad>" y documento "<Documento>"
+    When el usuario accede al submodulo 'Ver Ventas'
+    And filtra ventas del dia de hoy
+    And activa el modo canje
+    And selecciona las primeras <CantidadNV> notas de venta
+    And hace clic en el boton Canjear
+    And selecciona el comprobante "<ComprobanteDestino>" en el modal de canje
+    And selecciona la serie "<SerieDestino>" en el modal de canje
+    And confirma el canje
+    Then el sistema genera el canje exitosamente
 
-@NotaDebito
-Scenario: Emitir nota de debito con aumento en el valor
-    When Ingresar fecha inicial "27/01/2025"
-    And Ingresar fecha final "19/02/2025"
-    And Click en consultar ventas
-    And Buscar venta 'B002-27905'
-    And Ver venta buscada
-    And Elegir tipo de nota 'DEBITO'
-    And Seleccionar el tipo de nota "AUMENTO EN EL VALOR"
-    And Seleccionar el documento "NOTA DE DEBITO"
-    And Escribir el motivo de la nota "Aumento el valor"
-    And Ingresar el aumento de valor de la nota '60'
-    And Guardar nota
-    Then Ver comprobante
+    Examples:
+      | Caso  | Familia | Concepto      | Cantidad | CantidadNV | Documento   | ComprobanteDestino          | SerieDestino |
+      | CP039 | gaseosa | 7753234003313 | 50       | 2          | 00000000    | BOLETA DE VENTA ELECTRONICA | B002         |
+      | CP040 | gaseosa | 7753234003313 | 100      | 2          | 75893616    | BOLETA DE VENTA ELECTRONICA | B002         |
+      | CP041 | gaseosa | 7753234003313 | 50       | 1          | 20542245671 | FACTURA ELECTRONICA         | F001         |
 
-@EnviarComprobante
-Scenario: Enviar comprobante
-    When Ingresar fecha inicial "27/01/2025"
-    And Ingresar fecha final "13/02/2025"
-    And Click en consultar ventas
-    And Buscar venta 'B002-27909'
-    And Ver venta buscada
-    And Click en el boton enviar
-    And Ingresar correo 'kevinsanchezcabrerakevin@gmail.com'
-    And Click en el boton agregar el correo
-    Then Enviar comprobante de venta
+@CanjearNV
+@SinSeleccion
+Scenario Outline: <Caso> Verificar que el boton Canjear esta deshabilitado sin NVs seleccionadas
+    When el usuario accede al submodulo 'Ver Ventas'
+    And el usuario ingresa la fecha y hora "<fechaHoraInicial>" en el campo "Fecha y hora de inicio"
+    And el usuario ingresa la fecha y hora "<fechaHoraFinal>" en el campo "Fecha y hora de fin"
+    And hace clic en consultar ventas
+    And activa el modo canje
+    Then el boton Canjear permanece deshabilitado
+
+    Examples:
+      | Caso  | fechaHoraInicial    | fechaHoraFinal      |
+      | CP042 | 05/03/2026 12:00 am | 25/03/2026 11:59 pm |
+
+# Pendiente: validación de inconsistencias del modal aún no implementada en la app

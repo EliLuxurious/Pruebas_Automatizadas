@@ -1,4 +1,5 @@
 using OpenQA.Selenium;
+using Reqnroll;
 using SIGES3_0.Pages.VentasPage;
 
 namespace SIGES3_0.StepDefinitions.VentasStep
@@ -13,42 +14,58 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             nuevaVentaPage = new NuevaVentaPage(driver);
         }
 
-        [When("ejecuta el flujo de nueva venta con familia {string}, concepto {string}, cantidad {string}, documento {string}, comprobante {string}, serie {string}, entrega {string} y pago {string}")]
-        public void WhenEjecutaElFlujoDeNuevaVentaDynamic(string familia, string concepto, string cantidad, string documento, string comprobante, string serie, string entrega, string pago)
+        [StepDefinition("selecciona familia {string} y concepto {string}")]
+        public void WhenSeleccionaFamiliaYConcepto(string familia, string concepto)
         {
-            nuevaVentaPage.ExecuteFlowDynamic(familia, concepto, cantidad, documento, comprobante, serie, entrega, pago);
+            nuevaVentaPage.SelectProductFlow(familia, concepto);
         }
 
-        [Then("valida que Guardar habilitado sea {string}")]
-        public void ThenValidaQueGuardarHabilitadoSea(string habilitado)
+        [StepDefinition("actualiza la cantidad {string}")]
+        public void WhenActualizaLaCantidad(string cantidad)
         {
-            var isEnabled = habilitado.Trim().ToUpperInvariant() is "SI" or "YES" or "TRUE";
-            var expectation = new VentaExpectation
-            {
-                SaveShouldBeEnabled = isEnabled
-            };
-            nuevaVentaPage.ValidateSale(expectation);
+            nuevaVentaPage.UpdateQuantityFlow(cantidad);
         }
 
-        [Then("valida que Ejecutar guardado sea {string}")]
-        public void ThenValidaQueEjecutarGuardadoSea(string ejecutar)
+        [StepDefinition("ingresa el documento del cliente {string}")]
+        public void WhenIngresaDocumentoCliente(string documento)
         {
-            var isExecuted = ejecutar.Trim().ToUpperInvariant() is "SI" or "YES" or "TRUE";
-            var expectation = new VentaExpectation
-            {
-                SaveShouldBeExecuted = isExecuted
-            };
-            nuevaVentaPage.ValidateSale(expectation);
+            nuevaVentaPage.EnterDocumentAndSearch(documento);
         }
 
-        [Then("verifica el mensaje de confirmacion {string}")]
-        public void ThenVerificaElMensajeDeConfirmacion(string mensaje)
+        [StepDefinition("selecciona comprobante {string} con serie {string}")]
+        public void WhenSeleccionaComprobante(string comprobante, string serie)
         {
-            var expectation = new VentaExpectation
-            {
-                ExpectedMessage = mensaje
-            };
-            nuevaVentaPage.ValidateSale(expectation);
+            nuevaVentaPage.SelectVoucherFlow(comprobante, serie);
+        }
+
+        [StepDefinition("selecciona tipo de entrega {string}")]
+        public void WhenSeleccionaTipoEntrega(string entrega)
+        {
+            nuevaVentaPage.SelectDeliveryFlow(entrega);
+        }
+
+        [StepDefinition("configura el pago {string}")]
+        public void WhenConfiguraPago(string pago)
+        {
+            nuevaVentaPage.ConfigurePaymentFlow(pago);
+        }
+
+        [StepDefinition("hace clic en Guardar")]
+        public void WhenHaceClicEnGuardar()
+        {
+            nuevaVentaPage.GuardarVentaFlow();
+        }
+
+        [StepDefinition("crea {int} notas de venta con familia {string}, concepto {string}, cantidad {string} y documento {string}")]
+        public void CreaNotasDeVenta(int n, string familia, string concepto, string cantidad, string documento)
+        {
+            nuevaVentaPage.CrearNotasDeVenta(n, familia, concepto, cantidad, documento);
+        }
+
+        [Then("el sistema muestra el mensaje {string}")]
+        public void ThenElSistemaMuestraElMensaje(string mensaje)
+        {
+            nuevaVentaPage.VerifyConfirmationMessage(mensaje);
         }
     }
 }

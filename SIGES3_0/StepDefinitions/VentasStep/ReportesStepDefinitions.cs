@@ -1,6 +1,7 @@
 using OpenQA.Selenium;
-using SIGES3_0.Pages.VentasPage;
 using NUnit.Framework;
+using Reqnroll;
+using SIGES3_0.Pages.VentasPage;
 
 namespace SIGES3_0.StepDefinitions.VentasStep
 {
@@ -95,7 +96,12 @@ namespace SIGES3_0.StepDefinitions.VentasStep
 
 
         // Usado por: @FiltroFechas — valida si el reporte se generó o el sistema bloqueó las fechas inválidas
-        //La funcion se recicla de fechas de reporte, entonces, la diferencia es que este reporte te permite continuar para completar el flujo.
+
+        [Then(@"el sistema muestra el resultado esperado del reporte ""(.*)""")]
+        public void ThenElSistemaMuestraElResultadoEsperadoDelReporte(string resultadoEsperado)
+        {
+            _reportesPage.ValidarResultadoReporte(resultadoEsperado);
+        }
 
         // Usado por: @PorComprobante, @PorSerie, @PorConceptos, @PorFamilia, @PorCaracteristica
         [Then(@"el sistema genera el reporte exitosamente")]

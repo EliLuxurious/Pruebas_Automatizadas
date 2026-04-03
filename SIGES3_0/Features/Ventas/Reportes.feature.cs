@@ -146,22 +146,22 @@ await this.FeatureBackgroundAsync();
  await testRunner.WhenAsync("selecciona la vista \"Comprobantes\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 16
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora inicial \"{0}\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 17
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora final \"{0}\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 18
-    await testRunner.AndAsync(string.Format("selecciona el tipo de comprobante \"{0}\"", tipoComprobante), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("selecciona el tipo de comprobante \"{0}\"", tipoComprobante), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 19
-    await testRunner.AndAsync(string.Format("selecciona la serie \"{0}\"", serie), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("selecciona la serie \"{0}\"", serie), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 20
-    await testRunner.AndAsync("hace clic en \"VER REPORTE\" en la tarjeta \"Por Comprobante\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("hace clic en \"VER REPORTE\" en la tarjeta \"Por Comprobante\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 21
-    await testRunner.ThenAsync(string.Format("el sistema muestra el resultado esperado del reporte \"{0}\"", resultadoEsperado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.ThenAsync(string.Format("el sistema muestra el resultado esperado del reporte \"{0}\"", resultadoEsperado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -210,10 +210,10 @@ await this.FeatureBackgroundAsync();
     await testRunner.WhenAsync("selecciona la vista \"Comprobantes\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 34
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora inicial \"{0}\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 35
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora final \"{0}\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 36
     await testRunner.AndAsync(string.Format("selecciona el tipo de comprobante \"{0}\"", tipoComprobante), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -269,10 +269,10 @@ await this.FeatureBackgroundAsync();
     await testRunner.WhenAsync("selecciona la vista \"Series\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 54
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora inicial \"{0}\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 55
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora final \"{0}\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 56
     await testRunner.AndAsync(string.Format("selecciona el comprobante y serie \"{0}\"", comprobanteSerie), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -292,10 +292,10 @@ await this.FeatureBackgroundAsync();
         [NUnit.Framework.CategoryAttribute("Reportes")]
         [NUnit.Framework.CategoryAttribute("PorConceptos")]
         [NUnit.Framework.CategoryAttribute("Sinfiltro")]
-        [NUnit.Framework.TestCaseAttribute("CP086", "CENTRO COMERCIAL CENTRAL", "Por Familia y Serie", "05/03/2026 12:00 am", "05/03/2026 11:59 pm", null)]
-        [NUnit.Framework.TestCaseAttribute("CP087", "CENTRO COMERCIAL CENTRAL", "Por Categoría y Serie", "05/03/2026 12:00 am", "05/03/2026 11:59 pm", null)]
-        [NUnit.Framework.TestCaseAttribute("CP088", "CENTRO COMERCIAL CENTRAL", "Según Horario", "05/03/2026 12:00 am", "05/03/2026 11:59 pm", null)]
-        [NUnit.Framework.TestCaseAttribute("CP0000", "CENTRO COMERCIAL CENTRAL", "Por Comprobante con ICBPER", "05/03/2026 12:00 am", "05/03/2026 11:59 pm", null)]
+        [NUnit.Framework.TestCaseAttribute("CP086", "CENTRO COMERCIAL CENTRAL", "Por Familia y Serie", "05/03/2026 12:00 am", "25/03/2026 11:59 pm", null)]
+        [NUnit.Framework.TestCaseAttribute("CP087", "CENTRO COMERCIAL CENTRAL", "Por Categoría y Serie", "05/03/2026 12:00 am", "25/03/2026 11:59 pm", null)]
+        [NUnit.Framework.TestCaseAttribute("CP088", "CENTRO COMERCIAL CENTRAL", "Según Horario", "05/03/2026 12:00 am", "25/03/2026 11:59 pm", null)]
+        [NUnit.Framework.TestCaseAttribute("CP0000", "CENTRO COMERCIAL CENTRAL", "Por Comprobante con ICBPER", "05/03/2026 12:00 am", "25/03/2026 11:59 pm", null)]
         public async System.Threading.Tasks.Task CasoGenerarReportePorConceptosSinFiltroAdicional(string caso, string puntoVenta, string tarjeta, string fechaHoraInicial, string fechaHoraFinal, string[] exampleTags)
         {
             string[] @__tags = new string[] {
@@ -331,10 +331,10 @@ await this.FeatureBackgroundAsync();
     await testRunner.WhenAsync("selecciona la vista \"Conceptos\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 69
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora inicial \"{0}\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 70
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora final \"{0}\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 71
     await testRunner.AndAsync(string.Format("selecciona el punto de venta \"{0}\"", puntoVenta), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -390,10 +390,10 @@ await this.FeatureBackgroundAsync();
     await testRunner.WhenAsync("selecciona la vista \"Conceptos\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 87
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora inicial \"{0}\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 88
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora final \"{0}\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 89
     await testRunner.AndAsync(string.Format("selecciona el punto de venta \"{0}\"", puntoVenta), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -454,10 +454,10 @@ await this.FeatureBackgroundAsync();
     await testRunner.WhenAsync("selecciona la vista \"Conceptos\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 103
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora inicial \"{0}\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 104
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora final \"{0}\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 105
     await testRunner.AndAsync(string.Format("selecciona el punto de venta \"{0}\"", puntoVenta), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -515,10 +515,10 @@ await this.FeatureBackgroundAsync();
     await testRunner.WhenAsync("selecciona la vista \"Vendedor\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 119
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora inicial \"{0}\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 120
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora final \"{0}\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 121
     await testRunner.AndAsync(string.Format("selecciona el vendedor \"{0}\"", vendedor), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -580,10 +580,10 @@ await this.FeatureBackgroundAsync();
     await testRunner.WhenAsync("selecciona la vista \"Vendedor\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 136
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora inicial \"{0}\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 137
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora final \"{0}\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 138
     await testRunner.AndAsync(string.Format("selecciona el vendedor \"{0}\"", vendedor), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -642,10 +642,10 @@ await this.FeatureBackgroundAsync();
     await testRunner.WhenAsync("selecciona la vista \"Vendedor\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 152
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora inicial \"{0}\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 153
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora final \"{0}\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 154
     await testRunner.AndAsync(string.Format("selecciona el vendedor \"{0}\"", vendedor), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -702,10 +702,10 @@ await this.FeatureBackgroundAsync();
     await testRunner.WhenAsync("selecciona la vista \"Grupos\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 166
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora inicial \"{0}\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 167
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora final \"{0}\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 168
     await testRunner.AndAsync(string.Format("selecciona el establecimiento \"{0}\"", establecimiento), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -764,10 +764,10 @@ await this.FeatureBackgroundAsync();
     await testRunner.WhenAsync("selecciona la vista \"Excepciones\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 183
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora inicial \"{0}\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 184
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora final \"{0}\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 185
     await testRunner.AndAsync(string.Format("selecciona el punto de venta \"{0}\"", puntoVenta), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

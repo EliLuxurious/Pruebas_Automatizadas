@@ -1,6 +1,8 @@
 using SIGES3_0.Pages.Helpers;
+using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
+using System.Linq;
+using System.Threading;
 
 namespace SIGES3_0.Pages.VentasPage
 {
@@ -15,190 +17,187 @@ namespace SIGES3_0.Pages.VentasPage
             utilities = new Utilities(driver);
         }
 
-        public void SetInitialDate(string value)
-        {
-            utilities.ClearAndEnterText(VentasLocators.ViewSales.InitialDate, value);
-        }
-
-        public void SetFinalDate(string value)
-        {
-            utilities.ClearAndEnterText(VentasLocators.ViewSales.FinalDate, value);
-        }
-
         public void QuerySales()
         {
             utilities.ClickButton(VentasLocators.ViewSales.QueryButton);
         }
 
-        public void SearchSale(string value)
-        {
-            utilities.ClearAndEnterText(VentasLocators.ViewSales.SearchSale, value);
-        }
+        // Canje de Notas de Venta ??????????????????????????????????????????????
 
-        public void ActivateRedeem()
+        public void ActivarModoCanje()
         {
             utilities.ClickButton(VentasLocators.ViewSales.ActivateRedeem);
+            Thread.Sleep(800);
         }
 
-        public void SelectFirstSale()
+        public void SeleccionarNVs(int cantidad)
         {
-            utilities.ClickButton(VentasLocators.ViewSales.FirstRowCheck);
+            var js = (IJavaScriptExecutor)driver;
+            Thread.Sleep(800); // Esperar que canje mode termine de renderizar checkboxes
+            for (int fila = 1; fila <= cantidad; fila++)
+            {
+                // Busca el elemento clickeable dentro de td[1] en orden de prioridad:
+                // input ? label ? [role=checkbox] ? primer hijo ? td[1] mismo
+                js.ExecuteScript(
+                    "var rows = document.querySelectorAll('tbody tr');" +
+                    "var idx = arguments[0] - 1;" +
+                    "if (idx >= rows.length) return;" +
+                    "var td = rows[idx].querySelector('td:first-child');" +
+                    "if (!td) return;" +
+                    "var target = td.querySelector('input') ||" +
+                    "             td.querySelector('label') ||" +
+                    "             td.querySelector('[role=\"checkbox\"]') ||" +
+                    "             td.firstElementChild ||" +
+                    "             td;" +
+                    "target.click();",
+                    (long)fila);
+                Console.WriteLine($"Fila {fila}: click enviado");
+                Thread.Sleep(600);
+            }
         }
 
-        public void ClickRedeem()
+        public void ClickCanjear()
         {
-            utilities.ClickButton(VentasLocators.ViewSales.RedeemButton);
+            var btn = driver.FindElement(VentasLocators.ViewSales.RedeemButton);
+            var js = (IJavaScriptExecutor)driver;
+            js.ExecuteScript("arguments[0].scrollIntoView({block:'center'});", btn);
+            Thread.Sleep(500);
+            js.ExecuteScript("arguments[0].click();", btn);
+            Thread.Sleep(1500);
         }
 
-        public void SetVoucherType(string option)
+        public void SeleccionarComprobanteEnModal(string tipo)
         {
-            var select = new SelectElement(utilities.WaitUntilVisible(VentasLocators.ViewSales.RedeemVoucherType));
-            select.SelectByText(option);
+            utilities.ClickButton(VentasLocators.ViewSales.ModalComprobanteDropdown);
+            Thread.Sleep(600);
+            utilities.ClickButton(VentasLocators.ViewSales.ModalComprobanteOpcion(tipo));
+            Thread.Sleep(600);
         }
 
-        public void AcceptRedeem()
+        public void SeleccionarSerieEnModal(string serie)
+        {
+            utilities.ClickButton(VentasLocators.Voucher.SeriesInputByText(serie));
+            Thread.Sleep(500);
+        }
+
+        public void ConfirmarCanje()
         {
             utilities.ClickButton(VentasLocators.ViewSales.AcceptRedeemButton);
+            Thread.Sleep(2500);
         }
 
-        public void OpenSale()
+        public void VerificarCanjeExitoso()
         {
-            utilities.ClickButton(VentasLocators.ViewSales.ViewSaleButton);
-        }
+            Thread.Sleep(2000);
 
-        public void ChooseNoteType(string option)
-        {
-            switch (option.Trim().ToUpperInvariant())
+            bool hayError = driver.FindElements(By.XPath(
+                "//*[contains(@class,'toast-error') or contains(@class,'alert-danger')]"))
+                .Any(e => { try { return e.Displayed; } catch { return false; } });
+
+            Assert.IsFalse(hayError, "Se produjo un error al intentar canjear la nota de venta.");
+
+            bool hayExito = driver.FindElements(VentasLocators.ViewSales.CanjeExitoToast)
+                .Any(e => { try { return e.Displayed; } catch { return false; } });
+
+            if (!hayExito)
             {
-                case "DEBITO":
-                case "DÉBITO":
-                    utilities.ClickButton(VentasLocators.ViewSales.DebitNoteButton);
-                    break;
+                bool modalCerrado = !driver.FindElements(
+                    By.XPath("//div[contains(@class,'modal') and contains(@class,'show')]"))
+                    .Any(e => { try { return e.Displayed; } catch { return false; } });
 
-                case "CREDITO":
-                case "CRÉDITO":
-                    utilities.ClickButton(VentasLocators.ViewSales.CreditNoteButton);
-                    break;
-
-                default:
-                    throw new ArgumentException($"El tipo de nota '{option}' no esta soportado.");
+                Assert.IsTrue(modalCerrado, "El modal de canje no se cerró tras aceptar.");
             }
         }
 
-        public void SelectNoteCategory(string option)
+        public void VerificarBotonCanjearDeshabilitado()
         {
-            var select = new SelectElement(utilities.WaitUntilVisible(VentasLocators.ViewSales.NoteTypeSelect));
-            select.SelectByText(option);
+            Thread.Sleep(500);
+            var btn = driver.FindElements(VentasLocators.ViewSales.RedeemButton)
+                .FirstOrDefault(e => { try { return e.Displayed; } catch { return false; } });
+
+            Assert.IsTrue(
+                btn == null || !btn.Enabled || btn.GetAttribute("disabled") != null,
+                "Se esperaba que el botón Canjear estuviera deshabilitado.");
         }
 
-        public void SelectNoteDocument(string option)
+        public void SeleccionarNVsPorSerie(string nvListCsv)
         {
-            var select = new SelectElement(utilities.WaitUntilVisible(VentasLocators.ViewSales.NoteDocumentSelect));
-            select.SelectByText(option);
-        }
-
-        public void EnterReason(string value)
-        {
-            utilities.ClearAndEnterText(VentasLocators.ViewSales.NoteReason, value);
-        }
-
-        public void EnterNoteAmount(string value)
-        {
-            utilities.ClearAndEnterText(VentasLocators.ViewSales.NoteAmount, value);
-        }
-
-        public void EnterRowAmount(string value)
-        {
-            utilities.ClearAndEnterText(VentasLocators.ViewSales.NoteRowAmount, value);
-        }
-
-        public void EnterQuantity(string value)
-        {
-            utilities.ClearAndEnterText(VentasLocators.ViewSales.NoteQuantity, value);
-        }
-
-        public void SelectCreditDelivery(string option)
-        {
-            if (option.Trim().Equals("INMEDIATA", StringComparison.OrdinalIgnoreCase))
+            foreach (var serie in nvListCsv.Split(',').Select(s => s.Trim()))
             {
-                utilities.ClickButton(VentasLocators.ViewSales.NoteImmediate);
-                return;
-            }
-
-            utilities.ClickButton(VentasLocators.ViewSales.NoteDeferred);
-        }
-
-        public void SaveNote()
-        {
-            utilities.ClickButton(VentasLocators.ViewSales.SaveNote);
-        }
-
-        public void InvalidateDocument()
-        {
-            utilities.ClickButton(VentasLocators.ViewSales.InvalidateButton);
-        }
-
-        public void EnterObservation(string value)
-        {
-            utilities.ClearAndEnterText(VentasLocators.ViewSales.Observation, value);
-        }
-
-        public void AcceptInvalidation()
-        {
-            utilities.ClickButton(VentasLocators.ViewSales.AcceptInvalidation);
-        }
-
-        public void CloneSale()
-        {
-            utilities.ClickButton(VentasLocators.ViewSales.CloneButton);
-        }
-
-        public void PrintDocument()
-        {
-            utilities.ClickButton(VentasLocators.ViewSales.PrintButton);
-        }
-
-        public void DownloadDocument(string option)
-        {
-            switch (option.Trim().ToUpperInvariant())
-            {
-                case "PDF":
-                    utilities.ClickButton(VentasLocators.ViewSales.PdfButton);
-                    break;
-
-                case "XML":
-                    utilities.ClickButton(VentasLocators.ViewSales.DownloadDropdown);
-                    utilities.ClickButton(VentasLocators.ViewSales.XmlButton);
-                    break;
-
-                case "ZIP":
-                    utilities.ClickButton(VentasLocators.ViewSales.DownloadDropdown);
-                    utilities.ClickButton(VentasLocators.ViewSales.ZipButton);
-                    break;
-
-                default:
-                    throw new ArgumentException($"El tipo de descarga '{option}' no esta soportado.");
+                utilities.ClickButton(VentasLocators.ViewSales.NvRowCheckboxBySerie(serie));
+                Thread.Sleep(800);
             }
         }
 
-        public void OpenSendModal()
+        public void VerificarMensajeInconsistencia()
         {
-            utilities.ClickButton(VentasLocators.ViewSales.SendButton);
+            Thread.Sleep(1000);
+            bool hayMensaje = driver.FindElements(VentasLocators.ViewSales.ModalInconsistencia)
+                .Any(e => { try { return e.Displayed; } catch { return false; } });
+
+            Assert.IsTrue(hayMensaje, "Se esperaba una advertencia de inconsistencia en el modal.");
         }
 
-        public void EnterEmail(string value)
+        public void FiltrarVentasDiaDeHoy()
         {
-            utilities.ClearAndEnterText(VentasLocators.ViewSales.EmailInput, value);
+            var hoy = DateTime.Now.ToString("dd/MM/yyyy");
+
+            var inicioLocator = EsperarLocadorFecha(
+                VentasLocators.ViewSales.InitialDate,
+                VentasLocators.ViewSales.FechaHoraInicial);
+            IngresarFechaHora(inicioLocator, $"{hoy} 12:00 am");
+            Thread.Sleep(400);
+
+            var finLocator = EsperarLocadorFecha(
+                VentasLocators.ViewSales.FinalDate,
+                VentasLocators.ViewSales.FechaHoraFinal);
+            IngresarFechaHora(finLocator, $"{hoy} 11:59 pm");
+            Thread.Sleep(400);
+
+            QuerySales();
         }
 
-        public void AddEmail()
+        // Espera hasta 10 s a que aparezca el locator primario; si no, usa el alternativo.
+        private By EsperarLocadorFecha(By primario, By alternativo, int timeoutSeconds = 10)
         {
-            utilities.ClickButton(VentasLocators.ViewSales.AddEmail);
+            var deadline = DateTime.UtcNow.AddSeconds(timeoutSeconds);
+            while (DateTime.UtcNow < deadline)
+            {
+                if (driver.FindElements(primario).Count > 0)
+                    return primario;
+                if (driver.FindElements(alternativo).Count > 0)
+                    return alternativo;
+                Thread.Sleep(500);
+            }
+            return alternativo;
         }
 
-        public void SendMail()
+        // Establece el valor del campo fecha/hora.
+        // Usa el setter nativo de HTMLInputElement para que Angular detecte el cambio
+        // (equivalente a interacción real del usuario en componentes controlados).
+        private void IngresarFechaHora(By locator, string valor)
         {
-            utilities.ClickButton(VentasLocators.ViewSales.SendMail);
+            var el = driver.FindElement(locator);
+            var js = (IJavaScriptExecutor)driver;
+            js.ExecuteScript(
+                "var el = arguments[0]; var val = arguments[1];" +
+                "el.removeAttribute('readonly');" +
+                "var setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;" +
+                "setter.call(el, val);" +
+                "el.dispatchEvent(new Event('input', { bubbles: true }));" +
+                "el.dispatchEvent(new Event('change', { bubbles: true }));",
+                el, valor);
+            Thread.Sleep(300);
+        }
+
+        public void VerificarBotonAceptarDeshabilitado()
+        {
+            var btn = driver.FindElements(VentasLocators.ViewSales.AcceptRedeemButton)
+                .FirstOrDefault(e => { try { return e.Displayed; } catch { return false; } });
+
+            Assert.IsTrue(
+                btn == null || !btn.Enabled || btn.GetAttribute("disabled") != null,
+                "Se esperaba que el botón Aceptar estuviera deshabilitado.");
         }
     }
 }

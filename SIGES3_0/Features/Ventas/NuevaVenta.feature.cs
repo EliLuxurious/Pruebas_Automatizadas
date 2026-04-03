@@ -109,14 +109,14 @@ CP004: Boleta con cliente RUC.", global::Reqnroll.ProgrammingLanguage.CSharp, fe
         [NUnit.Framework.DescriptionAttribute("Flujo de ventas con Venta Normal")]
         [NUnit.Framework.CategoryAttribute("NuevaVenta")]
         [NUnit.Framework.CategoryAttribute("VentaNormal")]
-        [NUnit.Framework.TestCaseAttribute("CP001", "gaseosa", "7753234003320", "", "75893616", "FACTURA ELECTRONICA", "F002", "Inmediata", "Completo", "NO", "NO", "", null)]
-        [NUnit.Framework.TestCaseAttribute("CP002", "gaseosa", "7753234003320", "", "20542245671", "FACTURA ELECTRONICA", "F002", "Inmediata", "Completo", "SI", "SI", "Se registro correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("CP003", "gaseosa", "7753234003320", "150", "00000000", "BOLETA DE VENTA ELECTRONICA", "B002", "Inmediata", "Completo", "NO", "NO", "total es mayor a 700", null)]
-        [NUnit.Framework.TestCaseAttribute("CP004", "gaseosa", "7753234003320", "", "20542245671", "BOLETA DE VENTA ELECTRONICA", "B002", "Inmediata", "Completo", "SI", "SI", "Se registro correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("CP005", "gaseosa", "7753234003313", "50", "75893616", "BOLETA DE VENTA ELECTRONICA", "B002", "Diferida", "Completo", "SI", "SI", "Se registro correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("CP006", "gaseosa", "7753234003313", "150", "00000000", "NOTA DE VENTA(INTERNA)", "NV02", "Inmediata", "Completo", "SI", "SI", "Se registro correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("CP007", "gaseosa", "7753234003313", "150", "75893616", "NOTA DE VENTA(INTERNA)", "NV02", "Inmediata", "Incompleto", "SI", "SI", "insuficiente", null)]
-        public async System.Threading.Tasks.Task FlujoDeVentasConVentaNormal(string caso, string familia, string concepto, string cantidad, string documento, string comprobante, string serie, string entrega, string pago, string habilitado, string ejecutar, string mensaje, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("CP001", "gaseosa", "7753234003320", "", "75893616", "FACTURA ELECTRONICA", "F002", "Inmediata", "Completo", "", null)]
+        [NUnit.Framework.TestCaseAttribute("CP002", "gaseosa", "7753234003320", "", "20542245671", "FACTURA ELECTRONICA", "F002", "Inmediata", "Completo", "Se registro correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("CP003", "gaseosa", "7753234003320", "150", "00000000", "BOLETA DE VENTA ELECTRONICA", "B002", "Inmediata", "Completo", "total es mayor a 700", null)]
+        [NUnit.Framework.TestCaseAttribute("CP004", "gaseosa", "7753234003320", "", "20542245671", "BOLETA DE VENTA ELECTRONICA", "B002", "Inmediata", "Completo", "Se registro correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("CP005", "gaseosa", "7753234003313", "50", "75893616", "BOLETA DE VENTA ELECTRONICA", "B002", "Diferida", "Completo", "Se registro correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("CP006", "gaseosa", "7753234003313", "150", "00000000", "NOTA DE VENTA(INTERNA)", "NV02", "Inmediata", "Completo", "Se registro correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("CP007", "gaseosa", "7753234003313", "150", "75893616", "NOTA DE VENTA(INTERNA)", "NV02", "Inmediata", "Incompleto", "insuficiente", null)]
+        public async System.Threading.Tasks.Task FlujoDeVentasConVentaNormal(string caso, string familia, string concepto, string cantidad, string documento, string comprobante, string serie, string entrega, string pago, string mensaje, string[] exampleTags)
         {
             string[] @__tags = new string[] {
                     "NuevaVenta",
@@ -136,8 +136,6 @@ CP004: Boleta con cliente RUC.", global::Reqnroll.ProgrammingLanguage.CSharp, fe
             argumentsOfScenario.Add("Serie", serie);
             argumentsOfScenario.Add("Entrega", entrega);
             argumentsOfScenario.Add("Pago", pago);
-            argumentsOfScenario.Add("Habilitado", habilitado);
-            argumentsOfScenario.Add("Ejecutar", ejecutar);
             argumentsOfScenario.Add("Mensaje", mensaje);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Flujo de ventas con Venta Normal", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 16
@@ -154,17 +152,28 @@ this.ScenarioInitialize(scenarioInfo);
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 17
-    await testRunner.WhenAsync(string.Format("ejecuta el flujo de nueva venta con familia \"{0}\", concepto \"{1}\", cantidad \"{2}\"" +
-                            ", documento \"{3}\", comprobante \"{4}\", serie \"{5}\", entrega \"{6}\" y pago \"{7}\"", familia, concepto, cantidad, documento, comprobante, serie, entrega, pago), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+    await testRunner.WhenAsync(string.Format("selecciona familia \"{0}\" y concepto \"{1}\"", familia, concepto), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 18
-    await testRunner.ThenAsync(string.Format("valida que Guardar habilitado sea \"{0}\"", habilitado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+    await testRunner.AndAsync(string.Format("actualiza la cantidad \"{0}\"", cantidad), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 19
-    await testRunner.AndAsync(string.Format("valida que Ejecutar guardado sea \"{0}\"", ejecutar), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("ingresa el documento del cliente \"{0}\"", documento), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 20
-    await testRunner.AndAsync(string.Format("verifica el mensaje de confirmacion \"{0}\"", mensaje), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("selecciona comprobante \"{0}\" con serie \"{1}\"", comprobante, serie), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 21
+    await testRunner.AndAsync(string.Format("selecciona tipo de entrega \"{0}\"", entrega), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 22
+    await testRunner.AndAsync(string.Format("configura el pago \"{0}\"", pago), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 23
+    await testRunner.AndAsync("hace clic en Guardar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 24
+    await testRunner.ThenAsync(string.Format("el sistema muestra el mensaje \"{0}\"", mensaje), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

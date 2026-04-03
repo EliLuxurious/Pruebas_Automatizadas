@@ -1,4 +1,5 @@
 using OpenQA.Selenium;
+using Reqnroll;
 using SIGES3_0.Pages.VentasPage;
 
 namespace SIGES3_0.StepDefinitions.VentasStep
@@ -13,196 +14,88 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             verVentasPage = new VerVentasPage(driver);
         }
 
-        [When(@"Ingresar fecha inicial ""([^""]*)""")]
-        public void WhenIngresarFechaInicial(string value)
-        {
-            verVentasPage.SetInitialDate(value);
-        }
-
-        [When(@"Ingresar fecha final ""([^""]*)""")]
-        public void WhenIngresarFechaFinal(string value)
-        {
-            verVentasPage.SetFinalDate(value);
-        }
-
-        [When("Click en consultar ventas")]
-        public void WhenClickEnConsultarVentas()
+        [When("hace clic en consultar ventas")]
+        public void WhenHaceClicEnConsultarVentas()
         {
             verVentasPage.QuerySales();
         }
 
-        [When(@"Buscar venta '([^']*)'")]
-        public void WhenBuscarVenta(string value)
+        [When("activa el modo canje")]
+        public void WhenActivaElModoCanje()
         {
-            verVentasPage.SearchSale(value);
+            verVentasPage.ActivarModoCanje();
         }
 
-        [When("Activar canje")]
-        public void WhenActivarCanje()
+        [When(@"selecciona las notas de venta ""([^""]*)""")]
+        public void WhenSeleccionaLasNotasDeVenta(string nvList)
         {
-            verVentasPage.ActivateRedeem();
+            verVentasPage.SeleccionarNVsPorSerie(nvList);
         }
 
-        [When("Seleccionar venta")]
-        public void WhenSeleccionarVenta()
+        [When(@"selecciona (\d+) notas de venta")]
+        public void WhenSeleccionaNotasDeVenta(int cantidad)
         {
-            verVentasPage.SelectFirstSale();
+            verVentasPage.SeleccionarNVs(cantidad);
         }
 
-        [When("Click en el boton canjear")]
-        public void WhenClickEnElBotonCanjear()
+        [When("hace clic en el boton Canjear")]
+        public void WhenHaceClicEnElBotonCanjear()
         {
-            verVentasPage.ClickRedeem();
+            verVentasPage.ClickCanjear();
         }
 
-        [When(@"Seleccionar el tipo de comprobante ""([^""]*)""")]
-        public void WhenSeleccionarElTipoDeComprobante(string option)
+        [When(@"selecciona el comprobante ""([^""]*)"" en el modal de canje")]
+        public void WhenSeleccionaElComprobanteEnModal(string tipo)
         {
-            verVentasPage.SetVoucherType(option);
+            verVentasPage.SeleccionarComprobanteEnModal(tipo);
         }
 
-        [When("Click en el boton aceptar")]
-        public void WhenClickEnElBotonAceptar()
+        [When(@"selecciona la serie ""([^""]*)"" en el modal de canje")]
+        public void WhenSeleccionaLaSerieEnModal(string serie)
         {
-            verVentasPage.AcceptRedeem();
+            verVentasPage.SeleccionarSerieEnModal(serie);
         }
 
-        [Then("Ver comprobante")]
-        public void ThenVerComprobante()
+        [When("confirma el canje")]
+        public void WhenConfirmaElCanje()
         {
-            verVentasPage.OpenSale();
+            verVentasPage.ConfirmarCanje();
         }
 
-        [When("Ver venta buscada")]
-        public void WhenVerVentaBuscada()
+        [Then("el sistema genera el canje exitosamente")]
+        public void ThenElSistemaGeneraElCanjeExitosamente()
         {
-            verVentasPage.OpenSale();
+            verVentasPage.VerificarCanjeExitoso();
         }
 
-        [When("Elegir tipo de nota {string}")]
-        public void WhenElegirTipoDeNota(string option)
+        [StepDefinition("filtra ventas del dia de hoy")]
+        public void FiltrarVentasDiaDeHoy()
         {
-            verVentasPage.ChooseNoteType(option);
+            verVentasPage.FiltrarVentasDiaDeHoy();
         }
 
-        [When("Seleccionar el tipo de nota {string}")]
-        public void WhenSeleccionarElTipoDeNota(string option)
+        [StepDefinition("selecciona las primeras {int} notas de venta")]
+        public void SeleccionarPrimerasNVs(int cantidad)
         {
-            verVentasPage.SelectNoteCategory(option);
+            verVentasPage.SeleccionarNVs(cantidad);
         }
 
-        [When("Seleccionar el documento {string}")]
-        public void WhenSeleccionarElDocumento(string option)
+        [Then("el boton Canjear permanece deshabilitado")]
+        public void ThenElBotonCanjearPermanaceDeshabilitado()
         {
-            verVentasPage.SelectNoteDocument(option);
+            verVentasPage.VerificarBotonCanjearDeshabilitado();
         }
 
-        [When("Escribir el motivo de la nota {string}")]
-        public void WhenEscribirElMotivoDeLaNota(string value)
+        [Then("el sistema muestra una advertencia de inconsistencia")]
+        public void ThenElSistemaMuestraUnaAdvertenciaDeInconsistencia()
         {
-            verVentasPage.EnterReason(value);
+            verVentasPage.VerificarMensajeInconsistencia();
         }
 
-        [When(@"Ingresar el interes total '([^']*)'")]
-        public void WhenIngresarElInteresTotal(string value)
+        [Then("el boton Aceptar permanece deshabilitado")]
+        public void ThenElBotonAceptarPermanaceDeshabilitado()
         {
-            verVentasPage.EnterNoteAmount(value);
-        }
-
-        [When(@"Ingresar el aumento de valor de la nota '([^']*)'")]
-        public void WhenIngresarElAumentoDeValorDeLaNota(string value)
-        {
-            verVentasPage.EnterRowAmount(value);
-        }
-
-        [When("Seleccionar el tipo de entrega {string}")]
-        public void WhenSeleccionarElTipoDeEntrega(string option)
-        {
-            verVentasPage.SelectCreditDelivery(option);
-        }
-
-        [When("Guardar nota")]
-        public void WhenGuardarNota()
-        {
-            verVentasPage.SaveNote();
-        }
-
-        [When(@"Ingresar el descuento global '([^']*)'")]
-        public void WhenIngresarElDescuentoGlobal(string value)
-        {
-            verVentasPage.EnterNoteAmount(value);
-        }
-
-        [When(@"Ingresar el total de descuento '([^']*)'")]
-        public void WhenIngresarElTotalDeDescuento(string value)
-        {
-            verVentasPage.EnterRowAmount(value);
-        }
-
-        [When("Ingresar la cantidad {string}")]
-        public void WhenIngresarLaCantidad(string value)
-        {
-            verVentasPage.EnterQuantity(value);
-        }
-
-        [When("Click en el boton invalidar")]
-        public void WhenClickEnElBotonInvalidar()
-        {
-            verVentasPage.InvalidateDocument();
-        }
-
-        [When("Ingresar la observacion {string}")]
-        public void WhenIngresarLaObservacion(string value)
-        {
-            verVentasPage.EnterObservation(value);
-        }
-
-        [When("Click en opcion si para invalidar documento")]
-        public void WhenClickEnOpcionSiParaInvalidarDocumento()
-        {
-            verVentasPage.AcceptInvalidation();
-        }
-
-        [When("Click en el boton clonar")]
-        public void WhenClickEnElBotonClonar()
-        {
-            verVentasPage.CloneSale();
-        }
-
-        [Then("Click en el boton imprimir")]
-        public void ThenClickEnElBotonImprimir()
-        {
-            verVentasPage.PrintDocument();
-        }
-
-        [Then("Seleccionar el tipo de descarga {string}")]
-        public void ThenSeleccionarElTipoDeDescarga(string option)
-        {
-            verVentasPage.DownloadDocument(option);
-        }
-
-        [When("Click en el boton enviar")]
-        public void WhenClickEnElBotonEnviar()
-        {
-            verVentasPage.OpenSendModal();
-        }
-
-        [When(@"Ingresar correo '([^']*)'")]
-        public void WhenIngresarCorreo(string value)
-        {
-            verVentasPage.EnterEmail(value);
-        }
-
-        [When("Click en el boton agregar el correo")]
-        public void WhenClickEnElBotonAgregarElCorreo()
-        {
-            verVentasPage.AddEmail();
-        }
-
-        [Then("Enviar comprobante de venta")]
-        public void ThenEnviarComprobanteDeVenta()
-        {
-            verVentasPage.SendMail();
+            verVentasPage.VerificarBotonAceptarDeshabilitado();
         }
     }
 }

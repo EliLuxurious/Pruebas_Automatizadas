@@ -22,14 +22,12 @@ namespace SIGES3_0.Features.Ventas
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("VerVentas")]
     [NUnit.Framework.FixtureLifeCycleAttribute(NUnit.Framework.LifeCycle.InstancePerTestCase)]
-    [NUnit.Framework.IgnoreAttribute("Ignored feature")]
     public partial class VerVentasFeature
     {
         
         private global::Reqnroll.ITestRunner testRunner;
         
-        private static string[] featureTags = new string[] {
-                "ignore"};
+        private static string[] featureTags = ((string[])(null));
         
         private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Ventas", "VerVentas", "Cobertura base para acciones disponibles en ver ventas.", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
@@ -86,34 +84,47 @@ namespace SIGES3_0.Features.Ventas
         
         public virtual async System.Threading.Tasks.Task FeatureBackgroundAsync()
         {
-#line 6
+#line 5
 #line hidden
-#line 7
+#line 6
     await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
                     "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 8
+#line 7
     await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
                     "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 9
+#line 8
     await testRunner.AndAsync("el usuario accede al módulo \'Ventas\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 10
-    await testRunner.AndAsync("el usuario accede al submodulo \'Ver Ventas\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Canjear comprobante")]
-        [NUnit.Framework.CategoryAttribute("CanjearComprobante")]
-        public async System.Threading.Tasks.Task CanjearComprobante()
+        [NUnit.Framework.DescriptionAttribute("<Caso> Canjear NV con comprobante destino <ComprobanteDestino>")]
+        [NUnit.Framework.CategoryAttribute("CanjearNV")]
+        [NUnit.Framework.TestCaseAttribute("CP039", "gaseosa", "7753234003313", "50", "2", "00000000", "BOLETA DE VENTA ELECTRONICA", "B002", null)]
+        [NUnit.Framework.TestCaseAttribute("CP040", "gaseosa", "7753234003313", "100", "2", "75893616", "BOLETA DE VENTA ELECTRONICA", "B002", null)]
+        [NUnit.Framework.TestCaseAttribute("CP041", "gaseosa", "7753234003313", "50", "1", "20542245671", "FACTURA ELECTRONICA", "F001", null)]
+        public async System.Threading.Tasks.Task CasoCanjearNVConComprobanteDestinoComprobanteDestino(string caso, string familia, string concepto, string cantidad, string cantidadNV, string documento, string comprobanteDestino, string serieDestino, string[] exampleTags)
         {
-            string[] tagsOfScenario = new string[] {
-                    "CanjearComprobante"};
+            string[] @__tags = new string[] {
+                    "CanjearNV"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Canjear comprobante", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 13
+            argumentsOfScenario.Add("Caso", caso);
+            argumentsOfScenario.Add("Familia", familia);
+            argumentsOfScenario.Add("Concepto", concepto);
+            argumentsOfScenario.Add("Cantidad", cantidad);
+            argumentsOfScenario.Add("CantidadNV", cantidadNV);
+            argumentsOfScenario.Add("Documento", documento);
+            argumentsOfScenario.Add("ComprobanteDestino", comprobanteDestino);
+            argumentsOfScenario.Add("SerieDestino", serieDestino);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("<Caso> Canjear NV con comprobante destino <ComprobanteDestino>", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 11
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -123,53 +134,68 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
+#line 5
 await this.FeatureBackgroundAsync();
+#line hidden
+#line 12
+    await testRunner.GivenAsync("el usuario accede al submodulo \'Nueva Venta\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 13
+    await testRunner.AndAsync(string.Format("crea {0} notas de venta con familia \"{1}\", concepto \"{2}\", cantidad \"{3}\" y docum" +
+                            "ento \"{4}\"", cantidadNV, familia, concepto, cantidad, documento), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 14
-    await testRunner.WhenAsync("Ingresar fecha inicial \"27/01/2025\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+    await testRunner.WhenAsync("el usuario accede al submodulo \'Ver Ventas\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 15
-    await testRunner.AndAsync("Ingresar fecha final \"20/02/2025\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync("filtra ventas del dia de hoy", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 16
-    await testRunner.AndAsync("Click en consultar ventas", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync("activa el modo canje", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 17
-    await testRunner.AndAsync("Buscar venta \'NV02-53\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("selecciona las primeras {0} notas de venta", cantidadNV), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 18
-    await testRunner.AndAsync("Activar canje", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync("hace clic en el boton Canjear", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 19
-    await testRunner.AndAsync("Seleccionar venta", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("selecciona el comprobante \"{0}\" en el modal de canje", comprobanteDestino), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 20
-    await testRunner.AndAsync("Click en el boton canjear", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("selecciona la serie \"{0}\" en el modal de canje", serieDestino), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 21
-    await testRunner.AndAsync("Seleccionar el tipo de comprobante \"BOLETA DE VENTA ELECTRONICA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync("confirma el canje", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 22
-    await testRunner.AndAsync("Click en el boton aceptar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 23
-    await testRunner.ThenAsync("Ver comprobante", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+    await testRunner.ThenAsync("el sistema genera el canje exitosamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Emitir nota de debito con aumento en el valor")]
-        [NUnit.Framework.CategoryAttribute("NotaDebito")]
-        public async System.Threading.Tasks.Task EmitirNotaDeDebitoConAumentoEnElValor()
+        [NUnit.Framework.DescriptionAttribute("<Caso> Verificar que el boton Canjear esta deshabilitado sin NVs seleccionadas")]
+        [NUnit.Framework.CategoryAttribute("CanjearNV")]
+        [NUnit.Framework.CategoryAttribute("SinSeleccion")]
+        [NUnit.Framework.TestCaseAttribute("CP042", "05/03/2026 12:00 am", "25/03/2026 11:59 pm", null)]
+        public async System.Threading.Tasks.Task CasoVerificarQueElBotonCanjearEstaDeshabilitadoSinNVsSeleccionadas(string caso, string fechaHoraInicial, string fechaHoraFinal, string[] exampleTags)
         {
-            string[] tagsOfScenario = new string[] {
-                    "NotaDebito"};
+            string[] @__tags = new string[] {
+                    "CanjearNV",
+                    "SinSeleccion"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Emitir nota de debito con aumento en el valor", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 26
+            argumentsOfScenario.Add("Caso", caso);
+            argumentsOfScenario.Add("fechaHoraInicial", fechaHoraInicial);
+            argumentsOfScenario.Add("fechaHoraFinal", fechaHoraFinal);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("<Caso> Verificar que el boton Canjear esta deshabilitado sin NVs seleccionadas", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 32
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -179,97 +205,26 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
+#line 5
 await this.FeatureBackgroundAsync();
-#line hidden
-#line 27
-    await testRunner.WhenAsync("Ingresar fecha inicial \"27/01/2025\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 28
-    await testRunner.AndAsync("Ingresar fecha final \"19/02/2025\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 29
-    await testRunner.AndAsync("Click en consultar ventas", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 30
-    await testRunner.AndAsync("Buscar venta \'B002-27905\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 31
-    await testRunner.AndAsync("Ver venta buscada", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 32
-    await testRunner.AndAsync("Elegir tipo de nota \'DEBITO\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 33
-    await testRunner.AndAsync("Seleccionar el tipo de nota \"AUMENTO EN EL VALOR\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.WhenAsync("el usuario accede al submodulo \'Ver Ventas\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 34
-    await testRunner.AndAsync("Seleccionar el documento \"NOTA DE DEBITO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y hora de inicio\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 35
-    await testRunner.AndAsync("Escribir el motivo de la nota \"Aumento el valor\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y hora de fin\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 36
-    await testRunner.AndAsync("Ingresar el aumento de valor de la nota \'60\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync("hace clic en consultar ventas", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 37
-    await testRunner.AndAsync("Guardar nota", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync("activa el modo canje", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 38
-    await testRunner.ThenAsync("Ver comprobante", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-            }
-            await this.ScenarioCleanupAsync();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Enviar comprobante")]
-        [NUnit.Framework.CategoryAttribute("EnviarComprobante")]
-        public async System.Threading.Tasks.Task EnviarComprobante()
-        {
-            string[] tagsOfScenario = new string[] {
-                    "EnviarComprobante"};
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Enviar comprobante", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 41
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                await this.ScenarioStartAsync();
-#line 6
-await this.FeatureBackgroundAsync();
-#line hidden
-#line 42
-    await testRunner.WhenAsync("Ingresar fecha inicial \"27/01/2025\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 43
-    await testRunner.AndAsync("Ingresar fecha final \"13/02/2025\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 44
-    await testRunner.AndAsync("Click en consultar ventas", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 45
-    await testRunner.AndAsync("Buscar venta \'B002-27909\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 46
-    await testRunner.AndAsync("Ver venta buscada", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 47
-    await testRunner.AndAsync("Click en el boton enviar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 48
-    await testRunner.AndAsync("Ingresar correo \'kevinsanchezcabrerakevin@gmail.com\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 49
-    await testRunner.AndAsync("Click en el boton agregar el correo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 50
-    await testRunner.ThenAsync("Enviar comprobante de venta", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+    await testRunner.ThenAsync("el boton Canjear permanece deshabilitado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
