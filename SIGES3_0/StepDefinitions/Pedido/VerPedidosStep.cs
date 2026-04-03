@@ -329,17 +329,30 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
             verPedidosPage.FiltrarPedidoBaseParaConfirmar(esMayor700);
         }
 
+        //[When(@"el usuario configura la facturacion '(.*)' '(.*)' '(.*)'")]
+        //public void WhenElUsuarioConfiguraLaFacturacion(string tipoComprobante, string serie, string cliente)
+        //{
+        //    verPedidosPage.ConfigurarFacturacionConfirmacion(tipoComprobante, serie, cliente);
+        //}
+
         [When(@"el usuario configura la facturacion '(.*)' '(.*)' '(.*)'")]
         public void WhenElUsuarioConfiguraLaFacturacion(string tipoComprobante, string serie, string cliente)
         {
             verPedidosPage.ConfigurarFacturacionConfirmacion(tipoComprobante, serie, cliente);
         }
 
+        //[When(@"el usuario configura la entrega '(.*)' '(.*)'")]
+        //public void WhenElUsuarioConfiguraLaEntrega(string tipoEntrega, string guiaRemision)
+        //{
+        //    verPedidosPage.ConfigurarEntregaConfirmacion(tipoEntrega, guiaRemision);
+        //}
         [When(@"el usuario configura la entrega '(.*)' '(.*)'")]
         public void WhenElUsuarioConfiguraLaEntrega(string tipoEntrega, string guiaRemision)
         {
+            if (verPedidosPage.HayErrorCapturado()) return;
             verPedidosPage.ConfigurarEntregaConfirmacion(tipoEntrega, guiaRemision);
         }
+
 
         //GUIA DE REMISION
         [When(@"el usuario completa la guia de remision '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)'")]
@@ -355,13 +368,17 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
         string numeroPlaca,
         string direccionOrigen,
         string direccionDestino)
+            
         {
+            if (verPedidosPage.HayErrorCapturado()) return;
+
             // Si no aplica guía, no hacer nada
             if (!guiaRemision.Trim().Equals("true", StringComparison.OrdinalIgnoreCase))
             {
                 Console.WriteLine("[GuiaRemision] No aplica, se omite.");
                 return;
             }
+        
 
             guiaRemisionPage.ExpandirDatosGenerales();
             guiaRemisionPage.ValidarDestinatarioAutocompletado();
@@ -381,6 +398,8 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
             guiaRemisionPage.GuardarGuia();
         }
 
+   
+
         // MEDIOS DE PAGO
         [When(@"el usuario configura los medios de pago '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)'")]
         public void WhenElUsuarioConfiguraLosMediosDePago(
@@ -394,6 +413,7 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
         string monto,
         string nroCuotas)
         {
+            if (verPedidosPage.HayErrorCapturado()) return;
             verPedidosPage.ConfigurarMediosDePagoConfirmacion(
                 tipoPago,
                 multipago,
@@ -410,12 +430,14 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
         [When(@"el usuario configura el pago '(.*)' '(.*)'")]
         public void WhenElUsuarioConfiguraElPago(string tipoPago, string montoCubreTotal)
         {
+            if (verPedidosPage.HayErrorCapturado()) return;
             verPedidosPage.ConfigurarPagoConfirmacion(tipoPago, montoCubreTotal);
         }
 
         [When(@"el usuario confirma el pedido preparado")]
         public void WhenElUsuarioConfirmaElPedidoPreparado()
         {
+            if (verPedidosPage.HayErrorCapturado()) return;
             verPedidosPage.ConfirmarPedidoPreparado();
         }
 

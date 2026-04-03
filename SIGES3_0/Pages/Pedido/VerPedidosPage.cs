@@ -114,6 +114,8 @@ namespace SIGES3_0.Pages.PedidoPage
         //-------------------------
         private string ultimaAccion = "";
 
+        private string? mensajeErrorCapturado = null;
+        public bool HayErrorCapturado() => !string.IsNullOrEmpty(mensajeErrorCapturado);
         private By OpcionComprobante(string tipoComprobante)
         {
             string clave = NormalizarTextoComprobante(tipoComprobante);
@@ -145,36 +147,61 @@ namespace SIGES3_0.Pages.PedidoPage
             return By.XPath($"//*[contains(text(),'{serie}')]");
         }
 
+        //private string ObtenerTextoComprobanteSeleccionado()
+        //{
+        //    try
+        //    {
+        //        var combo = wait.Until(d =>
+        //        {
+        //            try
+        //            {
+        //                var combos = d.FindElements(cmbTipoComprobanteConfirmacion)
+        //                    .Where(e => e.Displayed)
+        //                    .ToList();
+
+        //                if (!combos.Any()) return null;
+
+        //                // Priorizar el que está en la sección de facturación visible
+        //                return combos.Last();
+        //            }
+        //            catch
+        //            {
+        //                return null;
+        //            }
+        //        });
+
+        //        return (combo?.Text ?? string.Empty).Trim().ToUpperInvariant();
+        //    }
+        //    catch
+        //    {
+        //        return string.Empty;
+        //    }
+        //}
         private string ObtenerTextoComprobanteSeleccionado()
         {
             try
             {
-                var combo = wait.Until(d =>
+                var combos = driver.FindElements(cmbTipoComprobanteConfirmacion)
+                    .Where(e => e.Displayed && e.Enabled)
+                    .ToList();
+
+                if (!combos.Any())
+                    return string.Empty;
+
+                var combo = combos.FirstOrDefault(c =>
                 {
-                    try
-                    {
-                        var combos = d.FindElements(cmbTipoComprobanteConfirmacion)
-                            .Where(e => e.Displayed)
-                            .ToList();
+                    var txt = (c.Text ?? "").Trim().ToUpperInvariant();
+                    return txt.Contains("BOLETA") || txt.Contains("FACTURA") || txt.Contains("NOTA DE VENTA");
+                }) ?? combos.Last();
 
-                        if (!combos.Any()) return null;
-
-                        // Priorizar el que está en la sección de facturación visible
-                        return combos.Last();
-                    }
-                    catch
-                    {
-                        return null;
-                    }
-                });
-
-                return (combo?.Text ?? string.Empty).Trim().ToUpperInvariant();
+                return (combo.Text ?? string.Empty).Trim().ToUpperInvariant();
             }
             catch
             {
                 return string.Empty;
             }
         }
+
 
         private bool ComprobanteSeleccionadoCoincide(string tipoComprobanteEsperado)
         {
@@ -225,6 +252,8 @@ namespace SIGES3_0.Pages.PedidoPage
 
             return actual.Contains(esperado);
         }
+
+
 
         // ======================================================
         // METODOS
@@ -1018,83 +1047,158 @@ namespace SIGES3_0.Pages.PedidoPage
             Thread.Sleep(1500);
         }
 
-        //-----------------------
-        //private void SeleccionarComprobanteConfirmacion(WebDriverWait waitLong, string tipoComprobante)
-        //{
-        //    // 1. Esperar el combo y abrirlo (hasta 3 intentos)
-        //    var combo = waitLong.Until(
-        //        ExpectedConditions.ElementToBeClickable(cmbTipoComprobanteConfirmacion)
-        //    );
 
-        //    bool panelAbierto = false;
-        //    for (int i = 0; i < 3 && !panelAbierto; i++)
+
+        //    private bool SeleccionarComprobanteConfirmacion(WebDriverWait waitLong, string tipoComprobante)
         //    {
-        //        ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", combo);
-        //        Thread.Sleep(700 + i * 300);
+        //        Console.WriteLine($"[Comprobante] Intentando seleccionar: '{tipoComprobante}'");
 
-        //        try
-        //        {
-        //            var panel = driver.FindElement(panelDropdownNgSelect);
-        //            panelAbierto = panel.Displayed;
-        //        }
-        //        catch { }
-        //    }
-
-        //    if (!panelAbierto)
-        //    {
-        //        Console.WriteLine($"[Comprobante] Panel no se abrió para '{tipoComprobante}', se mantiene valor actual.");
-        //        return;
-        //    }
-
-        //    // 2. Esperar que las ng-option estén renderizadas (listas para clickear)
-        //    try
-        //    {
-        //        waitLong.Until(d =>
+        //        // 1. Encontrar y hacer click en el combo de comprobante
+        //        var combo = waitLong.Until(d =>
         //        {
         //            try
         //            {
-        //                var opts = d.FindElements(
-        //                    By.XPath("//div[contains(@class,'ng-dropdown-panel')]//div[contains(@class,'ng-option')]")
-        //                );
-        //                return opts.Count > 0 && opts[0].Displayed;
+        //                var combos = d.FindElements(cmbTipoComprobanteConfirmacion)
+        //                    .Where(e => e.Displayed && e.Enabled)
+        //                    .ToList();
+
+        //                Console.WriteLine($"[Comprobante] Combos visibles encontrados: {combos.Count}");
+        //                if (!combos.Any()) return null;
+
+        //                return combos.FirstOrDefault(c =>
+        //                {
+        //                    var txt = (c.Text ?? "").Trim().ToUpperInvariant();
+        //                    return txt.Contains("BOLETA") || txt.Contains("FACTURA") || txt.Contains("NOTA DE VENTA");
+        //                }) ?? combos.Last();
         //            }
-        //            catch { return false; }
+        //            catch { return null; }
         //        });
-        //    }
-        //    catch (WebDriverTimeoutException)
-        //    {
-        //        Console.WriteLine("[Comprobante] Timeout esperando ng-option.");
-        //        return;
-        //    }
 
-        //    // 3. Clickear la opción correcta
-        //    try
-        //    {
-        //        var opcion = waitLong.Until(
-        //            ExpectedConditions.ElementToBeClickable(OpcionComprobante(tipoComprobante))
-        //        );
-        //        ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", opcion);
-        //        Console.WriteLine($"[Comprobante] '{tipoComprobante}' seleccionado.");
-        //    }
-        //    catch (WebDriverTimeoutException)
-        //    {
-        //        Console.WriteLine($"[Comprobante] No se encontró opción para '{tipoComprobante}'.");
-        //        return;
-        //    }
-
-        //    // 4. Esperar que el panel se cierre
-        //    try
-        //    {
-        //        waitLong.Until(d =>
+        //        if (combo == null)
         //        {
-        //            try { return !d.FindElement(panelDropdownNgSelect).Displayed; }
-        //            catch { return true; }
-        //        });
-        //    }
-        //    catch { }
+        //            Console.WriteLine("[Comprobante] No se encontró el combo de comprobante.");
+        //            return false;
+        //        }
 
-        //    Thread.Sleep(300);
-        //}
+        //((IJavaScriptExecutor)driver)
+        //    .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", combo);
+        //        Thread.Sleep(300);
+
+        //        try { combo.Click(); }
+        //        catch { ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", combo); }
+
+        //        Thread.Sleep(600);
+
+        //        // 2. Buscar el input de búsqueda del ng-select de comprobante.
+        //        //    Estrategia: el ng-select abierto expone un input type="text" con placeholder="Buscar..."
+        //        //    PERO debemos asegurarnos de tomar el que está DENTRO del ng-select del comprobante,
+        //        //    no el del cliente. Lo identificamos porque el ng-select del comprobante contiene
+        //        //    el trigger que acabamos de clickear; buscamos su ancestro ng-select y dentro de él el input.
+        //        IWebElement inputBuscar = null;
+        //        try
+        //        {
+        //            inputBuscar = new WebDriverWait(driver, TimeSpan.FromSeconds(5)).Until(d =>
+        //            {
+        //                try
+        //                {
+        //                    // El ng-select del comprobante: su trigger tiene clase select-trigger form-control
+        //                    // Subimos al ng-select padre y buscamos el input interno
+        //                    var inputs = d.FindElements(By.XPath(
+        //                        "//ng-select[.//div[contains(@class,'select-trigger') and contains(@class,'form-control')]]" +
+        //                        "//input[@type='text']"
+        //                    ))
+        //                    .Where(e => e.Displayed)
+        //                    .ToList();
+
+        //                    Console.WriteLine($"[Comprobante] Inputs en ng-select del comprobante: {inputs.Count}");
+
+        //                    if (inputs.Any()) return inputs.First();
+
+        //                    // Fallback: cualquier input visible que NO sea el search-input del cliente
+        //                    var fallbackInputs = d.FindElements(By.XPath(
+        //                        "//input[@type='text' and not(contains(@class,'search-input'))]"
+        //                    ))
+        //                    .Where(e => e.Displayed && e.Enabled)
+        //                    .ToList();
+
+        //                    Console.WriteLine($"[Comprobante] Inputs fallback: {fallbackInputs.Count}");
+        //                    return fallbackInputs.FirstOrDefault();
+        //                }
+        //                catch { return null; }
+        //            });
+        //        }
+        //        catch (WebDriverTimeoutException)
+        //        {
+        //            Console.WriteLine("[Comprobante] No apareció input de búsqueda, se intentará seleccionar directo por texto.");
+        //        }
+
+        //        // 3. Escribir en el buscador si existe
+        //        string textoBusqueda = ObtenerTextoBusquedaComprobante(tipoComprobante);
+
+        //        if (inputBuscar != null)
+        //        {
+        //            Console.WriteLine($"[Comprobante] Escribiendo '{textoBusqueda}' en el input de búsqueda.");
+        //            try { inputBuscar.Click(); } catch { }
+        //            inputBuscar.SendKeys(Keys.Control + "a");
+        //            inputBuscar.SendKeys(Keys.Delete);
+        //            Thread.Sleep(200);
+        //            inputBuscar.SendKeys(textoBusqueda);
+        //            Thread.Sleep(800);
+        //        }
+
+        //        // 4. Seleccionar la opción visible — usar .option-item.ng-star-inserted (confirmado en imagen 2)
+        //        var opcion = new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(d =>
+        //        {
+        //            try
+        //            {
+        //                // Primero intentar con el selector confirmado de la imagen 2
+        //                var opciones = d.FindElements(By.CssSelector(".option-item.ng-star-inserted"))
+        //                    .Where(e => e.Displayed)
+        //                    .ToList();
+
+        //                Console.WriteLine($"[Comprobante] Opciones .option-item.ng-star-inserted visibles: {opciones.Count}");
+        //                foreach (var op in opciones)
+        //                    Console.WriteLine($"  -> '{op.Text}'");
+
+        //                var encontrada = opciones.FirstOrDefault(e =>
+        //                    CoincideComprobante((e.Text ?? "").Trim(), tipoComprobante));
+
+        //                if (encontrada != null) return encontrada;
+
+        //                // Fallback XPath amplio (ng-option, div[@role='option'], etc.)
+        //                var opcionesXPath = d.FindElements(By.XPath(
+        //                    "//div[contains(@class,'ng-option')]" +
+        //                    " | //div[@role='option']" +
+        //                    " | //div[contains(@class,'option-item')]"
+        //                ))
+        //                .Where(e => e.Displayed)
+        //                .ToList();
+
+        //                return opcionesXPath.FirstOrDefault(e =>
+        //                    CoincideComprobante((e.Text ?? "").Trim(), tipoComprobante));
+        //            }
+        //            catch { return null; }
+        //        });
+
+        //        if (opcion == null)
+        //        {
+        //            Console.WriteLine($"[Comprobante] No se encontró opción visible para '{tipoComprobante}'.");
+        //            return false;
+        //        }
+
+        //        Console.WriteLine($"[Comprobante] Opción encontrada: '{opcion.Text}'");
+
+        //        ((IJavaScriptExecutor)driver)
+        //            .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", opcion);
+        //        Thread.Sleep(200);
+
+        //        try { opcion.Click(); }
+        //        catch { ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", opcion); }
+
+        //        Thread.Sleep(1000);
+
+        //        return ComprobanteSeleccionadoCoincide(tipoComprobante);
+        //    }
 
         private bool SeleccionarComprobanteConfirmacion(WebDriverWait waitLong, string tipoComprobante)
         {
@@ -1109,7 +1213,6 @@ namespace SIGES3_0.Pages.PedidoPage
                         .ToList();
 
                     Console.WriteLine($"[Comprobante] Combos visibles encontrados: {combos.Count}");
-
                     if (!combos.Any()) return null;
 
                     return combos.FirstOrDefault(c =>
@@ -1118,10 +1221,7 @@ namespace SIGES3_0.Pages.PedidoPage
                         return txt.Contains("BOLETA") || txt.Contains("FACTURA") || txt.Contains("NOTA DE VENTA");
                     }) ?? combos.Last();
                 }
-                catch
-                {
-                    return null;
-                }
+                catch { return null; }
             });
 
             if (combo == null)
@@ -1130,75 +1230,96 @@ namespace SIGES3_0.Pages.PedidoPage
                 return false;
             }
 
-    ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", combo);
-            Thread.Sleep(300);
+     ((IJavaScriptExecutor)driver)
+         .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", combo);
 
+            try { combo.Click(); }
+            catch { ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", combo); }
+
+            IWebElement inputBuscar = null!;
             try
             {
-                combo.Click();
-            }
-            catch
-            {
-                ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", combo);
-            }
-
-            // Esperar que aparezca el buscador del dropdown
-            var inputBuscar = waitLong.Until(d =>
-            {
-                try
+                inputBuscar = new WebDriverWait(driver, TimeSpan.FromSeconds(2))
                 {
-                    var inputs = d.FindElements(By.XPath(
-                        "//input[@placeholder='Buscar...' or contains(@placeholder,'Buscar')]"
-                    ))
-                    .Where(e => e.Displayed && e.Enabled)
-                    .ToList();
-
-                    return inputs.FirstOrDefault();
-                }
-                catch
+                    PollingInterval = TimeSpan.FromMilliseconds(120)
+                }.Until(d =>
                 {
-                    return null;
-                }
-            });
+                    try
+                    {
+                        var inputs = d.FindElements(By.XPath(
+                            "//ng-select[.//div[contains(@class,'select-trigger') and contains(@class,'form-control')]]" +
+                            "//input[@type='text']"
+                        ))
+                        .Where(e => e.Displayed && e.Enabled)
+                        .ToList();
 
-            if (inputBuscar == null)
+                        Console.WriteLine($"[Comprobante] Inputs en ng-select del comprobante: {inputs.Count}");
+                        if (inputs.Any()) return inputs.First();
+
+                        var fallbackInputs = d.FindElements(By.XPath(
+                            "//input[@type='text' and not(contains(@class,'search-input'))]"
+                        ))
+                        .Where(e => e.Displayed && e.Enabled)
+                        .ToList();
+
+                        Console.WriteLine($"[Comprobante] Inputs fallback: {fallbackInputs.Count}");
+                        return fallbackInputs.FirstOrDefault();
+                    }
+                    catch { return null; }
+                });
+            }
+            catch (WebDriverTimeoutException)
             {
-                Console.WriteLine("[Comprobante] No apareció el buscador del dropdown.");
-                return false;
+                Console.WriteLine("[Comprobante] No apareció input de búsqueda, se intentará seleccionar directo por texto.");
             }
 
             string textoBusqueda = ObtenerTextoBusquedaComprobante(tipoComprobante);
 
-            inputBuscar.Click();
-            inputBuscar.SendKeys(Keys.Control + "a");
-            inputBuscar.SendKeys(Keys.Delete);
-            Thread.Sleep(200);
-            inputBuscar.SendKeys(textoBusqueda);
-            Thread.Sleep(800);
+            if (inputBuscar != null)
+            {
+                Console.WriteLine($"[Comprobante] Escribiendo '{textoBusqueda}' en el input de búsqueda.");
+                try { inputBuscar.Click(); } catch { }
 
-            var opcion = waitLong.Until(d =>
+                try { inputBuscar.Clear(); }
+                catch
+                {
+                    inputBuscar.SendKeys(Keys.Control + "a");
+                    inputBuscar.SendKeys(Keys.Delete);
+                }
+
+                inputBuscar.SendKeys(textoBusqueda);
+            }
+
+            var opcion = new WebDriverWait(driver, TimeSpan.FromSeconds(4))
+            {
+                PollingInterval = TimeSpan.FromMilliseconds(120)
+            }.Until(d =>
             {
                 try
                 {
-                    var opciones = d.FindElements(By.XPath(
+                    var opciones = d.FindElements(By.CssSelector(".option-item.ng-star-inserted"))
+                        .Where(e => e.Displayed)
+                        .ToList();
+
+                    Console.WriteLine($"[Comprobante] Opciones .option-item.ng-star-inserted visibles: {opciones.Count}");
+
+                    var encontrada = opciones.FirstOrDefault(e =>
+                        CoincideComprobante((e.Text ?? "").Trim(), tipoComprobante));
+
+                    if (encontrada != null) return encontrada;
+
+                    var opcionesXPath = d.FindElements(By.XPath(
                         "//div[contains(@class,'ng-option')]" +
-                        " | //li" +
                         " | //div[@role='option']" +
-                        " | //span"
+                        " | //div[contains(@class,'option-item')]"
                     ))
                     .Where(e => e.Displayed)
                     .ToList();
 
-                    return opciones.FirstOrDefault(e =>
-                    {
-                        var txt = (e.Text ?? "").Trim().ToUpperInvariant();
-                        return CoincideComprobante(txt, tipoComprobante);
-                    });
+                    return opcionesXPath.FirstOrDefault(e =>
+                        CoincideComprobante((e.Text ?? "").Trim(), tipoComprobante));
                 }
-                catch
-                {
-                    return null;
-                }
+                catch { return null; }
             });
 
             if (opcion == null)
@@ -1209,40 +1330,102 @@ namespace SIGES3_0.Pages.PedidoPage
 
             Console.WriteLine($"[Comprobante] Opción encontrada: '{opcion.Text}'");
 
-            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", opcion);
-            Thread.Sleep(200);
+            ((IJavaScriptExecutor)driver)
+                .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", opcion);
 
-            try
-            {
-                opcion.Click();
-            }
-            catch
-            {
-                ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", opcion);
-            }
+            //try { opcion.Click(); }
+            //catch { ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", opcion); }
 
-            Thread.Sleep(1000);
+            //// Validación rápida sobre el MISMO combo ya encontrado
+            //try
+            //{
+            //    new WebDriverWait(driver, TimeSpan.FromSeconds(2))
+            //    {
+            //        PollingInterval = TimeSpan.FromMilliseconds(120)
+            //    }.Until(d =>
+            //    {
+            //        try
+            //        {
+            //            var textoCombo = (combo.Text ?? "").Trim();
+            //            Console.WriteLine($"[Comprobante] Texto actual combo: '{textoCombo}'");
 
-            return ComprobanteSeleccionadoCoincide(tipoComprobante);
+            //            return CoincideComprobante(textoCombo, tipoComprobante);
+            //        }
+            //        catch
+            //        {
+            //            return false;
+            //        }
+            //    });
+            //}
+            //catch
+            //{
+            //    Console.WriteLine("[Comprobante] La validación rápida no confirmó a tiempo.");
+            //}
+
+            //return ComprobanteSeleccionadoCoincide(tipoComprobante);
+
+            try { opcion.Click(); }
+catch { ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", opcion); }
+
+try
+{
+    new WebDriverWait(driver, TimeSpan.FromSeconds(3))
+    {
+        PollingInterval = TimeSpan.FromMilliseconds(120)
+    }.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.InvisibilityOfElementLocated(panelDropdownNgSelect));
+}
+catch
+{
+    Console.WriteLine("[Comprobante] El panel dropdown no se ocultó a tiempo, se continúa con validación.");
+}
+
+try
+{
+    new WebDriverWait(driver, TimeSpan.FromSeconds(2))
+    {
+        PollingInterval = TimeSpan.FromMilliseconds(120)
+    }.Until(d =>
+    {
+        try
+        {
+            var textoCombo = (combo.Text ?? "").Trim();
+            Console.WriteLine($"[Comprobante] Texto actual combo: '{textoCombo}'");
+            return CoincideComprobante(textoCombo, tipoComprobante);
+        }
+        catch
+        {
+            return false;
+        }
+    });
+
+    return true;
+}
+catch
+{
+    Console.WriteLine("[Comprobante] La validación directa del combo no confirmó a tiempo.");
+}
+
+return ComprobanteSeleccionadoCoincide(tipoComprobante);
         }
 
         private void SeleccionarSerieConfirmacion(WebDriverWait waitLong, string serie)
         {
-            // Las series son radio buttons con label que contiene el código (B002, F002, NV02, etc.)
-            // Solo aparecen si el comprobante tiene múltiples series configuradas.
-            // Si no aparece ninguna, se continúa sin error (serie única o no aplica).
             try
             {
-                var radioSerie = waitLong.Until(d =>
+                // CAMBIO: usar timeout corto (2s) en vez del waitLong de 20s
+                var waitSerie = new WebDriverWait(driver, TimeSpan.FromSeconds(2))
+                {
+                    PollingInterval = TimeSpan.FromMilliseconds(150)
+                };
+
+                var radioSerie = waitSerie.Until(d =>
                 {
                     try
                     {
-                        // Buscar label de radio button cuyo texto sea exactamente la serie
                         var candidatos = d.FindElements(By.XPath(
                             $"//label[normalize-space(.)='{serie}']"
                         ));
 
-                        // Fallback: buscar input radio con value o id que contenga la serie
                         if (!candidatos.Any(e => e.Displayed))
                         {
                             candidatos = d.FindElements(By.XPath(
@@ -1266,17 +1449,80 @@ namespace SIGES3_0.Pages.PedidoPage
             }
             catch (WebDriverTimeoutException)
             {
-                // No es error: puede que ese comprobante tenga una sola serie (ya preseleccionada)
                 Console.WriteLine($"[Serie] '{serie}' no encontrada como radio button; se asume preseleccionada.");
             }
         }
 
         // Abrir subsecciones de la confirmación del pedido para configurar opciones antes de confirmar
+        //private void AbrirFacturacionConfirmacion()
+        //{
+        //    var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+
+        //    // 1) Localizar el header de "Facturación" dentro del modal de confirmación
+        //    var header = waitLong.Until(d =>
+        //    {
+        //        try
+        //        {
+        //            var h = d.FindElement(seccionFacturacionConfirmacion);
+        //            return h.Displayed ? h : null;
+        //        }
+        //        catch
+        //        {
+        //            return null;
+        //        }
+        //    });
+
+        //    // 2) Scroll al header
+        //    ((IJavaScriptExecutor)driver)
+        //        .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", header);
+
+        //    // 3) Si hay un botón/chevron dentro del header, clickeamos ese; si no, el propio header
+        //    IWebElement clickable;
+        //    try
+        //    {
+        //        clickable = header.FindElement(By.XPath(".//button | .//*[@role='button']"));
+        //    }
+        //    catch
+        //    {
+        //        clickable = header;
+        //    }
+
+        //    waitLong.Until(d => clickable.Displayed && clickable.Enabled);
+        //    ((IJavaScriptExecutor)driver)
+        //        .ExecuteScript("arguments[0].click();", clickable);
+
+        //    // 4) Esperar a que el cuerpo del acordeón de Facturación esté visible (cliente dentro)
+        //    waitLong.Until(d =>
+        //    {
+        //        try
+        //        {
+        //            var body = d.FindElement(By.XPath(
+        //                "//div[contains(@class,'accordion-body')]" +
+        //                "[.//label[contains(normalize-space(),'Cliente')]]"
+        //            ));
+        //            return body.Displayed;
+        //        }
+        //        catch
+        //        {
+        //            return false;
+        //        }
+        //    });
+        //}
+
         private void AbrirFacturacionConfirmacion()
         {
             var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
 
-            // 1) Localizar el header de "Facturación" dentro del modal de confirmación
+            bool yaVisible = driver.FindElements(By.XPath(
+                "//div[contains(@class,'accordion-body')][.//label[contains(normalize-space(),'Cliente')]]"
+            )).Any(e => e.Displayed);
+
+            if (yaVisible)
+            {
+                Console.WriteLine("[AbrirFacturacionConfirmacion] Ya está visible, no se hace click.");
+                return;
+            }
+
             var header = waitLong.Until(d =>
             {
                 try
@@ -1290,11 +1536,9 @@ namespace SIGES3_0.Pages.PedidoPage
                 }
             });
 
-            // 2) Scroll al header
             ((IJavaScriptExecutor)driver)
                 .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", header);
 
-            // 3) Si hay un botón/chevron dentro del header, clickeamos ese; si no, el propio header
             IWebElement clickable;
             try
             {
@@ -1309,7 +1553,6 @@ namespace SIGES3_0.Pages.PedidoPage
             ((IJavaScriptExecutor)driver)
                 .ExecuteScript("arguments[0].click();", clickable);
 
-            // 4) Esperar a que el cuerpo del acordeón de Facturación esté visible (cliente dentro)
             waitLong.Until(d =>
             {
                 try
@@ -1487,7 +1730,7 @@ namespace SIGES3_0.Pages.PedidoPage
                 input.SendKeys(cliente);
                 input.SendKeys(Keys.Enter);
 
-                Thread.Sleep(1500);
+                Thread.Sleep(100);
             }
             catch (Exception e)
             {
@@ -1522,7 +1765,16 @@ namespace SIGES3_0.Pages.PedidoPage
                     );
                 }
 
-                Thread.Sleep(800);
+                string errorModal = VerificarErrorModalComprobante();
+                if (errorModal != null)
+                {
+                    Console.WriteLine($"[Facturacion] Error modal detectado: '{errorModal}'");
+                    mensajeErrorCapturado = errorModal;
+                    return; // salir sin continuar con serie ni cerrar sección
+                }
+
+
+                Thread.Sleep(100);
 
                 if (!serie.Trim().Equals("ninguno", StringComparison.OrdinalIgnoreCase))
                 {
@@ -1532,15 +1784,113 @@ namespace SIGES3_0.Pages.PedidoPage
                 // Cerrar sección facturación
                 AbrirFacturacionConfirmacion();
             }
-            catch (AssertionException)
+            //catch (AssertionException)
+            //{
+            //    throw;
+            //}
+            //catch (Exception e)
+            //{
+            //    Assert.Fail("Error configurando facturación de confirmación: " + e.Message);
+            //}
+
+            catch (AssertionException) { throw; }
+            catch (InvalidOperationException ex) when (ex.Message.StartsWith("ERROR_MODAL:"))
             {
-                throw;
+                throw; // re-lanzar para que llegue al step
             }
             catch (Exception e)
             {
                 Assert.Fail("Error configurando facturación de confirmación: " + e.Message);
             }
         }
+
+        // Verificacion del error de RUC con factura
+        private string VerificarErrorModalComprobante()
+        {
+            try
+            {
+                var mensajeError = new WebDriverWait(driver, TimeSpan.FromSeconds(2))
+                {
+                    PollingInterval = TimeSpan.FromMilliseconds(150)
+                }.Until(d =>
+                {
+                    try
+                    {
+                        var modal = d.FindElements(By.XPath(
+                            "//*[contains(text(),'Para emitir Factura') or " +
+                            "contains(text(),'RUC (11 dígitos)') or " +
+                            "contains(text(),'número de serie') or " +
+                            "contains(text(),'numero de serie')]"
+                        )).FirstOrDefault(e => e.Displayed);
+
+                        return modal;
+                    }
+                    catch { return null; }
+                });
+
+                string texto = mensajeError.Text.Trim();
+
+                // Cerrar el modal haciendo click en OK
+                try
+                {
+                    var btnOK = driver.FindElement(btnOKConfirmacion);
+                    if (btnOK.Displayed)
+                        ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", btnOK);
+                }
+                catch { }
+
+                return texto;
+            }
+            catch (WebDriverTimeoutException)
+            {
+                return null!; // No hubo error modal
+            }
+        }
+
+        //public void ConfigurarFacturacionConfirmacion(string tipoComprobante, string serie, string cliente)
+        //{
+        //    try
+        //    {
+        //        var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+
+        //        Console.WriteLine($"[TIMING] 1. Inicio ConfigurarFacturacion: {DateTime.Now:HH:mm:ss.fff}");
+        //        AbrirFacturacionConfirmacion();
+
+        //        Console.WriteLine($"[TIMING] 2. Después AbrirFacturacion: {DateTime.Now:HH:mm:ss.fff}");
+        //        waitLong.Until(ExpectedConditions.ElementIsVisible(txtClienteConfirmacion));
+
+        //        Console.WriteLine($"[TIMING] 3. Antes BuscarCliente: {DateTime.Now:HH:mm:ss.fff}");
+        //        BuscarClienteConfirmacion(cliente);
+
+        //        Console.WriteLine($"[TIMING] 4. Antes SeleccionarComprobante: {DateTime.Now:HH:mm:ss.fff}");
+        //        bool comprobanteOk = SeleccionarComprobanteConfirmacion(waitLong, tipoComprobante);
+
+        //        Console.WriteLine($"[TIMING] 5. Después SeleccionarComprobante: {DateTime.Now:HH:mm:ss.fff}");
+
+        //        if (!comprobanteOk)
+        //        {
+        //            string actual = ObtenerTextoComprobanteSeleccionado();
+        //            Assert.Fail($"No se pudo seleccionar el comprobante esperado '{tipoComprobante}'. Valor actual visible: '{actual}'.");
+        //        }
+
+        //        Thread.Sleep(800);
+        //        Console.WriteLine($"[TIMING] 6. Después Sleep(800): {DateTime.Now:HH:mm:ss.fff}");
+
+        //        if (!serie.Trim().Equals("ninguno", StringComparison.OrdinalIgnoreCase))
+        //        {
+        //            SeleccionarSerieConfirmacion(waitLong, serie);
+        //            Console.WriteLine($"[TIMING] 7. Después SeleccionarSerie: {DateTime.Now:HH:mm:ss.fff}");
+        //        }
+
+        //        AbrirFacturacionConfirmacion();
+        //        Console.WriteLine($"[TIMING] 8. Después segunda AbrirFacturacion (cerrar): {DateTime.Now:HH:mm:ss.fff}");
+        //    }
+        //    catch (AssertionException) { throw; }
+        //    catch (Exception e)
+        //    {
+        //        Assert.Fail("Error configurando facturación de confirmación: " + e.Message);
+        //    }
+        //}
         public void ConfigurarPagoConfirmacion(string tipoPago, string montoCubreTotal)
         {
             try
@@ -2103,6 +2453,14 @@ namespace SIGES3_0.Pages.PedidoPage
         {
             try
             {
+                if (!string.IsNullOrEmpty(mensajeErrorCapturado))
+        {
+            string msg = mensajeErrorCapturado;
+            mensajeErrorCapturado = null;
+            return msg;
+        }
+
+
                 WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
                 // Registro: sin producto
