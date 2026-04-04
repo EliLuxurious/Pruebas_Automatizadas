@@ -22,6 +22,7 @@
   <ItemGroup>
     <Folder Include="Drivers\" />
     <Folder Include="Features\FacturacionCiclica\" />
+
     <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Category\EditCategory\" />
     <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Category\DeleteCategory\" />
     <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Characteristic Value\EditCharacteristicValue\" />
@@ -35,6 +36,10 @@
     <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Presentation\EditPresentation\" />
     <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Presentation\DeletePresentation\" />
     <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Presentation\RegisterPresentation\" />
+
+    <Folder Include="Features\Cotizacion\" />
+    <Folder Include="Features\Pedido\" />
+
     <Folder Include="Support\" />
   </ItemGroup>
 
