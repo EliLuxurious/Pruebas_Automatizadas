@@ -354,31 +354,30 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
         }
 
 
-        //GUIA DE REMISION
-        [When(@"el usuario completa la guia de remision '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)'")]
+        [When(@"el usuario completa la guia de remision '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)'")]
+   
+
         public void WhenElUsuarioCompletaLaGuiaDeRemision(
-        string guiaRemision,
-        string fechaTraslado,
-        string pesoBruto,
-        string cantidadBultos,
-        string tipoTransporte,
-        string transportistaRuc,
-        string dniConductor,
-        string numeroLicencia,
-        string numeroPlaca,
-        string direccionOrigen,
-        string direccionDestino)
-            
+    string guiaRemision,
+    string fechaTraslado,
+    string pesoBruto,
+    string cantidadBultos,
+    string tipoTransporte,
+    string transportistaRuc,
+    string numeroLicencia,
+    string numeroPlaca,
+    string direccionOrigen,
+    string detalleOrigen,
+    string direccionDestino,
+    string detalleDestino)
         {
             if (verPedidosPage.HayErrorCapturado()) return;
 
-            // Si no aplica guía, no hacer nada
             if (!guiaRemision.Trim().Equals("true", StringComparison.OrdinalIgnoreCase))
             {
                 Console.WriteLine("[GuiaRemision] No aplica, se omite.");
                 return;
             }
-        
 
             guiaRemisionPage.ExpandirDatosGenerales();
             guiaRemisionPage.ValidarDestinatarioAutocompletado();
@@ -388,19 +387,29 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
 
             guiaRemisionPage.ExpandirDatosTransporte();
             guiaRemisionPage.SeleccionarTipoTransporte(tipoTransporte);
+
+            // PÚBLICO: solo RUC transportista
             guiaRemisionPage.IngresarTransportistaPublico(transportistaRuc);
-            guiaRemisionPage.IngresarConductorPrivado(dniConductor);
+
+            // PRIVADO: solo licencia y placa (DNI eliminado, no existe en la UI)
             guiaRemisionPage.IngresarNumeroLicencia(numeroLicencia);
             guiaRemisionPage.IngresarNumeroPlaca(numeroPlaca);
+
             guiaRemisionPage.SeleccionarDireccionOrigen(direccionOrigen);
+            guiaRemisionPage.IngresarDetalleOrigen(detalleOrigen);
+
             guiaRemisionPage.SeleccionarDireccionDestino(direccionDestino);
+            guiaRemisionPage.IngresarDetalleDestino(detalleDestino);
 
             guiaRemisionPage.GuardarGuia();
         }
 
-   
 
         // MEDIOS DE PAGO
+
+        
+
+        //------------------------
         [When(@"el usuario configura los medios de pago '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)'")]
         public void WhenElUsuarioConfiguraLosMediosDePago(
         string tipoPago,

@@ -109,7 +109,7 @@ namespace SIGES3_0.Pages.PedidoPage
 
         //PARA TOTAL BASE
         private const string TOTAL_BASE_MAYOR_700 = "759";
-        private const string TOTAL_BASE_MENOR_IGUAL_700 = "64";
+        private const string TOTAL_BASE_MENOR_IGUAL_700 = "32";
 
         //-------------------------
         private string ultimaAccion = "";
@@ -272,6 +272,30 @@ namespace SIGES3_0.Pages.PedidoPage
             boton.Click();
         }
 
+        //public void SeleccionarFamilia(string familia)
+        //{
+        //    if (familia == "ninguno") return;
+
+        //    // abrir dropdown
+        //    wait.Until(ExpectedConditions.ElementToBeClickable(cmbFamilia)).Click();
+
+        //    // volver a buscar la opción (evita stale)
+        //    var opcion = wait.Until(d =>
+        //    {
+        //        try
+        //        {
+        //            var el = d.FindElement(By.XPath($"//span[normalize-space()='{familia}']"));
+        //            return el.Displayed ? el : null;
+        //        }
+        //        catch
+        //        {
+        //            return null;
+        //        }
+        //    });
+
+        //    ((IJavaScriptExecutor)driver)
+        //        .ExecuteScript("arguments[0].click();", opcion);
+        //}
         public void SeleccionarFamilia(string familia)
         {
             if (familia == "ninguno") return;
@@ -309,9 +333,28 @@ namespace SIGES3_0.Pages.PedidoPage
             );
             dropdown.Click();
 
-            Thread.Sleep(1000); // dar tiempo a que cargue la lista según la familia
+            //Thread.Sleep(1000); // dar tiempo a que cargue la lista según la familia
 
-            // intentar ubicar la opción del concepto
+            //// intentar ubicar la opción del concepto
+            //var opcion = wait.Until(d =>
+            //{
+            //    try
+            //    {
+            //        var elementos = d.FindElements(By.XPath($"//*[contains(text(),'{concepto}')]"));
+            //        foreach (var elemento in elementos)
+            //        {
+            //            if (elemento.Displayed)
+            //                return elemento;
+            //        }
+            //        return null;
+            //    }
+            //    catch
+            //    {
+            //        return null;
+            //    }
+            //});
+
+            Thread.Sleep(1000);
             var opcion = wait.Until(d =>
             {
                 try
@@ -329,6 +372,7 @@ namespace SIGES3_0.Pages.PedidoPage
                     return null;
                 }
             });
+            //----
 
             ((IJavaScriptExecutor)driver)
                 .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", opcion);
@@ -380,97 +424,243 @@ namespace SIGES3_0.Pages.PedidoPage
             }
         }
 
+        //public void ConfigurarDescuento(string activo, string tipo, string modo, string valor)
+        //{
+        //    if (activo != "true") return;
+
+        //    driver.FindElement(chkDescuento).Click();
+
+        //    // Selección tipo descuento
+        //    if (tipo == "item")
+        //        driver.FindElement(btnDescuentoItem).Click();
+
+        //    if (tipo == "global")
+        //        driver.FindElement(btnDescuentoGlobal).Click();
+
+
+        //    // Selección modo descuento
+        //    if (modo == "$")
+        //        driver.FindElement(btnDescuentoSoles).Click();
+
+        //    if (modo == "%")
+        //        driver.FindElement(btnDescuentoPorcentaje).Click();
+
+
+        //    // Ingresar valor
+        //    var input = wait.Until(ExpectedConditions.ElementIsVisible(txtDescuento));
+
+        //    input.Clear();
+        //    input.SendKeys(valor);
+        //}
+
         public void ConfigurarDescuento(string activo, string tipo, string modo, string valor)
         {
-            if (activo != "true") return;
+            if (!activo.Trim().Equals("true", StringComparison.OrdinalIgnoreCase))
+                return;
 
-            driver.FindElement(chkDescuento).Click();
+            var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            waitLong.PollingInterval = TimeSpan.FromMilliseconds(200);
 
-            // Selección tipo descuento
-            if (tipo == "item")
-                driver.FindElement(btnDescuentoItem).Click();
+            void ClickSeguro(By locator)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    try
+                    {
+                        var el = waitLong.Until(d =>
+                        {
+                            try
+                            {
+                                var e = d.FindElement(locator);
+                                return (e.Displayed && e.Enabled) ? e : null;
+                            }
+                            catch
+                            {
+                                return null;
+                            }
+                        });
 
-            if (tipo == "global")
-                driver.FindElement(btnDescuentoGlobal).Click();
+                        ((IJavaScriptExecutor)driver)
+                            .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", el);
 
+                        Thread.Sleep(150);
 
-            // Selección modo descuento
-            if (modo == "$")
-                driver.FindElement(btnDescuentoSoles).Click();
+                        try
+                        {
+                            el.Click();
+                        }
+                        catch
+                        {
+                            ((IJavaScriptExecutor)driver)
+                                .ExecuteScript("arguments[0].click();", el);
+                        }
 
-            if (modo == "%")
-                driver.FindElement(btnDescuentoPorcentaje).Click();
+                        Thread.Sleep(250);
+                        return;
+                    }
+                    catch (StaleElementReferenceException)
+                    {
+                        Thread.Sleep(250);
+                    }
+                }
 
+                throw new Exception($"No se pudo hacer click en el elemento: {locator}");
+            }
 
-            // Ingresar valor
-            var input = wait.Until(ExpectedConditions.ElementIsVisible(txtDescuento));
+            ClickSeguro(chkDescuento);
 
-            input.Clear();
+            if (tipo.Trim().Equals("item", StringComparison.OrdinalIgnoreCase))
+                ClickSeguro(btnDescuentoItem);
+
+            if (tipo.Trim().Equals("global", StringComparison.OrdinalIgnoreCase))
+                ClickSeguro(btnDescuentoGlobal);
+
+            if (modo.Trim().Equals("$", StringComparison.OrdinalIgnoreCase))
+                ClickSeguro(btnDescuentoSoles);
+
+            if (modo.Trim().Equals("%", StringComparison.OrdinalIgnoreCase))
+                ClickSeguro(btnDescuentoPorcentaje);
+
+            var input = waitLong.Until(d =>
+            {
+                try
+                {
+                    var e = d.FindElement(txtDescuento);
+                    return (e.Displayed && e.Enabled) ? e : null;
+                }
+                catch
+                {
+                    return null;
+                }
+            });
+
+            ((IJavaScriptExecutor)driver)
+                .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", input);
+
+            Thread.Sleep(150);
+
+            input.Click();
+            input.SendKeys(Keys.Control + "a");
+            input.SendKeys(Keys.Delete);
             input.SendKeys(valor);
+            input.SendKeys(Keys.Tab);
+
+            Thread.Sleep(300);
         }
+
+        //public void BuscarCliente(string cliente)
+        //{
+        //    try
+        //    {
+        //        // cliente VARIOS
+        //        if (cliente == "00000000" || cliente.ToLower() == "varios")
+        //        {
+        //            Console.WriteLine("Cliente VARIOS - no se realiza búsqueda");
+        //            return;
+        //        }
+
+        //        var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(25));
+
+        //        // Esperar visible + scrollear + dar foco real al input
+        //        var input = waitLong.Until(
+        //            ExpectedConditions.ElementIsVisible(txtCliente)
+        //        );
+
+        //        ((IJavaScriptExecutor)driver)
+        //            .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", input);
+
+        //        waitLong.Until(ExpectedConditions.ElementToBeClickable(txtCliente)).Click();
+
+        //        // Limpieza robusta (más confiable que Clear() en inputs con autocomplete/máscara)
+        //        input.SendKeys(Keys.Control + "a");
+        //        input.SendKeys(Keys.Delete);
+
+        //        // Escribir DNI o RUC
+
+        //        try
+        //        {
+        //            var waitDropdown = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+        //            var opcion = waitDropdown.Until(d =>
+        //            {
+        //                try
+        //                {
+        //                    var opciones = d.FindElements(By.CssSelector(
+        //                        ".ng-dropdown-panel .ng-option, .dropdown-menu .dropdown-item, .autocomplete-items *"
+        //                    ));
+        //                    return opciones.FirstOrDefault(o => o.Displayed && o.Enabled);
+        //                }
+        //                catch
+        //                {
+        //                    return null;
+        //                }
+        //            });
+
+        //            ((IJavaScriptExecutor)driver)
+        //                .ExecuteScript("arguments[0].click();", opcion);
+        //        }
+        //        catch (WebDriverTimeoutException)
+        //        {
+        //            // 2) Fallback: disparar búsqueda con ENTER
+        //            input.SendKeys(Keys.Enter);
+        //        }
+
+        //        // Esperar que el campo quede poblado (puede ser DNI/RUC o el nombre del cliente, depende del UI)
+        //        waitLong.Until(d =>
+        //        {
+        //            try
+        //            {
+        //                var val = input.GetAttribute("value") ?? "";
+        //                return val.Trim().Length > 0;
+        //            }
+        //            catch
+        //            {
+        //                return false;
+        //            }
+        //        });
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine("Error buscando cliente: " + e.Message);
+        //        throw;
+        //    }
+        //}
 
         public void BuscarCliente(string cliente)
         {
             try
             {
-                // cliente VARIOS
                 if (cliente == "00000000" || cliente.ToLower() == "varios")
                 {
                     Console.WriteLine("Cliente VARIOS - no se realiza búsqueda");
                     return;
                 }
 
-                var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(25));
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
 
-                // Esperar visible + scrollear + dar foco real al input
-                var input = waitLong.Until(
-                    ExpectedConditions.ElementIsVisible(txtCliente)
-                );
+                var input = wait.Until(ExpectedConditions.ElementIsVisible(txtCliente));
 
                 ((IJavaScriptExecutor)driver)
                     .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", input);
 
-                waitLong.Until(ExpectedConditions.ElementToBeClickable(txtCliente)).Click();
+                wait.Until(ExpectedConditions.ElementToBeClickable(txtCliente)).Click();
 
-                // Limpieza robusta (más confiable que Clear() en inputs con autocomplete/máscara)
+                // limpiar
                 input.SendKeys(Keys.Control + "a");
                 input.SendKeys(Keys.Delete);
 
-                // Escribir DNI o RUC
+                Thread.Sleep(200);
+
+                // ✅ ESCRIBIR CLIENTE (esto te faltaba)
                 input.SendKeys(cliente);
 
-                // Algunos ambientes muestran un autocomplete (lista de opciones) y otros
-                // resuelven la búsqueda con ENTER sin desplegar lista.
-                // 1) Intentar seleccionar una opción visible (si existe) con un timeout corto.
-                try
-                {
-                    var waitDropdown = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-                    var opcion = waitDropdown.Until(d =>
-                    {
-                        try
-                        {
-                            var opciones = d.FindElements(By.CssSelector(
-                                ".ng-dropdown-panel .ng-option, .dropdown-menu .dropdown-item, .autocomplete-items *"
-                            ));
-                            return opciones.FirstOrDefault(o => o.Displayed && o.Enabled);
-                        }
-                        catch
-                        {
-                            return null;
-                        }
-                    });
+                Thread.Sleep(300);
 
-                    ((IJavaScriptExecutor)driver)
-                        .ExecuteScript("arguments[0].click();", opcion);
-                }
-                catch (WebDriverTimeoutException)
-                {
-                    // 2) Fallback: disparar búsqueda con ENTER
-                    input.SendKeys(Keys.Enter);
-                }
+                // ✅ ENTER (tu app funciona así)
+                input.SendKeys(Keys.Enter);
 
-                // Esperar que el campo quede poblado (puede ser DNI/RUC o el nombre del cliente, depende del UI)
-                waitLong.Until(d =>
+                // ✅ esperar que cambie el valor o se procese la búsqueda
+                wait.Until(d =>
                 {
                     try
                     {
@@ -490,6 +680,7 @@ namespace SIGES3_0.Pages.PedidoPage
                 throw;
             }
         }
+
 
         public void SeleccionarEntrega(string tipoEntrega)
         {
@@ -1046,160 +1237,6 @@ namespace SIGES3_0.Pages.PedidoPage
 
             Thread.Sleep(1500);
         }
-
-
-
-        //    private bool SeleccionarComprobanteConfirmacion(WebDriverWait waitLong, string tipoComprobante)
-        //    {
-        //        Console.WriteLine($"[Comprobante] Intentando seleccionar: '{tipoComprobante}'");
-
-        //        // 1. Encontrar y hacer click en el combo de comprobante
-        //        var combo = waitLong.Until(d =>
-        //        {
-        //            try
-        //            {
-        //                var combos = d.FindElements(cmbTipoComprobanteConfirmacion)
-        //                    .Where(e => e.Displayed && e.Enabled)
-        //                    .ToList();
-
-        //                Console.WriteLine($"[Comprobante] Combos visibles encontrados: {combos.Count}");
-        //                if (!combos.Any()) return null;
-
-        //                return combos.FirstOrDefault(c =>
-        //                {
-        //                    var txt = (c.Text ?? "").Trim().ToUpperInvariant();
-        //                    return txt.Contains("BOLETA") || txt.Contains("FACTURA") || txt.Contains("NOTA DE VENTA");
-        //                }) ?? combos.Last();
-        //            }
-        //            catch { return null; }
-        //        });
-
-        //        if (combo == null)
-        //        {
-        //            Console.WriteLine("[Comprobante] No se encontró el combo de comprobante.");
-        //            return false;
-        //        }
-
-        //((IJavaScriptExecutor)driver)
-        //    .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", combo);
-        //        Thread.Sleep(300);
-
-        //        try { combo.Click(); }
-        //        catch { ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", combo); }
-
-        //        Thread.Sleep(600);
-
-        //        // 2. Buscar el input de búsqueda del ng-select de comprobante.
-        //        //    Estrategia: el ng-select abierto expone un input type="text" con placeholder="Buscar..."
-        //        //    PERO debemos asegurarnos de tomar el que está DENTRO del ng-select del comprobante,
-        //        //    no el del cliente. Lo identificamos porque el ng-select del comprobante contiene
-        //        //    el trigger que acabamos de clickear; buscamos su ancestro ng-select y dentro de él el input.
-        //        IWebElement inputBuscar = null;
-        //        try
-        //        {
-        //            inputBuscar = new WebDriverWait(driver, TimeSpan.FromSeconds(5)).Until(d =>
-        //            {
-        //                try
-        //                {
-        //                    // El ng-select del comprobante: su trigger tiene clase select-trigger form-control
-        //                    // Subimos al ng-select padre y buscamos el input interno
-        //                    var inputs = d.FindElements(By.XPath(
-        //                        "//ng-select[.//div[contains(@class,'select-trigger') and contains(@class,'form-control')]]" +
-        //                        "//input[@type='text']"
-        //                    ))
-        //                    .Where(e => e.Displayed)
-        //                    .ToList();
-
-        //                    Console.WriteLine($"[Comprobante] Inputs en ng-select del comprobante: {inputs.Count}");
-
-        //                    if (inputs.Any()) return inputs.First();
-
-        //                    // Fallback: cualquier input visible que NO sea el search-input del cliente
-        //                    var fallbackInputs = d.FindElements(By.XPath(
-        //                        "//input[@type='text' and not(contains(@class,'search-input'))]"
-        //                    ))
-        //                    .Where(e => e.Displayed && e.Enabled)
-        //                    .ToList();
-
-        //                    Console.WriteLine($"[Comprobante] Inputs fallback: {fallbackInputs.Count}");
-        //                    return fallbackInputs.FirstOrDefault();
-        //                }
-        //                catch { return null; }
-        //            });
-        //        }
-        //        catch (WebDriverTimeoutException)
-        //        {
-        //            Console.WriteLine("[Comprobante] No apareció input de búsqueda, se intentará seleccionar directo por texto.");
-        //        }
-
-        //        // 3. Escribir en el buscador si existe
-        //        string textoBusqueda = ObtenerTextoBusquedaComprobante(tipoComprobante);
-
-        //        if (inputBuscar != null)
-        //        {
-        //            Console.WriteLine($"[Comprobante] Escribiendo '{textoBusqueda}' en el input de búsqueda.");
-        //            try { inputBuscar.Click(); } catch { }
-        //            inputBuscar.SendKeys(Keys.Control + "a");
-        //            inputBuscar.SendKeys(Keys.Delete);
-        //            Thread.Sleep(200);
-        //            inputBuscar.SendKeys(textoBusqueda);
-        //            Thread.Sleep(800);
-        //        }
-
-        //        // 4. Seleccionar la opción visible — usar .option-item.ng-star-inserted (confirmado en imagen 2)
-        //        var opcion = new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(d =>
-        //        {
-        //            try
-        //            {
-        //                // Primero intentar con el selector confirmado de la imagen 2
-        //                var opciones = d.FindElements(By.CssSelector(".option-item.ng-star-inserted"))
-        //                    .Where(e => e.Displayed)
-        //                    .ToList();
-
-        //                Console.WriteLine($"[Comprobante] Opciones .option-item.ng-star-inserted visibles: {opciones.Count}");
-        //                foreach (var op in opciones)
-        //                    Console.WriteLine($"  -> '{op.Text}'");
-
-        //                var encontrada = opciones.FirstOrDefault(e =>
-        //                    CoincideComprobante((e.Text ?? "").Trim(), tipoComprobante));
-
-        //                if (encontrada != null) return encontrada;
-
-        //                // Fallback XPath amplio (ng-option, div[@role='option'], etc.)
-        //                var opcionesXPath = d.FindElements(By.XPath(
-        //                    "//div[contains(@class,'ng-option')]" +
-        //                    " | //div[@role='option']" +
-        //                    " | //div[contains(@class,'option-item')]"
-        //                ))
-        //                .Where(e => e.Displayed)
-        //                .ToList();
-
-        //                return opcionesXPath.FirstOrDefault(e =>
-        //                    CoincideComprobante((e.Text ?? "").Trim(), tipoComprobante));
-        //            }
-        //            catch { return null; }
-        //        });
-
-        //        if (opcion == null)
-        //        {
-        //            Console.WriteLine($"[Comprobante] No se encontró opción visible para '{tipoComprobante}'.");
-        //            return false;
-        //        }
-
-        //        Console.WriteLine($"[Comprobante] Opción encontrada: '{opcion.Text}'");
-
-        //        ((IJavaScriptExecutor)driver)
-        //            .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", opcion);
-        //        Thread.Sleep(200);
-
-        //        try { opcion.Click(); }
-        //        catch { ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", opcion); }
-
-        //        Thread.Sleep(1000);
-
-        //        return ComprobanteSeleccionadoCoincide(tipoComprobante);
-        //    }
-
         private bool SeleccionarComprobanteConfirmacion(WebDriverWait waitLong, string tipoComprobante)
         {
             Console.WriteLine($"[Comprobante] Intentando seleccionar: '{tipoComprobante}'");
@@ -1333,37 +1370,6 @@ namespace SIGES3_0.Pages.PedidoPage
             ((IJavaScriptExecutor)driver)
                 .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", opcion);
 
-            //try { opcion.Click(); }
-            //catch { ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", opcion); }
-
-            //// Validación rápida sobre el MISMO combo ya encontrado
-            //try
-            //{
-            //    new WebDriverWait(driver, TimeSpan.FromSeconds(2))
-            //    {
-            //        PollingInterval = TimeSpan.FromMilliseconds(120)
-            //    }.Until(d =>
-            //    {
-            //        try
-            //        {
-            //            var textoCombo = (combo.Text ?? "").Trim();
-            //            Console.WriteLine($"[Comprobante] Texto actual combo: '{textoCombo}'");
-
-            //            return CoincideComprobante(textoCombo, tipoComprobante);
-            //        }
-            //        catch
-            //        {
-            //            return false;
-            //        }
-            //    });
-            //}
-            //catch
-            //{
-            //    Console.WriteLine("[Comprobante] La validación rápida no confirmó a tiempo.");
-            //}
-
-            //return ComprobanteSeleccionadoCoincide(tipoComprobante);
-
             try { opcion.Click(); }
 catch { ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", opcion); }
 
@@ -1452,63 +1458,6 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
                 Console.WriteLine($"[Serie] '{serie}' no encontrada como radio button; se asume preseleccionada.");
             }
         }
-
-        // Abrir subsecciones de la confirmación del pedido para configurar opciones antes de confirmar
-        //private void AbrirFacturacionConfirmacion()
-        //{
-        //    var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
-
-        //    // 1) Localizar el header de "Facturación" dentro del modal de confirmación
-        //    var header = waitLong.Until(d =>
-        //    {
-        //        try
-        //        {
-        //            var h = d.FindElement(seccionFacturacionConfirmacion);
-        //            return h.Displayed ? h : null;
-        //        }
-        //        catch
-        //        {
-        //            return null;
-        //        }
-        //    });
-
-        //    // 2) Scroll al header
-        //    ((IJavaScriptExecutor)driver)
-        //        .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", header);
-
-        //    // 3) Si hay un botón/chevron dentro del header, clickeamos ese; si no, el propio header
-        //    IWebElement clickable;
-        //    try
-        //    {
-        //        clickable = header.FindElement(By.XPath(".//button | .//*[@role='button']"));
-        //    }
-        //    catch
-        //    {
-        //        clickable = header;
-        //    }
-
-        //    waitLong.Until(d => clickable.Displayed && clickable.Enabled);
-        //    ((IJavaScriptExecutor)driver)
-        //        .ExecuteScript("arguments[0].click();", clickable);
-
-        //    // 4) Esperar a que el cuerpo del acordeón de Facturación esté visible (cliente dentro)
-        //    waitLong.Until(d =>
-        //    {
-        //        try
-        //        {
-        //            var body = d.FindElement(By.XPath(
-        //                "//div[contains(@class,'accordion-body')]" +
-        //                "[.//label[contains(normalize-space(),'Cliente')]]"
-        //            ));
-        //            return body.Displayed;
-        //        }
-        //        catch
-        //        {
-        //            return false;
-        //        }
-        //    });
-        //}
-
         private void AbrirFacturacionConfirmacion()
         {
             var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
@@ -1784,14 +1733,6 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
                 // Cerrar sección facturación
                 AbrirFacturacionConfirmacion();
             }
-            //catch (AssertionException)
-            //{
-            //    throw;
-            //}
-            //catch (Exception e)
-            //{
-            //    Assert.Fail("Error configurando facturación de confirmación: " + e.Message);
-            //}
 
             catch (AssertionException) { throw; }
             catch (InvalidOperationException ex) when (ex.Message.StartsWith("ERROR_MODAL:"))
@@ -1846,51 +1787,6 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
                 return null!; // No hubo error modal
             }
         }
-
-        //public void ConfigurarFacturacionConfirmacion(string tipoComprobante, string serie, string cliente)
-        //{
-        //    try
-        //    {
-        //        var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
-
-        //        Console.WriteLine($"[TIMING] 1. Inicio ConfigurarFacturacion: {DateTime.Now:HH:mm:ss.fff}");
-        //        AbrirFacturacionConfirmacion();
-
-        //        Console.WriteLine($"[TIMING] 2. Después AbrirFacturacion: {DateTime.Now:HH:mm:ss.fff}");
-        //        waitLong.Until(ExpectedConditions.ElementIsVisible(txtClienteConfirmacion));
-
-        //        Console.WriteLine($"[TIMING] 3. Antes BuscarCliente: {DateTime.Now:HH:mm:ss.fff}");
-        //        BuscarClienteConfirmacion(cliente);
-
-        //        Console.WriteLine($"[TIMING] 4. Antes SeleccionarComprobante: {DateTime.Now:HH:mm:ss.fff}");
-        //        bool comprobanteOk = SeleccionarComprobanteConfirmacion(waitLong, tipoComprobante);
-
-        //        Console.WriteLine($"[TIMING] 5. Después SeleccionarComprobante: {DateTime.Now:HH:mm:ss.fff}");
-
-        //        if (!comprobanteOk)
-        //        {
-        //            string actual = ObtenerTextoComprobanteSeleccionado();
-        //            Assert.Fail($"No se pudo seleccionar el comprobante esperado '{tipoComprobante}'. Valor actual visible: '{actual}'.");
-        //        }
-
-        //        Thread.Sleep(800);
-        //        Console.WriteLine($"[TIMING] 6. Después Sleep(800): {DateTime.Now:HH:mm:ss.fff}");
-
-        //        if (!serie.Trim().Equals("ninguno", StringComparison.OrdinalIgnoreCase))
-        //        {
-        //            SeleccionarSerieConfirmacion(waitLong, serie);
-        //            Console.WriteLine($"[TIMING] 7. Después SeleccionarSerie: {DateTime.Now:HH:mm:ss.fff}");
-        //        }
-
-        //        AbrirFacturacionConfirmacion();
-        //        Console.WriteLine($"[TIMING] 8. Después segunda AbrirFacturacion (cerrar): {DateTime.Now:HH:mm:ss.fff}");
-        //    }
-        //    catch (AssertionException) { throw; }
-        //    catch (Exception e)
-        //    {
-        //        Assert.Fail("Error configurando facturación de confirmación: " + e.Message);
-        //    }
-        //}
         public void ConfigurarPagoConfirmacion(string tipoPago, string montoCubreTotal)
         {
             try
@@ -1907,6 +1803,9 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
         }
 
         //CONFIRMAR PEDIDO - MEDIOS DE PAGO
+
+        // Exclusivo para @ConfirmarPedidoMediosDePago
+        
         public void ConfigurarMediosDePagoConfirmacion(
         string tipoPago,
         string multipago,
@@ -1966,6 +1865,53 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
                 Assert.Fail("Error configurando medios de pago en confirmación: " + e.Message);
             }
         }
+
+        //public void ConfirmarPedidoPreparado()
+        //{
+        //    ultimaAccion = "confirmar";
+
+        //    var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+
+        //    IWebElement boton = waitLong.Until(d =>
+        //    {
+        //        try
+        //        {
+        //            var el = d.FindElement(btnConfirmarPedidoFinal);
+        //            return el.Displayed ? el : null;
+        //        }
+        //        catch { return null; }
+        //    });
+
+        //    ((IJavaScriptExecutor)driver)
+        //        .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", boton);
+
+        //    Thread.Sleep(500);
+
+        //    bool deshabilitado =
+        //        !boton.Enabled ||
+        //        boton.GetAttribute("disabled") != null ||
+        //        (boton.GetAttribute("class") ?? "").ToLower().Contains("disabled");
+
+        //    if (deshabilitado)
+        //    {
+        //        Console.WriteLine("[ConfirmarPedidoPreparado] El botón Confirmar Pedido está deshabilitado.");
+
+        //        // NUEVO: verificar si hay mensaje de campos incompletos visible
+        //        string errorPago = VerificarErrorCamposPago();
+        //        if (errorPago != null)
+        //        {
+        //            Console.WriteLine($"[ConfirmarPedidoPreparado] Error de pago detectado: '{errorPago}'");
+        //            mensajeErrorCapturado = errorPago;
+        //        }
+        //        return;
+        //    }
+
+        //    try { boton.Click(); }
+        //    catch { ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", boton); }
+
+        //    Thread.Sleep(800);
+        //}
+
         public void ConfirmarPedidoPreparado()
         {
             ultimaAccion = "confirmar";
@@ -1979,10 +1925,7 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
                     var el = d.FindElement(btnConfirmarPedidoFinal);
                     return el.Displayed ? el : null;
                 }
-                catch
-                {
-                    return null;
-                }
+                catch { return null; }
             });
 
             ((IJavaScriptExecutor)driver)
@@ -1998,20 +1941,139 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
             if (deshabilitado)
             {
                 Console.WriteLine("[ConfirmarPedidoPreparado] El botón Confirmar Pedido está deshabilitado.");
+
+                // Verificar error visible con botón deshabilitado
+                string? errorPago = VerificarErrorCamposPago();
+                if (errorPago != null)
+                {
+                    Console.WriteLine($"[ConfirmarPedidoPreparado] Error detectado (botón deshabilitado): '{errorPago}'");
+                    mensajeErrorCapturado = errorPago;
+                }
                 return;
             }
 
+            // NUEVO: verificar error ANTES del click aunque el botón esté habilitado
+            string? errorPreClick = VerificarErrorCamposPago();
+            if (errorPreClick != null)
+            {
+                Console.WriteLine($"[ConfirmarPedidoPreparado] Error detectado (pre-click): '{errorPreClick}'");
+                mensajeErrorCapturado = errorPreClick;
+                return; // ← NO hacer click, salir directo
+            }
+
+            try { boton.Click(); }
+            catch { ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", boton); }
+
+            Thread.Sleep(800);
+
+            // NUEVO: verificar error también DESPUÉS del click (ej: puntos insuficientes que habilita botón)
+            string? errorPostClick = VerificarErrorCamposPago();
+            if (errorPostClick != null)
+            {
+                Console.WriteLine($"[ConfirmarPedidoPreparado] Error detectado (post-click): '{errorPostClick}'");
+                mensajeErrorCapturado = errorPostClick;
+            }
+        }
+
+        //private string? VerificarErrorCamposPago()
+        //{
+        //    try
+        //    {
+        //        // verificar puntos insuficientes (visible en tab PUNTOS)
+        //        var mensajePuntos = driver.FindElements(By.XPath(
+        //            "//*[contains(text(),'No hay suficientes puntos disponibles')]"
+        //        )).FirstOrDefault(e => e.Displayed);
+
+        //        if (mensajePuntos != null)
+        //        {
+        //            Console.WriteLine($"[VerificarErrorCamposPago] Puntos insuficientes detectado.");
+        //            return "Puntos insuficiente";
+        //        }
+
+        //        // Verificar si hay mensaje "Complete los campos requeridos"
+        //        var mensajeCompleto = driver.FindElements(
+        //            By.XPath("//*[contains(text(),'Complete los campos requeridos')]")
+        //        ).FirstOrDefault(e => e.Displayed);
+
+        //        if (mensajeCompleto == null) return null;
+
+        //        Console.WriteLine($"[VerificarErrorCamposPago] 'Complete los campos requeridos' visible.");
+
+        //        // Si el select de tarjeta está visible → tab tarjeta crédito/débito → entidad bancaria
+        //        bool selectTarjetaVisible = driver.FindElements(cmbTarjetaConfirmacion)
+        //            .Any(e => e.Displayed);
+
+        //        if (selectTarjetaVisible)
+        //        {
+        //            Console.WriteLine($"[VerificarErrorCamposPago] Tab tarjeta → Seleccione una entidad bancaria");
+        //            return "Seleccione una entidad bancaria";
+        //        }
+
+        //        Console.WriteLine($"[VerificarErrorCamposPago] Tab transferencia/depósito → Seleccione una cuenta bancaria");
+        //        return "Seleccione una cuenta bancaria";
+        //    }
+        //    catch
+        //    {
+        //        return null;
+        //    }
+        //}
+
+        private string? VerificarErrorCamposPago()
+        {
             try
             {
-                boton.Click();
+                var mensajePuntos = driver.FindElements(By.XPath(
+                    "//*[contains(text(),'No hay suficientes puntos disponibles') or contains(text(),'Puntos insuficiente') or contains(text(),'Puntos insuficientes')]"
+                )).FirstOrDefault(e => e.Displayed);
+
+                if (mensajePuntos != null)
+                    return "Puntos insuficiente";
+
+                var mensajeMonto = driver.FindElements(By.XPath(
+                    "//*[contains(text(),'Monto insuficiente')]"
+                )).FirstOrDefault(e => e.Displayed);
+
+                if (mensajeMonto != null)
+                    return "Monto insuficiente";
+
+                var mensajeCompleto = driver.FindElements(
+                    By.XPath("//*[contains(text(),'Complete los campos requeridos')]")
+                ).FirstOrDefault(e => e.Displayed);
+
+                if (mensajeCompleto == null) return null;
+
+                // si está visible el input de efectivo, priorizar efectivo
+                bool efectivoVisible = driver.FindElements(txtRecibidoEfectivo)
+                    .Any(e => e.Displayed && e.Enabled);
+
+                if (efectivoVisible)
+                {
+                    var valor = driver.FindElements(txtRecibidoEfectivo)
+                        .FirstOrDefault(e => e.Displayed && e.Enabled)?
+                        .GetAttribute("value")?.Trim();
+
+                    if (!string.IsNullOrEmpty(valor))
+                        return "Monto insuficiente";
+                }
+
+                bool selectTarjetaVisible = driver.FindElements(cmbTarjetaConfirmacion)
+                    .Any(e => e.Displayed);
+
+                if (selectTarjetaVisible)
+                    return "Seleccione una entidad bancaria";
+
+                bool cuentaVisible = driver.FindElements(cmbCuentaBancariaConfirmacion)
+                    .Any(e => e.Displayed);
+
+                if (cuentaVisible)
+                    return "Seleccione una cuenta bancaria";
+
+                return "Complete los campos requeridos";
             }
             catch
             {
-                ((IJavaScriptExecutor)driver)
-                    .ExecuteScript("arguments[0].click();", boton);
+                return null;
             }
-
-            Thread.Sleep(800);
         }
 
         // HLEP
@@ -2178,6 +2240,8 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
             if (EsNA(monto)) return;
 
             string valor = ResolverMontoPago(monto);
+            Console.WriteLine($"[Efectivo] Parámetro recibido: '{monto}'");
+            Console.WriteLine($"[Efectivo] Monto resuelto: '{valor}'");
             if (string.IsNullOrWhiteSpace(valor)) return;
 
             var input = wait.Until(d =>
@@ -2594,6 +2658,47 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
                 }
                 catch { }
 
+                // ── MEDIOS DE PAGO: ERRORES ESPECÍFICOS ────────────────
+                try
+                {
+                    var mensaje = driver.FindElement(By.XPath("//*[contains(text(),'Seleccione una entidad bancaria')]"));
+                    if (mensaje.Displayed)
+                        return "Seleccione una entidad bancaria";
+                }
+                catch { }
+
+                try
+                {
+                    var mensaje = driver.FindElement(By.XPath("//*[contains(text(),'Seleccione una cuenta bancaria')]"));
+                    if (mensaje.Displayed)
+                        return "Seleccione una cuenta bancaria";
+                }
+                catch { }
+
+                try
+                {
+                    var mensaje = driver.FindElement(By.XPath("//*[contains(text(),'Puntos insuficiente') or contains(text(),'Puntos insuficientes')]"));
+                    if (mensaje.Displayed)
+                        return "Puntos insuficiente";
+                }
+                catch { }
+
+                try
+                {
+                    var mensaje = driver.FindElement(By.XPath("//*[contains(text(),'Para el pago con puntos debe identificar al cliente')]"));
+                    if (mensaje.Displayed)
+                        return "Para el pago con puntos debe identificar al cliente";
+                }
+                catch { }
+
+                try
+                {
+                    var mensaje = driver.FindElement(By.XPath("//*[contains(text(),'Para dar a credito debe identificar al cliente') or contains(text(),'Para dar a crédito debe identificar al cliente')]"));
+                    if (mensaje.Displayed)
+                        return "Para dar a credito debe identificar al cliente";
+                }
+                catch { }
+
                 // ── ÉXITO DE CONFIRMACIÓN: PRIORIDAD ALTA ──────────────
                 try
                 {
@@ -2646,46 +2751,6 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
                 }
                 catch { }
 
-                // ── MEDIOS DE PAGO: ERRORES ESPECÍFICOS ────────────────
-                try
-                {
-                    var mensaje = driver.FindElement(By.XPath("//*[contains(text(),'Seleccione una entidad bancaria')]"));
-                    if (mensaje.Displayed)
-                        return "Seleccione una entidad bancaria";
-                }
-                catch { }
-
-                try
-                {
-                    var mensaje = driver.FindElement(By.XPath("//*[contains(text(),'Seleccione una cuenta bancaria')]"));
-                    if (mensaje.Displayed)
-                        return "Seleccione una cuenta bancaria";
-                }
-                catch { }
-
-                try
-                {
-                    var mensaje = driver.FindElement(By.XPath("//*[contains(text(),'Puntos insuficiente') or contains(text(),'Puntos insuficientes')]"));
-                    if (mensaje.Displayed)
-                        return "Puntos insuficiente";
-                }
-                catch { }
-
-                try
-                {
-                    var mensaje = driver.FindElement(By.XPath("//*[contains(text(),'Para el pago con puntos debe identificar al cliente')]"));
-                    if (mensaje.Displayed)
-                        return "Para el pago con puntos debe identificar al cliente";
-                }
-                catch { }
-
-                try
-                {
-                    var mensaje = driver.FindElement(By.XPath("//*[contains(text(),'Para dar a credito debe identificar al cliente') or contains(text(),'Para dar a crédito debe identificar al cliente')]"));
-                    if (mensaje.Displayed)
-                        return "Para dar a credito debe identificar al cliente";
-                }
-                catch { }
 
                 return "";
             }

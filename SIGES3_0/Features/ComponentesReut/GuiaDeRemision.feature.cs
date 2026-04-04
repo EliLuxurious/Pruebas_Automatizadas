@@ -33,7 +33,7 @@ namespace SIGES3_0.Features.ComponentesReut
         private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/ComponentesReut", "Guia de Remision Remitente", "Como usuario del sistema\r\nQuiero emitir una guia de remision\r\nPara validar el tra" +
                 "slado de productos", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
-#line 1 "GuiaRemision.feature"
+#line 1 "GuiaDeRemision.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
@@ -89,22 +89,32 @@ namespace SIGES3_0.Features.ComponentesReut
 #line 8
 #line hidden
 #line 9
- await testRunner.GivenAsync("el usuario accede al modulo correspondiente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                    "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 10
+ await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                    "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 11
+ await testRunner.AndAsync("el usuario accede al módulo \'Pedidos\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 12
+ await testRunner.AndAsync("el usuario accede al submodulo \'Ver Pedidos\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Validar emision de guia de remision")]
         [NUnit.Framework.CategoryAttribute("EmitirGuia")]
-        [NUnit.Framework.TestCaseAttribute("1", "Hoy", "100", "10", "Publico", "20602945589", "NA", "NA", "NA", "Huanuco-Leoncio-Rupa Rupa", "Lima-Lima-Lima", "Guia emitida correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("2", "Hoy", "80", "5", "Publico", "00000000000", "NA", "NA", "NA", "Huanuco-Leoncio-Rupa Rupa", "Lima-Lima-Lima", "Transportista debe tener RUC valido", null)]
-        [NUnit.Framework.TestCaseAttribute("3", "Ninguno", "50", "2", "Publico", "20123456789", "NA", "NA", "NA", "Lima-Lima-Lima", "Huanuco-Leoncio-Rupa Rup", "Registre la fecha de inicio", null)]
-        [NUnit.Framework.TestCaseAttribute("4", "Hoy", "Ninguno", "Ninguno", "Publico", "20123456789", "NA", "NA", "NA", "Huanuco-Leoncio-Rupa Rupa", "Lima-Lima-Lima", "Falta peso y numero de bultos", null)]
-        [NUnit.Framework.TestCaseAttribute("5", "Hoy", "100", "10", "Privado", "NA", "71310154", "M-71310154", "2770XS", "Arequipa-Arequipa-Arequipa", "Lima-Lima-Lima", "Guia emitida correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("6", "Hoy", "10", "2", "Privado", "NA", "Ninguno", "NA", "NA", "Huanuco-Leoncio-Rupa Rupa", "Lima-Lima-Lima", "Identifique al conductor con DNI", null)]
-        [NUnit.Framework.TestCaseAttribute("7", "Hoy", "10", "2", "Privado", "NA", "71310154", "Ninguno", "2770XS", "Arequipa-Arequipa-Arequipa", "Lima-Lima-Lima", "Ingrese numero de licencia", null)]
-        [NUnit.Framework.TestCaseAttribute("8", "Hoy", "10", "2", "Privado", "NA", "71310154", "M-71310154", "Ninguno", "Huanuco-Leoncio-Rupa Rupa", "Lima-Lima-Lima", "Ingrese numero de placa", null)]
-        public async System.Threading.Tasks.Task ValidarEmisionDeGuiaDeRemision(string caso, string fecha_De_Inicio_Traslado, string peso_Bruto, string cantidad_Bultos, string tipo_Transporte, string transportista_Ruc, string dni_Conductor, string numero_Licencia, string numero_Placa, string direccion_Origen, string direccion_Destino, string resultado_Esperado, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("1", "Hoy", "100", "10", "Publico", "20602945589", "NA", "NA", "Huanuco-Leoncio-Rupa Rupa", "Av amazonas C9", "Lima-Lima-Lima", "Av San Juna C1", "Guia emitida correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("2", "Hoy", "80", "5", "Publico", "ninguno", "NA", "NA", "Huanuco-Leoncio-Rupa Rupa", "Av amazonas C9", "Lima-Lima-Lima", "Av San Juna C1", "Transportista debe tener RUC valido", null)]
+        [NUnit.Framework.TestCaseAttribute("4", "Hoy", "Ninguno", "Ninguno", "Publico", "20123456789", "NA", "NA", "Huanuco-Leoncio-Rupa Rupa", "Av amazonas C9", "Lima-Lima-Lima", "Av San Juna C1", "Falta peso y numero de bultos", null)]
+        [NUnit.Framework.TestCaseAttribute("5", "Hoy", "100", "10", "Privado", "NA", "M-71310154", "2770XS", "Arequipa-Arequipa-Arequipa", "Av amazonas C9", "Lima-Lima-Lima", "Av San Juna C1", "Guia emitida correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("6", "Hoy", "10", "2", "Privado", "NA", "NA", "NA", "Huanuco-Leoncio-Rupa Rupa", "Av amazonas C9", "Lima-Lima-Lima", "Av San Juna C1", "Identifique al conductor con DNI", null)]
+        [NUnit.Framework.TestCaseAttribute("7", "Hoy", "10", "2", "Privado", "NA", "Ninguno", "2770XS", "Arequipa-Arequipa-Arequipa", "Av amazonas C9", "Lima-Lima-Lima", "Av San Juna C1", "Ingrese numero de licencia", null)]
+        [NUnit.Framework.TestCaseAttribute("8", "Hoy", "10", "2", "Privado", "NA", "M-71310154", "Ninguno", "Huanuco-Leoncio-Rupa Rupa", "Av amazonas C9", "Lima-Lima-Lima", "Av San Juna C1", "Ingrese numero de placa", null)]
+        public async System.Threading.Tasks.Task ValidarEmisionDeGuiaDeRemision(string caso, string fecha_De_Inicio_Traslado, string peso_Bruto, string cantidad_Bultos, string tipo_Transporte, string transportista_Ruc, string numero_Licencia, string numero_Placa, string direccion_Origen, string detalle_Origen, string direccion_Destino, string detalle_Destino, string resultado_Esperado, string[] exampleTags)
         {
             string[] @__tags = new string[] {
                     "EmitirGuia"};
@@ -120,14 +130,15 @@ namespace SIGES3_0.Features.ComponentesReut
             argumentsOfScenario.Add("cantidad_bultos", cantidad_Bultos);
             argumentsOfScenario.Add("tipo_transporte", tipo_Transporte);
             argumentsOfScenario.Add("transportista_ruc", transportista_Ruc);
-            argumentsOfScenario.Add("dni_conductor", dni_Conductor);
             argumentsOfScenario.Add("numero_licencia", numero_Licencia);
             argumentsOfScenario.Add("numero_placa", numero_Placa);
             argumentsOfScenario.Add("direccion_origen", direccion_Origen);
+            argumentsOfScenario.Add("detalle_origen", detalle_Origen);
             argumentsOfScenario.Add("direccion_destino", direccion_Destino);
+            argumentsOfScenario.Add("detalle_destino", detalle_Destino);
             argumentsOfScenario.Add("resultado_esperado", resultado_Esperado);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Validar emision de guia de remision", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 12
+#line 15
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -140,43 +151,54 @@ this.ScenarioInitialize(scenarioInfo);
 #line 8
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 14
- await testRunner.WhenAsync("el usuario valida el destinatario autocompletado", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 15
- await testRunner.AndAsync(string.Format("el usuario ingresa fecha de traslado \'{0}\'", fecha_De_Inicio_Traslado), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
 #line 16
- await testRunner.AndAsync(string.Format("el usuario ingresa peso bruto \'{0}\'", peso_Bruto), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.GivenAsync("existe un pedido base para emitir guia con familia \'Azúcar\' concepto \'77512340011" +
+                        "15\' cantidad \'20\' cliente \'75971755\' entrega \'diferida\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 17
- await testRunner.AndAsync(string.Format("el usuario ingresa numero de bultos \'{0}\'", cantidad_Bultos), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.WhenAsync("el usuario abre el flujo de guia de remision con comprobante \'boleta de venta ele" +
+                        "ctronica\' serie \'B002\' cliente \'75971755\' entrega \'inmediata\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 18
- await testRunner.AndAsync(string.Format("el usuario selecciona transporte \'{0}\'", tipo_Transporte), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("el usuario valida el destinatario autocompletado", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 19
- await testRunner.AndAsync(string.Format("el usuario ingresa RUC transportista \'{0}\'", transportista_Ruc), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario ingresa fecha de traslado \'{0}\'", fecha_De_Inicio_Traslado), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 20
- await testRunner.AndAsync(string.Format("el usuario ingresa DNI conductor \'{0}\'", dni_Conductor), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario ingresa peso bruto \'{0}\'", peso_Bruto), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 21
- await testRunner.AndAsync(string.Format("el usuario ingresa licencia \'{0}\'", numero_Licencia), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario ingresa numero de bultos \'{0}\'", cantidad_Bultos), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 22
- await testRunner.AndAsync(string.Format("el usuario ingresa placa \'{0}\'", numero_Placa), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario selecciona transporte \'{0}\'", tipo_Transporte), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 23
- await testRunner.AndAsync(string.Format("el usuario selecciona direccion de origen \'{0}\'", direccion_Origen), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario ingresa RUC transportista \'{0}\'", transportista_Ruc), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 24
- await testRunner.AndAsync(string.Format("el usuario selecciona direccion de destino \'{0}\'", direccion_Destino), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario ingresa licencia \'{0}\'", numero_Licencia), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 25
- await testRunner.AndAsync("el usuario emite la guia", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario ingresa placa \'{0}\'", numero_Placa), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 26
+ await testRunner.AndAsync(string.Format("el usuario selecciona direccion de origen \'{0}\'", direccion_Origen), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 27
+ await testRunner.AndAsync(string.Format("el usuario selecciona detalle de direccion de origen \'{0}\'", detalle_Origen), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 28
+ await testRunner.AndAsync(string.Format("el usuario selecciona direccion de destino \'{0}\'", direccion_Destino), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 29
+ await testRunner.AndAsync(string.Format("el usuario selecciona detalle de direccion de destino \'{0}\'", detalle_Destino), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 30
+ await testRunner.AndAsync("el usuario emite la guia", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 31
  await testRunner.ThenAsync(string.Format("el sistema valida el resultado de la guia \'{0}\'", resultado_Esperado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

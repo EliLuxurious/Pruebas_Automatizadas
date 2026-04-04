@@ -111,7 +111,7 @@ namespace SIGES3_0.Features.Pedido
         [NUnit.Framework.TestCaseAttribute("2", "ninguno", "ninguno", "0", "false", "false", "false", "NA", "NA", "0", "75971755", "diferida", "Ningún producto seleccionado", null)]
         [NUnit.Framework.TestCaseAttribute("3", "Gaseosa", "7753234003313", "12", "true", "true", "true", "item", "$", "1", "75971755", "inmediata", "el pedido se guardo correctamente", null)]
         [NUnit.Framework.TestCaseAttribute("4", "Azúcar", "7751234001115", "20", "false", "false", "true", "global", "%", "10", "20542245671", "diferida", "el pedido se guardo correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("5", "Gaseosa", "7753234003313", "5000", "false", "false", "false", "NA", "NA", "0", "75971755", "inmediata", "muestra mensaje de inconsistencia", null)]
+        [NUnit.Framework.TestCaseAttribute("5", "Gaseosa", "7753234003313", "9500000", "false", "false", "false", "NA", "NA", "0", "75971755", "inmediata", "muestra mensaje de inconsistencia", null)]
         public async System.Threading.Tasks.Task RegistroDeNuevoPedido_CasosVariados(string caso, string familia, string concepto, string cantidad, string igv, string det_Unif, string descuento, string tipo_Descuento, string modo_Descuento, string valor_Descuento, string cliente, string tipo_Entrega, string resultado_Esperado, string[] exampleTags)
         {
             string[] @__tags = new string[] {
@@ -311,17 +311,17 @@ await this.FeatureBackgroundAsync();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Confirmar pedido Comprobantes - Casos variados")]
         [NUnit.Framework.CategoryAttribute("ConfirmarPedido")]
-        [NUnit.Framework.TestCaseAttribute("1", "false", "Azúcar", "7751234001115", "20", "20542245671", "diferida", "factura electronica", "NA", "20542245671", "inmediata", "true", "Hoy", "100", "10", "Publico", "20602945589", "NA", "NA", "NA", "Huanuco-Leoncio-Rupa Rupa", "Lima-Lima-Lima", "true", "Pedido confirmado correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("2", "false", "Azúcar", "7751234001115", "20", "20542245671", "diferida", "factura electronica", "NA", "75971755", "inmediata", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Para emitir Factura Electrónica, el cliente debe tener RUC (11 dígitos)", null)]
-        [NUnit.Framework.TestCaseAttribute("3", "false", "Azúcar", "7751234001115", "20", "20542245671", "diferida", "factura electronica", "NA", "20542245671", "diferida", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Pedido confirmado correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("4", "false", "Azúcar", "7751234001115", "20", "20542245671", "diferida", "factura electronica", "NA", "20542245671", "inmediata", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "false", "Monto insuficiente", null)]
-        [NUnit.Framework.TestCaseAttribute("5", "true", "Gaseosa", "7753234003320", "110", "00000000", "inmediata", "boleta de venta electronica", "B004", "75971635", "diferida", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Pedido confirmado correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("6", "false", "Azúcar", "7751234001115", "20", "20542245671", "diferida", "boleta de venta electronica", "B002", "00000000", "inmediata", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Pedido confirmado correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("7", "true", "Gaseosa", "7753234003320", "110", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Es necesario identificar al cliente, el total es mayor a S/.700", null)]
-        [NUnit.Framework.TestCaseAttribute("8", "false", "Azúcar", "7751234001115", "20", "20542245671", "diferida", "nota de venta", "NA", "75971755", "diferida", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Pedido confirmado correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("9", "false", "Azúcar", "7751234001115", "20", "20542245671", "diferida", "nota de venta", "NA", "20602945589", "inmediata", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Pedido confirmado correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("10", "false", "Azúcar", "7751234001115", "20", "20542245671", "diferida", "nota de venta", "NA", "20602945589", "inmediata", "false", "NA", "NA", "NA", "NA", "20602945589", "NA", "NA", "NA", "NA", "NA", "false", "Monto insuficiente", null)]
-        [NUnit.Framework.TestCaseAttribute("11", "false", "Azúcar", "7751234001115", "20", "20542245671", "diferida", "boleta de venta electronica", "NA", "00000000", "inmediata", "true", "Hoy", "100", "10", "Privado", "NA", "71310154", "M-71310154", "2770XS", "Arequipa-Arequipa-Arequipa", "Lima-Lima-Lima", "true", "Boton de guia de remision inhabilitado \"Para guia de remision Necesita identifica" +
+        [NUnit.Framework.TestCaseAttribute("1", "false", "Azúcar", "7751234001115", "10", "20542245671", "diferida", "factura electronica", "NA", "20542245671", "inmediata", "true", "Hoy", "100", "10", "Publico", "20602945589", "NA", "NA", "Huanuco-Leoncio-Rupa Rupa", "av amazonas", "Lima-Lima-Lima", "av brosil", "true", "Pedido confirmado correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("2", "false", "Azúcar", "7751234001115", "10", "20542245671", "diferida", "factura electronica", "NA", "75971755", "inmediata", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Para emitir Factura Electrónica, el cliente debe tener RUC (11 dígitos)", null)]
+        [NUnit.Framework.TestCaseAttribute("3", "false", "Azúcar", "7751234001115", "10", "20542245671", "diferida", "factura electronica", "NA", "20542245671", "diferida", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Pedido confirmado correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("4", "false", "Azúcar", "7751234001115", "10", "20542245671", "diferida", "factura electronica", "NA", "20542245671", "inmediata", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "false", "Monto insuficiente", null)]
+        [NUnit.Framework.TestCaseAttribute("5", "true", "Gaseosa", "7753234003320", "110", "00000000", "inmediata", "boleta de venta electronica", "B004", "75971635", "diferida", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Pedido confirmado correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("6", "false", "Azúcar", "7751234001115", "10", "20542245671", "diferida", "boleta de venta electronica", "B002", "00000000", "inmediata", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Pedido confirmado correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("7", "true", "Gaseosa", "7753234003320", "110", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Es necesario identificar al cliente, el total es mayor a S/.700", null)]
+        [NUnit.Framework.TestCaseAttribute("8", "false", "Azúcar", "7751234001115", "10", "20542245671", "diferida", "nota de venta", "NA", "75971755", "diferida", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Pedido confirmado correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("9", "false", "Azúcar", "7751234001115", "10", "20542245671", "diferida", "nota de venta", "NA", "20602945589", "inmediata", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Pedido confirmado correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("10", "false", "Azúcar", "7751234001115", "10", "20542245671", "diferida", "nota de venta", "NA", "20602945589", "inmediata", "false", "NA", "NA", "NA", "NA", "20602945589", "NA", "NA", "NA", "NA", "NA", "NA", "false", "Monto insuficiente", null)]
+        [NUnit.Framework.TestCaseAttribute("11", "false", "Azúcar", "7751234001115", "10", "20542245671", "diferida", "boleta de venta electronica", "NA", "00000000", "inmediata", "true", "Hoy", "100", "10", "Privado", "NA", "M-71310154", "2770XS", "Arequipa-Arequipa-Arequipa", "av arequipa", "Lima-Lima-Lima", "av la mariana", "true", "Boton de guia de remision inhabilitado \"Para guia de remision Necesita identifica" +
             "r al cliente con RUC o DNI\"", null)]
         public async System.Threading.Tasks.Task ConfirmarPedidoComprobantes_CasosVariados(
                     string caso, 
@@ -341,11 +341,12 @@ await this.FeatureBackgroundAsync();
                     string cantidad_Bultos, 
                     string tipo_Transporte, 
                     string transportista_Ruc, 
-                    string dni_Conductor, 
                     string numero_Licencia, 
                     string numero_Placa, 
                     string direccion_Origen, 
+                    string detalle_Origen, 
                     string direccion_Destino, 
+                    string detalle_Destino, 
                     string monto_Cubre_Total, 
                     string resultado_Esperado, 
                     string[] exampleTags)
@@ -375,11 +376,12 @@ await this.FeatureBackgroundAsync();
             argumentsOfScenario.Add("cantidad_bultos", cantidad_Bultos);
             argumentsOfScenario.Add("tipo_transporte", tipo_Transporte);
             argumentsOfScenario.Add("transportista_ruc", transportista_Ruc);
-            argumentsOfScenario.Add("dni_conductor", dni_Conductor);
             argumentsOfScenario.Add("numero_licencia", numero_Licencia);
             argumentsOfScenario.Add("numero_placa", numero_Placa);
             argumentsOfScenario.Add("direccion_origen", direccion_Origen);
+            argumentsOfScenario.Add("detalle_origen", detalle_Origen);
             argumentsOfScenario.Add("direccion_destino", direccion_Destino);
+            argumentsOfScenario.Add("detalle_destino", detalle_Destino);
             argumentsOfScenario.Add("monto_cubre_total", monto_Cubre_Total);
             argumentsOfScenario.Add("resultado_esperado", resultado_Esperado);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Confirmar pedido Comprobantes - Casos variados", null, tagsOfScenario, argumentsOfScenario, featureTags);
@@ -411,7 +413,7 @@ await this.FeatureBackgroundAsync();
 #line hidden
 #line 83
  await testRunner.AndAsync(string.Format("el usuario completa la guia de remision \'{0}\' \'{1}\' \'{2}\' \'{3}\' \'{4}\' \'{5}\' \'{6}\'" +
-                            " \'{7}\' \'{8}\' \'{9}\' \'{10}\'", guia_Remision, fecha_De_Inicio_Traslado, peso_Bruto, cantidad_Bultos, tipo_Transporte, transportista_Ruc, dni_Conductor, numero_Licencia, numero_Placa, direccion_Origen, direccion_Destino), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+                            " \'{7}\' \'{8}\' \'{9}\' \'{10}\' \'{11}\'", guia_Remision, fecha_De_Inicio_Traslado, peso_Bruto, cantidad_Bultos, tipo_Transporte, transportista_Ruc, numero_Licencia, numero_Placa, direccion_Origen, detalle_Origen, direccion_Destino, detalle_Destino), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 84
  await testRunner.AndAsync(string.Format("el usuario configura el pago \'efectivo\' \'{0}\'", monto_Cubre_Total), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -429,19 +431,19 @@ await this.FeatureBackgroundAsync();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Confirmar pedido con medios de pago - Casos variados")]
         [NUnit.Framework.CategoryAttribute("ConfirmarPedidoMediosDePago")]
-        [NUnit.Framework.TestCaseAttribute("1", "false", "Azúcar", "7751234001115", "20", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "contado", "false", "efectivo", "NA", "NA", "NA", "NA", "true", "NA", "Pedido confirmado correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("2", "false", "Azúcar", "7751234001115", "20", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "contado", "false", "efectivo", "NA", "NA", "NA", "NA", "false", "NA", "Monto insuficiente", null)]
-        [NUnit.Framework.TestCaseAttribute("3", "false", "Azúcar", "7751234001115", "20", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "contado", "false", "tarjeta_credito", "INTERBANK", "VISA", "NA", "458962", "true", "NA", "Pedido confirmado correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("4", "false", "Azúcar", "7751234001115", "20", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "contado", "false", "tarjeta_credito", "ninguno", "ninguno", "NA", "ninguno", "true", "NA", "Seleccione una entidad bancaria", null)]
-        [NUnit.Framework.TestCaseAttribute("5", "false", "Azúcar", "7751234001115", "20", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "contado", "false", "transferencia_fondos", "NA", "NA", "BCP|SOL|1912490779081", "458962", "true", "NA", "Pedido confirmado correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("6", "false", "Azúcar", "7751234001115", "20", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "contado", "false", "deposito_cuenta", "NA", "NA", "ninguno", "ninguno", "true", "NA", "Seleccione una cuenta bancaria", null)]
-        [NUnit.Framework.TestCaseAttribute("7", "false", "Azúcar", "7751234001115", "20", "75971755", "inmediata", "boleta de venta electronica", "B002", "75971755", "inmediata", "contado", "false", "puntos", "NA", "NA", "NA", "NA", "true", "NA", "Pedido confirmado correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("8", "false", "Azúcar", "7751234001115", "20", "75971751", "inmediata", "boleta de venta electronica", "B002", "75971751", "inmediata", "contado", "false", "puntos", "NA", "NA", "NA", "NA", "false", "NA", "Puntos insuficiente", null)]
-        [NUnit.Framework.TestCaseAttribute("9", "false", "Azúcar", "7751234001115", "20", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "contado", "false", "puntos", "NA", "NA", "NA", "NA", "NA", "NA", "Para el pago con puntos debe identificar al cliente", null)]
-        [NUnit.Framework.TestCaseAttribute("10", "false", "Azúcar", "7751234001115", "20", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "contado", "true", "efectivo, tarjeta_debito, deposito_cuenta", "YAPE", "VISA", "BCP", "31004542, 000744226861", "true", "NA", "Pedido confirmado correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("11", "false", "Azúcar", "7751234001115", "20", "75971755", "inmediata", "boleta de venta electronica", "B002", "75971755", "inmediata", "credito", "false", "efectivo", "NA", "NA", "NA", "NA", "NA", "2", "Pedido confirmado correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("12", "false", "Azúcar", "7751234001115", "20", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "credito", "false", "efectivo", "NA", "NA", "NA", "NA", "NA", "3", "Para dar a credito debe identificar al cliente", null)]
-        [NUnit.Framework.TestCaseAttribute("13", "false", "Azúcar", "7751234001115", "20", "75971755", "inmediata", "boleta de venta electronica", "B002", "75971755", "inmediata", "credito", "true", "tarjeta_credito, puntos", "INTERBANK", "VISA", "NA", "0030281", "true", "4", "Pedido confirmado correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("1", "false", "Azúcar", "7751234001115", "10", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "contado", "false", "efectivo", "NA", "NA", "NA", "NA", "true", "NA", "Pedido confirmado correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("2", "false", "Azúcar", "7751234001115", "10", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "contado", "false", "efectivo", "NA", "NA", "NA", "NA", "false", "NA", "Monto insuficiente", null)]
+        [NUnit.Framework.TestCaseAttribute("3", "false", "Azúcar", "7751234001115", "10", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "contado", "false", "tarjeta_credito", "INTERBANK", "VISA", "NA", "458962", "true", "NA", "Pedido confirmado correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("4", "false", "Azúcar", "7751234001115", "10", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "contado", "false", "tarjeta_debito", "ninguno", "ninguno", "NA", "ninguno", "true", "NA", "Seleccione una entidad bancaria", null)]
+        [NUnit.Framework.TestCaseAttribute("5", "false", "Azúcar", "7751234001115", "10", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "contado", "false", "transferencia_fondos", "NA", "NA", "BCP|SOL|1912490779081", "458962", "true", "NA", "Pedido confirmado correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("6", "false", "Azúcar", "7751234001115", "10", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "contado", "false", "deposito_cuenta", "NA", "NA", "ninguno", "ninguno", "true", "NA", "Seleccione una cuenta bancaria", null)]
+        [NUnit.Framework.TestCaseAttribute("7", "false", "Azúcar", "7751234001115", "10", "75971755", "inmediata", "boleta de venta electronica", "B002", "75971755", "inmediata", "contado", "false", "puntos", "NA", "NA", "NA", "NA", "true", "NA", "Pedido confirmado correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("8", "false", "Azúcar", "7751234001115", "10", "75971751", "inmediata", "boleta de venta electronica", "B002", "75971751", "inmediata", "contado", "false", "puntos", "NA", "NA", "NA", "NA", "false", "NA", "Puntos insuficiente", null)]
+        [NUnit.Framework.TestCaseAttribute("9", "false", "Azúcar", "7751234001115", "10", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "contado", "false", "puntos", "NA", "NA", "NA", "NA", "NA", "NA", "Para el pago con puntos debe identificar al cliente", null)]
+        [NUnit.Framework.TestCaseAttribute("10", "false", "Azúcar", "7751234001115", "10", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "contado", "true", "efectivo, tarjeta_debito, deposito_cuenta", "YAPE", "VISA", "BCP", "31004542, 000744226861", "true", "NA", "Pedido confirmado correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("11", "false", "Azúcar", "7751234001115", "10", "75971755", "inmediata", "boleta de venta electronica", "B002", "75971755", "inmediata", "credito", "false", "efectivo", "NA", "NA", "NA", "NA", "NA", "2", "Pedido confirmado correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("12", "false", "Azúcar", "7751234001115", "10", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "credito", "false", "efectivo", "NA", "NA", "NA", "NA", "NA", "3", "Para dar a credito debe identificar al cliente", null)]
+        [NUnit.Framework.TestCaseAttribute("13", "false", "Azúcar", "7751234001115", "10", "75971755", "inmediata", "boleta de venta electronica", "B002", "75971755", "inmediata", "credito", "true", "tarjeta_credito, puntos", "INTERBANK", "VISA", "NA", "0030281", "true", "4", "Pedido confirmado correctamente", null)]
         public async System.Threading.Tasks.Task ConfirmarPedidoConMediosDePago_CasosVariados(
                     string caso, 
                     string total_Mayor_700, 
@@ -524,7 +526,7 @@ await this.FeatureBackgroundAsync();
 #line hidden
 #line 110
  await testRunner.AndAsync("el usuario completa la guia de remision \'false\' \'NA\' \'NA\' \'NA\' \'NA\' \'NA\' \'NA\' \'NA" +
-                        "\' \'NA\' \'NA\' \'NA\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+                        "\' \'NA\' \'NA\' \'NA\' \'NA\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 111
  await testRunner.AndAsync(string.Format("el usuario configura los medios de pago \'{0}\' \'{1}\' \'{2}\' \'{3}\' \'{4}\' \'{5}\' \'{6}\'" +
