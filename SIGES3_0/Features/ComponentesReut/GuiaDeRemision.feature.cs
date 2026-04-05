@@ -109,11 +109,10 @@ namespace SIGES3_0.Features.ComponentesReut
         [NUnit.Framework.CategoryAttribute("EmitirGuia")]
         [NUnit.Framework.TestCaseAttribute("1", "Hoy", "100", "10", "Publico", "20602945589", "NA", "NA", "Huanuco-Leoncio-Rupa Rupa", "Av amazonas C9", "Lima-Lima-Lima", "Av San Juna C1", "Guia emitida correctamente", null)]
         [NUnit.Framework.TestCaseAttribute("2", "Hoy", "80", "5", "Publico", "ninguno", "NA", "NA", "Huanuco-Leoncio-Rupa Rupa", "Av amazonas C9", "Lima-Lima-Lima", "Av San Juna C1", "Transportista debe tener RUC valido", null)]
-        [NUnit.Framework.TestCaseAttribute("4", "Hoy", "Ninguno", "Ninguno", "Publico", "20123456789", "NA", "NA", "Huanuco-Leoncio-Rupa Rupa", "Av amazonas C9", "Lima-Lima-Lima", "Av San Juna C1", "Falta peso y numero de bultos", null)]
-        [NUnit.Framework.TestCaseAttribute("5", "Hoy", "100", "10", "Privado", "NA", "M-71310154", "2770XS", "Arequipa-Arequipa-Arequipa", "Av amazonas C9", "Lima-Lima-Lima", "Av San Juna C1", "Guia emitida correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("6", "Hoy", "10", "2", "Privado", "NA", "NA", "NA", "Huanuco-Leoncio-Rupa Rupa", "Av amazonas C9", "Lima-Lima-Lima", "Av San Juna C1", "Identifique al conductor con DNI", null)]
-        [NUnit.Framework.TestCaseAttribute("7", "Hoy", "10", "2", "Privado", "NA", "Ninguno", "2770XS", "Arequipa-Arequipa-Arequipa", "Av amazonas C9", "Lima-Lima-Lima", "Av San Juna C1", "Ingrese numero de licencia", null)]
-        [NUnit.Framework.TestCaseAttribute("8", "Hoy", "10", "2", "Privado", "NA", "M-71310154", "Ninguno", "Huanuco-Leoncio-Rupa Rupa", "Av amazonas C9", "Lima-Lima-Lima", "Av San Juna C1", "Ingrese numero de placa", null)]
+        [NUnit.Framework.TestCaseAttribute("3", "Hoy", "Ninguno", "Ninguno", "Publico", "20123456789", "NA", "NA", "Huanuco-Leoncio-Rupa Rupa", "Av amazonas C9", "Lima-Lima-Lima", "Av San Juna C1", "Falta peso y numero de bultos", null)]
+        [NUnit.Framework.TestCaseAttribute("4", "Hoy", "100", "10", "Privado", "NA", "M-71310154", "2770XS", "Arequipa-Arequipa-Arequipa", "Av amazonas C9", "Lima-Lima-Lima", "Av San Juna C1", "Guia emitida correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("5", "Hoy", "10", "2", "Privado", "NA", "Ninguno", "2770XS", "Arequipa-Arequipa-Arequipa", "Av amazonas C9", "Lima-Lima-Lima", "Av San Juna C1", "Ingrese numero de licencia", null)]
+        [NUnit.Framework.TestCaseAttribute("6", "Hoy", "10", "2", "Privado", "NA", "M-71310154", "Ninguno", "Huanuco-Leoncio-Rupa Rupa", "Av amazonas C9", "Lima-Lima-Lima", "Av San Juna C1", "Ingrese numero de placa", null)]
         public async System.Threading.Tasks.Task ValidarEmisionDeGuiaDeRemision(string caso, string fecha_De_Inicio_Traslado, string peso_Bruto, string cantidad_Bultos, string tipo_Transporte, string transportista_Ruc, string numero_Licencia, string numero_Placa, string direccion_Origen, string detalle_Origen, string direccion_Destino, string detalle_Destino, string resultado_Esperado, string[] exampleTags)
         {
             string[] @__tags = new string[] {

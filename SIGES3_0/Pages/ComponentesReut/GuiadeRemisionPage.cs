@@ -135,69 +135,10 @@ namespace SIGES3_0.Pages.Componentes
                 .Replace("Á", "A").Replace("É", "E").Replace("Í", "I")
                 .Replace("Ó", "O").Replace("Ú", "U").Replace("Ñ", "N");
 
-        //    private void SeleccionarOpcionSelect(By locator, string texto)
-        //    {
-        //        var select = EsperarVisible(locator);
-        //        ((IJavaScriptExecutor)driver)
-        //            .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", select);
-        //        Thread.Sleep(200);
-
-        //        var partes = NormalizarTexto(texto)
-        //            .Split('-')
-        //            .Select(p => p.Trim())
-        //            .Where(p => !string.IsNullOrWhiteSpace(p))
-        //            .ToArray();
-
-        //        Console.WriteLine($"[Ubigeo] Buscando: {string.Join(" | ", partes)}");
-
-        //        // LOG: mostrar opciones que contienen la primera parte para debug
-        //        var opcionesDebug = (System.Collections.ObjectModel.ReadOnlyCollection<object>?)
-        //            ((IJavaScriptExecutor)driver).ExecuteScript(@"
-        //        var opts = arguments[0].options;
-        //        var parte = arguments[1];
-        //        var resultado = [];
-        //        for (var i = 0; i < opts.length; i++) {
-        //            var t = opts[i].text.toUpperCase()
-        //                .replace(/Á/g,'A').replace(/É/g,'E').replace(/Í/g,'I')
-        //                .replace(/Ó/g,'O').replace(/Ú/g,'U').replace(/Ñ/g,'N');
-        //            if (t.indexOf(parte) >= 0) resultado.push(opts[i].text);
-        //            if (resultado.length >= 10) break;
-        //        }
-        //        return resultado;
-        //    ", select, partes[0]);
-
-        //        if (opcionesDebug != null)
-        //        {
-        //            Console.WriteLine($"[Ubigeo] Opciones con '{partes[0]}':");
-        //            foreach (var op in opcionesDebug)
-        //                Console.WriteLine($"  -> '{op}'");
-        //        }
-
-        //        // Búsqueda flexible: todas las partes deben estar CONTENIDAS (no exactas)
-        //        var value = (string?)((IJavaScriptExecutor)driver).ExecuteScript(@"
-        //    var opts = arguments[0].options;
-        //    var partes = arguments[1];
-        //    for (var i = 0; i < opts.length; i++) {
-        //        var t = opts[i].text.toUpperCase()
-        //            .replace(/Á/g,'A').replace(/É/g,'E').replace(/Í/g,'I')
-        //            .replace(/Ó/g,'O').replace(/Ú/g,'U').replace(/Ñ/g,'N');
-        //        var ok = partes.every(function(p) { return t.indexOf(p) >= 0; });
-        //        if (ok) return opts[i].value;
-        //    }
-        //    return null;
-        //", select, partes);
-
-        //        if (value == null)
-        //            throw new NoSuchElementException($"No se encontró ubigeo '{texto}'.");
-
-        //        Console.WriteLine($"[Ubigeo] Value encontrado: '{value}'");
-
-        //        new SelectElement(select).SelectByValue(value);
-        //        ((IJavaScriptExecutor)driver).ExecuteScript(
-        //            "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));", select);
-
-        //        Thread.Sleep(500);
-        //    }
+        // Para almacenar temporalmente mensajes de error detectados antes de intentar guardar la guía
+        private string? mensajeErrorGuia = null;
+        public string? ObtenerErrorGuia() => mensajeErrorGuia;
+        public void LimpiarErrorGuia() => mensajeErrorGuia = null;
 
         private void SeleccionarOpcionSelect(By locator, string texto)
         {
@@ -475,66 +416,119 @@ namespace SIGES3_0.Pages.Componentes
             LimpiarYEscribir(txtDetalleDestino, detalle.Trim());
         }
 
-        //public void GuardarGuia()
-        //{
-        //    var boton = EsperarClickeable(btnAceptar);
-        //    ((IJavaScriptExecutor)driver)
-        //        .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", boton);
-        //    Thread.Sleep(200);
+        private bool EstaDeshabilitado(IWebElement element)
+        {
+            try
+            {
+                var disabledAttr = (element.GetAttribute("disabled") ?? "").Trim().ToLower();
+                var ariaDisabled = (element.GetAttribute("aria-disabled") ?? "").Trim().ToLower();
+                var clase = (element.GetAttribute("class") ?? "").Trim().ToLower();
 
-        //    try { boton.Click(); }
-        //    catch { ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", boton); }
-
-        //    Thread.Sleep(1200);
-        //}
+                return disabledAttr == "true" ||
+                       disabledAttr == "disabled" ||
+                       ariaDisabled == "true" ||
+                       clase.Contains("disabled");
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
         public void GuardarGuia()
         {
-            // Primero verificar si hay error de transportista visible — no intentar Aceptar
+            LimpiarErrorGuia();
+
+            // Caso negativo de transportista público inválido
             if (ExisteVisible(mensajeTransportistaInvalido, 2))
             {
                 Console.WriteLine("[Guia] Error transportista detectado, no se hace click en Aceptar.");
+                mensajeErrorGuia = "Transportista debe tener RUC valido";
                 return;
             }
 
-            var boton = EsperarClickeable(btnAceptar);
+            Thread.Sleep(800);
+
+            var botones = driver.FindElements(btnAceptar)
+                .Where(e => e.Displayed)
+                .ToList();
+
+            if (!botones.Any())
+            {
+                Console.WriteLine("[Guia] Botón Aceptar no visible. Se continúa para validar mensaje.");
+                return;
+            }
+
+            var boton = botones.First();
+
             ((IJavaScriptExecutor)driver)
                 .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", boton);
-            Thread.Sleep(200);
 
-            try { boton.Click(); }
-            catch { ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", boton); }
+            Thread.Sleep(300);
+
+            // Si está deshabilitado, no hacemos timeout; dejamos que el Then lea el resultado
+            if (EstaDeshabilitado(boton) || !boton.Enabled)
+            {
+                Console.WriteLine("[Guia] Botón Aceptar deshabilitado. Se valida mensaje del formulario.");
+                return;
+            }
+
+            try
+            {
+                if (boton.Enabled)
+                {
+                    boton.Click();
+                }
+                else
+                {
+                    Console.WriteLine("[Guia] Botón Aceptar no habilitado.");
+                    return;
+                }
+            }
+            catch
+            {
+                try
+                {
+                    ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", boton);
+                }
+                catch
+                {
+                    Console.WriteLine("[Guia] No se pudo hacer click en Aceptar. Se continúa con validación.");
+                    return;
+                }
+            }
 
             Thread.Sleep(1200);
         }
 
         public string ObtenerResultadoGuia()
         {
+            if (!string.IsNullOrWhiteSpace(mensajeErrorGuia))
+                return mensajeErrorGuia!;
+
             if (ExisteVisible(mensajeTransportistaInvalido, 2))
                 return "Transportista debe tener RUC valido";
 
-            if (!ModalSigueAbierto())
-                return "Guia emitida correctamente";
+            bool hayBanner = ExisteVisible(bannerCamposRequeridos, 2) ||
+                             ExisteVisible(mensajeCampoObligatorio, 2);
 
-            bool hayBanner = ExisteVisible(bannerCamposRequeridos, 1) ||
-                             ExisteVisible(mensajeCampoObligatorio, 1);
+            string fecha = ValorCampo(txtFechaTraslado);
+            string peso = ValorCampo(txtPesoBruto);
+            string bultos = ValorCampo(txtNumeroBultos);
+            string licencia = ValorCampo(txtNumeroLicencia);
+            string placa = ValorCampo(txtNumeroPlaca);
 
-            if (hayBanner)
+            bool esPrivado = false;
+            try
             {
-                string fecha = ValorCampo(txtFechaTraslado);
-                string peso = ValorCampo(txtPesoBruto);
-                string bultos = ValorCampo(txtNumeroBultos);
-                string licencia = ValorCampo(txtNumeroLicencia);
-                string placa = ValorCampo(txtNumeroPlaca);
+                var sel = new SelectElement(EsperarVisible(cboModalidadTransporte));
+                esPrivado = NormalizarTexto(sel.SelectedOption.Text).Contains("PRIVADO");
+            }
+            catch { }
 
-                bool esPrivado = false;
-                try
-                {
-                    var sel = new SelectElement(EsperarVisible(cboModalidadTransporte));
-                    esPrivado = NormalizarTexto(sel.SelectedOption.Text).Contains("PRIVADO");
-                }
-                catch { }
-
+            // Aunque no aparezca banner, si el modal sigue abierto y faltan campos, devolvemos el motivo
+            if (ModalSigueAbierto() || hayBanner)
+            {
                 if (string.IsNullOrWhiteSpace(fecha))
                     return "Registre la fecha de inicio";
 
@@ -548,17 +542,96 @@ namespace SIGES3_0.Pages.Componentes
                 if (esPrivado && string.IsNullOrWhiteSpace(placa))
                     return "Ingrese numero de placa";
 
-                return "Completar los campos requeridos correctamente";
+                if (hayBanner)
+                    return "Completar los campos requeridos correctamente";
             }
+
+            if (!ModalSigueAbierto())
+                return "Guia emitida correctamente";
 
             try
             {
                 var mensaje = ObtenerVisible(lblMensaje);
-                if (mensaje != null) return mensaje.Text.Trim();
+                if (mensaje != null)
+                    return mensaje.Text.Trim();
             }
             catch { }
 
             return string.Empty;
         }
+
+        //public void GuardarGuia()
+        //{
+        //    // Verificar error de transportista antes de intentar Aceptar
+        //    if (ExisteVisible(mensajeTransportistaInvalido, 2))
+        //    {
+        //        Console.WriteLine("[Guia] Error transportista detectado, no se hace click en Aceptar.");
+        //        mensajeErrorGuia = "Transportista debe tener RUC valido";
+        //        return;
+        //    }
+
+        //    var boton = EsperarClickeable(btnAceptar);
+        //    ((IJavaScriptExecutor)driver)
+        //        .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", boton);
+        //    Thread.Sleep(200);
+
+        //    try { boton.Click(); }
+        //    catch { ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", boton); }
+
+        //    Thread.Sleep(1200);
+        //}
+
+        //public string ObtenerResultadoGuia()
+        //{
+        //    if (ExisteVisible(mensajeTransportistaInvalido, 2))
+        //        return "Transportista debe tener RUC valido";
+
+        //    if (!ModalSigueAbierto())
+        //        return "Guia emitida correctamente";
+
+        //    bool hayBanner = ExisteVisible(bannerCamposRequeridos, 1) ||
+        //                     ExisteVisible(mensajeCampoObligatorio, 1);
+
+        //    if (hayBanner)
+        //    {
+        //        string fecha = ValorCampo(txtFechaTraslado);
+        //        string peso = ValorCampo(txtPesoBruto);
+        //        string bultos = ValorCampo(txtNumeroBultos);
+        //        string licencia = ValorCampo(txtNumeroLicencia);
+        //        string placa = ValorCampo(txtNumeroPlaca);
+
+        //        bool esPrivado = false;
+        //        try
+        //        {
+        //            var sel = new SelectElement(EsperarVisible(cboModalidadTransporte));
+        //            esPrivado = NormalizarTexto(sel.SelectedOption.Text).Contains("PRIVADO");
+        //        }
+        //        catch { }
+
+        //        if (string.IsNullOrWhiteSpace(fecha))
+        //            return "Registre la fecha de inicio";
+
+        //        if ((string.IsNullOrWhiteSpace(peso) || peso == "0") &&
+        //            (string.IsNullOrWhiteSpace(bultos) || bultos == "0"))
+        //            return "Falta peso y numero de bultos";
+
+        //        if (esPrivado && string.IsNullOrWhiteSpace(licencia))
+        //            return "Ingrese numero de licencia";
+
+        //        if (esPrivado && string.IsNullOrWhiteSpace(placa))
+        //            return "Ingrese numero de placa";
+
+        //        return "Completar los campos requeridos correctamente";
+        //    }
+
+        //    try
+        //    {
+        //        var mensaje = ObtenerVisible(lblMensaje);
+        //        if (mensaje != null) return mensaje.Text.Trim();
+        //    }
+        //    catch { }
+
+        //    return string.Empty;
+        //}
     }
 }

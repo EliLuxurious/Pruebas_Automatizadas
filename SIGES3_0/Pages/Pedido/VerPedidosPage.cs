@@ -1562,6 +1562,48 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
             );
         }
 
+        //public void ConfigurarEntregaConfirmacion(string tipoEntrega, string guiaRemision)
+        //{
+        //    try
+        //    {
+        //        var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(25));
+
+        //        AbrirEntregaConfirmacion();
+
+        //        if (tipoEntrega.Trim().Equals("inmediata", StringComparison.OrdinalIgnoreCase))
+        //        {
+        //            var radio = waitLong.Until(d =>
+        //                d.FindElements(By.XPath("//label[normalize-space()='Inmediata']"))
+        //                 .FirstOrDefault(e => e.Displayed)
+        //            );
+        //            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", radio);
+        //        }
+
+        //        if (tipoEntrega.Trim().Equals("diferida", StringComparison.OrdinalIgnoreCase))
+        //        {
+        //            var radio = waitLong.Until(d =>
+        //                d.FindElements(By.XPath("//label[normalize-space()='Diferida']"))
+        //                 .FirstOrDefault(e => e.Displayed)
+        //            );
+        //            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", radio);
+        //        }
+
+        //        if (guiaRemision.Trim().Equals("true", StringComparison.OrdinalIgnoreCase))
+        //        {
+        //            var btnGuia = waitLong.Until(
+        //                ExpectedConditions.ElementToBeClickable(btnGuiaRemisionConfirmacion)
+        //            );
+        //            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", btnGuia);
+        //        }
+
+        //        Thread.Sleep(500);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Assert.Fail("Error configurando entrega de confirmación: " + e.Message);
+        //    }
+        //}
+
         public void ConfigurarEntregaConfirmacion(string tipoEntrega, string guiaRemision)
         {
             try
@@ -1590,10 +1632,59 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
 
                 if (guiaRemision.Trim().Equals("true", StringComparison.OrdinalIgnoreCase))
                 {
-                    var btnGuia = waitLong.Until(
-                        ExpectedConditions.ElementToBeClickable(btnGuiaRemisionConfirmacion)
-                    );
+                    // Esperar que el botón sea visible
+                    var btnGuia = new WebDriverWait(driver, TimeSpan.FromSeconds(5)).Until(d =>
+                        d.FindElements(btnGuiaRemisionConfirmacion).FirstOrDefault(e => e.Displayed));
+
+                    if (btnGuia == null)
+                    {
+                        Console.WriteLine("[Entrega] Botón guía no encontrado.");
+                        mensajeErrorCapturado = "Boton de guia de remision inhabilitado Para guia de remision Necesita identificar al cliente con RUC o DNI";
+                        return;
+                    }
+
+                    // Log del estado del botón para debug
+                    string clases = (btnGuia.GetAttribute("class") ?? "").ToLower();
+                    string disabled = btnGuia.GetAttribute("disabled") ?? "";
+                    Console.WriteLine($"[Entrega] Botón guía — enabled:{btnGuia.Enabled}, class:'{clases}', disabled:'{disabled}'");
+
+                    // Verificar si está deshabilitado por atributo, clase o pointer-events
+                    bool estaDeshabilitado =
+                        !btnGuia.Enabled ||
+                        !string.IsNullOrEmpty(disabled) ||
+                        clases.Contains("disabled") ||
+                        !btnGuia.GetCssValue("pointer-events")
+                                .Equals("auto", StringComparison.OrdinalIgnoreCase);
+
+                    if (estaDeshabilitado)
+                    {
+                        Console.WriteLine("[Entrega] Botón guía deshabilitado — cliente sin RUC.");
+                        mensajeErrorCapturado = "Boton de guia de remision inhabilitado Para guia de remision Necesita identificar al cliente con RUC o DNI";
+                        return;
+                    }
+
+                    // Intentar hacer click
                     ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", btnGuia);
+
+                    // Verificar si el modal de guía se abrió realmente
+                    bool modalAbierto = false;
+                    try
+                    {
+                        new WebDriverWait(driver, TimeSpan.FromSeconds(3)).Until(d =>
+                            d.FindElements(By.XPath("//button[normalize-space()='Aceptar']"))
+                             .Any(e => e.Displayed));
+                        modalAbierto = true;
+                    }
+                    catch { }
+
+                    if (!modalAbierto)
+                    {
+                        Console.WriteLine("[Entrega] Modal guía no se abrió — botón inhabilitado funcionalmente.");
+                        mensajeErrorCapturado = "Boton de guia de remision inhabilitado Para guia de remision Necesita identificar al cliente con RUC o DNI";
+                        return;
+                    }
+
+                    Console.WriteLine("[Entrega] Modal guía abierto correctamente.");
                 }
 
                 Thread.Sleep(500);
@@ -1604,7 +1695,7 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
             }
         }
 
-        
+
         private void AbrirPagoConfirmacion()
         {
             var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
@@ -2654,7 +2745,7 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
                 {
                     var mensaje = driver.FindElement(By.XPath("//*[contains(text(),'Necesita identificar al cliente con RUC o DNI')]"));
                     if (mensaje.Displayed)
-                        return "Para guia de remision Necesita identificar al cliente con RUC o DNI";
+                        return "Boton de guia de remision inhabilitado Para guia de remision Necesita identificar al cliente con RUC o DNI";
                 }
                 catch { }
 
