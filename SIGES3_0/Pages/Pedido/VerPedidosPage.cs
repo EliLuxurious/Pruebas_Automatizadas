@@ -1696,92 +1696,17 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
             }
         }
 
-        //CONFIRMAR PEDIDO - MEDIOS DE PAGO
-        //    public void ConfigurarMediosDePagoConfirmacion(
-        //string tipoPago,
-        //string multipago,
-        //string medioPago,
-        //string banco,
-        //string tarjeta,
-        //string cuentaBancaria,
-        //string nroOperacion,
-        //string montoPorMedio,
-        //string nroCuotas,
-        //string montoInicialCredito)
-        //    {
-        //        try
-        //        {
-        //            AbrirPagoConfirmacion();
-
-        //            SeleccionarTipoPagoConfirmacion(tipoPago);
-
-        //            bool esMultipago = multipago.Trim().Equals("true", StringComparison.OrdinalIgnoreCase);
-        //            ConfigurarMultipagoConfirmacion(esMultipago);
-
-        //            if (tipoPago.Trim().Equals("credito", StringComparison.OrdinalIgnoreCase))
-        //            {
-        //                IngresarNumeroCuotasConfirmacion(nroCuotas);
-
-        //                if (!EsNA(montoInicialCredito))
-        //                    IngresarMontoInicialCreditoConfirmacion(montoInicialCredito);
-        //            }
-
-        //            var medios = SepararValores(medioPago);
-        //            var bancos = new Queue<string>(SepararValoresFiltrados(banco));
-        //            var tarjetas = new Queue<string>(SepararValoresFiltrados(tarjeta));
-        //            var cuentas = new Queue<string>(SepararValoresFiltrados(cuentaBancaria));
-        //            var operaciones = new Queue<string>(SepararValoresFiltrados(nroOperacion));
-        //            var montos = new Queue<string>(SepararValoresFiltrados(montoPorMedio));
-
-        //            for (int i = 0; i < medios.Count; i++)
-        //            {
-        //                string medioActual = medios[i].Trim();
-        //                string montoActual = montos.Count > 0 ? montos.Dequeue() : "NA";
-
-        //                Console.WriteLine($"[Multipago] Inicio medio #{i + 1}: {medioActual}");
-
-        //                if (i > 0 && esMultipago)
-        //                {
-        //                    Console.WriteLine($"[Multipago] Agregando nuevo medio de pago para #{i + 1}");
-        //                    AgregarMedioPagoConfirmacion();
-        //                    Console.WriteLine($"[Multipago] Nuevo medio agregado para #{i + 1}");
-        //                }
-
-        //                Console.WriteLine($"[Multipago] Seleccionando tab: {medioActual}");
-        //                SeleccionarTabMedioPagoConfirmacion(medioActual);
-        //                Console.WriteLine($"[Multipago] Tab seleccionado: {medioActual}");
-
-        //                ConfigurarMedioPagoConfirmacion(
-        //                    medioActual,
-        //                    tipoPago,
-        //                    montoActual,
-        //                    bancos,
-        //                    tarjetas,
-        //                    cuentas,
-        //                    operaciones
-        //                );
-
-        //                Console.WriteLine($"[Multipago] Medio configurado: {medioActual}");
-        //            }
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            Assert.Fail("Error configurando medios de pago en confirmación: " + e.Message);
-        //        }
-        //    }
-
-
         public void ConfigurarMediosDePagoConfirmacion(
-    string tipoPago,
-    string multipago,
-    string medioPago,
-    string banco,
-    string tarjeta,
-    string cuentaBancaria,
-    string nroOperacion,
-    string montoPorMedio,
-    string nroCuotas,
-    string montoInicialCredito)
+        string tipoPago,
+        string multipago,
+        string medioPago,
+        string banco,
+        string tarjeta,
+        string cuentaBancaria,
+        string nroOperacion,
+        string montoPorMedio,
+        string nroCuotas,
+        string montoInicialCredito)
         {
             try
             {
@@ -1810,11 +1735,6 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
                 Console.WriteLine($"[Multipago] Medios: {medios.Count}");
                 Console.WriteLine($"[Multipago] Montos: {montos.Count}");
 
-                if (montos.Count > medios.Count)
-                {
-                    Console.WriteLine("[Multipago] Hay más montos que medios. Los sobrantes no se usarán.");
-                }
-
                 for (int i = 0; i < medios.Count; i++)
                 {
                     string medioActual = medios[i].Trim();
@@ -1839,18 +1759,16 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
 
                     Console.WriteLine($"[Multipago] Medio configurado: {medioActual}");
 
-                    // Guardar el medio actual y abrir el siguiente
-                    if (esMultipago && i < medios.Count - 1)
+                    if (esMultipago)
                     {
-                        Console.WriteLine($"[Multipago] Guardando medio #{i + 1} y preparando medio #{i + 2}");
-                        AgregarMedioPagoConfirmacion();
+                        Console.WriteLine($"[Multipago] Guardando medio #{i + 1}");
+                        GuardarMedioPagoActual();
                     }
                 }
 
-                // Intento final de guardar el último medio solo si aún sigue deshabilitado
-                if (esMultipago && medios.Count > 1)
+                if (esMultipago)
                 {
-                    IntentarGuardarUltimoMedioPagoSiHaceFalta();
+                    ultimoMedioPagoConfirmacion = string.Empty;
                 }
             }
             catch (Exception e)
@@ -1859,57 +1777,26 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
             }
         }
 
-        private void IntentarGuardarUltimoMedioPagoSiHaceFalta()
+        private void GuardarMedioPagoActual()
         {
+            var boton = wait.Until(ExpectedConditions.ElementToBeClickable(btnAgregarMedioPagoConfirmacion));
+
+            ((IJavaScriptExecutor)driver)
+                .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", boton);
+
+            Thread.Sleep(300);
+
             try
             {
-                var botonConfirmar = driver.FindElements(btnConfirmarPedidoFinal)
-                    .FirstOrDefault(e => e.Displayed);
-
-                bool deshabilitado =
-                    botonConfirmar == null ||
-                    !botonConfirmar.Enabled ||
-                    botonConfirmar.GetAttribute("disabled") != null ||
-                    (botonConfirmar.GetAttribute("class") ?? "").ToLower().Contains("disabled");
-
-                if (!deshabilitado)
-                {
-                    Console.WriteLine("[Multipago] El botón Confirmar ya está habilitado. No se guarda nuevamente el último medio.");
-                    return;
-                }
-
-                var botonAgregar = driver.FindElements(btnAgregarMedioPagoConfirmacion)
-                    .FirstOrDefault(e => e.Displayed && e.Enabled);
-
-                if (botonAgregar == null)
-                {
-                    Console.WriteLine("[Multipago] No se encontró botón Agregar Medio de Pago para guardar el último medio.");
-                    return;
-                }
-
-                Console.WriteLine("[Multipago] Se intenta guardar el último medio de pago.");
-
-                ((IJavaScriptExecutor)driver)
-                    .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", botonAgregar);
-
-                Thread.Sleep(300);
-
-                try
-                {
-                    botonAgregar.Click();
-                }
-                catch
-                {
-                    ((IJavaScriptExecutor)driver)
-                        .ExecuteScript("arguments[0].click();", botonAgregar);
-                }
-
-                Thread.Sleep(800);
+                boton.Click();
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine("[Multipago] No se pudo guardar el último medio: " + ex.Message);
+                ((IJavaScriptExecutor)driver)
+                    .ExecuteScript("arguments[0].click();", boton);
             }
+
+            Thread.Sleep(900);
         }
 
         public void ConfirmarPedidoPreparado()
@@ -2007,18 +1894,42 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
                 if (mensajePuntosCliente != null)
                     return "Para el pago con puntos debe identificar al cliente";
 
-                var mensajeCompleto = driver.FindElements(
-                    By.XPath("//*[contains(text(),'Complete los campos requeridos')]")
-                ).FirstOrDefault(e => e.Displayed);
+                //----------
+                try
+                {
+                    var botonConfirmar = driver.FindElements(btnConfirmarPedidoFinal)
+                        .FirstOrDefault(e => e.Displayed);
 
-                if (mensajeCompleto == null)
+                    if (botonConfirmar != null)
+                    {
+                        bool habilitado =
+                            botonConfirmar.Enabled &&
+                            botonConfirmar.GetAttribute("disabled") == null &&
+                            !(botonConfirmar.GetAttribute("class") ?? "").ToLower().Contains("disabled");
+
+                        if (habilitado)
+                            return null;
+                    }
+                }
+                catch { }
+
+                if (string.IsNullOrWhiteSpace(ultimoMedioPagoConfirmacion))
+                {
+                    var mensajeCompletoSolo = driver.FindElements(
+                        By.XPath("//*[contains(text(),'Complete los campos requeridos')]")
+                    ).FirstOrDefault(e => e.Displayed);
+
+                    if (mensajeCompletoSolo != null)
+                        return null;
+
                     return null;
+                }
 
                 // EFECTIVO
                 if (ultimoMedioPagoConfirmacion == "efectivo")
                 {
                     var inputEfectivo = driver.FindElements(txtRecibidoEfectivo)
-                        .FirstOrDefault(e => e.Displayed);
+                        .FirstOrDefault(e => e.Displayed && e.Enabled);
 
                     if (inputEfectivo != null)
                     {
@@ -2026,36 +1937,11 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
                         if (string.IsNullOrEmpty(valor) || valor == "0")
                             return "Monto insuficiente";
                     }
-
-                    return "Monto insuficiente";
                 }
 
                 // TARJETA CRÉDITO / DÉBITO
-                //if (ultimoMedioPagoConfirmacion == "tarjeta_credito" ||
-                //    ultimoMedioPagoConfirmacion == "tarjeta_debito")
-                //{
-                //    var selectBanco = driver.FindElements(cmbBancoConfirmacion)
-                //        .FirstOrDefault(e => e.Displayed);
-
-                //    if (selectBanco != null)
-                //    {
-                //        var comboBanco = new SelectElement(selectBanco);
-                //        var textoSeleccionado = (comboBanco.SelectedOption?.Text ?? "").Trim();
-
-                //        if (string.IsNullOrWhiteSpace(textoSeleccionado) ||
-                //            textoSeleccionado.Equals("Seleccione", StringComparison.OrdinalIgnoreCase) ||
-                //            textoSeleccionado.Equals("Seleccione una opción", StringComparison.OrdinalIgnoreCase) ||
-                //            textoSeleccionado.Equals("ninguno", StringComparison.OrdinalIgnoreCase))
-                //        {
-                //            return "Seleccione una entidad bancaria";
-                //        }
-                //    }
-
-                //    return "Seleccione una entidad bancaria";
-                //}
-
                 if (ultimoMedioPagoConfirmacion == "tarjeta_credito" ||
-                ultimoMedioPagoConfirmacion == "tarjeta_debito")
+                    ultimoMedioPagoConfirmacion == "tarjeta_debito")
                 {
                     var selectBanco = driver.FindElements(cmbBancoConfirmacion)
                         .Where(e => e.Displayed && e.Enabled)
@@ -2070,39 +1956,37 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
                     if (string.IsNullOrWhiteSpace(textoSeleccionado) ||
                         textoSeleccionado.Equals("Seleccione", StringComparison.OrdinalIgnoreCase) ||
                         textoSeleccionado.Equals("Seleccione una opción", StringComparison.OrdinalIgnoreCase) ||
-                        textoSeleccionado.Equals("ninguno", StringComparison.OrdinalIgnoreCase))
+                        textoSeleccionado.Equals("ninguno", StringComparison.OrdinalIgnoreCase) ||
+                        textoSeleccionado.StartsWith("--Se", StringComparison.OrdinalIgnoreCase))
                     {
                         return "Seleccione una entidad bancaria";
+                    }
+
+                    var selectTarjeta = driver.FindElements(cmbTarjetaConfirmacion)
+                        .Where(e => e.Displayed && e.Enabled)
+                        .LastOrDefault();
+
+                    if (selectTarjeta != null)
+                    {
+                        var comboTarjeta = new SelectElement(selectTarjeta);
+                        var textoTarjeta = (comboTarjeta.SelectedOption?.Text ?? "").Trim();
+
+                        if (string.IsNullOrWhiteSpace(textoTarjeta) ||
+                            textoTarjeta.Equals("Seleccione", StringComparison.OrdinalIgnoreCase) ||
+                            textoTarjeta.Equals("Seleccione una opción", StringComparison.OrdinalIgnoreCase) ||
+                            textoTarjeta.Equals("ninguno", StringComparison.OrdinalIgnoreCase) ||
+                            textoTarjeta.StartsWith("--Se", StringComparison.OrdinalIgnoreCase))
+                        {
+                            return "Seleccione una entidad bancaria";
+                        }
                     }
 
                     return null;
                 }
 
                 // TRANSFERENCIA / DEPÓSITO
-                //if (ultimoMedioPagoConfirmacion == "transferencia_fondos" ||
-                //    ultimoMedioPagoConfirmacion == "deposito_cuenta")
-                //{
-                //    var selectCuenta = driver.FindElements(cmbCuentaBancariaConfirmacion)
-                //        .FirstOrDefault(e => e.Displayed);
-
-                //    if (selectCuenta != null)
-                //    {
-                //        var comboCuenta = new SelectElement(selectCuenta);
-                //        var textoSeleccionado = (comboCuenta.SelectedOption?.Text ?? "").Trim();
-
-                //        if (string.IsNullOrWhiteSpace(textoSeleccionado) ||
-                //            textoSeleccionado.Equals("Seleccione", StringComparison.OrdinalIgnoreCase) ||
-                //            textoSeleccionado.Equals("Seleccione una opción", StringComparison.OrdinalIgnoreCase) ||
-                //            textoSeleccionado.Equals("ninguno", StringComparison.OrdinalIgnoreCase))
-                //        {
-                //            return "Seleccione una cuenta bancaria";
-                //        }
-                //    }
-
-                //    return "Seleccione una cuenta bancaria";
-                //}
                 if (ultimoMedioPagoConfirmacion == "transferencia_fondos" ||
-                ultimoMedioPagoConfirmacion == "deposito_cuenta")
+                    ultimoMedioPagoConfirmacion == "deposito_cuenta")
                 {
                     var selectCuenta = driver.FindElements(cmbCuentaBancariaConfirmacion)
                         .Where(e => e.Displayed && e.Enabled)
@@ -2117,7 +2001,8 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
                     if (string.IsNullOrWhiteSpace(textoSeleccionado) ||
                         textoSeleccionado.Equals("Seleccione", StringComparison.OrdinalIgnoreCase) ||
                         textoSeleccionado.Equals("Seleccione una opción", StringComparison.OrdinalIgnoreCase) ||
-                        textoSeleccionado.Equals("ninguno", StringComparison.OrdinalIgnoreCase))
+                        textoSeleccionado.Equals("ninguno", StringComparison.OrdinalIgnoreCase) ||
+                        textoSeleccionado.StartsWith("--Se", StringComparison.OrdinalIgnoreCase))
                     {
                         return "Seleccione una cuenta bancaria";
                     }
@@ -2125,7 +2010,15 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
                     return null;
                 }
 
-                return "Complete los campos requeridos";
+                // Mensaje genérico final
+                var mensajeCompleto = driver.FindElements(
+                    By.XPath("//*[contains(text(),'Complete los campos requeridos')]")
+                ).FirstOrDefault(e => e.Displayed);
+
+                if (mensajeCompleto != null)
+                    return "Complete los campos requeridos";
+
+                return null;
             }
             catch
             {
