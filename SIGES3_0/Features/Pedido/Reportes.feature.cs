@@ -109,7 +109,7 @@ namespace SIGES3_0.Features.Pedido
         [NUnit.Framework.CategoryAttribute("FiltroFechas")]
         [NUnit.Framework.TestCaseAttribute("1", "Todos", "Todos", "10/03/2026 12:00 am", "09/03/2026 11:59 pm", "Invalidados", "No permite aplicar el filtro Inhabilitado", null)]
         [NUnit.Framework.TestCaseAttribute("2", "Todos", "Todos", "09/03/2026 12:00 am", "23/03/2026 11:59 pm", "Invalidados", "Aplica el filtro correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("3", "Todos", "Todos", "01/03/2026 12:00 am", "12/03/2026 11:59 pm", "Invalidados", "Aplica el filtro correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("3", "Todos", "Todos", "08/03/2026 12:00 am", "12/03/2026 11:59 pm", "Invalidados", "Aplica el filtro correctamente", null)]
         [NUnit.Framework.TestCaseAttribute("4", "Todos", "Todos", "26/03/2026 12:00 am", "26/03/3032 11:59 pm", "Invalidados", "Aplica el filtro correctamente", null)]
         public async System.Threading.Tasks.Task ValidarFiltroDeFechasEnReporteDePedidos(string caso, string establecimiento, string puntoVenta, string fechaHoraInicial, string fechaHoraFinal, string tipoReporte, string resultadoEsperado, string[] exampleTags)
         {

@@ -24,9 +24,7 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
             guiaRemisionPage = new GuiaRemisionPage(driver); // ← agregar
         }
 
-        // -------------------------
         // NAVEGACIÓN
-        // ------------------------
 
         [When(@"el usuario accede al módulo '(.*)'")]
         public void WhenElUsuarioAccedeAlModulo(string modulo)
@@ -80,11 +78,8 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
             verPedidosPage.SeleccionarOpcion(opcion);
         }
 
-
-
-        // -------------------------
         // PRODUCTO
-        // -------------------------
+
         [When(@"el usuario selecciona la familia '(.*)'")]
         public void WhenElUsuarioSeleccionaLaFamilia(string familia)
         {
@@ -133,50 +128,14 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
             verPedidosPage.ActivarIGV(igv);
         }
 
-
-        //[When(@"el usuario selecciona la familia '(.*)'")]
-        //public void WhenElUsuarioSeleccionaLaFamilia(string familia)
-        //{
-        //    verPedidosPage.SeleccionarFamilia(familia);
-        //}
-
-        //[When(@"el usuario selecciona el concepto '(.*)'")]
-        //public void WhenElUsuarioSeleccionaElConcepto(string concepto)
-        //{
-        //    verPedidosPage.SeleccionarConcepto(concepto);
-        //}
-
-        //[When(@"el usuario ingresa la cantidad '(.*)'")]
-        //public void WhenElUsuarioIngresaLaCantidad(string cantidad)
-        //{
-        //    verPedidosPage.IngresarCantidad(cantidad);
-        //}
-
-        //// -------------------------
-        //// OPCIONES
-        //// -------------------------
-
-        //[When(@"el usuario activa IGV '(.*)'")]
-        //public void WhenElUsuarioActivaIGV(string igv)
-        //{
-        //    verPedidosPage.ActivarIGV(igv);
-        //}
-
         [When(@"el usuario activa DET.UNIF '(.*)'")]
         public void WhenElUsuarioActivaDETUNIF(string detUnif)
         {
             verPedidosPage.ActivarDetUnif(detUnif);
         }
 
-        // -------------------------
         // DESCUENTO
-        // -------------------------
 
-        //[When(@"el usuario configura descuento '(.*)' '(.*)' '(.*)' '(.*)'")]
-        //public void WhenElUsuarioConfiguraDescuento(string activo, string tipo, string modo, string valor)
-        //{
-        //    verPedidosPage.ConfigurarDescuento(activo, tipo, modo, valor);
-        //}
         [When(@"el usuario configura descuento '(.*)' '(.*)' '(.*)' '(.*)'")]
         public void WhenElUsuarioConfiguraDescuento(string descuento, string tipoDescuento, string modoDescuento, string valorDescuento)
         {
@@ -202,9 +161,7 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
             verPedidosPage.BuscarCliente(cliente);
         }
 
-        // -------------------------
         // ENTREGA
-        // -------------------------
 
         [When(@"el usuario selecciona tipo de entrega '(.*)'")]
         public void WhenElUsuarioSeleccionaTipoDeEntrega(string tipoEntrega)
@@ -212,9 +169,7 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
             verPedidosPage.SeleccionarEntrega(tipoEntrega);
         }
 
-        // -------------------------
         // REGISTRO
-        // -------------------------
 
         [When(@"el usuario registra el pedido")]
         public void WhenElUsuarioRegistraElPedido()
@@ -256,10 +211,8 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
             verPedidosPage.GuardarEdicionPedido();
         }
 
-
-        // -------------------------
         // INVALIDACIÓN
-        // -------------------------
+
         [Given(@"existe un pedido en estado registrado para invalidar con familia '(.*)' concepto '(.*)' cantidad '(.*)' cliente '(.*)' entrega '(.*)'")]
         public void GivenExisteUnPedidoParaInvalidar(
         string familia, string concepto, string cantidad, string cliente, string entrega)
@@ -329,23 +282,13 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
             verPedidosPage.FiltrarPedidoBaseParaConfirmar(esMayor700);
         }
 
-        //[When(@"el usuario configura la facturacion '(.*)' '(.*)' '(.*)'")]
-        //public void WhenElUsuarioConfiguraLaFacturacion(string tipoComprobante, string serie, string cliente)
-        //{
-        //    verPedidosPage.ConfigurarFacturacionConfirmacion(tipoComprobante, serie, cliente);
-        //}
-
         [When(@"el usuario configura la facturacion '(.*)' '(.*)' '(.*)'")]
         public void WhenElUsuarioConfiguraLaFacturacion(string tipoComprobante, string serie, string cliente)
         {
             verPedidosPage.ConfigurarFacturacionConfirmacion(tipoComprobante, serie, cliente);
         }
 
-        //[When(@"el usuario configura la entrega '(.*)' '(.*)'")]
-        //public void WhenElUsuarioConfiguraLaEntrega(string tipoEntrega, string guiaRemision)
-        //{
-        //    verPedidosPage.ConfigurarEntregaConfirmacion(tipoEntrega, guiaRemision);
-        //}
+
         [When(@"el usuario configura la entrega '(.*)' '(.*)'")]
         public void WhenElUsuarioConfiguraLaEntrega(string tipoEntrega, string guiaRemision)
         {
@@ -406,11 +349,7 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
 
 
         // MEDIOS DE PAGO
-
-        
-
-        //------------------------
-        [When(@"el usuario configura los medios de pago '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)'")]
+        [When(@"el usuario configura los medios de pago '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)'")]
         public void WhenElUsuarioConfiguraLosMediosDePago(
         string tipoPago,
         string multipago,
@@ -419,10 +358,12 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
         string tarjeta,
         string cuentaBancaria,
         string nroOperacion,
-        string monto,
-        string nroCuotas)
+        string montoPorMedio,
+        string nroCuotas,
+        string montoInicialCredito)
         {
             if (verPedidosPage.HayErrorCapturado()) return;
+
             verPedidosPage.ConfigurarMediosDePagoConfirmacion(
                 tipoPago,
                 multipago,
@@ -431,8 +372,9 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
                 tarjeta,
                 cuentaBancaria,
                 nroOperacion,
-                monto,
-                nroCuotas
+                montoPorMedio,
+                nroCuotas,
+                montoInicialCredito
             );
         }
 
