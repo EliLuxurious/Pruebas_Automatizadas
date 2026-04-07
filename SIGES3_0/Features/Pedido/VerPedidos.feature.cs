@@ -111,7 +111,7 @@ namespace SIGES3_0.Features.Pedido
         [NUnit.Framework.TestCaseAttribute("2", "ninguno", "ninguno", "0", "false", "false", "false", "NA", "NA", "0", "75971755", "diferida", "Ningún producto seleccionado", null)]
         [NUnit.Framework.TestCaseAttribute("3", "Gaseosa", "7753234003313", "12", "true", "true", "true", "item", "$", "1", "75971755", "inmediata", "el pedido se guardo correctamente", null)]
         [NUnit.Framework.TestCaseAttribute("4", "Azúcar", "7751234001115", "20", "false", "false", "true", "global", "%", "10", "20542245671", "diferida", "el pedido se guardo correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("5", "Gaseosa", "7753234003313", "9500000", "false", "false", "false", "NA", "NA", "0", "75971755", "inmediata", "muestra mensaje de inconsistencia", null)]
+        [NUnit.Framework.TestCaseAttribute("5", "Gaseosa", "7753234003313", "900500000", "false", "false", "false", "NA", "NA", "0", "75971755", "inmediata", "muestra mensaje de inconsistencia", null)]
         public async System.Threading.Tasks.Task RegistroDeNuevoPedido_CasosVariados(string caso, string familia, string concepto, string cantidad, string igv, string det_Unif, string descuento, string tipo_Descuento, string modo_Descuento, string valor_Descuento, string cliente, string tipo_Entrega, string resultado_Esperado, string[] exampleTags)
         {
             string[] @__tags = new string[] {

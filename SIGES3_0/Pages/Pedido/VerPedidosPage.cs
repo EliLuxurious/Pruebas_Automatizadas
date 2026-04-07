@@ -46,6 +46,10 @@ namespace SIGES3_0.Pages.PedidoPage
         private By mensajeAdvertencia = By.XPath("//span[contains(@class,'badge-status') and contains(@class,'danger')]");
         private By mensajeSinProducto = By.XPath("//span[@class='badge-status danger']");
         private By loadingContainer = By.CssSelector("div.loading-container");
+        // mensajes de advertencia
+        private By mensajeInconsistenciaRegistro = By.XPath("//strong[normalize-space()='Se encontraron inconsistencias en los datos:']");
+        private By detalleInconsistenciaRegistro = By.XPath("//div[contains(@class,'alert-danger')]//li");
+        private By mensajeSinProductoRegistro = By.XPath("//*[contains(text(),'Ningún producto seleccionado')]");
 
         // EDITAR PEDIDO
         private By btnEditarPrimerRegistro = By.XPath("//tbody/tr[1]/td[9]/div[1]/button[1]");
@@ -62,7 +66,6 @@ namespace SIGES3_0.Pages.PedidoPage
         // CONFIRMAR PEDIDO
         private By txtFiltroTotal = By.XPath("//th[7]//input[1]");
         private By btnConfirmarPrimerRegistro = By.XPath("//tbody/tr[1]/td[9]/div[1]/button[3]");
-        // Botón final del modal: el texto puede estar dentro de un <span>, por eso usamos contains(.) en vez de text()
         private By btnConfirmarPedidoFinal = By.XPath("//button[contains(normalize-space(.),'Confirmar Pedido') or .//*[contains(normalize-space(.),'Confirmar Pedido')]]");
 
         private By seccionFacturacionConfirmacion = By.XPath("//div[contains(@class,'d-flex') and contains(@class,'align-items-center') and contains(@class,'w-100')]" +"[.//span[normalize-space()='Facturación']]");
@@ -71,22 +74,19 @@ namespace SIGES3_0.Pages.PedidoPage
 
         private By txtClienteConfirmacion = By.CssSelector("input.search-input[placeholder='Buscar...']");
 
-        //private By cmbTipoComprobanteConfirmacion = By.XPath("//span[@class='select-value ng-star-inserted']");
         private By cmbTipoComprobanteConfirmacion = By.XPath("//div[contains(@class,'select-trigger') and contains(@class,'form-control')]");
         private By panelDropdownNgSelect = By.CssSelector(".ng-dropdown-panel");
 
         // ENTREGA CONFIRMAR
         private By rbtEntregaInmediataConfirmacion = By.XPath("//label[normalize-space()='Inmediata']");
         private By rbtEntregaDiferidaConfirmacion = By.XPath("//labelS[normalize-space()='Diferida']");
-        private By btnGuiaRemisionConfirmacion = By.XPath("//span[normalize-space()='Guia de remisión']");
+        private By btnGuiaRemisionConfirmacion = By.XPath("//button[.//span[normalize-space()='Guia de remisión'] or normalize-space()='Guia de remisión']");
         private By btnCerrarEntregaConfirmacion = By.XPath("(//*[contains(@class,'ri-arrow-up-s-line') or contains(@class,'ri-arrow-down-s-line')])[2]");
 
         // PAGO CONFIRMAR
         private By rbtContadoConfirmacion = By.XPath("//label[normalize-space()='Contado']");
         private By tabEfectivoConfirmacion = By.XPath("//*[contains(text(),'EFECTIVO')]");
         private By txtRecibidoEfectivo = By.XPath("//input[@id='amountReceived']");
-
-        private By btnCerrarPagoConfirmacion = By.XPath("(//*[contains(@class,'ri-arrow-up-s-line') or contains(@class,'ri-arrow-down-s-line')])[3]");
 
         // CONFIRMAR PEDIDO - MEDIOS DE PAGOS
         private By chkMultipagoConfirmacion = By.XPath("//input[@id='checkTypePaymentMethod']");
@@ -121,18 +121,7 @@ namespace SIGES3_0.Pages.PedidoPage
 
         private string? mensajeErrorCapturado = null;
         public bool HayErrorCapturado() => !string.IsNullOrEmpty(mensajeErrorCapturado);
-        private By OpcionComprobante(string tipoComprobante)
-        {
-            string clave = NormalizarTextoComprobante(tipoComprobante);
-
-            return By.XPath(
-                $"//div[contains(@class,'ng-option') and normalize-space(.)='{clave}']" +
-                $" | //div[contains(@class,'ng-option')]//span[normalize-space(.)='{clave}']" +
-                $" | //li[normalize-space(.)='{clave}']" +
-                $" | //span[normalize-space(.)='{clave}']"
-            );
-        }
-
+        
         private string NormalizarTextoComprobante(string tipoComprobante)
         {
             string t = (tipoComprobante ?? "").Trim().ToUpperInvariant()
@@ -140,16 +129,11 @@ namespace SIGES3_0.Pages.PedidoPage
                 .Replace("Ó", "O").Replace("Ú", "U").Replace("Ñ", "N");
 
             // Mapeo: texto del feature → fragmento exacto que aparece en el DOM
-            if (t.Contains("NOTA DE VENTA")) return "NOTA DE VENTA";   // matchea "NOTA DE VENTA(INTERNA)"
+            if (t.Contains("NOTA DE VENTA")) return "NOTA DE VENTA";   //  "NOTA DE VENTA(INTERNA)"
             if (t.Contains("FACTURA")) return "FACTURA ELECTRONICA";
             if (t.Contains("BOLETA")) return "BOLETA DE VENTA ELECTRONICA";
 
             return t;
-        }
-
-        private By OpcionSerie(string serie)
-        {
-            return By.XPath($"//*[contains(text(),'{serie}')]");
         }
 
         private string ObtenerTextoComprobanteSeleccionado()
@@ -265,6 +249,28 @@ namespace SIGES3_0.Pages.PedidoPage
             }
 
             Thread.Sleep(600);
+        }
+
+        private bool BotonEstaDeshabilitado(IWebElement boton)
+        {
+            try
+            {
+                string disabled = (boton.GetAttribute("disabled") ?? "").Trim().ToLower();
+                string ariaDisabled = (boton.GetAttribute("aria-disabled") ?? "").Trim().ToLower();
+                string clases = (boton.GetAttribute("class") ?? "").Trim().ToLower();
+                string pointerEvents = (boton.GetCssValue("pointer-events") ?? "").Trim().ToLower();
+
+                return !boton.Enabled ||
+                       disabled == "true" ||
+                       disabled == "disabled" ||
+                       ariaDisabled == "true" ||
+                       clases.Contains("disabled") ||
+                       pointerEvents == "none";
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         // METODOS
@@ -697,55 +703,7 @@ namespace SIGES3_0.Pages.PedidoPage
             {
                 return false;
             }
-        }
-
-        private IWebElement ObtenerAccordion(string seccion)
-        {
-            var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
-
-            return waitLong.Until(d =>
-            {
-                try
-                {
-                    var acc = d.FindElement(By.XPath(
-                        $"//app-form-accordion[.//h2[contains(@class,'accordion-header') and contains(normalize-space(.),'{seccion}')]]"
-                    ));
-
-                    return acc.Displayed ? acc : null;
-                }
-                catch
-                {
-                    return null;
-                }
-            });
-        }
-
-        private bool ContenidoVisible(IWebElement accordion, string seccion)
-        {
-            try
-            {
-                if (seccion.Trim().Equals("Facturación", StringComparison.OrdinalIgnoreCase))
-                {
-                    return accordion.FindElements(By.CssSelector("input.search-input[placeholder='Buscar...']"))
-                                    .Any(e => e.Displayed);
-                }
-
-                if (seccion.Trim().Equals("Entrega", StringComparison.OrdinalIgnoreCase))
-                {
-                    return accordion.FindElements(By.XPath(
-                        ".//label[normalize-space()='Inmediata' or normalize-space()='Diferida']"
-                    )).Any(e => e.Displayed);
-                }
-
-                return accordion.FindElements(By.XPath(".//div[contains(@class,'accordion-body')]"))
-                                .Any(e => e.Displayed);
-            }
-            catch
-            {
-                return false;
-            }
-        }     
-
+        }    
         public void VolverAVerPedidos()
         {
             var opcion = wait.Until(
@@ -1436,9 +1394,18 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
 
                 if (guiaRemision.Trim().Equals("true", StringComparison.OrdinalIgnoreCase))
                 {
-                    // Esperar que el botón sea visible
                     var btnGuia = new WebDriverWait(driver, TimeSpan.FromSeconds(5)).Until(d =>
-                        d.FindElements(btnGuiaRemisionConfirmacion).FirstOrDefault(e => e.Displayed));
+                    {
+                        try
+                        {
+                            return d.FindElements(btnGuiaRemisionConfirmacion)
+                                .FirstOrDefault(e => e.Displayed);
+                        }
+                        catch
+                        {
+                            return null;
+                        }
+                    });
 
                     if (btnGuia == null)
                     {
@@ -1447,30 +1414,36 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
                         return;
                     }
 
-                    // Log del estado del botón para debug
+    ((IJavaScriptExecutor)driver)
+        .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", btnGuia);
+
+                    Thread.Sleep(300);
+
                     string clases = (btnGuia.GetAttribute("class") ?? "").ToLower();
                     string disabled = btnGuia.GetAttribute("disabled") ?? "";
-                    Console.WriteLine($"[Entrega] Botón guía — enabled:{btnGuia.Enabled}, class:'{clases}', disabled:'{disabled}'");
+                    string ariaDisabled = btnGuia.GetAttribute("aria-disabled") ?? "";
+                    string pointerEvents = btnGuia.GetCssValue("pointer-events") ?? "";
 
-                    // Verificar si está deshabilitado por atributo, clase o pointer-events
-                    bool estaDeshabilitado =
-                        !btnGuia.Enabled ||
-                        !string.IsNullOrEmpty(disabled) ||
-                        clases.Contains("disabled") ||
-                        !btnGuia.GetCssValue("pointer-events")
-                                .Equals("auto", StringComparison.OrdinalIgnoreCase);
+                    Console.WriteLine($"[Entrega] Botón guía — enabled:{btnGuia.Enabled}, class:'{clases}', disabled:'{disabled}', aria-disabled:'{ariaDisabled}', pointer-events:'{pointerEvents}'");
+
+                    bool estaDeshabilitado = BotonEstaDeshabilitado(btnGuia);
 
                     if (estaDeshabilitado)
                     {
-                        Console.WriteLine("[Entrega] Botón guía deshabilitado — cliente sin RUC.");
+                        Console.WriteLine("[Entrega] Botón guía deshabilitado. No se hace click.");
                         mensajeErrorCapturado = "Boton de guia de remision inhabilitado Para guia de remision Necesita identificar al cliente con RUC o DNI";
                         return;
                     }
 
-                    // Intentar hacer click
-                    ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", btnGuia);
+                    try
+                    {
+                        btnGuia.Click();
+                    }
+                    catch
+                    {
+                        ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", btnGuia);
+                    }
 
-                    // Verificar si el modal de guía se abrió realmente
                     bool modalAbierto = false;
                     try
                     {
@@ -1483,7 +1456,7 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
 
                     if (!modalAbierto)
                     {
-                        Console.WriteLine("[Entrega] Modal guía no se abrió — botón inhabilitado funcionalmente.");
+                        Console.WriteLine("[Entrega] No se abrió el modal de guía.");
                         mensajeErrorCapturado = "Boton de guia de remision inhabilitado Para guia de remision Necesita identificar al cliente con RUC o DNI";
                         return;
                     }
@@ -2076,19 +2049,6 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
             LimpiarYEscribirCampo(input, ResolverMontoPago(monto));
         }
 
-
-        private void AgregarMedioPagoConfirmacion()
-        {
-            int cantidadAntes = driver.FindElements(btnAgregarMedioPagoConfirmacion).Count;
-
-            var boton = wait.Until(ExpectedConditions.ElementToBeClickable(btnAgregarMedioPagoConfirmacion));
-
-            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", boton);
-            Thread.Sleep(300);
-            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", boton);
-
-            Thread.Sleep(800);
-        }
         private void SeleccionarTabMedioPagoConfirmacion(string medioPago)
         {
             string medio = medioPago.Trim().ToLower();
@@ -2399,50 +2359,6 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
             LimpiarYEscribirCampo(input, informacion.Trim());
         }
 
-        private IWebElement ObtenerSelectVisiblePorIndiceConfirmacion(By locator, int indiceVisible)
-        {
-            return wait.Until(d =>
-            {
-                try
-                {
-                    var visibles = d.FindElements(locator)
-                        .Where(e => e.Displayed && e.Enabled)
-                        .ToList();
-
-                    if (visibles.Count > indiceVisible)
-                        return visibles[indiceVisible];
-
-                    return null;
-                }
-                catch
-                {
-                    return null;
-                }
-            });
-        }
-
-        private IWebElement ObtenerInputVisiblePorIndiceConfirmacion(By locator, int indiceVisible = 0)
-        {
-            return wait.Until(d =>
-            {
-                try
-                {
-                    var visibles = d.FindElements(locator)
-                        .Where(e => e.Displayed && e.Enabled)
-                        .ToList();
-
-                    if (visibles.Count > indiceVisible)
-                        return visibles[indiceVisible];
-
-                    return null;
-                }
-                catch
-                {
-                    return null;
-                }
-            });
-        }
-
         // medio pag mult
         private IWebElement ObtenerUltimoSelectVisibleConfirmacion(By locator)
         {
@@ -2515,32 +2431,6 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
     ", selectElement, value);
 
             Thread.Sleep(600);
-        }
-
-        private void ClickSeguroConfirmacion(By locator)
-        {
-            var elementos = wait.Until(d =>
-            {
-                var list = d.FindElements(locator)
-                    .Where(e => e.Displayed && e.Enabled)
-                    .ToList();
-
-                return list.Any() ? list.Last() : null;
-            });
-
-            ((IJavaScriptExecutor)driver)
-                .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", elementos);
-
-            Thread.Sleep(300);
-
-            try
-            {
-                elementos.Click();
-            }
-            catch
-            {
-                ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", elementos);
-            }
         }
 
         private void LimpiarYEscribirCampo(IWebElement input, string valor)
@@ -2633,28 +2523,28 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
 
                 WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
-                // Registro: sin producto
+                // ── REGISTRO: MENSAJES DEL FORMULARIO ─────────────────
                 try
                 {
-                    var mensajeProducto = driver.FindElement(
-                        By.XPath("//*[contains(text(),'Ningún producto seleccionado')]")
-                    );
-                    if (mensajeProducto.Displayed)
-                        return "Ningún producto seleccionado";
-                }
-                catch { }
+                    var waitRegistro = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
 
-                // Registro: inconsistencias generales (stock, cantidad, validaciones)
-                try
-                {
-                    var inconsistencia = driver.FindElement(By.XPath(
-                        "//*[contains(text(),'Se encontraron inconsistencias')] | " +
-                        "//*[contains(text(),'supera el stock disponible')] | " +
-                        "//*[contains(text(),'menor o igual al stock')] | " +
-                        "//*[contains(text(),'cantidad')]"
-                    ));
-                    if (inconsistencia.Displayed)
-                        return "muestra mensaje de inconsistencia";
+                    bool hayInconsistencia = waitRegistro.Until(d =>
+                        d.FindElements(mensajeInconsistenciaRegistro).Any(e => e.Displayed) ||
+                        d.FindElements(detalleInconsistenciaRegistro).Any(e => e.Displayed) ||
+                        d.FindElements(mensajeSinProductoRegistro).Any(e => e.Displayed)
+                    );
+
+                    if (hayInconsistencia)
+                    {
+                        if (driver.FindElements(mensajeSinProductoRegistro).Any(e => e.Displayed))
+                            return "Ningún producto seleccionado";
+
+                        if (driver.FindElements(mensajeInconsistenciaRegistro).Any(e => e.Displayed) ||
+                            driver.FindElements(detalleInconsistenciaRegistro).Any(e => e.Displayed))
+                        {
+                            return "muestra mensaje de inconsistencia";
+                        }
+                    }
                 }
                 catch { }
 
