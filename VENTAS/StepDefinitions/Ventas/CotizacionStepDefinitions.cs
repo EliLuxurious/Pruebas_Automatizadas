@@ -1,4 +1,4 @@
-using System;
+锘縰sing System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,25 +23,25 @@ namespace SigesCore.StepDefinitions.Ventas
             this.qouta = new CotizacionPage(driver); ;
         }
 
-        [When("Seleccionar Cotizaci髇")]
+        [When("Seleccionar Cotizaci贸n")]
         public void WhenSeleccionarCotizacion()
         {
             qouta.ClickQouta();
         }
 
-        [When("Click en nueva cotizaci髇")]
+        [When("Click en nueva cotizaci贸n")]
         public void WhenClickEnNuevaCotizacion()
         {
             qouta.ClickNewQouta();
         }
 
-        [When("Agregar concepto para cotizaci髇 {string}")]
+        [When("Agregar concepto para cotizaci贸n {string}")]
         public void WhenAgregarConceptoParaCotizacion(string value)
         {
             qouta.ConceptQuota(value);
         }
 
-        [When("Agregar conceptos para cotizaci髇:")]
+        [When("Agregar conceptos para cotizaci贸n:")]
         public void WhenAgregarConceptosParaCotizacion(DataTable table)
         {
             foreach (var row in table.Rows)
@@ -70,7 +70,7 @@ namespace SigesCore.StepDefinitions.Ventas
             qouta.IGVQuota(option);
         }
 
-        [When("Agregar tipo de cliente para cotizaci髇 {string} {string}")]
+        [When("Agregar tipo de cliente para cotizaci贸n {string} {string}")]
         public void WhenAgregarTipoDeClienteParaCotizacion(string option, string value)
         {
             qouta.CustomerTypeQuota(option, value);

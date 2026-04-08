@@ -1,4 +1,4 @@
-using OpenQA.Selenium.Support.UI;
+Ôªøusing OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
@@ -42,14 +42,14 @@ namespace RESTAURANTE.Hoks.Pages.Preparacion
             IWebElement scrollableElement = driver.FindElement(contenedorCartillas);
             IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
 
-            // Encuentra la cartilla especÌfica
+            // Encuentra la cartilla espec√≠fica
             IWebElement cartillaEspecifica = scrollableElement.FindElement(By.XPath($"//div[contains(@class, 'box-primary') and .//h3[contains(text(),'{_nOrden}')]]"));
 
             // Desplaza la cartilla hasta la vista
             js.ExecuteScript("arguments[0].scrollIntoView({block: 'nearest', inline: 'center'});", cartillaEspecifica);
 
 
-            // Encuentra y devuelve las Ûrdenes dentro de la cartilla
+            // Encuentra y devuelve las √≥rdenes dentro de la cartilla
             return cartillaEspecifica.FindElements(detallesOrdenes);
         }
 
@@ -67,7 +67,7 @@ namespace RESTAURANTE.Hoks.Pages.Preparacion
                     break;
 
                 default:
-                    throw new ArgumentException($"El {_ambiente} no es v·lido");
+                    throw new ArgumentException($"El {_ambiente} no es v√°lido");
             }
 
             utilities.elementExists(fieldLocator);
@@ -138,7 +138,7 @@ namespace RESTAURANTE.Hoks.Pages.Preparacion
                     fieldLocator = servirButton;
                     break;
                 default:
-                    throw new ArgumentException($"Accion {_accion} no v·lido");
+                    throw new ArgumentException($"Accion {_accion} no v√°lido");
             }
 
             utilities.buttonClickeable(fieldLocator);

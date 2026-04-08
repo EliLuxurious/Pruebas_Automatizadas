@@ -1,4 +1,4 @@
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
@@ -45,7 +45,7 @@ namespace RESTAURANTE.Hoks.Pages.Atencion
                     break;
 
                 default:
-                    throw new ArgumentException($"El {_atencion} no es v�lido");
+                    throw new ArgumentException($"El {_atencion} no es válido");
             }
 
             utilities.buttonClickeable(fieldLocator);

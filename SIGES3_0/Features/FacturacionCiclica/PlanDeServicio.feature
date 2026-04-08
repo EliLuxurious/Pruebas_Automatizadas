@@ -1,5 +1,4 @@
-﻿@ignore
-@GestionPlanes
+﻿@GestionPlanes
 Feature: Gestión de Planes de Servicio
 
 @GeneracionPlanActivo

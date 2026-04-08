@@ -1,4 +1,4 @@
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 
 
 namespace RESTAURANTE.Hoks.Pages
@@ -16,9 +16,9 @@ namespace RESTAURANTE.Hoks.Pages
 
         // LOGIN
         private By usernameField = By.XPath("//input[@id='Email']"); // campo de usuario
-        private By passwordField = By.XPath("//input[@id='Password']"); // campo de contrase�a
-        private By loginButton = By.XPath("//button[contains(text(),'Iniciar')]"); // bot�n de inicio de sesi�n 
-        private By acceptButton = By.XPath("//button[contains(text(),'Aceptar')]"); // bot�n de aceptar
+        private By passwordField = By.XPath("//input[@id='Password']"); // campo de contraseña
+        private By loginButton = By.XPath("//button[contains(text(),'Iniciar')]"); // botón de inicio de sesión 
+        private By acceptButton = By.XPath("//button[contains(text(),'Aceptar')]"); // botón de aceptar
 
         // INGRESO MODULO RESTAURANTE
         private By restaurantField = By.XPath("//a[@class='menu-lista-cabecera']/span[text()='Restaurante']");
@@ -35,7 +35,7 @@ namespace RESTAURANTE.Hoks.Pages
         {
             driver.Url = "https://tintoymadero-qa.sigesonline.com/";
             utilities.InputTexto(usernameField, _user); // campo user
-            utilities.InputTexto(passwordField, _password); // campo contrase�a
+            utilities.InputTexto(passwordField, _password); // campo contraseña
 
             utilities.buttonClickeable(loginButton); // boton login
             utilities.buttonClickeable(acceptButton); // boton aceptar
@@ -79,7 +79,7 @@ namespace RESTAURANTE.Hoks.Pages
                     break;
 
                 default:
-                    throw new ArgumentException($"El {_modulo} no es v�lido.");
+                    throw new ArgumentException($"El {_modulo} no es válido.");
             }
 
             Thread.Sleep(4000);

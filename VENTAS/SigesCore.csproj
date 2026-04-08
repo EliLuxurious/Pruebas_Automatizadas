@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -31,7 +31,7 @@
     <Folder Include="Features\Compras\" />
     <Folder Include="Features\TesoreriaFinanzas\" />
     <Folder Include="Hooks\AlmacenPage\" />
-    <Folder Include="Hooks\XPathsAlmac�n\" />
+    <Folder Include="Hooks\XPathsAlmacén\" />
     <Folder Include="Hooks\XPathsTesoreriayFinanzas\" />
     <Folder Include="Hooks\XPathsCompras\" />
     <Folder Include="Hooks\TesoreriaFinanzasPage\" />

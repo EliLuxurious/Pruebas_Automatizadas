@@ -1,4 +1,4 @@
-using NUnit.Framework;
+Ôªøusing NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
@@ -51,16 +51,16 @@ namespace RESTAURANTE.Hoks.Pages.Atencion
             switch (accion.ToLower())
             {
                 case "nombre":
-                    // Si el string comienza con n˙meros seguidos de '|', lo eliminamos
+                    // Si el string comienza con n√∫meros seguidos de '|', lo eliminamos
                     return Regex.IsMatch(input, @"^\d+\|")
                         ? Regex.Replace(input, @"^\d+\|", "").Trim()
                         : input.Trim();
 
                 case "numero":
-                    // ExpresiÛn regular para capturar solo el n˙mero al inicio antes del "|"
+                    // Expresi√≥n regular para capturar solo el n√∫mero al inicio antes del "|"
                     Match match = Regex.Match(input, @"^(\d+)\|");
 
-                    // Si hay coincidencia, devuelve el n˙mero; de lo contrario, devuelve "N/A"
+                    // Si hay coincidencia, devuelve el n√∫mero; de lo contrario, devuelve "N/A"
                     return match.Success ? match.Groups[1].Value : "N/A";
 
                 case "decimal":
@@ -70,7 +70,7 @@ namespace RESTAURANTE.Hoks.Pages.Atencion
                     }
                     return input;
                 default:
-                    return "AcciÛn inv·lida";
+                    return "Acci√≥n inv√°lida";
             }
         }
 
@@ -93,7 +93,7 @@ namespace RESTAURANTE.Hoks.Pages.Atencion
                     break;
 
                 default:
-                    throw new ArgumentException($"El {_modoAtencion} no es v·lido");
+                    throw new ArgumentException($"El {_modoAtencion} no es v√°lido");
             }
 
             utilities.elementExists(fieldLocator);
@@ -164,7 +164,7 @@ namespace RESTAURANTE.Hoks.Pages.Atencion
                     if (descripcion.Contains(_item) && cantidad.Contains(Formato("decimal", _cantidad)))
                     {
                         int ordenNumero = int.Parse(orden); // Convertimos a entero
-                        // Encuentra y hace clic en el botÛn de anotaciÛn
+                        // Encuentra y hace clic en el bot√≥n de anotaci√≥n
                         utilities.ScrollViewElement(fila);
                         Thread.Sleep(2000);
                         switch (_accion)
@@ -188,12 +188,12 @@ namespace RESTAURANTE.Hoks.Pages.Atencion
                         Thread.Sleep(2000);
                         utilities.ScrollViewTop();
 
-                        break; // Sale del bucle al encontrar el botÛn
+                        break; // Sale del bucle al encontrar el bot√≥n
                     }
                 }
                 catch (NoSuchElementException)
                 {
-                    continue; // Si la fila no tiene una descripciÛn v·lida, sigue con la siguiente
+                    continue; // Si la fila no tiene una descripci√≥n v√°lida, sigue con la siguiente
                 }
             }            
         }
@@ -224,11 +224,11 @@ namespace RESTAURANTE.Hoks.Pages.Atencion
                         string alias = celdas[1].Text.Trim(); // Columna ALIAS
                         string monto = celdas[4].Text.Trim(); // Columna MONTO
 
-                        // ComparaciÛn de valores
+                        // Comparaci√≥n de valores
                         if (alias.Equals(_alias, StringComparison.OrdinalIgnoreCase) &&
                             monto.Equals(_montoTotal))
                         {
-                            Thread.Sleep(2000); // PequeÒa espera antes de hacer clic
+                            Thread.Sleep(2000); // Peque√±a espera antes de hacer clic
                             fila.Click();
                             Console.WriteLine("Se hizo click en la fila con Alias: " + alias + " y Monto: " + monto);
                             encontrado = true;
@@ -244,7 +244,7 @@ namespace RESTAURANTE.Hoks.Pages.Atencion
 
             if (!encontrado)
             {
-                Console.WriteLine("No se encontrÛ la fila con Alias: " + _alias + " y Monto: " + _montoTotal);
+                Console.WriteLine("No se encontr√≥ la fila con Alias: " + _alias + " y Monto: " + _montoTotal);
             }
 
             Thread.Sleep(4000); // Espera adicional si es necesaria
@@ -258,7 +258,7 @@ namespace RESTAURANTE.Hoks.Pages.Atencion
 
             try
             {
-                // Construir el XPath din·mico para encontrar la fila especÌfica
+                // Construir el XPath din√°mico para encontrar la fila espec√≠fica
                 string xpathFila = $"//tbody[tr/td[contains(text(), '{itemBuscado}')]]//td[contains(text(), '{cantidadBuscada}')]/parent::tr";
 
                 // Encontrar la fila correcta
@@ -266,7 +266,7 @@ namespace RESTAURANTE.Hoks.Pages.Atencion
 
                 utilities.ScrollViewElement(fila);
 
-                // Dentro de esa fila, encontrar el botÛn "Atender"
+                // Dentro de esa fila, encontrar el bot√≥n "Atender"
                 IWebElement botonAccion = fila.FindElement(By.XPath($".//button[@title='{_accion}']"));
                 botonAccion.Click();
 
@@ -275,17 +275,17 @@ namespace RESTAURANTE.Hoks.Pages.Atencion
                 switch (_accion)
                 {
                 case "Atender":
-                        // Dentro de esa fila, encontrar el botÛn "Atender"
+                        // Dentro de esa fila, encontrar el bot√≥n "Atender"
                         IWebElement botonAtender = fila.FindElement(By.XPath(".//button[@title='Atender']"));
                         botonAtender.Click();
                         break;
                 case "Anular":
-                        // Dentro de esa fila, encontrar el botÛn "Atender"
+                        // Dentro de esa fila, encontrar el bot√≥n "Atender"
                         IWebElement botonAnular = fila.FindElement(By.XPath(".//button[@title='Anular']"));
                         botonAnular.Click();
                         break;
                 case "Anotacion":
-                        // Dentro de esa fila, encontrar el botÛn "Atender"
+                        // Dentro de esa fila, encontrar el bot√≥n "Atender"
                         IWebElement botonAnotacion = fila.FindElement(By.XPath(".//button[@title='Agregar Anotacion']"));
                         botonAnotacion.Click();
                         break;
@@ -294,12 +294,12 @@ namespace RESTAURANTE.Hoks.Pages.Atencion
                     throw new ArgumentException($"LA ACCION {_accion} NO ES VALIDO");
                 }
 
-                Console.WriteLine("BotÛn de atender clickeado con Èxito.");
+                Console.WriteLine("Bot√≥n de atender clickeado con √©xito.");
                 Thread.Sleep(4000);
             }
             catch (NoSuchElementException)
             {
-                Console.WriteLine("No se encontrÛ el botÛn de atender para el item y cantidad especificados.");
+                Console.WriteLine("No se encontr√≥ el bot√≥n de atender para el item y cantidad especificados.");
             }
 
             
@@ -344,7 +344,7 @@ namespace RESTAURANTE.Hoks.Pages.Atencion
                 }
                 catch (NoSuchElementException)
                 {
-                    continue; // Si la fila no tiene una descripciÛn v·lida, sigue con la siguiente
+                    continue; // Si la fila no tiene una descripci√≥n v√°lida, sigue con la siguiente
                 }
 
             }

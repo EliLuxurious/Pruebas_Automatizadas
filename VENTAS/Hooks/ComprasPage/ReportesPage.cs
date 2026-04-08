@@ -1,4 +1,4 @@
-using FluentAssertions.Equivalency;
+Ôªøusing FluentAssertions.Equivalency;
 using NUnit.Framework;
 using NUnit.Framework.Internal.Execution;
 using OpenQA.Selenium;
@@ -40,7 +40,7 @@ namespace SigesCore.Hooks.ComprasPage
 
         public class PathsPurchasesReports
         {
-            //Ingresar a la secciÛn ver compras
+            //Ingresar a la secci√≥n ver compras
 
             public static readonly By PurchaseButton = By.XPath("//span[contains(text(),'Compra')]");
             public static readonly By PurchaseReportsButton = By.XPath("//body/div[@id='wrapper']/aside[1]/div[1]/section[1]/ul[1]/li[5]/ul[1]/li[3]/a[1]");
@@ -102,7 +102,7 @@ namespace SigesCore.Hooks.ComprasPage
                     Thread.Sleep(2000);
                     break;
                 default:
-                    throw new ArgumentException($"La opciÛn {option} no es v·lido");
+                    throw new ArgumentException($"La opci√≥n {option} no es v√°lido");
             }
         }
         public void ReportByType(string option, string fromdate, string todate)
@@ -136,7 +136,7 @@ namespace SigesCore.Hooks.ComprasPage
 
                     break;
                 default:
-                    throw new ArgumentException($"La opciÛn {option} no es v·lido");
+                    throw new ArgumentException($"La opci√≥n {option} no es v√°lido");
             }
         }
 
@@ -162,22 +162,22 @@ namespace SigesCore.Hooks.ComprasPage
                     Thread.Sleep(2000);
                     break;
                 default:
-                    throw new ArgumentException($"La opciÛn {option} no es v·lido");
+                    throw new ArgumentException($"La opci√≥n {option} no es v√°lido");
             }
         }
         public void EnterField(By _path, string _field)
         {
             var element = driver.FindElement(_path);
-            element.Click();  // Asegura que el campo estÈ activo
+            element.Click();  // Asegura que el campo est√© activo
 
             // Borra el campo completamente con Ctrl + A y Suprimir
             element.SendKeys(Keys.Control + "a");
             element.SendKeys(Keys.Delete);
 
-            // Espera un momento para asegurarse de que el campo estÈ vacÌo
+            // Espera un momento para asegurarse de que el campo est√© vac√≠o
             Thread.Sleep(100);
 
-            // Verifica si el campo quedÛ vacÌo antes de ingresar el nuevo texto
+            // Verifica si el campo qued√≥ vac√≠o antes de ingresar el nuevo texto
             if (!string.IsNullOrEmpty(element.GetAttribute("value")))
             {
                 element.Clear();
@@ -190,16 +190,16 @@ namespace SigesCore.Hooks.ComprasPage
         public void EnterFieldEspecific(By _path, string _field)
         {
             var element = driver.FindElement(_path);
-            element.Click();  // Asegura que el campo estÈ activo
+            element.Click();  // Asegura que el campo est√© activo
 
             // Borra el campo completamente con Ctrl + A y Suprimir
             element.SendKeys(Keys.Control + "a");
             element.SendKeys(Keys.Delete);
 
-            // Espera un momento para asegurarse de que el campo estÈ vacÌo
+            // Espera un momento para asegurarse de que el campo est√© vac√≠o
             Thread.Sleep(100);
 
-            // Verifica si el campo quedÛ vacÌo antes de ingresar el nuevo texto
+            // Verifica si el campo qued√≥ vac√≠o antes de ingresar el nuevo texto
             if (!string.IsNullOrEmpty(element.GetAttribute("value")))
             {
                 element.Clear();
@@ -229,14 +229,14 @@ namespace SigesCore.Hooks.ComprasPage
             // Crear el objeto SelectElement
             SelectElement dropdown = new SelectElement(selectElement);
 
-            // Seleccionar el ROL pasado como par·metro
+            // Seleccionar el ROL pasado como par√°metro
             dropdown.SelectByText(data);
 
-            // Validar que la opciÛn seleccionada es la esperada
+            // Validar que la opci√≥n seleccionada es la esperada
             Assert.That(dropdown.SelectedOption.Text, Is.EqualTo(data),
-                $"La opciÛn seleccionada '{dropdown.SelectedOption.Text}' no coincide con '{data}'");
+                $"La opci√≥n seleccionada '{dropdown.SelectedOption.Text}' no coincide con '{data}'");
 
-            // PequeÒa pausa para visualizaciÛn (opcional)
+            // Peque√±a pausa para visualizaci√≥n (opcional)
             Thread.Sleep(1000);
         }
 

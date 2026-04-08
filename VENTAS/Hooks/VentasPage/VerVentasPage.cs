@@ -1,4 +1,4 @@
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SigesCore.Hooks.Utility;
 using SigesCore.Hooks.XPaths;
@@ -43,7 +43,7 @@ namespace SigesCore.Hooks.VentasPage
             Thread.Sleep(3000);
         }
 
-        // BUSCAR UNA VENTA POR SU C�DIGO
+        // BUSCAR UNA VENTA POR SU CÓDIGO
         public void SearchSaleField(string value)
         {
             utilityPage.ClearAndSetInputField(RedeemVoucher.searchSale, value);
@@ -61,7 +61,7 @@ namespace SigesCore.Hooks.VentasPage
             driverViewPayment.FindElement(RedeemVoucher.selectedSalePath).Click();
         }
 
-        // CLICK EN EL BOT�N CANJEAR
+        // CLICK EN EL BOTÓN CANJEAR
         public void ClickRedeemButton()
         {
             utilityPage.ClickButton(RedeemVoucher.redeemButton);
@@ -73,7 +73,7 @@ namespace SigesCore.Hooks.VentasPage
             utilityPage.OptionsSelector(RedeemVoucher.modal, RedeemVoucher.voucherType, option);
         }
 
-        // CLICK EN EL BOT�N ACEPTAR
+        // CLICK EN EL BOTÓN ACEPTAR
         public void ClickAcceptRedeemButton()
         {
             utilityPage.ClickButton(RedeemVoucher.acceptRedeemButton);
@@ -94,56 +94,56 @@ namespace SigesCore.Hooks.VentasPage
             utilityPage.ElementExists(DebitNote.debitNoteButton);
             switch (option)
             {
-                case "D�BITO":
+                case "DÉBITO":
                     utilityPage.ClickButton(DebitNote.debitNoteButton);
                     break;
 
-                case "CR�DITO":
+                case "CRÉDITO":
                     utilityPage.ClickButton(CreditNote.creditNoteButton);
                     break;
 
                 default:
-                    throw new ArgumentException($"El {option} no es v�lido");
+                    throw new ArgumentException($"El {option} no es válido");
             }
         }
 
-        // SELECCIONAR EL TIPO DE NOTA DE D�BITO (NOTA DE D�BITO)
+        // SELECCIONAR EL TIPO DE NOTA DE DÉBITO (NOTA DE DÉBITO)
         public void TypeDebitNote(string option)
         {
             utilityPage.OptionsSelector(DebitNote.modal, DebitNote.TypeDebitNotePath, option);
         }
 
-        // SELECCIONAR NOTA DE D�BITO (NOTA DE D�BITO)
+        // SELECCIONAR NOTA DE DÉBITO (NOTA DE DÉBITO)
         public void DocumentType(string option)
         {
             utilityPage.OptionsSelector(DebitNote.modal, DebitNote.documentTypePath, option);
         }
 
-        // INGRESO DEL MOTIVO DE LA NOTA (NOTA DE D�BITO)
+        // INGRESO DEL MOTIVO DE LA NOTA (NOTA DE DÉBITO)
         public void ReasonDebitNote(string value)
         {
             utilityPage.ClearAndSetInputField(DebitNote.reasonDebitNotePath, value);
         }
 
-        // INGRESO DEL MOTIVO DE LA NOTA (NOTA DE D�BITO)
+        // INGRESO DEL MOTIVO DE LA NOTA (NOTA DE DÉBITO)
         public void DeliveryTypeNoteCredit(string option)
         {
             utilityPage.SelectDeliveryType(DebitNote.modal, CreditNote.immediate, CreditNote.deferred, option);
         }
 
-        // INGRESO DEL TOTAL AUMENTO DEL VALOR (NOTA DE D�BITO)
+        // INGRESO DEL TOTAL AUMENTO DEL VALOR (NOTA DE DÉBITO)
         public void TotalAmount(string value)
         {
             utilityPage.ClearAndSetInputField(DebitNote.totalAmountPath, value);
         }
 
-        // INGRESO  DEL INTER�S TOTAL (NOTA DE D�BITO)
+        // INGRESO  DEL INTERÉS TOTAL (NOTA DE DÉBITO)
         public void NoteAmount(string value)
         {
             utilityPage.ClearAndSetInputField(DebitNote.totalinterestPath, value);
         }
 
-        // INGRESAR LA CANTIDAD PARA DEVOLUCI�N POR �TEM (NOTA DE CR�DITO)
+        // INGRESAR LA CANTIDAD PARA DEVOLUCIÓN POR ÍTEM (NOTA DE CRÉDITO)
         public void QuantityCreditNote(string value)
         {
             utilityPage.ClearAndSetInputField(CreditNote.quantityPath, value);
@@ -162,13 +162,13 @@ namespace SigesCore.Hooks.VentasPage
             utilityPage.ClickButton(InvalidateDocumentClass.invalidateButton);
         }
 
-        // INGRESO DE LA OBSERVACI�N
+        // INGRESO DE LA OBSERVACIÓN
         public void Observation(string value)
         {
             utilityPage.ClearAndSetInputField(InvalidateDocumentClass.observation, value);
         }
 
-        // CLICK EN 'SI' PARA ACEPTAR LA INVALIDACI�N
+        // CLICK EN 'SI' PARA ACEPTAR LA INVALIDACIÓN
         public void AcceptInvalidation()
         {
             utilityPage.ClickButton(InvalidateDocumentClass.accept);
@@ -212,7 +212,7 @@ namespace SigesCore.Hooks.VentasPage
             }
             else
             {
-                throw new ArgumentException($"El {option} no es v�lido");
+                throw new ArgumentException($"El {option} no es válido");
             }
         }
 
@@ -222,7 +222,7 @@ namespace SigesCore.Hooks.VentasPage
             utilityPage.ClickButton(SendDocumentClass.sendButton);
         }
 
-        // INGRESAR EL CORREO ELECTR�NICO
+        // INGRESAR EL CORREO ELECTRÓNICO
         public void EmailField(string value)
         {
             utilityPage.ClearAndSetInputField(SendDocumentClass.inputEmail, value);

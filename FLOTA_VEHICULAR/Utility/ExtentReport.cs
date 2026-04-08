@@ -1,4 +1,4 @@
-using AventStack.ExtentReports;
+ï»¿using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Config;
 using OpenQA.Selenium;
@@ -16,11 +16,11 @@ namespace FLOTA_VEHICULAR.Utility
         public static ExtentTest _feature;
         public static ExtentTest _scenario;
 
-        // Raíz de resultados
+        // RaÃ­z de resultados
         public static string dir = AppDomain.CurrentDomain.BaseDirectory;
         public static string testResultRoot = dir.Replace("bin\\Debug\\net8.0", "TestResults");
 
-        // Contexto de la ejecución
+        // Contexto de la ejecuciÃ³n
         public static string runTimestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
         public static string runFolder = Path.Combine(testResultRoot, runTimestamp);
         public static string screenshotsFolder = Path.Combine(runFolder, "Screenshots");
@@ -39,7 +39,7 @@ namespace FLOTA_VEHICULAR.Utility
 
             _extentReports = new ExtentReports();
             _extentReports.AttachReporter(spark);
-            _extentReports.AddSystemInfo("Application", "Automatización POM");
+            _extentReports.AddSystemInfo("Application", "AutomatizaciÃ³n POM");
             _extentReports.AddSystemInfo("Browser", "Chrome");
             _extentReports.AddSystemInfo("OS", "Windows");
         }

@@ -1,4 +1,4 @@
-using OpenQA.Selenium;
+ï»¿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
@@ -38,11 +38,11 @@ namespace RESTAURANTE.Hoks.Pages
                 try
                 {
                     IWebElement overlay = driver.FindElement(overlayLocator);
-                    return !overlay.Displayed; // Espera hasta que el overlay no esté visible
+                    return !overlay.Displayed; // Espera hasta que el overlay no estÃ© visible
                 }
                 catch (NoSuchElementException)
                 {
-                    return true; // Si no se encuentra, el overlay ya desapareció
+                    return true; // Si no se encuentra, el overlay ya desapareciÃ³
                 }
             });
         }
@@ -51,7 +51,7 @@ namespace RESTAURANTE.Hoks.Pages
         {
             if (driver.FindElements(_path).Count == 0)
             {
-                throw new NoSuchElementException($"El elemento con el localizador {_path} no se encontró.");
+                throw new NoSuchElementException($"El elemento con el localizador {_path} no se encontrÃ³.");
             }
 
             wait.Until(ExpectedConditions.ElementIsVisible(_path)); // Espera hasta que el elemento sea visible
@@ -63,7 +63,7 @@ namespace RESTAURANTE.Hoks.Pages
         {
             if (driver.FindElements(_path).Count == 0)
             {
-                throw new NoSuchElementException($"El elemento con el localizador {_path} no se encontró.");
+                throw new NoSuchElementException($"El elemento con el localizador {_path} no se encontrÃ³.");
             }
 
             wait.Until(ExpectedConditions.ElementIsVisible(_path)); // Espera hasta que el elemento sea visible
@@ -82,7 +82,7 @@ namespace RESTAURANTE.Hoks.Pages
             }
             catch (WebDriverTimeoutException)
             {
-                throw new NoSuchElementException($"El elemento con el localizador {_path} visibilidad no se encontró dentro del tiempo esperado.");
+                throw new NoSuchElementException($"El elemento con el localizador {_path} visibilidad no se encontrÃ³ dentro del tiempo esperado.");
             }
         }
 
@@ -95,7 +95,7 @@ namespace RESTAURANTE.Hoks.Pages
             }
             catch (WebDriverTimeoutException)
             {
-                throw new NoSuchElementException($"El elemento con el localizador {_button} no se encontró dentro del tiempo esperado.");
+                throw new NoSuchElementException($"El elemento con el localizador {_button} no se encontrÃ³ dentro del tiempo esperado.");
             }
         }
 
@@ -103,7 +103,7 @@ namespace RESTAURANTE.Hoks.Pages
         {
             if (driver.FindElements(_button).Count == 0)
             {
-                throw new NoSuchElementException($"El elemento con el localizador {_button} no se encontró.");
+                throw new NoSuchElementException($"El elemento con el localizador {_button} no se encontrÃ³.");
             }
 
             WaitForOverlayToDisappear(); // OVERLAY
@@ -124,7 +124,7 @@ namespace RESTAURANTE.Hoks.Pages
         {
             if (_element.FindElements(_path).Count == 0)
             {
-                throw new NoSuchElementException($"El elemento con el localizador {_path} no se encontró.");
+                throw new NoSuchElementException($"El elemento con el localizador {_path} no se encontrÃ³.");
             }
 
             wait.Until(ExpectedConditions.ElementIsVisible(_path)); // Espera hasta que el elemento sea visible
@@ -137,7 +137,7 @@ namespace RESTAURANTE.Hoks.Pages
         {
             if (_element.FindElements(_path).Count == 0)
             {
-                throw new NoSuchElementException($"El elemento con el localizador {_path} no se encontró.");
+                throw new NoSuchElementException($"El elemento con el localizador {_path} no se encontrÃ³.");
             }
 
             wait.Until(ExpectedConditions.ElementIsVisible(_path)); // Espera hasta que el elemento sea visible
@@ -170,23 +170,23 @@ namespace RESTAURANTE.Hoks.Pages
                 _element.FindElement(_path).Click();
 
                 /*
-                // Abre el menú desplegable
+                // Abre el menÃº desplegable
                 IWebElement dropdown = _element.FindElement(_path);
                 //dropdown.Click();
                 IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
                 js.ExecuteScript("arguments[0].click();", dropdown);
                 */
 
-                // Espera explícita para que las opciones sean visibles
+                // Espera explÃ­cita para que las opciones sean visibles
                 wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(".select2-results__options")));
 
-                // Selecciona la opción deseada
+                // Selecciona la opciÃ³n deseada
                 IWebElement optionElement = _element.FindElement(By.XPath($"//li[contains(text(), '{option}')]"));
                 optionElement.Click();
             }
             catch (NoSuchElementException ex)
             {
-                Console.WriteLine($"Error: No se encontró la opción '{option}' en el menú desplegable. Detalle: {ex.Message}");
+                Console.WriteLine($"Error: No se encontrÃ³ la opciÃ³n '{option}' en el menÃº desplegable. Detalle: {ex.Message}");
             }
         }
 

@@ -1,4 +1,4 @@
-using FluentAssertions.Equivalency;
+Ôªøusing FluentAssertions.Equivalency;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -70,7 +70,7 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
             // Almacena el identificador de la ventana principal
             string parentWindowHandler = driver.CurrentWindowHandle;
 
-            // ObtÈn todos los identificadores de ventanas abiertas
+            // Obt√©n todos los identificadores de ventanas abiertas
             var handles = driver.WindowHandles;
 
             // Cambia a la ventana que no sea la principal
@@ -83,9 +83,9 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
                 }
             }
 
-            // AquÌ puedes interactuar con el contenido del modal
+            // Aqu√≠ puedes interactuar con el contenido del modal
             // Por ejemplo, rellenar un campo de texto:
-            //driver.FindElement(By.Id("tuCampoID")).SendKeys("InformaciÛn del modal");
+            //driver.FindElement(By.Id("tuCampoID")).SendKeys("Informaci√≥n del modal");
 
             // Si necesitas volver a la ventana principal:
             //driver.SwitchTo().Window(parentWindowHandler);
@@ -118,7 +118,7 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
                     _buttonLocator = _buttonDiferenciado;
                     break;
                 default:
-                    throw new ArgumentException($"Tipo de facturacion {_typeFactura} no v·lido");
+                    throw new ArgumentException($"Tipo de facturacion {_typeFactura} no v√°lido");
             }
 
             utilities.ClickButtonInModal(modalRestaurante, _buttonLocator);
@@ -158,7 +158,7 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
                     break;
 
                 default:
-                    throw new ArgumentException($"El {_clientType} no es v·lido");
+                    throw new ArgumentException($"El {_clientType} no es v√°lido");
             }
 
             utilities.InputTextoModal(modalFacturacion, fieldLocator, _clientValue);
@@ -196,7 +196,7 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
             }
             else
             {
-                // Diccionario que mapea el modo de pago al botÛn correspondiente
+                // Diccionario que mapea el modo de pago al bot√≥n correspondiente
                 moodPagoButtons = new Dictionary<string, By>
                 {
                     { "DEPCU", By.XPath($"//label[@id='labelMedioPago--{_ncuenta}-14']") },
@@ -210,13 +210,13 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
             // Verificar si el modo de pago existe en el diccionario
             if (moodPagoButtons.ContainsKey(_moodPago))
             {
-                // Llamar al mÈtodo moodPay con el botÛn correspondiente
+                // Llamar al m√©todo moodPay con el bot√≥n correspondiente
                 utilities.ClickButtonInModal(modalFacturacion, moodPagoButtons[_moodPago]);
             }
             else
             {
-                // Lanzar excepciÛn si el modo de pago no es v·lido
-                throw new ArgumentException($"El {_moodPago} no es v·lido");
+                // Lanzar excepci√≥n si el modo de pago no es v√°lido
+                throw new ArgumentException($"El {_moodPago} no es v√°lido");
             }
             Console.WriteLine($"METODO DE PAGO {_ncuenta} INGRESADO");
             Thread.Sleep(4000);
@@ -232,7 +232,7 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
         {
             if (driver.FindElements(_path).Count == 0)
             {
-                throw new NoSuchElementException($"El elemento con el localizador {_path} no se encontrÛ.");
+                throw new NoSuchElementException($"El elemento con el localizador {_path} no se encontr√≥.");
             }
 
             utilities.ClickButtonInModal(_path);

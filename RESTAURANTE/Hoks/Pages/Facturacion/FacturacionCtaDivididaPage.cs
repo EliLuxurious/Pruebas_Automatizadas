@@ -1,4 +1,4 @@
-using MongoDB.Bson.Serialization.Serializers;
+Ôªøusing MongoDB.Bson.Serialization.Serializers;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.DevTools.V130.Debugger;
@@ -67,7 +67,7 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
 
             IWebElement ncard = driver.FindElement(By.Id("elementId")); // Encuentra el elemento
             IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
-            js.ExecuteScript("arguments[0].scrollIntoView(true);", ncard); // Despl·zate hasta el elemento
+            js.ExecuteScript("arguments[0].scrollIntoView(true);", ncard); // Despl√°zate hasta el elemento
 
 
 
@@ -79,7 +79,7 @@ namespace RESTAURANTE.Hoks.Pages.Facturacion
             ((IJavaScriptExecutor)modalFacturacion).ExecuteScript("window.scrollBy(1000, 0);");
             */
             /*
-            // Si _ncuenta es mayor a 2, presionar el botÛn las veces necesarias
+            // Si _ncuenta es mayor a 2, presionar el bot√≥n las veces necesarias
             for (int i = 0; i < vecesAPresionar; i++)
             {
                 utilities.ClickButtonInModal(modalFacturacion, addCardPagos);

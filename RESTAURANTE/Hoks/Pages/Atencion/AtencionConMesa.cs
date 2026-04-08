@@ -1,4 +1,4 @@
-using NUnit.Framework;
+ï»¿using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
@@ -56,7 +56,7 @@ namespace RESTAURANTE.Hoks.Pages.Atencion
                     break;
 
                 default:
-                    throw new ArgumentException($"El {_ambiente} no es válido");
+                    throw new ArgumentException($"El {_ambiente} no es vÃ¡lido");
             }
 
             utilities.elementExists(fieldLocator);
@@ -102,7 +102,7 @@ namespace RESTAURANTE.Hoks.Pages.Atencion
 
             utilities.buttonClickeable(By.XPath("//body/div[@id='wrapper']/div[1]/section[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/button[1]"));
             // Seleccionar todos los botones de las mesas disponibles
-            // Esperar hasta que los botones de mesa estén visibles
+            // Esperar hasta que los botones de mesa estÃ©n visibles
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
             var mesas = wait.Until(d => d.FindElements(By.XPath("//button[contains(@class, 'btn-mesa-disponible') and span]")));
@@ -114,7 +114,7 @@ namespace RESTAURANTE.Hoks.Pages.Atencion
                 return;
             }
 
-            // Buscar la mesa con el número 6
+            // Buscar la mesa con el nÃºmero 6
             foreach (var mesa in mesas)
             {
                 try
@@ -122,18 +122,18 @@ namespace RESTAURANTE.Hoks.Pages.Atencion
                     var span = mesa.FindElement(By.TagName("span"));
                     var textoMesa = span.Text.Trim();
 
-                    Console.WriteLine($"Mesa encontrada con número: {textoMesa}");
+                    Console.WriteLine($"Mesa encontrada con nÃºmero: {textoMesa}");
 
                     if (textoMesa == "6") // Verificar si el texto coincide
                     {
                         mesa.Click();
-                        Console.WriteLine("? MESA 6 SELECCIONADA");
+                        Console.WriteLine("âœ… MESA 6 SELECCIONADA");
                         break;
                     }
                 }
                 catch (NoSuchElementException)
                 {
-                    Console.WriteLine("No se encontró el número dentro de la mesa.");
+                    Console.WriteLine("No se encontrÃ³ el nÃºmero dentro de la mesa.");
                 }
             }
 
@@ -182,7 +182,7 @@ namespace RESTAURANTE.Hoks.Pages.Atencion
                     break;
 
                 default:
-                    throw new ArgumentException($"La tipo de orden por {_orden} no es válido");
+                    throw new ArgumentException($"La tipo de orden por {_orden} no es vÃ¡lido");
             }
 
             Thread.Sleep(2000);

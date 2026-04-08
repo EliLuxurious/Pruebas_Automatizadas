@@ -1,4 +1,4 @@
-using AventStack.ExtentReports;
+﻿using AventStack.ExtentReports;
 using AventStack.ExtentReports.Gherkin.Model;
 using BoDi;
 using OpenQA.Selenium;
@@ -7,7 +7,7 @@ using OpenQA.Selenium.DevTools.V129.Runtime;
 using PruebaConcepto.Utility;
 using TechTalk.SpecFlow;
 
-namespace Automatizaci�nVentas.Hoks
+namespace AutomatizaciónVentas.Hoks
 {
     [Binding]
     public sealed class Hooks :ExtentReport

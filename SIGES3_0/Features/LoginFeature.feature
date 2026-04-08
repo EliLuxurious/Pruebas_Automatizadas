@@ -1,5 +1,4 @@
-﻿@ignore
-Feature: LoginFeature
+﻿Feature: LoginFeature
 
 Prueba de Login Exitoso
 
