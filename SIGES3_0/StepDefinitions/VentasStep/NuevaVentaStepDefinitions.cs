@@ -50,6 +50,18 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             nuevaVentaPage.ConfigurePaymentFlow(pago);
         }
 
+        [StepDefinition("selecciona tipo de pago {string}")]
+        public void WhenSeleccionaTipoPago(string tipoPago)
+        {
+            nuevaVentaPage.SelectPaymentTypeFlow(tipoPago);
+        }
+
+        [StepDefinition("ingresa monto inicial del pago {string}")]
+        public void WhenIngresaMontoInicialDelPago(string monto)
+        {
+            nuevaVentaPage.EnterPaymentInitialAmountFlow(monto);
+        }
+
         [StepDefinition("hace clic en Guardar")]
         public void WhenHaceClicEnGuardar()
         {

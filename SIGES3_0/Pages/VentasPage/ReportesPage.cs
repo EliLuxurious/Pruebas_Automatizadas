@@ -213,7 +213,7 @@ namespace SIGES3_0.Pages.VentasPage
             }
         }
         // =========================
-        // REUTILIZABLE
+        // REUTILIZABLE Ventas
         // =========================
 
         // Modulo y submodulos

@@ -45,7 +45,7 @@ namespace SIGES3_0.Pages.VentasPage
         {
             ExpandBillingAccordion();
 
-            Console.WriteLine($"Paso 5a - Ingresar documento {documento}");
+            Log($"Paso 5a - Ingresar documento {documento}");
             var clienteInput = Find(VentasLocators.NuevaVenta.ClienteBuscar);
             clienteInput.Clear();
             clienteInput.SendKeys(documento);
@@ -55,7 +55,7 @@ namespace SIGES3_0.Pages.VentasPage
             Assert.That(typedDocument, Is.EqualTo(documento),
                 $"El documento ingresado no coincide. Esperado={documento}, Actual={typedDocument}");
 
-            Console.WriteLine("Paso 5b - Click lupa");
+            Log("Paso 5b - Click lupa");
             Click(VentasLocators.NuevaVenta.ClienteLupa);
             Thread.Sleep(1500);
 
@@ -65,7 +65,7 @@ namespace SIGES3_0.Pages.VentasPage
                     "[normalize-space()]"))
                 .Select(e => { try { return e.Text?.Trim(); } catch { return null; } })
                 .FirstOrDefault(t => !string.IsNullOrWhiteSpace(t));
-            Console.WriteLine($"Paso 5c - Resultado cliente: {textoCliente ?? "(sin texto de cliente visible)"}");
+            Log($"Paso 5c - Resultado cliente: {textoCliente ?? "(sin texto de cliente visible)"}");
 
             // Capturar popup si aparece (ej: total mayor a 700 con cliente VARIOS + Boleta)
             // Se ignoran mensajes informativos de éxito del sistema (ej: "Se completó los campos").
@@ -73,11 +73,11 @@ namespace SIGES3_0.Pages.VentasPage
             var popupMsg = CaptureVisibleMessage(2);
             if (!string.IsNullOrWhiteSpace(popupMsg))
             {
-                Console.WriteLine($"Popup detectado al resolver cliente: {popupMsg}");
+                Log($"Popup detectado al resolver cliente: {popupMsg}");
                 if (IsBlockingMessage(popupMsg))
                     _lastObservedMessage = popupMsg;
                 else
-                    Console.WriteLine($"Mensaje informativo ignorado (no bloqueante): {popupMsg}");
+                    Log($"Mensaje informativo ignorado (no bloqueante): {popupMsg}");
                 TryClickOptional(
                     VentasLocators.NuevaVenta.ErrorOkButton,
                     VentasLocators.NuevaVenta.ErrorOkButtonFallback,
@@ -91,7 +91,7 @@ namespace SIGES3_0.Pages.VentasPage
         // se activa al seleccionar Factura cuando ya hay un DNI ingresado.
         public void SelectVoucherFlow(string comprobante, string serie)
         {
-            Console.WriteLine($"Seleccionando comprobante: {comprobante}");
+            Log($"Seleccionando comprobante: {comprobante}");
             SelectVoucherTypeAndSeries(comprobante, serie);
 
             // Capturar popup si aparece (ej: RUC requerido al seleccionar Factura con DNI)
@@ -100,11 +100,11 @@ namespace SIGES3_0.Pages.VentasPage
             var popupMsg = CaptureVisibleMessage(2);
             if (!string.IsNullOrWhiteSpace(popupMsg))
             {
-                Console.WriteLine($"Popup detectado al seleccionar comprobante: {popupMsg}");
+                Log($"Popup detectado al seleccionar comprobante: {popupMsg}");
                 if (IsBlockingMessage(popupMsg) && string.IsNullOrWhiteSpace(_lastObservedMessage))
                     _lastObservedMessage = popupMsg;
                 else
-                    Console.WriteLine($"Mensaje informativo ignorado (no bloqueante): {popupMsg}");
+                    Log($"Mensaje informativo ignorado (no bloqueante): {popupMsg}");
                 TryClickOptional(
                     VentasLocators.NuevaVenta.ErrorOkButton,
                     VentasLocators.NuevaVenta.ErrorOkButtonFallback,
@@ -116,15 +116,63 @@ namespace SIGES3_0.Pages.VentasPage
         // Paso: selecciona tipo de entrega X
         public void SelectDeliveryFlow(string entrega) => SelectDeliveryType(entrega);
 
-        // Paso: configura el pago X
+        // Paso: configura el pago X (modos legados: Completo, Incompleto, Credito, CreditoInicial)
         public void ConfigurePaymentFlow(string pago) => UpdatePayment(pago);
+
+        // Paso: selecciona el tipo de pago (Contado / Credito / "-" para omitir)
+        public void SelectPaymentTypeFlow(string tipoPago)
+        {
+            bool skip = string.IsNullOrWhiteSpace(tipoPago) || tipoPago.Trim() == "-";
+            if (skip) return;
+
+            bool pagoYaVisible = driver.FindElements(VentasLocators.Payment.CashTypeLabelText)
+                .Any(e => { try { return e.Displayed; } catch { return false; } });
+            if (!pagoYaVisible)
+            {
+                try { Click(VentasLocators.Payment.PaymentAccordionButton, VentasLocators.Payment.PaymentAccordionButtonFallback); Thread.Sleep(1000); } catch { }
+            }
+
+            if (tipoPago.Equals("Contado", StringComparison.OrdinalIgnoreCase))
+            {
+                Log("Seleccionando tipo de pago: Contado");
+                Click(VentasLocators.Payment.CashTypeLabelText, VentasLocators.Payment.CashTypeLabel);
+                Thread.Sleep(1000);
+                VerificarCamposPagoAutoRelleno();
+            }
+            else if (tipoPago.Equals("Credito", StringComparison.OrdinalIgnoreCase))
+            {
+                Log("Seleccionando tipo de pago: Crédito");
+                Click(VentasLocators.Payment.CreditTypeLabelText, VentasLocators.Payment.QuickCreditTypeLabel);
+                Thread.Sleep(1000);
+            }
+        }
+
+        // Paso: ingresa el monto inicial para pago a crédito ("-" para omitir)
+        public void EnterPaymentInitialAmountFlow(string monto)
+        {
+            bool skip = string.IsNullOrWhiteSpace(monto) || monto.Trim() == "-";
+            if (skip) return;
+
+            Log($"Ingresando monto inicial del pago: {monto}");
+            var montoInput = Find(VentasLocators.Payment.CreditInitialAmountInput);
+            montoInput.Clear();
+            montoInput.SendKeys(monto);
+            montoInput.SendKeys(Keys.Tab);
+            Thread.Sleep(1000);
+
+            var recibido = Find(VentasLocators.Payment.CashReceivedNewSale);
+            recibido.Clear();
+            recibido.SendKeys(monto);
+            recibido.SendKeys(Keys.Tab);
+            Thread.Sleep(1000);
+        }
 
         // Precondición: crea N notas de venta en bucle con los mismos datos
         public void CrearNotasDeVenta(int n, string familia, string concepto, string cantidad, string documento)
         {
             for (int i = 0; i < n; i++)
             {
-                Console.WriteLine($"Creando NV {i + 1} de {n}...");
+                Log($"Creando NV {i + 1} de {n}...");
                 SelectProductFlow(familia, concepto);
                 UpdateQuantityFlow(cantidad);
                 EnterDocumentAndSearch(documento);
@@ -142,7 +190,7 @@ namespace SIGES3_0.Pages.VentasPage
         // Captura el mensaje resultante sin sobrescribir mensajes de popup previos.
         public void GuardarVentaFlow()
         {
-            Console.WriteLine("Paso 10 - Intentando guardar venta...");
+            Log("Paso 10 - Intentando guardar venta...");
             _wasSaveEnabled = false;
             _wasSaveExecuted = false;
 
@@ -151,47 +199,39 @@ namespace SIGES3_0.Pages.VentasPage
 
             if (btn == null)
             {
-                Console.WriteLine("Botón Guardar no encontrado en el DOM.");
+                Log("Botón Guardar no encontrado en el DOM.");
                 return;
             }
 
             _wasSaveEnabled = IsSaveEnabled();
-            Console.WriteLine($"Botón Guardar habilitado: {_wasSaveEnabled}");
+            Log($"Botón Guardar habilitado: {_wasSaveEnabled}");
 
-            try
+            if (!_wasSaveEnabled)
             {
-                utilities.ScrollViewElement(btn);
-                btn.Click();
-                Thread.Sleep(2000);
-                if (_wasSaveEnabled)
-                    _wasSaveExecuted = true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"No se pudo hacer click en Guardar: {ex.Message}");
+                // Capturar la validación actualmente visible en el formulario.
+                // Sobrescribir _lastObservedMessage: el mensaje de validación del form tiene
+                // prioridad sobre cualquier popup informativo capturado en pasos anteriores.
+                var validacion = CapturarValidaciones();
+                _lastObservedMessage = !string.IsNullOrWhiteSpace(validacion)
+                    ? validacion
+                    : "Formulario incompleto (sin mensaje de validación visible)";
+                Log($"Guardar DESHABILITADO — Validación activa: '{_lastObservedMessage}'");
                 return;
             }
 
-            // Si el guardado SE EJECUTÓ: su resultado tiene prioridad absoluta sobre cualquier
-            // mensaje informativo capturado en pasos anteriores (ej: CP006 info de cliente).
-            // Si el formulario se reinició, la venta fue exitosa sin ambigüedad.
-            // Si el guardado NO se ejecutó (botón deshabilitado): preservar el mensaje
-            // de validación previo (ej: CP003 "total mayor a 700").
-            var msg = CaptureVisibleMessage(3);
-            if (_wasSaveExecuted)
-            {
-                if (IsNewSaleFormReset())
-                    _lastObservedMessage = "Se registró correctamente";
-                else if (!string.IsNullOrWhiteSpace(msg))
-                    _lastObservedMessage = msg;
-            }
-            else if (string.IsNullOrWhiteSpace(_lastObservedMessage))
-            {
-                if (!string.IsNullOrWhiteSpace(msg))
-                    _lastObservedMessage = msg;
-            }
+            utilities.ScrollViewElement(btn);
+            btn.Click();
+            Thread.Sleep(2000);
+            _wasSaveExecuted = true;
 
-            Console.WriteLine($"Resultado: Habilitado={_wasSaveEnabled}, Ejecutado={_wasSaveExecuted}, Mensaje='{_lastObservedMessage}'");
+            // Resultado del guardado: form reiniciado = éxito, mensaje visible = error post-guardado
+            var msg = CaptureVisibleMessage(3);
+            if (IsNewSaleFormReset())
+                _lastObservedMessage = "Se registró correctamente";
+            else if (!string.IsNullOrWhiteSpace(msg))
+                _lastObservedMessage = msg;
+
+            Log($"Resultado: Habilitado={_wasSaveEnabled}, Ejecutado={_wasSaveExecuted}, Mensaje='{_lastObservedMessage}'");
         }
 
         // Then: verifica el mensaje de confirmacion X
@@ -199,7 +239,7 @@ namespace SIGES3_0.Pages.VentasPage
         {
             if (string.IsNullOrWhiteSpace(mensajeEsperado))
             {
-                Console.WriteLine("Sin mensaje de confirmación esperado. Validación omitida.");
+                Log("Sin mensaje de confirmación esperado. Validación omitida.");
                 return;
             }
 
@@ -229,18 +269,18 @@ namespace SIGES3_0.Pages.VentasPage
 
         private void ToggleIgvAndDetUnif()
         {
-            Console.WriteLine("Marcar IGV");
+            Log("Marcar IGV");
             Click(VentasLocators.NuevaVenta.IgvCheck);
             Thread.Sleep(1000);
 
-            Console.WriteLine("Marcar DET.UNIF");
+            Log("Marcar DET.UNIF");
             Click(VentasLocators.NuevaVenta.DetUnifCheck);
             Thread.Sleep(1000);
         }
 
         private void SelectProduct(string family, string concept)
         {
-            Console.WriteLine("Seleccionar Familia");
+            Log("Seleccionar Familia");
             Click(VentasLocators.NuevaVenta.FamiliaDropdown);
             Thread.Sleep(1000);
 
@@ -255,7 +295,7 @@ namespace SIGES3_0.Pages.VentasPage
             );
             Thread.Sleep(1000);
 
-            Console.WriteLine("Seleccionar Concepto");
+            Log("Seleccionar Concepto");
             Click(VentasLocators.NuevaVenta.ConceptoDropdown);
             Thread.Sleep(1000);
 
@@ -272,7 +312,7 @@ namespace SIGES3_0.Pages.VentasPage
         {
             if (!string.IsNullOrWhiteSpace(cantidad))
             {
-                Console.WriteLine($"Actualizando Cantidad a {cantidad}");
+                Log($"Actualizando Cantidad a {cantidad}");
                 var quantityInput = Find(VentasLocators.Detail.QuantityInputs);
                 quantityInput.Clear();
                 quantityInput.SendKeys(cantidad);
@@ -283,7 +323,7 @@ namespace SIGES3_0.Pages.VentasPage
 
         private void ExpandBillingAccordion()
         {
-            Console.WriteLine("Abrir acordeón Facturación");
+            Log("Abrir acordeón Facturación");
 
             // Si el contenido de facturación ya está visible (dropdown), no hacer click para evitar CERRAR el acordeón abierto.
             bool yaAbierto = driver.FindElements(VentasLocators.NuevaVenta.ComprobanteDropdown)
@@ -291,7 +331,7 @@ namespace SIGES3_0.Pages.VentasPage
 
             if (yaAbierto)
             {
-                Console.WriteLine("Acordeón Facturación ya está abierto. No se cierra.");
+                Log("Acordeón Facturación ya está abierto. No se cierra.");
                 return;
             }
 
@@ -310,7 +350,7 @@ namespace SIGES3_0.Pages.VentasPage
 
         private void SelectVoucherTypeAndSeries(string voucherText, string seriesText)
         {
-            Console.WriteLine($"Paso 6a - Abrir dropdown Comprobante");
+            Log($"Paso 6a - Abrir dropdown Comprobante");
 
             // Localizar el dropdown y hacer scroll para asegurar visibilidad
             var dropdownEl = Find(VentasLocators.NuevaVenta.ComprobanteDropdown);
@@ -329,7 +369,7 @@ namespace SIGES3_0.Pages.VentasPage
 
             if (!dropdownAbierto)
             {
-                Console.WriteLine("AVISO: Dropdown comprobante no se abrió. Reintentando con scroll...");
+                Log("AVISO: Dropdown comprobante no se abrió. Reintentando con scroll...");
                 utilities.ScrollViewElement(dropdownEl);
                 Thread.Sleep(300);
                 dropdownEl.Click();
@@ -342,7 +382,7 @@ namespace SIGES3_0.Pages.VentasPage
             Assert.That(dropdownAbierto, Is.True,
                 $"El dropdown de Comprobante no se abrió después de 2 intentos. No se puede seleccionar '{voucherText}'.");
 
-            Console.WriteLine($"Paso 6b - Seleccionar opción ({voucherText})");
+            Log($"Paso 6b - Seleccionar opción ({voucherText})");
             Click(VentasLocators.NuevaVenta.ComprobanteOpcionPorTexto(voucherText));
             Thread.Sleep(1000);
 
@@ -350,7 +390,7 @@ namespace SIGES3_0.Pages.VentasPage
             Thread.Sleep(300);
             bool dropdownCerrado = !driver.FindElements(optionsLocator)
                 .Any(e => { try { return e.Displayed; } catch { return false; } });
-            Console.WriteLine($"Opción '{voucherText}' seleccionada. Dropdown cerrado: {dropdownCerrado}");
+            Log($"Opción '{voucherText}' seleccionada. Dropdown cerrado: {dropdownCerrado}");
 
             // Cuando el comprobante tiene una sola serie asignada, el sistema la auto-asigna
             // y NO muestra los radio buttons. Solo se selecciona si son visibles (multiples series).
@@ -359,11 +399,11 @@ namespace SIGES3_0.Pages.VentasPage
 
             if (!haySeriesVisibles)
             {
-                Console.WriteLine($"Paso 8 - Serie auto-asignada (comprobante tiene una sola serie). Serie esperada: {seriesText}");
+                Log($"Paso 8 - Serie auto-asignada (comprobante tiene una sola serie). Serie esperada: {seriesText}");
                 return;
             }
 
-            Console.WriteLine($"Paso 8 - Seleccionar Serie {seriesText}");
+            Log($"Paso 8 - Seleccionar Serie {seriesText}");
             Click(
                 VentasLocators.NuevaVenta.SeriePorTexto(seriesText),
                 VentasLocators.Voucher.SeriesByText(seriesText),
@@ -375,7 +415,7 @@ namespace SIGES3_0.Pages.VentasPage
 
         private void SelectDeliveryType(string entrega)
         {
-            Console.WriteLine("Verificar/Abrir sección Entrega");
+            Log("Verificar/Abrir sección Entrega");
 
             // ImmediateLabel en lugar de Immediate: los radio buttons en Angular suelen estar
             // ocultos con CSS (opacity:0 / position:absolute) por lo que Displayed=false
@@ -385,7 +425,7 @@ namespace SIGES3_0.Pages.VentasPage
 
             if (!entregaYaVisible)
             {
-                Console.WriteLine("Sección Entrega cerrada. Abriendo acordeón...");
+                Log("Sección Entrega cerrada. Abriendo acordeón...");
                 Click(
                     VentasLocators.NuevaVenta.AccordionEntrega,
                     VentasLocators.NuevaVenta.AccordionEntregaFallback1
@@ -399,38 +439,134 @@ namespace SIGES3_0.Pages.VentasPage
             }
             else
             {
-                Console.WriteLine("Sección Entrega ya está abierta.");
+                Log("Sección Entrega ya está abierta.");
             }
 
             if (!string.IsNullOrWhiteSpace(entrega) && entrega.Equals("Diferida", StringComparison.OrdinalIgnoreCase))
             {
-                Console.WriteLine("Seleccionando tipo Diferida");
+                Log("Seleccionando tipo Diferida");
                 Click(VentasLocators.NuevaVenta.EntregaDiferida);
             }
             else
             {
-                Console.WriteLine("Seleccionando tipo Inmediata");
+                Log("Seleccionando tipo Inmediata");
                 // ImmediateLabel en lugar del radio oculto: equivalente y más robusto
                 Click(VentasLocators.Delivery.ImmediateLabel);
             }
             Thread.Sleep(1000);
         }
 
+        private void UpdatePayment(string tipoPago, string montoInicial)
+        {
+            bool sinCambio = string.IsNullOrWhiteSpace(tipoPago) || tipoPago.Trim() == "-";
+            if (sinCambio) return;
+
+            Log($"Configurando pago: tipoPago={tipoPago}, montoInicial={montoInicial}");
+
+            bool pagoYaVisible = driver.FindElements(VentasLocators.Payment.CashTypeLabelText)
+                .Any(e => { try { return e.Displayed; } catch { return false; } });
+
+            if (!pagoYaVisible)
+            {
+                try {
+                    Click(VentasLocators.Payment.PaymentAccordionButton,
+                          VentasLocators.Payment.PaymentAccordionButtonFallback);
+                    Thread.Sleep(1000);
+                } catch { }
+            }
+
+            if (tipoPago.Equals("Contado", StringComparison.OrdinalIgnoreCase))
+            {
+                Click(VentasLocators.Payment.CashTypeLabelText,
+                      VentasLocators.Payment.CashTypeLabel);
+                Thread.Sleep(1000);
+                VerificarCamposPagoAutoRelleno();
+                return;
+            }
+            Click(VentasLocators.Payment.CreditTypeLabelText,
+                  VentasLocators.Payment.QuickCreditTypeLabel);
+            Thread.Sleep(1000);
+
+            bool tieneMonto = !string.IsNullOrWhiteSpace(montoInicial) && montoInicial.Trim() != "-";
+            if (tieneMonto)
+            {
+                var montoInput = Find(VentasLocators.Payment.CreditInitialAmountInput);
+                montoInput.Clear();
+                montoInput.SendKeys(montoInicial);
+                montoInput.SendKeys(Keys.Tab);
+                Thread.Sleep(1000);
+
+                var recibido = Find(VentasLocators.Payment.CashReceivedNewSale);
+                recibido.Clear();
+                recibido.SendKeys(montoInicial);
+                recibido.SendKeys(Keys.Tab);
+                Thread.Sleep(1000);
+            }
+        }
+
         private void UpdatePayment(string pago)
         {
-            if (!string.IsNullOrWhiteSpace(pago) && pago.Equals("Incompleto", StringComparison.OrdinalIgnoreCase))
+            if (string.IsNullOrWhiteSpace(pago)) return;
+
+            if (pago.Equals("Incompleto", StringComparison.OrdinalIgnoreCase))
             {
-                Console.WriteLine("Modificando pago a incompleto...");
-                // Expandir acordeón pago si es necesario, aunque a veces ya está abierto.
+                Log("Modificando pago a incompleto...");
                 try {
-                    Click(VentasLocators.Payment.PaymentAccordionHeader);
+                    Click(VentasLocators.Payment.PaymentAccordionButton,
+                          VentasLocators.Payment.PaymentAccordionButtonFallback);
                     Thread.Sleep(1000);
                 } catch { }
 
                 var amountInput = Find(VentasLocators.Payment.CashReceivedNewSale);
                 amountInput.Clear();
-                amountInput.SendKeys("1"); // Monto insuficiente
+                amountInput.SendKeys("1");
                 amountInput.SendKeys(Keys.Tab);
+                Thread.Sleep(1000);
+            }
+            else if (pago.Equals("Credito", StringComparison.OrdinalIgnoreCase))
+            {
+                Log("Configurando pago a crédito rápido (sin contado, con cuotas)...");
+                bool pagoYaVisible = driver.FindElements(VentasLocators.Payment.CreditTypeLabelText)
+                    .Any(e => { try { return e.Displayed; } catch { return false; } });
+                if (!pagoYaVisible)
+                {
+                    try {
+                        Click(VentasLocators.Payment.PaymentAccordionButton,
+                              VentasLocators.Payment.PaymentAccordionButtonFallback);
+                        Thread.Sleep(1000);
+                    } catch { }
+                }
+                Click(VentasLocators.Payment.CreditTypeLabelText,
+                      VentasLocators.Payment.QuickCreditTypeLabel);
+                Thread.Sleep(1000);
+            }
+            else if (pago.Equals("CreditoInicial", StringComparison.OrdinalIgnoreCase))
+            {
+                Log("Configurando pago a crédito con monto inicial (contado parcial + cuotas)...");
+                bool pagoYaVisible = driver.FindElements(VentasLocators.Payment.CreditTypeLabelText)
+                    .Any(e => { try { return e.Displayed; } catch { return false; } });
+                if (!pagoYaVisible)
+                {
+                    try {
+                        Click(VentasLocators.Payment.PaymentAccordionButton,
+                              VentasLocators.Payment.PaymentAccordionButtonFallback);
+                        Thread.Sleep(1000);
+                    } catch { }
+                }
+                Click(VentasLocators.Payment.CreditTypeLabelText,
+                      VentasLocators.Payment.QuickCreditTypeLabel);
+                Thread.Sleep(1000);
+
+                var montoInicial = Find(VentasLocators.Payment.CreditInitialAmountInput);
+                montoInicial.Clear();
+                montoInicial.SendKeys("1");
+                montoInicial.SendKeys(Keys.Tab);
+                Thread.Sleep(1000);
+
+                var recibido = Find(VentasLocators.Payment.CashReceivedNewSale);
+                recibido.Clear();
+                recibido.SendKeys("1");
+                recibido.SendKeys(Keys.Tab);
                 Thread.Sleep(1000);
             }
         }
@@ -442,7 +578,7 @@ namespace SIGES3_0.Pages.VentasPage
                 var esperado = expectation.SaveShouldBeEnabled.Value;
                 if (_wasSaveEnabled && !esperado)
                 {
-                    Console.WriteLine("ERROR: La venta se GUARDÓ. El botón estaba HABILITADO cuando debería estar INHABILITADO (Factura a cliente DNI sin RUC).");
+                    Log("ERROR: La venta se GUARDÓ. El botón estaba HABILITADO cuando debería estar INHABILITADO (Factura a cliente DNI sin RUC).");
                 }
                 
                 Assert.That(_wasSaveEnabled, Is.EqualTo(esperado),
@@ -624,6 +760,29 @@ namespace SIGES3_0.Pages.VentasPage
             throw new NoSuchElementException($"No se pudo hacer clic (sin scroll): {string.Join(" | ", locators.Select(l => l.ToString()))}");
         }
 
+        // Verifica que el sistema auto-rellenó correctamente Monto y Recibido con el total de la venta,
+        // y que Vuelto = 0 (pago exacto). Falla con mensaje claro si los campos quedan vacíos o no coinciden.
+        private void VerificarCamposPagoAutoRelleno()
+        {
+            string Leer(By loc) =>
+                driver.FindElements(loc)
+                      .FirstOrDefault(e => { try { return e.Displayed; } catch { return false; } })
+                      ?.GetAttribute("value")?.Trim() ?? string.Empty;
+
+            var monto    = Leer(VentasLocators.Payment.CashAmount);
+            var recibido = Leer(VentasLocators.Payment.CashReceivedNewSale);
+            var vuelto   = Leer(VentasLocators.Payment.Change);
+
+            Log($"[Pago] Monto={monto} | Recibido={recibido} | Vuelto={vuelto}");
+
+            Assert.That(monto, Is.Not.Empty.And.Not.EqualTo("0"),
+                "Campo Monto no fue auto-rellenado con el total de la venta.");
+            Assert.That(recibido, Is.EqualTo(monto),
+                $"Campo Recibido ({recibido}) no coincide con Monto ({monto}). El auto-relleno falló.");
+            Assert.That(vuelto, Is.EqualTo("0").Or.EqualTo("0.00").Or.Empty,
+                $"Vuelto ({vuelto}) debería ser 0 cuando Recibido = Monto.");
+        }
+
         private bool IsSaveEnabled()
         {
             try
@@ -650,8 +809,29 @@ namespace SIGES3_0.Pages.VentasPage
             return btn.Enabled && !classes.Contains("disabled") && ariaDisabled != "true";
         }
 
+        public bool WasSaveEnabled => _wasSaveEnabled;
+
+        // Captura el primer mensaje de validación visible: primero toasts/popups bloqueantes,
+        // luego invalid-feedback / text-danger inline en el formulario.
+        private string CapturarValidaciones()
+        {
+            var popup = CaptureVisibleMessage(1);
+            if (!string.IsNullOrWhiteSpace(popup) && IsBlockingMessage(popup))
+                return popup;
+
+            return driver.FindElements(By.XPath(
+                    "//*[contains(@class,'invalid-feedback') or contains(@class,'text-danger') or " +
+                    "contains(@class,'custom-error-message')][normalize-space()]"))
+                .Where(e => { try { return e.Displayed; } catch { return false; } })
+                .Select(e => e.Text?.Trim())
+                .FirstOrDefault(t => !string.IsNullOrWhiteSpace(t)) ?? string.Empty;
+        }
+
         // Devuelve true si el mensaje es una validación bloqueante real (error/advertencia del negocio).
         // Devuelve false para mensajes informativos de éxito del sistema que no representan un problema.
+        private static void Log(string msg) =>
+            Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] {msg}");
+
         private static bool IsBlockingMessage(string msg)
         {
             if (string.IsNullOrWhiteSpace(msg)) return false;

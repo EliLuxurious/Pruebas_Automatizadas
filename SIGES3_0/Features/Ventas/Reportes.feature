@@ -46,7 +46,9 @@ Scenario Outline: <Caso> Generar reporte por comprobante
       | CP0000 | NOTA DE CREDITO             | B002  |05/03/2026 12:00 am  | 25/03/2026 11:59 pm |
       | CP0000 | NOTA DE DEBITO              | B002  |05/03/2026 12:00 am  | 25/03/2026 11:59 pm |
 
-
+####################################################################
+##################### SERIES
+####################################################################
 @Reportes
 @PorSerie
 Scenario Outline: <Caso> Generar reporte por serie
@@ -61,6 +63,9 @@ Scenario Outline: <Caso> Generar reporte por serie
       | Caso   | ComprobanteSerie | fechaHoraInicial    | fechaHoraFinal      |
       | CP0000 | 03 : B002            | 05/03/2026 12:00 am | 25/03/2026 11:59 pm |
 
+####################################################################
+##################### CONCEPTOS
+####################################################################
 @Reportes
 @PorConceptos
 @Sinfiltro
@@ -112,6 +117,9 @@ Scenario Outline: <Caso> Generar reporte por familia en la vista Conceptos
       | CP084  | CENTRO COMERCIAL CENTRAL   | MARCA          | POR CONCEPTO, CARACTERISTICAS Y FORMA DE PAGO      | 05/03/2026 12:00 am | 05/03/2026 11:59 pm |
       | CP085  | CENTRO COMERCIAL CENTRAL   | TAMAÑO         | POR CARACTERISTICAS                                | 05/03/2026 12:00 am | 05/03/2026 11:59 pm |
 
+####################################################################
+##################### VENDEDOR
+####################################################################
 @Reportes
 @PorVendedor
 Scenario Outline: <Caso> Generar reporte por vendedor en la vista Vendedor
@@ -159,6 +167,11 @@ Scenario Outline: <Caso> Generar reporte por familia y vendedor en la vista Vend
       | Caso   | Vendedor                   | fechaHoraInicial    | fechaHoraFinal      |
       | CP092  | FRANKLIN MARTINEZ HURTADO  | 05/03/2026 12:00 am | 05/03/2026 11:59 pm |
 
+      # Falta caso de prueba por Por centro de atención y Serie
+
+####################################################################
+##################### GRUPOS
+####################################################################
 @Reportes
 @PorGrupos
 Scenario Outline: <Caso> Generar reporte en la vista Grupos

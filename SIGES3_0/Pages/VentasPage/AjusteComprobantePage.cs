@@ -20,21 +20,24 @@ namespace SIGES3_0.Pages.VentasPage
         }
 
         // ── Filtrar ventas por fecha de ayer ─────────────────────────────────
-        public void FiltrarVentasPorFechaAyer()
+        public void FiltrarVentasPorFechaAyer() => FiltrarVentasPorDiasAtras(1);
+
+        // ── Filtrar ventas por N días atrás ───────────────────────────────────
+        public void FiltrarVentasPorDiasAtras(int dias)
         {
-            var ayer = DateTime.Now.AddDays(-1).ToString("dd/MM/yyyy");
-            Console.WriteLine($"[AjusteComprobante] Filtrando ventas con rango: {ayer} 12:00 am - {ayer} 11:59 pm");
+            var fecha = DateTime.Now.AddDays(-dias).ToString("dd/MM/yyyy");
+            Console.WriteLine($"[AjusteComprobante] Filtrando ventas con rango: {fecha} 12:00 am - {fecha} 11:59 pm");
 
             var inicioLocator = EsperarLocadorFecha(
                 VentasLocators.ViewSales.InitialDate,
                 VentasLocators.ViewSales.FechaHoraInicial);
-            IngresarFechaHoraJS(inicioLocator, $"{ayer} 12:00 am");
+            IngresarFechaHoraJS(inicioLocator, $"{fecha} 12:00 am");
             Thread.Sleep(400);
 
             var finLocator = EsperarLocadorFecha(
                 VentasLocators.ViewSales.FinalDate,
                 VentasLocators.ViewSales.FechaHoraFinal);
-            IngresarFechaHoraJS(finLocator, $"{ayer} 11:59 pm");
+            IngresarFechaHoraJS(finLocator, $"{fecha} 11:59 pm");
             Thread.Sleep(400);
 
             var btn = _wait.Until(ExpectedConditions.ElementToBeClickable(VentasLocators.ViewSales.QueryButton));
@@ -43,7 +46,7 @@ namespace SIGES3_0.Pages.VentasPage
             Thread.Sleep(3000);
 
             var filas = _driver.FindElements(By.XPath("//tbody/tr")).Count;
-            Console.WriteLine($"[AjusteComprobante] Resultados después del filtrado: {filas} fila(s) en la tabla");
+            Console.WriteLine($"[AjusteComprobante] Resultados después del filtrado ({dias} día(s) atrás): {filas} fila(s) en la tabla");
         }
 
         // ── Abrir modal de ajuste ───────────────────────────────────────────
@@ -103,6 +106,7 @@ namespace SIGES3_0.Pages.VentasPage
                 "nota de débito" or "nota de debito" => VentasLocators.AjusteComprobante.TabNotaDebito,
                 "nota de crédito" or "nota de credito" => VentasLocators.AjusteComprobante.TabNotaCredito,
                 "ver documento" => VentasLocators.AjusteComprobante.TabVerDocumento,
+                "invalidar" => VentasLocators.AjusteComprobante.TabInvalidar,
                 _ => throw new Exception($"Tab de ajuste no reconocido: {tab}")
             };
 
@@ -125,10 +129,34 @@ namespace SIGES3_0.Pages.VentasPage
         // ── Tipo de nota de crédito ─────────────────────────────────────────
         public void SeleccionarTipoNotaCredito(string tipo)
         {
-            var select = new SelectElement(
-                _wait.Until(ExpectedConditions.ElementToBeClickable(
-                    VentasLocators.AjusteComprobante.TipoNotaCreditoSelect)));
-            select.SelectByText(tipo);
+            // Strategy 1: native <select> (in case backend renders a real select element)
+            var nativeSelect = _driver
+                .FindElements(By.XPath("//label[contains(normalize-space(),'Tipo de nota de cr')]/following::select[1]"))
+                .FirstOrDefault(e => { try { return e.Displayed; } catch { return false; } });
+            if (nativeSelect != null)
+            {
+                new SelectElement(nativeSelect).SelectByText(tipo);
+                Thread.Sleep(1000);
+                return;
+            }
+
+            // Strategy 2: custom dropdown — find trigger by placeholder text or label proximity
+            var trigger = _driver
+                .FindElements(By.XPath(
+                    "//*[contains(@class,'select-trigger')][contains(normalize-space(),'Selecciona un tipo de nota')] | " +
+                    "//label[contains(normalize-space(),'Tipo de nota de cr')]/following::*[contains(@class,'select-trigger')][1]"))
+                .FirstOrDefault(e => { try { return e.Displayed; } catch { return false; } });
+
+            if (trigger == null)
+                trigger = _wait.Until(ExpectedConditions.ElementToBeClickable(
+                    VentasLocators.AjusteComprobante.TipoNotaCreditoSelect));
+
+            ClickSeguro(trigger);
+            Thread.Sleep(500);
+
+            var opcion = _wait.Until(ExpectedConditions.ElementToBeClickable(
+                VentasLocators.AjusteComprobante.TipoNotaCreditoOpcion(tipo)));
+            ClickSeguro(opcion);
             Thread.Sleep(1000);
         }
 
@@ -219,6 +247,16 @@ namespace SIGES3_0.Pages.VentasPage
         // ── Cantidad a devolver (NC - Devolución por ítem) ──────────────────
         public void IngresarCantidadDevolver(string cantidad)
         {
+            if (string.IsNullOrWhiteSpace(cantidad) || cantidad.Trim() == "-")
+            {
+                Console.WriteLine("Cantidad a devolver omitida.");
+                return;
+            }
+
+            Console.WriteLine($"Ingresando cantidad a devolver: {cantidad}");
+            ExpandirSeccion("Detalle");
+            Thread.Sleep(500);
+
             var input = _wait.Until(ExpectedConditions.ElementToBeClickable(
                 VentasLocators.AjusteComprobante.CantidadDevolverInput));
             input.Clear();
@@ -360,6 +398,12 @@ namespace SIGES3_0.Pages.VentasPage
         // ── Entrega (NC) ───────────────────────────────────────────────────
         public void SeleccionarEntrega(string tipo)
         {
+            if (string.IsNullOrWhiteSpace(tipo) || tipo.Trim() == "-")
+            {
+                Console.WriteLine("Tipo de entrega en ajuste omitido.");
+                return;
+            }
+
             ExpandirSeccion("Entrega");
             Thread.Sleep(500);
 
@@ -381,6 +425,12 @@ namespace SIGES3_0.Pages.VentasPage
         // ── Devolución (NC — Pago) ─────────────────────────────────────────
         public void SeleccionarDevolucion(string tipo)
         {
+            if (string.IsNullOrWhiteSpace(tipo) || tipo.Trim() == "-")
+            {
+                Console.WriteLine("Tipo de devolución omitido.");
+                return;
+            }
+
             ExpandirSeccion("Pago");
             Thread.Sleep(500);
 
@@ -482,6 +532,68 @@ namespace SIGES3_0.Pages.VentasPage
                 .Any(Visible);
             Assert.IsTrue(hay,
                 "Se esperaba el mensaje 'Es necesario que la cantidad a devolver sea menor a la cantidad entregada.'");
+        }
+
+        // ── Observación de invalidación ────────────────────────────────────
+        public void IngresarObservacionInvalidacion(string observacion)
+        {
+            var input = _wait.Until(ExpectedConditions.ElementToBeClickable(
+                VentasLocators.InvalidarVenta.ObservacionInvalidar));
+            input.Clear();
+            input.SendKeys(observacion);
+            Thread.Sleep(300);
+        }
+
+        // ── Click Invalidar en el modal ────────────────────────────────────
+        public void ClickInvalidarEnModal()
+        {
+            var btn = _wait.Until(d =>
+                d.FindElements(VentasLocators.InvalidarVenta.BotonInvalidar)
+                 .FirstOrDefault(e => { try { return e.Displayed && e.Enabled; } catch { return false; } }));
+
+            if (btn == null)
+                Assert.Fail("No se encontró el botón Invalidar habilitado en el modal.");
+
+            ScrollTo(btn!);
+            ClickSeguro(btn!);
+            Thread.Sleep(3000);
+        }
+
+        // ── Verificar invalidación exitosa ──────────────────────────────────
+        public void VerificarInvalidacionExitosa()
+        {
+            var waitCorto = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            bool hayExito = false;
+            try
+            {
+                waitCorto.Until(d => d.FindElements(VentasLocators.InvalidarVenta.MensajeExitoInvalidar).Any(Visible));
+                hayExito = true;
+            }
+            catch (WebDriverTimeoutException) { }
+
+            Assert.IsTrue(hayExito,
+                "No se detectó mensaje de confirmación de invalidación exitosa (toast-success o swal2-success).");
+
+            CerrarPopupSiExiste();
+        }
+
+        // ── Verificar botón Invalidar no activo (CP067) ────────────────────
+        public void VerificarBotonInvalidarNoActivo()
+        {
+            Thread.Sleep(1000);
+
+            var btn = _driver.FindElements(VentasLocators.InvalidarVenta.BotonInvalidar)
+                .FirstOrDefault(Visible);
+
+            bool botonDeshabilitado = btn == null || !btn.Enabled
+                || btn.GetAttribute("disabled") != null
+                || (btn.GetAttribute("class") ?? "").Contains("disabled");
+
+            bool hayMensajeCampos = _driver.FindElements(VentasLocators.AjusteComprobante.MensajeCamposRequeridos)
+                .Any(Visible);
+
+            Assert.IsTrue(botonDeshabilitado || hayMensajeCampos,
+                "Se esperaba que el botón Invalidar estuviera deshabilitado o que el sistema mostrara un mensaje de campos requeridos.");
         }
 
         // ── Helpers privados ───────────────────────────────────────────────

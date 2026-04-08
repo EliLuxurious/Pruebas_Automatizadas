@@ -8,35 +8,23 @@ namespace SIGES3_0.StepDefinitions.VentasStep
     public class AjusteComprobanteStepDefinitions
     {
         private readonly AjusteComprobantePage _ajustePage;
-        private readonly NuevaVentaPage _nuevaVentaPage;
 
         public AjusteComprobanteStepDefinitions(IWebDriver driver)
         {
             _ajustePage = new AjusteComprobantePage(driver);
-            _nuevaVentaPage = new NuevaVentaPage(driver);
         }
-
-        // ── Precondición: crear venta completa ──────────────────────────────
-        [StepDefinition("crea una venta con familia {string}, concepto {string}, cantidad {string}, documento {string}, comprobante {string}, serie {string}, entrega {string}, pago {string}")]
-        public void CreaUnaVenta(string familia, string concepto, string cantidad, string documento,
-            string comprobante, string serie, string entrega, string pago)
-        {
-            _nuevaVentaPage.SelectProductFlow(familia, concepto);
-            _nuevaVentaPage.UpdateQuantityFlow(cantidad);
-            _nuevaVentaPage.EnterDocumentAndSearch(documento);
-            _nuevaVentaPage.SelectVoucherFlow(comprobante, serie);
-            _nuevaVentaPage.SelectDeliveryFlow(entrega);
-            _nuevaVentaPage.ConfigurePaymentFlow(pago);
-            _nuevaVentaPage.GuardarVentaFlow();
-            _nuevaVentaPage.VerifyConfirmationMessage("Se registr");
-            Thread.Sleep(1000);
-        }
-
         // ── Ver Ventas: filtrar por ayer ─────────────────────────────────────
         [StepDefinition("filtra ventas por fecha de ayer")]
         public void FiltraVentasPorFechaDeAyer()
         {
             _ajustePage.FiltrarVentasPorFechaAyer();
+        }
+
+        // ── Ver Ventas: filtrar N días atrás (ej: "8" para CP068) ─────────────
+        [StepDefinition("filtra ventas de {int} dias atras")]
+        public void FiltraVentasDeDiasAtras(int dias)
+        {
+            _ajustePage.FiltrarVentasPorDiasAtras(dias);
         }
 
         // ── Abrir modal de ajuste ───────────────────────────────────────────
@@ -85,6 +73,7 @@ namespace SIGES3_0.StepDefinitions.VentasStep
         [StepDefinition("ingresa motivo o sustento {string}")]
         public void IngresaMotivoOSustento(string motivo)
         {
+            if (EsOpcionalVacio(motivo)) return;
             _ajustePage.IngresarMotivoSustento(motivo);
         }
 
@@ -113,6 +102,7 @@ namespace SIGES3_0.StepDefinitions.VentasStep
         [StepDefinition("ingresa cantidad a devolver {string}")]
         public void IngresaCantidadADevolver(string cantidad)
         {
+            if (EsOpcionalVacio(cantidad)) return;
             _ajustePage.IngresarCantidadDevolver(cantidad);
         }
 
@@ -266,6 +256,45 @@ namespace SIGES3_0.StepDefinitions.VentasStep
         {
             if (EsOpcionalVacio(importe)) return;
             _ajustePage.IngresarImporteDetalle(importe);
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        // Pasos de Invalidar Venta
+        // ═══════════════════════════════════════════════════════════════════
+
+        // ── Devolución en modal de Invalidar (reutiliza SeleccionarEntrega) ─
+        [StepDefinition("selecciona devolucion {string} en el modal de invalidacion")]
+        public void SeleccionaDevolucionEnElModalDeInvalidacion(string tipo)
+        {
+            if (EsOpcionalVacio(tipo)) return;
+            _ajustePage.SeleccionarEntrega(tipo);
+        }
+
+        // ── Observación de invalidación ─────────────────────────────────────
+        [StepDefinition("ingresa observacion de invalidacion {string}")]
+        public void IngresaObservacionDeInvalidacion(string observacion)
+        {
+            _ajustePage.IngresarObservacionInvalidacion(observacion);
+        }
+
+        // ── Click Invalidar en el modal ─────────────────────────────────────
+        [StepDefinition("hace clic en Invalidar en el modal de invalidacion")]
+        public void HaceClicEnInvalidarEnElModalDeInvalidacion()
+        {
+            _ajustePage.ClickInvalidarEnModal();
+        }
+
+        // ── Verificaciones de Invalidar ─────────────────────────────────────
+        [Then("el sistema procesa la invalidacion correctamente")]
+        public void ThenElSistemaProcesamLaInvalidacionCorrectamente()
+        {
+            _ajustePage.VerificarInvalidacionExitosa();
+        }
+
+        [Then("el sistema no activa el boton Invalidar")]
+        public void ThenElSistemaNoActivaElBotonInvalidar()
+        {
+            _ajustePage.VerificarBotonInvalidarNoActivo();
         }
     }
 }
