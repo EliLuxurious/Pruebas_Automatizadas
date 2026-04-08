@@ -2,19 +2,23 @@
 using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Config;
 using OpenQA.Selenium;
-using System.Runtime.InteropServices;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SIGES3_0.Utility
 {
     public class ExtentReport
     {
-        public static ExtentReports? _extentReports;
-        public static ExtentTest? _feature;
-        public static ExtentTest? _scenario;
+        public static ExtentReports _extentReports;
+        public static ExtentTest _feature;
+        public static ExtentTest _scenario;
 
-        // Raiz de resultados compatible con Windows y macOS.
+        // Raíz de resultados
         public static string dir = AppDomain.CurrentDomain.BaseDirectory;
-        public static string testResultRoot = ResolveTestResultsRoot();
+        public static string testResultRoot = dir.Replace("bin\\Debug\\net8.0", "TestResults");
 
         // Contexto de la ejecución
         public static string runTimestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
@@ -37,7 +41,7 @@ namespace SIGES3_0.Utility
             _extentReports.AttachReporter(spark);
             _extentReports.AddSystemInfo("Application", "Automatización POM");
             _extentReports.AddSystemInfo("Browser", "Chrome");
-            _extentReports.AddSystemInfo("OS", RuntimeInformation.OSDescription);
+            _extentReports.AddSystemInfo("OS", "Windows");
         }
 
         public static void ExtentReportTearDown()
@@ -62,23 +66,6 @@ namespace SIGES3_0.Utility
                 name = name.Replace(c, '_');
             }
             return name;
-        }
-
-        private static string ResolveTestResultsRoot()
-        {
-            var current = new DirectoryInfo(dir);
-
-            while (current != null)
-            {
-                if (string.Equals(current.Name, "bin", StringComparison.OrdinalIgnoreCase))
-                {
-                    return Path.Combine(current.Parent?.FullName ?? dir, "TestResults");
-                }
-
-                current = current.Parent;
-            }
-
-            return Path.Combine(dir, "TestResults");
         }
     }
 
