@@ -251,7 +251,7 @@ await this.FeatureBackgroundAsync();
             argumentsOfScenario.Add("fechaHoraInicial", fechaHoraInicial);
             argumentsOfScenario.Add("fechaHoraFinal", fechaHoraFinal);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("<Caso> Generar reporte por serie", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 52
+#line 54
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -264,22 +264,22 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 53
+#line 55
     await testRunner.WhenAsync("selecciona la vista \"Series\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 54
+#line 56
     await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 55
+#line 57
     await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 56
+#line 58
     await testRunner.AndAsync(string.Format("selecciona el comprobante y serie \"{0}\"", comprobanteSerie), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 57
+#line 59
     await testRunner.AndAsync("hace clic en \"VER REPORTE\" en la tarjeta \"Por Serie\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 58
+#line 60
     await testRunner.ThenAsync("el sistema genera el reporte exitosamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -291,10 +291,10 @@ await this.FeatureBackgroundAsync();
         [NUnit.Framework.CategoryAttribute("Reportes")]
         [NUnit.Framework.CategoryAttribute("PorConceptos")]
         [NUnit.Framework.CategoryAttribute("Sinfiltro")]
-        [NUnit.Framework.TestCaseAttribute("CP086", "CENTRO COMERCIAL CENTRAL", "Por Familia y Serie", "05/03/2026 12:00 am", "05/03/2026 11:59 pm", null)]
-        [NUnit.Framework.TestCaseAttribute("CP087", "CENTRO COMERCIAL CENTRAL", "Por Categoría y Serie", "05/03/2026 12:00 am", "05/03/2026 11:59 pm", null)]
-        [NUnit.Framework.TestCaseAttribute("CP088", "CENTRO COMERCIAL CENTRAL", "Según Horario", "05/03/2026 12:00 am", "05/03/2026 11:59 pm", null)]
-        [NUnit.Framework.TestCaseAttribute("CP0000", "CENTRO COMERCIAL CENTRAL", "Por Comprobante con ICBPER", "05/03/2026 12:00 am", "05/03/2026 11:59 pm", null)]
+        [NUnit.Framework.TestCaseAttribute("CP086", "CENTRO COMERCIAL CENTRAL", "Por Familia y Serie", "05/03/2026 12:00 am", "25/03/2026 11:59 pm", null)]
+        [NUnit.Framework.TestCaseAttribute("CP087", "CENTRO COMERCIAL CENTRAL", "Por Categoría y Serie", "05/03/2026 12:00 am", "25/03/2026 11:59 pm", null)]
+        [NUnit.Framework.TestCaseAttribute("CP088", "CENTRO COMERCIAL CENTRAL", "Según Horario", "05/03/2026 12:00 am", "25/03/2026 11:59 pm", null)]
+        [NUnit.Framework.TestCaseAttribute("CP0000", "CENTRO COMERCIAL CENTRAL", "Por Comprobante con ICBPER", "05/03/2026 12:00 am", "25/03/2026 11:59 pm", null)]
         public async System.Threading.Tasks.Task CasoGenerarReportePorConceptosSinFiltroAdicional(string caso, string puntoVenta, string tarjeta, string fechaHoraInicial, string fechaHoraFinal, string[] exampleTags)
         {
             string[] @__tags = new string[] {
@@ -313,7 +313,7 @@ await this.FeatureBackgroundAsync();
             argumentsOfScenario.Add("fechaHoraInicial", fechaHoraInicial);
             argumentsOfScenario.Add("fechaHoraFinal", fechaHoraFinal);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("<Caso> Generar reporte por conceptos (sin filtro adicional)", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 67
+#line 72
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -326,22 +326,22 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 68
+#line 73
     await testRunner.WhenAsync("selecciona la vista \"Conceptos\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 69
+#line 74
     await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 70
+#line 75
     await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 71
+#line 76
     await testRunner.AndAsync(string.Format("selecciona el punto de venta \"{0}\"", puntoVenta), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 72
+#line 77
     await testRunner.AndAsync(string.Format("hace clic en \"VER REPORTE\" en la tarjeta \"{0}\"", tarjeta), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 73
+#line 78
     await testRunner.ThenAsync("el sistema genera el reporte exitosamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -372,7 +372,7 @@ await this.FeatureBackgroundAsync();
             argumentsOfScenario.Add("fechaHoraInicial", fechaHoraInicial);
             argumentsOfScenario.Add("fechaHoraFinal", fechaHoraFinal);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("<Caso> Generar reporte por familia en la vista Conceptos", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 85
+#line 90
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -385,25 +385,25 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 86
+#line 91
     await testRunner.WhenAsync("selecciona la vista \"Conceptos\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 87
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora inicial \"{0}\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 92
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 88
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora final \"{0}\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 93
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 89
+#line 94
     await testRunner.AndAsync(string.Format("selecciona el punto de venta \"{0}\"", puntoVenta), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 90
+#line 95
     await testRunner.AndAsync(string.Format("selecciona la familia \"{0}\"", familia), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 91
+#line 96
     await testRunner.AndAsync("hace clic en \"VER REPORTE\" en la tarjeta \"Por Familia\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 92
+#line 97
     await testRunner.ThenAsync("el sistema genera el reporte exitosamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -436,7 +436,7 @@ await this.FeatureBackgroundAsync();
             argumentsOfScenario.Add("fechaHoraInicial", fechaHoraInicial);
             argumentsOfScenario.Add("fechaHoraFinal", fechaHoraFinal);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("<Caso> Generar reporte por característica en la vista Conceptos", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 101
+#line 106
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -449,25 +449,25 @@ await this.FeatureBackgroundAsync();
 #line 6
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 102
+#line 107
     await testRunner.WhenAsync("selecciona la vista \"Conceptos\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 103
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora inicial \"{0}\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 108
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 104
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora final \"{0}\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 109
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 105
+#line 110
     await testRunner.AndAsync(string.Format("selecciona el punto de venta \"{0}\"", puntoVenta), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 106
+#line 111
     await testRunner.AndAsync(string.Format("selecciona la característica \"{0}\" en la tarjeta \"{1}\"", caracteristica, tarjeta), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 107
+#line 112
     await testRunner.AndAsync(string.Format("hace clic en \"VER REPORTE\" en la tarjeta \"{0}\"", tarjeta), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 108
+#line 113
     await testRunner.ThenAsync("el sistema genera el reporte exitosamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -497,7 +497,7 @@ await this.FeatureBackgroundAsync();
             argumentsOfScenario.Add("fechaHoraInicial", fechaHoraInicial);
             argumentsOfScenario.Add("fechaHoraFinal", fechaHoraFinal);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("<Caso> Generar reporte por vendedor en la vista Vendedor", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 117
+#line 125
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -510,28 +510,28 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 118
+#line 126
     await testRunner.WhenAsync("selecciona la vista \"Vendedor\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 119
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora inicial \"{0}\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 127
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 120
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora final \"{0}\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 128
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 121
+#line 129
     await testRunner.AndAsync(string.Format("selecciona el vendedor \"{0}\"", vendedor), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 122
+#line 130
     await testRunner.AndAsync(string.Format("selecciona \"{0}\" en el filtro \"Familias\" de la tarjeta \"Por Vendedor\"", familia), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 123
+#line 131
     await testRunner.AndAsync(string.Format("selecciona \"{0}\" en el filtro \"Conceptos\" de la tarjeta \"Por Vendedor\"", concepto), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 124
+#line 132
     await testRunner.AndAsync("hace clic en \"VER REPORTE\" en la tarjeta \"Por Vendedor\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 125
+#line 133
     await testRunner.ThenAsync("el sistema genera el reporte exitosamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -562,7 +562,7 @@ await this.FeatureBackgroundAsync();
             argumentsOfScenario.Add("fechaHoraInicial", fechaHoraInicial);
             argumentsOfScenario.Add("fechaHoraFinal", fechaHoraFinal);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("<Caso> Generar reporte por modalidad y concepto en la vista Vendedor", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 134
+#line 142
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -575,26 +575,26 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 135
+#line 143
     await testRunner.WhenAsync("selecciona la vista \"Vendedor\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 136
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora inicial \"{0}\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 144
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 137
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora final \"{0}\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 145
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 138
+#line 146
     await testRunner.AndAsync(string.Format("selecciona el vendedor \"{0}\"", vendedor), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 139
+#line 147
     await testRunner.AndAsync(string.Format("selecciona \"{0}\" en el filtro \"Modalidad\" de la tarjeta \"Por Modalidad y Concepto" +
                             "\"", modalidad), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 140
+#line 148
     await testRunner.AndAsync("hace clic en \"VER REPORTE\" en la tarjeta \"Por Modalidad y Concepto\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 141
+#line 149
     await testRunner.ThenAsync("el sistema genera el reporte exitosamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -624,7 +624,7 @@ await this.FeatureBackgroundAsync();
             argumentsOfScenario.Add("fechaHoraInicial", fechaHoraInicial);
             argumentsOfScenario.Add("fechaHoraFinal", fechaHoraFinal);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("<Caso> Generar reporte por familia y vendedor en la vista Vendedor", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 150
+#line 158
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -637,22 +637,22 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 151
+#line 159
     await testRunner.WhenAsync("selecciona la vista \"Vendedor\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 152
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora inicial \"{0}\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 160
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 153
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora final \"{0}\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 161
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 154
+#line 162
     await testRunner.AndAsync(string.Format("selecciona el vendedor \"{0}\"", vendedor), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 155
+#line 163
     await testRunner.AndAsync("hace clic en \"VER REPORTE\" en la tarjeta \"Por Familia y Vendedor\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 156
+#line 164
     await testRunner.ThenAsync("el sistema genera el reporte exitosamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -684,7 +684,7 @@ await this.FeatureBackgroundAsync();
             argumentsOfScenario.Add("fechaHoraInicial", fechaHoraInicial);
             argumentsOfScenario.Add("fechaHoraFinal", fechaHoraFinal);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("<Caso> Generar reporte en la vista Grupos", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 164
+#line 177
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -697,25 +697,25 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 165
+#line 178
     await testRunner.WhenAsync("selecciona la vista \"Grupos\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 166
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora inicial \"{0}\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 179
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 167
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora final \"{0}\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 180
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 168
+#line 181
     await testRunner.AndAsync(string.Format("selecciona el establecimiento \"{0}\"", establecimiento), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 169
+#line 182
     await testRunner.AndAsync(string.Format("selecciona el punto de venta \"{0}\"", puntoVenta), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 170
+#line 183
     await testRunner.AndAsync(string.Format("hace clic en \"VER REPORTE\" en la tarjeta \"{0}\"", tarjeta), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 171
+#line 184
     await testRunner.ThenAsync("el sistema genera el reporte exitosamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -746,7 +746,7 @@ await this.FeatureBackgroundAsync();
             argumentsOfScenario.Add("fechaHoraInicial", fechaHoraInicial);
             argumentsOfScenario.Add("fechaHoraFinal", fechaHoraFinal);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("<Caso> Generar reporte en la vista Excepciones", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 181
+#line 194
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -759,22 +759,22 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 182
+#line 195
     await testRunner.WhenAsync("selecciona la vista \"Excepciones\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 183
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora inicial \"{0}\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 196
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Inicial\"", fechaHoraInicial), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 184
-    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora final \"{0}\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 197
+    await testRunner.AndAsync(string.Format("el usuario ingresa la fecha y hora \"{0}\" en el campo \"Fecha y Hora Final\"", fechaHoraFinal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 185
+#line 198
     await testRunner.AndAsync(string.Format("selecciona el punto de venta \"{0}\"", puntoVenta), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 186
+#line 199
     await testRunner.AndAsync(string.Format("hace clic en \"VER REPORTE\" en la tarjeta \"{0}\"", tarjeta), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 187
+#line 200
     await testRunner.ThenAsync("el sistema genera el reporte exitosamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

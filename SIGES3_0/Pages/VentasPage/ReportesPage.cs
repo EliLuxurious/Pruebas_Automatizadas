@@ -26,24 +26,13 @@ namespace SIGES3_0.Pages.VentasPage
 
         public void SeleccionarVista(string tabName)
         {
-            var tabLocator = VentasLocators.Reportes.TabDinamico(tabName);
             try
             {
-                _utilities.ClickButton(tabLocator);
+                _wait.Until(ExpectedConditions.ElementToBeClickable(VentasLocators.Reportes.VistaReporte(tabName.Trim().ToLower()))).Click();
             }
-            catch (NoSuchElementException)
+            catch (WebDriverTimeoutException)
             {
-                // Fallbacks seguros en caso de que el dinámico no lo encuentre directamente
-                switch (tabName.Trim().ToLower())
-                {
-                    case "comprobantes": _utilities.ClickButton(VentasLocators.Reportes.TabComprobantes); break;
-                    case "series":       _utilities.ClickButton(VentasLocators.Reportes.TabSeries); break;
-                    case "conceptos":    _utilities.ClickButton(VentasLocators.Reportes.TabConceptos); break;
-                    case "vendedor":     _utilities.ClickButton(VentasLocators.Reportes.TabVendedor); break;
-                    case "grupos":       _utilities.ClickButton(VentasLocators.Reportes.TabGrupos); break;
-                    case "excepciones":  _utilities.ClickButton(VentasLocators.Reportes.TabExcepciones); break;
-                    default: throw new Exception($"La vista/tab '{tabName}' no existe en Reportes.");
-                }
+                throw new Exception($"No se encontró la vista '{tabName}' en Reportes. Valores válidos: comprobantes, series, conceptos, vendedor, grupos, excepciones.");
             }
             Thread.Sleep(1000);
         }
@@ -224,16 +213,22 @@ namespace SIGES3_0.Pages.VentasPage
             }
         }
         // =========================
-        // REUTILIZABLE
+        // REUTILIZABLE Ventas
         // =========================
 
-        public void AccederModulo(string modulo) =>
-            _utilities.ClickButton(
-                By.XPath($"//span[normalize-space()='{modulo}']/ancestor::a[1]"));
+        // Modulo y submodulos
 
-        public void AccederSubmodulo(string submodulo) =>
-            _utilities.ClickButton(
-                By.XPath($"//span[contains(text(),'{submodulo}')]"));
+        public void AccederModulo(string modulo)
+        {
+            var locator = By.XPath($"//span[normalize-space()='{modulo}']/ancestor::a[1]");
+            _wait.Until(ExpectedConditions.ElementToBeClickable(locator)).Click();
+        }
+
+        public void AccederSubmodulo(string submodulo)
+        {
+            var locator = By.XPath($"//span[contains(text(),'{submodulo}')]");
+            _wait.Until(ExpectedConditions.ElementToBeClickable(locator)).Click();
+        }
 
         // DATE PICKER
 
@@ -273,7 +268,14 @@ namespace SIGES3_0.Pages.VentasPage
             catch (Exception ex) { throw new Exception("Falló seleccionando mes/año: " + ex.Message); }
 
             try { ClickDia(fecha, inputLocator); }
-            catch (Exception ex) { throw new Exception("Falló seleccionando día: " + ex.Message); }
+            catch (Exception ex)
+            {
+                string m = ex.Message.ToLower();
+                if (m.Contains("no se logro seleccionar el dia correcto") ||
+                    m.Contains("no se logró seleccionar el día correcto"))
+                { CerrarPicker(); return; }
+                throw new Exception("Falló seleccionando día: " + ex.Message);
+            }
 
             try { ClickHora(fecha, inputLocator); }
             catch (Exception ex) { throw new Exception("Falló seleccionando hora: " + ex.Message); }
@@ -391,17 +393,42 @@ namespace SIGES3_0.Pages.VentasPage
 
             int yMin = mesVisible.Location.Y + mesVisible.Size.Height;
 
+            // Calibrar yMax con el día "1": el grid del calendario tiene máx 6 semanas,
+            // esto excluye elementos del time-picker que aparecen más abajo.
+            int? yMax = null;
+            var celdaUno = _driver.FindElements(ItemsDia)
+                .Where(e => EsVisible(e) && (e.Text?.Trim() ?? "") == "1" && e.Location.Y > yMin)
+                .OrderBy(e => e.Location.Y)
+                .FirstOrDefault();
+            if (celdaUno != null)
+                yMax = celdaUno.Location.Y + Math.Max(celdaUno.Size.Height, 20) * 7;
+
             var candidatos = _driver.FindElements(ItemsDia)
                 .Where(e =>
                 {
                     if (!EsVisible(e)) return false;
                     if ((e.Text?.Trim() ?? "") != textoDia) return false;
                     if (e.Location.Y <= yMin) return false;
+                    if (yMax.HasValue && e.Location.Y > yMax.Value) return false;
                     return true;
                 })
                 .OrderBy(e => e.Location.X)
                 .ThenBy(e => e.Location.Y)
                 .ToList();
+
+            // Fallback sin yMax si el cálculo fue demasiado restrictivo
+            if (!candidatos.Any())
+                candidatos = _driver.FindElements(ItemsDia)
+                    .Where(e =>
+                    {
+                        if (!EsVisible(e)) return false;
+                        if ((e.Text?.Trim() ?? "") != textoDia) return false;
+                        if (e.Location.Y <= yMin) return false;
+                        return true;
+                    })
+                    .OrderBy(e => e.Location.X)
+                    .ThenBy(e => e.Location.Y)
+                    .ToList();
 
             if (!candidatos.Any())
                 throw new Exception("No se encontró ningún candidato para el día: " + textoDia);
@@ -411,10 +438,29 @@ namespace SIGES3_0.Pages.VentasPage
                 try
                 {
                     ClickPicker(candidato);
+                    Thread.Sleep(600);
+
+                    // Verificación primaria: el input ya refleja la fecha correcta
+                    string v = ValorCampo(inputLocator);
+                    if (!string.IsNullOrWhiteSpace(v) && v.StartsWith(fechaTexto))
+                        return;
+
+                    // Verificación secundaria: el elemento recibió estado "selected"
+                    // (pickers combinados fecha+hora no actualizan el input hasta terminar la hora)
+                    string cls = (candidato.GetAttribute("class") ?? "").ToLower();
+                    if (cls.Contains("active") || cls.Contains("selected") || cls.Contains("current"))
+                        return;
+                }
+                catch (OpenQA.Selenium.StaleElementReferenceException)
+                {
+                    // El elemento se volvió stale → el click causó una transición de vista
+                    // (calendario → selector de hora) → el día fue seleccionado correctamente
                     Thread.Sleep(300);
                     string v = ValorCampo(inputLocator);
                     if (!string.IsNullOrWhiteSpace(v) && v.StartsWith(fechaTexto))
                         return;
+                    // El input se actualiza al final (tras seleccionar la hora); continuamos
+                    return;
                 }
                 catch { }
             }

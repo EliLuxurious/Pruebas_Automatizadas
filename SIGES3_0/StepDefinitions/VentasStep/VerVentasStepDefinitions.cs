@@ -1,4 +1,5 @@
 using OpenQA.Selenium;
+using Reqnroll;
 using SIGES3_0.Pages.VentasPage;
 
 namespace SIGES3_0.StepDefinitions.VentasStep
@@ -23,6 +24,12 @@ namespace SIGES3_0.StepDefinitions.VentasStep
         public void WhenActivaElModoCanje()
         {
             verVentasPage.ActivarModoCanje();
+        }
+
+        [When(@"selecciona las notas de venta ""([^""]*)""")]
+        public void WhenSeleccionaLasNotasDeVenta(string nvList)
+        {
+            verVentasPage.SeleccionarNVsPorSerie(nvList);
         }
 
         [When(@"selecciona (\d+) notas de venta")]
@@ -59,6 +66,18 @@ namespace SIGES3_0.StepDefinitions.VentasStep
         public void ThenElSistemaGeneraElCanjeExitosamente()
         {
             verVentasPage.VerificarCanjeExitoso();
+        }
+
+        [StepDefinition("filtra ventas del dia de hoy")]
+        public void FiltrarVentasDiaDeHoy()
+        {
+            verVentasPage.FiltrarVentasDiaDeHoy();
+        }
+
+        [StepDefinition("selecciona las primeras {int} notas de venta")]
+        public void SeleccionarPrimerasNVs(int cantidad)
+        {
+            verVentasPage.SeleccionarNVs(cantidad);
         }
 
         [Then("el boton Canjear permanece deshabilitado")]

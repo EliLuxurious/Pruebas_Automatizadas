@@ -39,7 +39,7 @@ namespace SIGES3_0.StepDefinitions.SharedStep
         public void IngresarFechaEnCampo(string fechaHora, string labelCampo) =>
             _reportesPage.IngresarFechaHora(LocatorPorLabel(labelCampo), fechaHora);
 
-        // ── 2. Fecha inicial
+        // ── 2. Fecha inicial (con campo explícito)
         [When(@"el usuario ingresa la fecha inicial {string} en el campo {string}")]
         public void IngresarFechaInicial(string fechaHora, string labelCampo)
         {
@@ -47,7 +47,15 @@ namespace SIGES3_0.StepDefinitions.SharedStep
             _reportesPage.IngresarFechaHora(LocatorPorLabel(labelCampo), fechaHora);
         }
 
-        // ── 3. Fecha final
+        // ── 2b. Fecha y hora inicial (sin campo — usa "Fecha y Hora Inicial" por defecto)
+        [When(@"el usuario ingresa la fecha y hora inicial {string}")]
+        public void IngresarFechaYHoraInicial(string fechaHora)
+        {
+            _ctx[ClaveBloqueo] = false;
+            _reportesPage.IngresarFechaHora(LocatorPorLabel("Fecha y Hora Inicial"), fechaHora);
+        }
+
+        // ── 3. Fecha final (con campo explícito)
         [When(@"el usuario ingresa la fecha final {string} en el campo {string}")]
         public void IngresarFechaFinal(string fechaHora, string labelCampo)
         {
@@ -70,6 +78,32 @@ namespace SIGES3_0.StepDefinitions.SharedStep
                     return;
                 }
                 Assert.Fail("Error al ingresar fecha final: " + ex.Message);
+            }
+        }
+
+        // ── 3b. Fecha y hora final (sin campo — usa "Fecha y Hora Final" por defecto)
+        [When(@"el usuario ingresa la fecha y hora final {string}")]
+        public void IngresarFechaYHoraFinal(string fechaHora)
+        {
+            _ctx[ClaveBloqueo] = false;
+            try
+            {
+                _reportesPage.IngresarFechaHora(LocatorPorLabel("Fecha y Hora Final"), fechaHora);
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message.ToLower();
+                bool esBloqueada = msg.Contains("no se logro seleccionar el dia correcto")
+                                || msg.Contains("fallo seleccionando dia")
+                                || msg.Contains("no se logró seleccionar el día correcto")
+                                || msg.Contains("falló seleccionando día");
+                if (esBloqueada)
+                {
+                    _ctx[ClaveBloqueo] = true;
+                    Console.WriteLine("[DatePicker] Fecha final bloqueada o inválida — se omitirá el botón de acción. Detalle: " + ex.Message);
+                    return;
+                }
+                Assert.Fail("Error al ingresar fecha y hora final: " + ex.Message);
             }
         }
 

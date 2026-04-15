@@ -1,6 +1,7 @@
 using OpenQA.Selenium;
-using SIGES3_0.Pages.VentasPage;
 using NUnit.Framework;
+using Reqnroll;
+using SIGES3_0.Pages.VentasPage;
 
 namespace SIGES3_0.StepDefinitions.VentasStep
 {
