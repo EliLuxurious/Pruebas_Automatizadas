@@ -82,16 +82,7 @@ namespace SIGES3_0.Pages.VentasPage
 
             Log($"Seleccionando punto de venta: {puntoVenta}");
 
-            // El dropdown puede estar ya abierto (bi-chevron-up) si la sección se expandió antes.
-            // Verificar sin espera: si la opción ya es visible, no hacer clic en el chevron.
-            var opcionVisible = driver.FindElements(VentasLocators.NuevaVenta.PuntoVentaOpcion(puntoVenta))
-                .Any(e => { try { return e.Displayed; } catch { return false; } });
-
-            if (!opcionVisible)
-            {
-                Click(VentasLocators.NuevaVenta.PuntoVentaChevron);
-                Thread.Sleep(800);
-            }
+            Click(VentasLocators.NuevaVenta.PuntoVentaChevron);
 
             Click(VentasLocators.NuevaVenta.PuntoVentaOpcion(puntoVenta));
             Thread.Sleep(800);

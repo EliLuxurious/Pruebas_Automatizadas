@@ -83,12 +83,12 @@ Feature: Nueva Venta
     @VentaContingencia
     Scenario Outline: <Caso> Registro de venta por Contingencia
         When selecciona el modo de venta "VENTA POR CONTINGENCIA"
-        And ingresa la fecha de emision "<FechaEmision>"
-        And configura IGV "N" y Detalle Unificado "N"
+        And configura IGV "false" y Detalle Unificado "false"
         And el usuario selecciona la familia 'Gaseosa'
         And el usuario selecciona el concepto '7753234003313'
         And el usuario ingresa la cantidad '150'
         And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'
+        And ingresa la fecha de emision "<FechaEmision>"
         And el usuario configura la entrega '<Entrega>' '<GuiaRemision>'
         And configura el pago "Contado"
         And hace clic en Guardar
@@ -129,6 +129,8 @@ Feature: Nueva Venta
             | CP037 | Transporte Privado sin licencia       | true         | Hoy           | 100       | 10     | Privado        | 75971759         | NA             | 2770XS      | ingrese numero de licencia           |
             | CP038 | Transporte Privado sin placa          | true         | Hoy           | 100       | 10     | Privado        | 75971759         | M-71310154     | NA          | ingrese numero de placa              |
 
+    
+
 # Casos CP031-CP038: Guia de Remision desde Nueva Venta (Tabla de Decisión).
     # Condiciones evaluadas:
     #   - Fecha de traslado: registrada / vacía
@@ -145,3 +147,30 @@ Feature: Nueva Venta
     #   "identifique al conductor con dni"            → Guardar deshabilitado (Privado sin conductor)
     #   "ingrese numero de licencia"                  → Guardar deshabilitado (Privado sin licencia)
     #   "ingrese numero de placa"                     → Guardar deshabilitado (Privado sin placa)
+
+    @NuevaVenta
+@Descuentos
+Scenario Outline: Validar descuentos en nueva venta
+
+	# 🔹 REUTILIZADO (Pedidos)
+	And el usuario selecciona la familia '<familia>'
+	And el usuario selecciona el concepto '<concepto1>'
+	And el usuario ingresa la cantidad '<cantidad1>'
+	And el usuario selecciona el concepto '<concepto2>'
+	And el usuario ingresa la cantidad '<cantidad2>'
+
+	# 🔹 CONFIGURACIÓN
+	And el usuario activa IGV '<igv>'
+
+	# 🔹 REUTILIZADO (Cotización)
+	And el usuario configura descuento '<descuento>' '<tipo_descuento>' '<modo_descuento>' '<valor_descuento>'
+
+	# ❗ VALIDACIÓN SIN GUARDAR
+	Then el sistema valida el resultado del descuento en venta '<resultado>'
+
+Examples:
+| caso | familia | concepto1      | cantidad1 | concepto2      | cantidad2 | igv   | descuento | tipo_descuento | modo_descuento | valor_descuento | resultado                                   |
+| 1    | Gaseosa | 7753234003313 | 1         | 7753234003320 | 1         | false | true      | item           | $              | 1.00            | descuento item monto valido                  |
+| 2    | Gaseosa | 7753234003313 | 1         | 7753234003320 | 1         | false | true      | global         | %              | 5               | descuento global porcentaje valido           |
+| 3    | Gaseosa | 7753234003313 | 1         | 7753234003320 | 1         | false | true      | global         | $              | 20.00           | descuento global monto invalido              |
+| 4    | Gaseosa | 7753234003313 | 1         | 7753234003320 | 1         | false | true      | item           | %              | 100             | descuento item porcentaje invalido           |
