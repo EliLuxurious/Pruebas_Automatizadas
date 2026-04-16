@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -15,6 +13,8 @@ namespace SIGES3_0.Pages.PedidoPages
         private readonly IWebDriver driver;
         private readonly WebDriverWait wait;
 
+        private bool fechaFinalInvalidaOBloqueada = false;
+
         public ReporteDePedidosPage(IWebDriver driver)
         {
             this.driver = driver;
@@ -24,50 +24,79 @@ namespace SIGES3_0.Pages.PedidoPages
         // =========================
         // LOCATORS
         // =========================
+        private readonly By panelFechaFinal =
+    By.XPath("//label[contains(normalize-space(.),'Fecha y Hora Final')]/following::div[contains(@class,'calendar-section')][1]");
 
-        private readonly By submoduloReportes = By.XPath("//span[normalize-space()='Reportes']/ancestor::a");
+        private readonly By panelFechaInicial =
+            By.XPath("//label[contains(normalize-space(.),'Fecha y Hora Inicial')]/following::div[contains(@class,'calendar-section')][1]");
 
-        private readonly By cmbEstablecimiento = By.XPath("//label[contains(.,'Establecimientos')]/following::div[contains(@class,'select-trigger')][1]");
+        private readonly By contenedorScrollPicker =
+            By.XPath("//div[contains(@class,'calendar-section')]");
 
-        private readonly By cmbPuntoVenta = By.XPath("//label[contains(.,'Puntos de venta')]/following::div[contains(@class,'select-trigger')][1]");
+        private readonly By tituloDocumentoReporte = By.XPath("//h3[normalize-space()='INVALIDACIÓN DE PEDIDOS']");
 
-        private readonly By inputFechaHoraInicial = By.XPath("//label[contains(.,'Fecha y Hora Inicial')]/following::input[@readonly][1]");
+        private readonly By hojaReporteDocumento = By.XPath("//div[contains(@class,'report-sheet')]");
 
-        private readonly By inputFechaHoraFinal = By.XPath("//label[contains(.,'Fecha y Hora Final')]/following::input[@readonly][1]");
+        private readonly By subtituloDocumentoReporte = By.XPath("//div[contains(@class,'sheet-subtitle')] | //span[contains(@class,'sheet-subtitle')]");
+        
+        private readonly By submoduloReportes =
+            By.XPath("//span[normalize-space()='Reportes']/ancestor::a");
 
-        private readonly By btnVerReporteInvalidados = By.XPath("//button[contains(.,'VER REPORTE') or contains(.,'Ver reporte')]");
+        private readonly By cmbEstablecimiento =
+            By.XPath("//label[contains(normalize-space(.),'Establecimientos')]/following::div[contains(@class,'select-trigger')][1]");
 
-        private readonly By toastError = By.XPath("//*[contains(@class,'toast') or contains(@class,'alert') or contains(@class,'swal') or contains(text(),'fecha') or contains(text(),'rango') or contains(text(),'inválid') or contains(text(),'inval')]");
+        private readonly By cmbPuntoVenta =
+            By.XPath("//label[contains(normalize-space(.),'Puntos de venta')]/following::div[contains(@class,'select-trigger')][1]");
 
-        private readonly By tablaResultados = By.XPath("//table | //tbody | //div[contains(@class,'table-responsive')]");
+        private readonly By inputFechaHoraInicial =
+            By.XPath("//label[contains(normalize-space(.),'Fecha y Hora Inicial')]/following::input[@readonly][1]");
 
-        private readonly By mensajeSinResultados = By.XPath("//*[contains(text(),'No hay datos') or contains(text(),'No se encontraron resultados') or contains(text(),'Sin resultados')]");
+        private readonly By inputFechaHoraFinal =
+            By.XPath("//label[contains(normalize-space(.),'Fecha y Hora Final')]/following::input[@readonly][1]");
 
-        private readonly By btnMesSiguiente = By.XPath("(//i[contains(@class,'right') or contains(@class,'chevron-right') or contains(@class,'arrow-right')])[1] | (//button[contains(@aria-label,'next') or contains(@class,'next')])[1]");
+        private readonly By btnVerReporteInvalidados = By.XPath("//button[normalize-space()='VER REPORTE']");
 
-        private readonly By btnMesAnterior = By.XPath("(//i[contains(@class,'left') or contains(@class,'chevron-left') or contains(@class,'arrow-left')])[1] | (//button[contains(@aria-label,'prev') or contains(@class,'previous')])[1]");
+        private readonly By dropdownAbierto =
+            By.XPath("//div[contains(@class,'select-dropdown') and contains(@class,'ng-star-inserted')]");
 
-        private readonly By lblMesPicker = By.XPath("//*[normalize-space()='Enero' or normalize-space()='Febrero' or normalize-space()='Marzo' or normalize-space()='Abril' or normalize-space()='Mayo' or normalize-space()='Junio' or normalize-space()='Julio' or normalize-space()='Agosto' or normalize-space()='Septiembre' or normalize-space()='Octubre' or normalize-space()='Noviembre' or normalize-space()='Diciembre']");
+        private readonly By opcionesDropdown =
+            By.XPath("//div[contains(@class,'select-dropdown') and contains(@class,'ng-star-inserted')]//*[self::div or self::span][normalize-space()]");
 
-        private readonly By lblAnioPicker = By.XPath("//*[normalize-space()='2024' or normalize-space()='2025' or normalize-space()='2026' or normalize-space()='2027' or normalize-space()='2028']");
+        private readonly By datePickerPopup =
+            By.XPath("//div[contains(@class,'calendar-section')]");
 
-        private readonly By itemsDiaPicker = By.XPath("//button | //div | //span");
+        private readonly By cabeceraCalendario =
+            By.XPath("//div[contains(@class,'calendar-section')]//*[contains(normalize-space(.),'202') and not(contains(@class,'time-item'))]");
 
-        private readonly By itemsHoraPicker = By.XPath("//button | //div | //span");
+        private readonly By btnMesAnterior =
+            By.XPath("(//div[contains(@class,'calendar-section')]//*[contains(@class,'calendar-header')]//*[self::button or self::i or self::span or self::div])[1]");
 
-        private readonly By itemsMinutoPicker = By.XPath("//button | //div | //span");
+        private readonly By btnMesSiguiente =
+            By.XPath("(//div[contains(@class,'calendar-section')]//*[contains(@class,'calendar-header')]//*[self::button or self::i or self::span or self::div])[last()]");
 
-        private readonly By itemsAmPmPicker = By.XPath("//button | //div | //span");
+        private readonly By celdasDia =
+            By.XPath("//div[contains(@class,'calendar-grid')]//div[contains(@class,'day-cell')]");
 
-        private readonly By opcionesCombo =
-            By.XPath("//*[contains(@class,'option') or contains(@class,'item') or self::span or self::div]");
+        private readonly By columnaHoras =
+            By.XPath("//div[contains(@class,'time-column') and contains(@class,'hours')]//div[contains(@class,'time-item')]");
 
-        private readonly By opcionAmPicker =
-            By.XPath("//*[normalize-space()='a. m.']");
+        private readonly By columnaMinutos =
+            By.XPath("//div[contains(@class,'time-column') and contains(@class,'minutes')]//div[contains(@class,'time-item')]");
 
-        private readonly By opcionPmPicker =
-            By.XPath("//*[normalize-space()='p. m.']");
+        private readonly By columnaAmPm =
+            By.XPath("//div[contains(@class,'time-column') and contains(@class,'ampm')]//div[contains(@class,'time-item')]");
 
+        private readonly By toastError =
+            By.XPath("//*[contains(@class,'toast') or contains(@class,'alert') or contains(@class,'swal') or contains(text(),'fecha') or contains(text(),'rango') or contains(text(),'inválid') or contains(text(),'inval')]");
+
+        private readonly By tablaResultados =
+            By.XPath("//table | //tbody | //div[contains(@class,'table-responsive')]");
+
+        private readonly By mensajeSinResultados =
+            By.XPath("//*[contains(text(),'No hay datos') or contains(text(),'No se encontraron resultados') or contains(text(),'Sin resultados')]");
+        private readonly By contenedorHoras = By.XPath("//div[contains(@class,'time-column') and contains(@class,'hours')]");
+
+        private readonly By contenedorMinutos = By.XPath("//div[contains(@class,'time-column') and contains(@class,'minutes')]");
         // =========================
         // MÉTODOS PÚBLICOS
         // =========================
@@ -76,16 +105,19 @@ namespace SIGES3_0.Pages.PedidoPages
         {
             try
             {
-                IWebElement reporte = wait.Until(d =>
-                    d.FindElements(submoduloReportes).FirstOrDefault(e => EsVisible(e) && e.Enabled));
+                IWebElement? reporte = wait.Until(d =>
+                    d.FindElements(submoduloReportes)
+                     .FirstOrDefault(e => EsVisible(e) && e.Enabled));
 
-                if (reporte == null)
+                if (reporte is null)
                     Assert.Fail("No se encontró el submódulo Reportes.");
 
                 ScrollToElement(reporte);
-                Thread.Sleep(500);
                 ClickSeguro(reporte);
-                Thread.Sleep(1500);
+
+                wait.Until(d =>
+                    d.Url.Contains("/order-report") ||
+                    d.FindElements(btnVerReporteInvalidados).Any(EsVisible));
             }
             catch (Exception ex)
             {
@@ -99,7 +131,7 @@ namespace SIGES3_0.Pages.PedidoPages
             {
                 if (establecimiento.Trim().Equals("Todos", StringComparison.OrdinalIgnoreCase))
                 {
-                    Console.WriteLine("Establecimiento = Todos, no se selecciona opción.");
+                    Console.WriteLine("Establecimiento = Todos, no se cambia selección.");
                     return;
                 }
 
@@ -117,7 +149,7 @@ namespace SIGES3_0.Pages.PedidoPages
             {
                 if (puntoDeVenta.Trim().Equals("Todos", StringComparison.OrdinalIgnoreCase))
                 {
-                    Console.WriteLine("Punto de venta = Todos, no se selecciona opción.");
+                    Console.WriteLine("Punto de venta = Todos, no se cambia selección.");
                     return;
                 }
 
@@ -128,8 +160,6 @@ namespace SIGES3_0.Pages.PedidoPages
                 Assert.Fail("Error al seleccionar punto de venta: " + ex.Message);
             }
         }
-
-        private bool fechaFinalInvalidaOBloqueada = false;
 
         public void IngresarFechaHoraInicial(string fechaHora)
         {
@@ -155,13 +185,15 @@ namespace SIGES3_0.Pages.PedidoPages
             }
             catch (Exception ex)
             {
-                string mensaje = ex.Message.ToLower();
+                string mensaje = ex.Message.ToLowerInvariant();
 
                 if (mensaje.Contains("no se logró seleccionar el día correcto") ||
-                    mensaje.Contains("falló seleccionando día"))
+                    mensaje.Contains("fecha final bloqueada") ||
+                    mensaje.Contains("falló seleccionando día") ||
+                    mensaje.Contains("no se encontró el día disponible"))
                 {
                     fechaFinalInvalidaOBloqueada = true;
-                    Console.WriteLine("La fecha final no pudo seleccionarse porque el sistema la bloqueó: " + ex.Message);
+                    Console.WriteLine("La fecha final quedó bloqueada o inválida: " + ex.Message);
                     return;
                 }
 
@@ -175,18 +207,22 @@ namespace SIGES3_0.Pages.PedidoPages
             {
                 if (fechaFinalInvalidaOBloqueada)
                 {
-                    Console.WriteLine("No se hace clic en Ver Reporte porque la fecha es inválida.");
+                    Console.WriteLine("No se hace clic en Ver Reporte porque la fecha final es inválida o quedó bloqueada.");
                     return;
                 }
 
-                Console.WriteLine("Fecha inicial antes de consultar: " + ObtenerValorSeguro(inputFechaHoraInicial));
-                Console.WriteLine("Fecha final antes de consultar: " + ObtenerValorSeguro(inputFechaHoraFinal));
-
                 IWebElement boton = wait.Until(ExpectedConditions.ElementToBeClickable(ObtenerBotonReporte(tipoReporte)));
                 ScrollToElement(boton);
-                Thread.Sleep(300);
                 ClickSeguro(boton);
-                Thread.Sleep(2000);
+
+                EsperarHasta(d =>
+                    d.FindElements(toastError).Any(EsVisible) ||
+                    d.Url.Contains("/order-report-document", StringComparison.OrdinalIgnoreCase) ||
+                    d.FindElements(tituloDocumentoReporte).Any(EsVisible) ||
+                    d.FindElements(hojaReporteDocumento).Any(EsVisible),
+                    12);
+
+                Thread.Sleep(5000);
             }
             catch (Exception ex)
             {
@@ -196,59 +232,49 @@ namespace SIGES3_0.Pages.PedidoPages
 
         public void ValidarResultadoEsperado(string resultadoEsperado)
         {
-            try
+            string resultadoActual = ObtenerResultadoSistema();
+
+            Console.WriteLine("Resultado esperado: " + resultadoEsperado);
+            Console.WriteLine("Resultado actual: " + resultadoActual);
+            Console.WriteLine("fechaFinalInvalidaOBloqueada: " + fechaFinalInvalidaOBloqueada);
+
+            switch (resultadoEsperado.Trim().ToLowerInvariant())
             {
-                string resultadoActual = ObtenerResultadoSistema();
+                case "no permite aplicar el filtro":
+                    Assert.That(
+                        resultadoActual.ToLowerInvariant(),
+                        Does.Contain("fecha")
+                            .Or.Contain("error")
+                            .Or.Contain("inválid")
+                            .Or.Contain("inval")
+                            .Or.Contain("rango"),
+                        $"Se esperaba un mensaje de error por fecha inválida, pero se obtuvo: {resultadoActual}");
+                    break;
 
-                Console.WriteLine("Resultado esperado: " + resultadoEsperado);
-                Console.WriteLine("Resultado actual: " + resultadoActual);
-                Console.WriteLine("fechaFinalInvalidaOBloqueada: " + fechaFinalInvalidaOBloqueada);
+                case "no permite aplicar el filtro inhabilitado":
+                    Assert.That(
+                        fechaFinalInvalidaOBloqueada,
+                        Is.True,
+                        "Se esperaba que el sistema bloquee la fecha final inválida, pero no ocurrió.");
+                    break;
 
-                switch (resultadoEsperado.Trim().ToLower())
-                {
-                    case "no permite aplicar el filtro":
-                        Assert.That(
-                            resultadoActual.ToLower(),
-                            Does.Contain("fecha")
-                                .Or.Contain("error")
-                                .Or.Contain("inválid")
-                                .Or.Contain("inval")
-                                .Or.Contain("rango"),
-                            $"Se esperaba un mensaje de error por fecha inválida, pero se obtuvo: {resultadoActual}"
-                        );
-                        break;
+                case "aplica el filtro correctamente":
+                    Assert.That(
+                        resultadoActual.ToLowerInvariant(),
+                        Does.Contain("filtro aplicado")
+                            .Or.Contain("tabla visible")
+                            .Or.Contain("sin resultados")
+                            .Or.Contain("resultados visibles")
+                            .Or.Contain("reporte visible"),
+                        $"Se esperaba que el filtro se aplique correctamente, pero se obtuvo: {resultadoActual}");
+                    break;
 
-                    case "no permite aplicar el filtro inhabilitado":
-                        Assert.That(
-                            fechaFinalInvalidaOBloqueada,
-                            Is.True,
-                            "Se esperaba que el sistema bloquee la fecha final inválida, pero no ocurrió."
-                        );
-
-                        Console.WriteLine("Validación correcta: el sistema bloqueó la selección de fecha final inválida.");
-                        return;
-
-                    case "aplica el filtro correctamente":
-                        Assert.That(
-                            resultadoActual.ToLower(),
-                            Does.Contain("filtro aplicado")
-                                .Or.Contain("tabla visible")
-                                .Or.Contain("sin resultados")
-                                .Or.Contain("resultados visibles"),
-                            $"Se esperaba que el filtro se aplique correctamente, pero se obtuvo: {resultadoActual}"
-                        );
-                        break;
-
-                    default:
-                        Assert.Fail("Resultado esperado no reconocido: " + resultadoEsperado);
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail("Error validando resultado del reporte: " + ex.Message);
+                default:
+                    Assert.Fail("Resultado esperado no reconocido: " + resultadoEsperado);
+                    break;
             }
         }
+
         // =========================
         // RESULTADO
         // =========================
@@ -257,16 +283,31 @@ namespace SIGES3_0.Pages.PedidoPages
         {
             try
             {
-                IWebElement error = driver.FindElements(toastError).FirstOrDefault(EsVisible);
-                if (error != null)
+                IWebElement? error = driver.FindElements(toastError).FirstOrDefault(EsVisible);
+                if (error is not null)
                     return error.Text.Trim();
 
-                IWebElement tabla = driver.FindElements(tablaResultados).FirstOrDefault(EsVisible);
-                if (tabla != null)
+                if (driver.Url.Contains("/order-report-document", StringComparison.OrdinalIgnoreCase))
+                    return "reporte visible";
+
+                IWebElement? tituloReporte = driver.FindElements(tituloDocumentoReporte).FirstOrDefault(EsVisible);
+                if (tituloReporte is not null)
+                    return "reporte visible";
+
+                IWebElement? hojaReporte = driver.FindElements(hojaReporteDocumento).FirstOrDefault(EsVisible);
+                if (hojaReporte is not null)
+                    return "reporte visible";
+
+                IWebElement? subtitulo = driver.FindElements(subtituloDocumentoReporte).FirstOrDefault(EsVisible);
+                if (subtitulo is not null)
+                    return "reporte visible";
+
+                IWebElement? tabla = driver.FindElements(tablaResultados).FirstOrDefault(EsVisible);
+                if (tabla is not null)
                     return "tabla visible";
 
-                IWebElement vacio = driver.FindElements(mensajeSinResultados).FirstOrDefault(EsVisible);
-                if (vacio != null)
+                IWebElement? vacio = driver.FindElements(mensajeSinResultados).FirstOrDefault(EsVisible);
+                if (vacio is not null)
                     return "sin resultados";
 
                 return "filtro aplicado";
@@ -285,42 +326,50 @@ namespace SIGES3_0.Pages.PedidoPages
         {
             DateTime fecha = ConvertirFechaFeature(fechaHoraTexto);
 
-            CerrarDatePickerSiEstaAbierto();
+            AbrirDatePicker(inputLocator);
 
-            IWebElement input = wait.Until(ExpectedConditions.ElementToBeClickable(inputLocator));
-            ScrollToElement(input);
-            Thread.Sleep(10);
-            ClickSeguro(input);
-            Thread.Sleep(10);
+            SeleccionarMesYAnio(fecha);
+            SeleccionarDia(fecha, inputLocator);
 
-            string valorAntes = ObtenerValorSeguro(inputLocator);
-
-            try { SeleccionarMesYAnio(fecha); }
-            catch (Exception ex) { throw new Exception("Falló seleccionando mes/año: " + ex.Message); }
-
-            try { SeleccionarDia(fecha, inputLocator); }
-            catch (Exception ex) { throw new Exception("Falló seleccionando día: " + ex.Message); }
-
-            try { SeleccionarHora(fecha, inputLocator); }
-            catch (Exception ex) { throw new Exception("Falló seleccionando hora: " + ex.Message); }
-
-            try { SeleccionarMinuto(fecha, inputLocator); }
-            catch (Exception ex) { throw new Exception("Falló seleccionando minuto: " + ex.Message); }
-
-            try { SeleccionarAmPm(fecha, inputLocator); }
-            catch (Exception ex) { throw new Exception("Falló seleccionando AM/PM: " + ex.Message); }
-
-            Thread.Sleep(800);
+            ScrollDentroDelPicker(inputLocator, 999);
+            SeleccionarHora(fecha, inputLocator);
+            SeleccionarMinuto(fecha, inputLocator);
+            SeleccionarAmPm(fecha, inputLocator);
 
             string esperado = FormatearComoLoMuestraElControl(fecha);
-            string actual = ObtenerValorSeguro(inputLocator);
 
-            if (actual != esperado)
+            bool valorFinalCorrecto = EsperarHastaRetornando(_ =>
             {
-                Assert.Fail($"La fecha no se asignó correctamente. Esperado: {esperado} / Actual: {actual}");
+                string actual = ObtenerValorSeguro(inputLocator);
+                return LimpiarTexto(actual)
+                    .Equals(LimpiarTexto(esperado), StringComparison.OrdinalIgnoreCase);
+            }, 5);
+
+            string actualFinal = ObtenerValorSeguro(inputLocator);
+
+            if (!valorFinalCorrecto)
+            {
+                throw new Exception($"La fecha no se asignó correctamente. Esperado: {esperado} / Actual: {actualFinal}");
             }
 
             CerrarDatePickerSiEstaAbierto();
+        }
+
+        private void AbrirDatePicker(By inputLocator)
+        {
+            IWebElement input = wait.Until(ExpectedConditions.ElementToBeClickable(inputLocator));
+            ScrollToElement(input);
+            CentrarEnPantalla(input);
+            ClickSeguro(input);
+
+            wait.Until(ExpectedConditions.ElementIsVisible(datePickerPopup));
+
+            IWebElement? panel = ObtenerPanelDatePickerAbierto(inputLocator);
+            if (panel is not null)
+            {
+                ScrollToElement(panel);
+                CentrarEnPantalla(panel);
+            }
         }
 
         private DateTime ConvertirFechaFeature(string fechaHora)
@@ -355,137 +404,118 @@ namespace SIGES3_0.Pages.PedidoPages
 
         private void SeleccionarMesYAnio(DateTime fechaObjetivo)
         {
-            string[] meses =
-            {
-                "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-            };
-
-            string mesObjetivo = meses[fechaObjetivo.Month - 1];
-            int anioObjetivo = fechaObjetivo.Year;
+            string cabeceraEsperada = fechaObjetivo.ToString("MMMM yyyy", new CultureInfo("es-ES"));
+            cabeceraEsperada = char.ToUpper(cabeceraEsperada[0]) + cabeceraEsperada.Substring(1);
 
             for (int i = 0; i < 24; i++)
             {
-                IWebElement mesElemento = wait.Until(d =>
-                {
-                    var elementos = d.FindElements(lblMesPicker);
+                IWebElement? cabecera = ObtenerCabeceraCalendarioVisible();
 
-                    return elementos
-                        .Where(e => EsVisible(e))
-                        .OrderByDescending(e => e.Location.Y)
-                        .FirstOrDefault();
-                });
+                if (cabecera is null)
+                    throw new Exception("No se encontró la cabecera visible del calendario.");
 
-                if (mesElemento == null)
-                    throw new Exception("No se encontró el mes visible del calendario.");
+                string textoActual = LimpiarTexto(cabecera.Text);
 
-                string mesActual = mesElemento.Text.Trim();
-
-                int anioActual = anioObjetivo;
-                IWebElement anioElemento = driver.FindElements(lblAnioPicker)
-                    .Where(e => EsVisible(e))
-                    .OrderByDescending(e => e.Location.Y)
-                    .FirstOrDefault();
-
-                if (anioElemento != null && int.TryParse(anioElemento.Text.Trim(), out int anioDetectado))
-                    anioActual = anioDetectado;
-
-                if (mesActual.Equals(mesObjetivo, StringComparison.OrdinalIgnoreCase) && anioActual == anioObjetivo)
+                if (textoActual.Equals(cabeceraEsperada, StringComparison.OrdinalIgnoreCase))
                     return;
 
-                DateTime actual = new DateTime(anioActual, ObtenerNumeroMes(mesActual), 1);
-                DateTime objetivo = new DateTime(anioObjetivo, fechaObjetivo.Month, 1);
+                DateTime actual = ParseCabeceraMesAnio(textoActual);
+                DateTime objetivo = new DateTime(fechaObjetivo.Year, fechaObjetivo.Month, 1);
 
                 if (actual < objetivo)
                 {
-                    IWebElement next = wait.Until(d =>
-                        d.FindElements(btnMesSiguiente).FirstOrDefault(EsVisible));
-
-                    if (next == null)
-                        throw new Exception("No se encontró el botón para avanzar mes.");
-
+                    IWebElement next = wait.Until(ExpectedConditions.ElementToBeClickable(btnMesSiguiente));
                     ClickSeguro(next);
                 }
                 else
                 {
-                    IWebElement prev = wait.Until(d =>
-                        d.FindElements(btnMesAnterior).FirstOrDefault(EsVisible));
-
-                    if (prev == null)
-                        throw new Exception("No se encontró el botón para retroceder mes.");
-
+                    IWebElement prev = wait.Until(ExpectedConditions.ElementToBeClickable(btnMesAnterior));
                     ClickSeguro(prev);
                 }
 
-                Thread.Sleep(400);
+                EsperarHasta(_ =>
+                {
+                    IWebElement? nuevaCabecera = ObtenerCabeceraCalendarioVisible();
+                    return nuevaCabecera is not null &&
+                           !LimpiarTexto(nuevaCabecera.Text).Equals(textoActual, StringComparison.OrdinalIgnoreCase);
+                }, 5);
             }
 
-            throw new Exception($"No se pudo navegar al mes/año esperado: {mesObjetivo} {anioObjetivo}");
+            throw new Exception($"No se pudo navegar al mes/año esperado: {cabeceraEsperada}");
+        }
+
+        private IWebElement? ObtenerCabeceraCalendarioVisible()
+        {
+            return driver.FindElements(cabeceraCalendario)
+                .Where(EsVisible)
+                .Select(e => new
+                {
+                    Elemento = e,
+                    Texto = LimpiarTexto(e.Text)
+                })
+                .Where(x => EsCabeceraMesAnioValida(x.Texto))
+                .Select(x => x.Elemento)
+                .FirstOrDefault();
+        }
+
+        private bool EsCabeceraMesAnioValida(string texto)
+        {
+            string[] formatos = { "MMMM yyyy", "MMM yyyy" };
+
+            return DateTime.TryParseExact(
+                texto,
+                formatos,
+                new CultureInfo("es-ES"),
+                DateTimeStyles.None,
+                out _);
+        }
+
+        private DateTime ParseCabeceraMesAnio(string texto)
+        {
+            string[] formatos = { "MMMM yyyy", "MMM yyyy" };
+
+            if (DateTime.TryParseExact(
+                texto,
+                formatos,
+                new CultureInfo("es-ES"),
+                DateTimeStyles.None,
+                out DateTime fecha))
+            {
+                return new DateTime(fecha.Year, fecha.Month, 1);
+            }
+
+            throw new Exception("No se pudo interpretar la cabecera del calendario: " + texto);
         }
 
         private void SeleccionarDia(DateTime fechaEsperada, By inputLocator)
         {
-            string textoDia = fechaEsperada.Day.ToString();
+            string dia = fechaEsperada.Day.ToString();
+
+            IWebElement? diaElemento = driver.FindElements(celdasDia)
+                .FirstOrDefault(e =>
+                    EsVisible(e) &&
+                    e.Text.Trim() == dia &&
+                    !TieneClase(e, "disabled"));
+
+            if (diaElemento is null)
+                throw new Exception("No se encontró el día disponible: " + dia);
+
+            ClickSeguro(diaElemento);
+
             string fechaEsperadaTexto = fechaEsperada.ToString("dd/MM/yyyy");
 
-            IWebElement mesVisible = driver.FindElements(lblMesPicker)
-                .Where(e => EsVisible(e))
-                .OrderByDescending(e => e.Location.Y)
-                .FirstOrDefault();
-
-            if (mesVisible == null)
-                throw new Exception("No se encontró el encabezado del calendario.");
-
-            int yMinCalendario = mesVisible.Location.Y + mesVisible.Size.Height;
-
-            var candidatos = driver.FindElements(itemsDiaPicker)
-                .Where(e =>
-                {
-                    if (!EsVisible(e))
-                        return false;
-
-                    string texto = e.Text?.Trim() ?? "";
-                    if (texto != textoDia)
-                        return false;
-
-                    string tag = e.TagName.ToLower();
-                    if (tag != "div" && tag != "button" && tag != "span")
-                        return false;
-
-                    if (e.Location.Y <= yMinCalendario)
-                        return false;
-
-                    return true;
-                })
-                .OrderBy(e => e.Location.X)
-                .ThenBy(e => e.Location.Y)
-                .ToList();
-
-            if (!candidatos.Any())
-                throw new Exception("No se encontró ningún candidato para el día: " + textoDia);
-
-            foreach (var candidato in candidatos)
+            bool diaCorrecto = EsperarHastaRetornando(_ =>
             {
-                try
-                {
-                    ClickSeguro(candidato);
-                    Thread.Sleep(300);
+                string actual = ObtenerValorSeguro(inputLocator);
+                return !string.IsNullOrWhiteSpace(actual) &&
+                       actual.StartsWith(fechaEsperadaTexto, StringComparison.OrdinalIgnoreCase);
+            }, 3);
 
-                    string valorActual = ObtenerValorSeguro(inputLocator);
-
-                    if (!string.IsNullOrWhiteSpace(valorActual) &&
-                        valorActual.StartsWith(fechaEsperadaTexto))
-                    {
-                        return;
-                    }
-                }
-                catch
-                {
-                }
+            if (!diaCorrecto)
+            {
+                string actual = ObtenerValorSeguro(inputLocator);
+                throw new Exception($"No se logró seleccionar el día correcto. Esperado día: {dia} / Actual: {actual}");
             }
-
-            string valorFinal = ObtenerValorSeguro(inputLocator);
-            throw new Exception($"No se logró seleccionar el día correcto. Esperado: {fechaEsperadaTexto} / Actual: {valorFinal}");
         }
 
         private void SeleccionarHora(DateTime fechaEsperada, By inputLocator)
@@ -493,93 +523,101 @@ namespace SIGES3_0.Pages.PedidoPages
             string hora = fechaEsperada.ToString("hh");
             string fechaEsperadaTexto = fechaEsperada.ToString("dd/MM/yyyy");
 
-            var columnas = ObtenerColumnasNumericasDelPicker();
+            IWebElement contenedor = wait.Until(ExpectedConditions.ElementIsVisible(contenedorHoras));
+            IWebElement? horaElemento = BuscarTimeItemEnColumna(contenedor, columnaHoras, hora);
 
-            if (columnas.Count < 2)
-                throw new Exception("No se pudieron identificar las columnas de hora y minuto del picker.");
-
-            var columnaHora = columnas[0];
-
-            IWebElement horaElemento = columnaHora
-                .FirstOrDefault(e => (e.Text ?? "").Trim() == hora);
-
-            if (horaElemento == null)
-                throw new Exception("No se encontró la hora en la columna de horas: " + hora);
+            if (horaElemento is null)
+                throw new Exception("No se encontró la hora: " + hora);
 
             ClickSeguro(horaElemento);
-            Thread.Sleep(300);
 
-            string actual = ObtenerValorSeguro(inputLocator);
-
-            if (!actual.StartsWith(fechaEsperadaTexto) || !actual.Contains($" {hora}:"))
+            bool horaCorrecta = EsperarHastaRetornando(_ =>
             {
-                throw new Exception($"No se logró seleccionar la hora correcta. Esperado: {fechaEsperadaTexto} {hora}:xx / Actual: {actual}");
+                string actual = ObtenerValorSeguro(inputLocator);
+                return !string.IsNullOrWhiteSpace(actual) &&
+                       actual.StartsWith(fechaEsperadaTexto, StringComparison.OrdinalIgnoreCase) &&
+                       actual.Contains($" {hora}:");
+            }, 3);
+
+            if (!horaCorrecta)
+            {
+                string actual = ObtenerValorSeguro(inputLocator);
+                throw new Exception($"No se logró seleccionar la hora correcta. Esperado: {hora} / Actual: {actual}");
             }
         }
 
         private void SeleccionarMinuto(DateTime fechaEsperada, By inputLocator)
         {
             string minuto = fechaEsperada.ToString("mm");
-            string fechaEsperadaTexto = fechaEsperada.ToString("dd/MM/yyyy");
 
-            var columnas = ObtenerColumnasNumericasDelPicker();
+            IWebElement contenedor = wait.Until(ExpectedConditions.ElementIsVisible(contenedorMinutos));
+            IWebElement? minutoElemento = BuscarTimeItemEnColumna(contenedor, columnaMinutos, minuto);
 
-            if (columnas.Count < 2)
-                throw new Exception("No se pudieron identificar las columnas de hora y minuto del picker.");
-
-            var columnaMinuto = columnas[1];
-
-            IWebElement minutoElemento = columnaMinuto
-                .FirstOrDefault(e => (e.Text ?? "").Trim() == minuto);
-
-            if (minutoElemento == null)
-                throw new Exception("No se encontró el minuto en la columna de minutos: " + minuto);
+            if (minutoElemento is null)
+                throw new Exception("No se encontró el minuto: " + minuto);
 
             ClickSeguro(minutoElemento);
-            Thread.Sleep(300);
 
-            string actual = ObtenerValorSeguro(inputLocator);
-
-            if (!actual.StartsWith(fechaEsperadaTexto) || !actual.Contains($":{minuto}"))
+            bool minutoCorrecto = EsperarHastaRetornando(_ =>
             {
-                throw new Exception($"No se logró seleccionar el minuto correcto. Esperado: {fechaEsperadaTexto} xx:{minuto} / Actual: {actual}");
+                string actual = ObtenerValorSeguro(inputLocator);
+                return !string.IsNullOrWhiteSpace(actual) &&
+                       actual.Contains($":{minuto}");
+            }, 3);
+
+            if (!minutoCorrecto)
+            {
+                string actual = ObtenerValorSeguro(inputLocator);
+                throw new Exception($"No se logró seleccionar el minuto correcto. Esperado: {minuto} / Actual: {actual}");
             }
         }
 
-        private void SeleccionarAmPm(DateTime fecha, By inputLocator)
+        private void SeleccionarAmPm(DateTime fechaEsperada, By inputLocator)
         {
-            bool esAm = fecha.ToString("tt", new CultureInfo("en-US"))
-                .Equals("AM", StringComparison.OrdinalIgnoreCase);
+            string ampmEsperado = fechaEsperada.ToString("tt", new CultureInfo("en-US"))
+                .Equals("AM", StringComparison.OrdinalIgnoreCase)
+                ? "a. m."
+                : "p. m.";
 
-            By opcionObjetivo = esAm ? opcionAmPicker : opcionPmPicker;
+            IWebElement contenedor = wait.Until(ExpectedConditions.ElementIsVisible(columnaAmPm));
+            IWebElement? ampmElemento = driver.FindElements(columnaAmPm)
+                .FirstOrDefault(e =>
+                    EsVisible(e) &&
+                    LimpiarTexto(e.Text).Equals(ampmEsperado, StringComparison.OrdinalIgnoreCase));
 
-            IWebElement ampmElemento = wait.Until(d =>
-                d.FindElements(opcionObjetivo).FirstOrDefault(e => EsVisible(e)));
+            if (ampmElemento is null)
+            {
+                ((IJavaScriptExecutor)driver).ExecuteScript(
+                    "arguments[0].scrollIntoView({block:'center'});", contenedor);
 
-            if (ampmElemento == null)
-                throw new Exception("No se encontró el selector " + (esAm ? "a. m." : "p. m."));
+                ampmElemento = driver.FindElements(columnaAmPm)
+                    .FirstOrDefault(e =>
+                        EsVisible(e) &&
+                        LimpiarTexto(e.Text).Equals(ampmEsperado, StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (ampmElemento is null)
+                throw new Exception("No se encontró el selector " + ampmEsperado);
 
             ClickSeguro(ampmElemento);
-            Thread.Sleep(500);
 
-            string actual = ObtenerValorSeguro(inputLocator);
-            string esperadoTexto = esAm ? "a. m." : "p. m.";
-
-            if (!actual.Contains(esperadoTexto))
+            bool ampmCorrecto = EsperarHastaRetornando(_ =>
             {
-                ClickSeguro(ampmElemento);
-                Thread.Sleep(500);
+                string actual = ObtenerValorSeguro(inputLocator);
+                return !string.IsNullOrWhiteSpace(actual) &&
+                       actual.Contains(ampmEsperado, StringComparison.OrdinalIgnoreCase);
+            }, 3);
 
-                actual = ObtenerValorSeguro(inputLocator);
-
-                if (!actual.Contains(esperadoTexto))
-                    throw new Exception($"No se logró seleccionar {(esAm ? "a. m." : "p. m.")}. Valor actual: {actual}");
+            if (!ampmCorrecto)
+            {
+                string actual = ObtenerValorSeguro(inputLocator);
+                throw new Exception($"No se logró seleccionar AM/PM. Esperado: {ampmEsperado} / Actual: {actual}");
             }
         }
 
         private string FormatearComoLoMuestraElControl(DateTime fecha)
         {
-            string ampm = fecha.ToString("tt", new CultureInfo("en-US")).ToLower() == "am"
+            string ampm = fecha.ToString("tt", new CultureInfo("en-US")).Equals("AM", StringComparison.OrdinalIgnoreCase)
                 ? "a. m."
                 : "p. m.";
 
@@ -594,21 +632,22 @@ namespace SIGES3_0.Pages.PedidoPages
         {
             IWebElement combo = wait.Until(ExpectedConditions.ElementToBeClickable(comboLocator));
             ScrollToElement(combo);
-            Thread.Sleep(300);
             ClickSeguro(combo);
-            Thread.Sleep(700);
 
-            IWebElement item = wait.Until(d =>
-                d.FindElements(opcionesCombo).FirstOrDefault(e =>
+            wait.Until(ExpectedConditions.ElementIsVisible(dropdownAbierto));
+
+            IWebElement? item = driver.FindElements(opcionesDropdown)
+                .FirstOrDefault(e =>
                     EsVisible(e) &&
-                    e.Text.Trim().Equals(opcion, StringComparison.OrdinalIgnoreCase)));
+                    LimpiarTexto(e.Text).Equals(opcion.Trim(), StringComparison.OrdinalIgnoreCase));
 
-            if (item == null)
+            if (item is null)
                 throw new Exception("No se encontró la opción del combo: " + opcion);
 
             ScrollToElement(item);
             ClickSeguro(item);
-            Thread.Sleep(700);
+
+            EsperarHasta(d => !d.FindElements(dropdownAbierto).Any(EsVisible), 5);
         }
 
         // =========================
@@ -617,10 +656,11 @@ namespace SIGES3_0.Pages.PedidoPages
 
         private By ObtenerBotonReporte(string tipoReporte)
         {
-            switch (tipoReporte.Trim().ToLower())
+            switch (tipoReporte.Trim().ToLowerInvariant())
             {
                 case "invalidados":
                     return btnVerReporteInvalidados;
+
                 default:
                     throw new Exception("Tipo de reporte no configurado: " + tipoReporte);
             }
@@ -629,100 +669,136 @@ namespace SIGES3_0.Pages.PedidoPages
         // =========================
         // HELPERS
         // =========================
-
-        private List<List<IWebElement>> ObtenerColumnasNumericasDelPicker()
+        private void CentrarEnPantalla(IWebElement element)
         {
-            var elementosNumericos = driver.FindElements(itemsHoraPicker)
-                .Where(e =>
-                {
-                    if (!EsVisible(e))
-                        return false;
+            ((IJavaScriptExecutor)driver).ExecuteScript(
+                "arguments[0].scrollIntoView({block:'center', inline:'nearest'});", element);
+        }
 
-                    string texto = (e.Text ?? "").Trim();
-
-                    if (texto.Length != 2)
-                        return false;
-
-                    return int.TryParse(texto, out _);
-                })
-                .OrderBy(e => e.Location.X)
-                .ThenBy(e => e.Location.Y)
-                .ToList();
-
-            if (!elementosNumericos.Any())
-                throw new Exception("No se encontraron elementos numéricos visibles en el picker.");
-
-            var columnas = new List<List<IWebElement>>();
-            const int toleranciaX = 20;
-
-            foreach (var elemento in elementosNumericos)
+        private IWebElement? ObtenerPanelDatePickerAbierto(By inputLocator)
+        {
+            try
             {
-                bool agregado = false;
-
-                foreach (var columna in columnas)
+                if (inputLocator == inputFechaHoraFinal)
                 {
-                    int xReferencia = columna[0].Location.X;
-
-                    if (Math.Abs(elemento.Location.X - xReferencia) <= toleranciaX)
-                    {
-                        columna.Add(elemento);
-                        agregado = true;
-                        break;
-                    }
+                    return driver.FindElements(panelFechaFinal).FirstOrDefault(EsVisible)
+                        ?? driver.FindElements(datePickerPopup).LastOrDefault(EsVisible);
                 }
 
-                if (!agregado)
-                    columnas.Add(new List<IWebElement> { elemento });
+                if (inputLocator == inputFechaHoraInicial)
+                {
+                    return driver.FindElements(panelFechaInicial).FirstOrDefault(EsVisible)
+                        ?? driver.FindElements(datePickerPopup).FirstOrDefault(EsVisible);
+                }
+
+                return driver.FindElements(datePickerPopup).LastOrDefault(EsVisible);
+            }
+            catch
+            {
+                return driver.FindElements(datePickerPopup).LastOrDefault(EsVisible);
+            }
+        }
+
+        private void ScrollDentroDelPicker(By inputLocator, int top)
+        {
+            IWebElement? panel = ObtenerPanelDatePickerAbierto(inputLocator);
+            if (panel is null)
+                return;
+
+            ((IJavaScriptExecutor)driver).ExecuteScript(
+                "arguments[0].scrollTop = arguments[1];", panel, top);
+        }
+        private IWebElement? BuscarTimeItemEnColumna(IWebElement contenedor, By itemsLocator, string valorBuscado)
+        {
+            for (int i = 0; i < 25; i++)
+            {
+                IWebElement? itemVisible = driver.FindElements(itemsLocator)
+                    .FirstOrDefault(e =>
+                        EsVisible(e) &&
+                        LimpiarTexto(e.Text) == valorBuscado);
+
+                if (itemVisible is not null)
+                {
+                    ScrollToElement(itemVisible);
+                    CentrarEnPantalla(itemVisible);
+                    return itemVisible;
+                }
+
+                ((IJavaScriptExecutor)driver).ExecuteScript(
+                    "arguments[0].scrollTop = arguments[0].scrollTop + 35;", contenedor);
             }
 
-            columnas = columnas
-                .Where(c => c.Count >= 5)
-                .OrderBy(c => c.Average(e => e.Location.X))
-                .ToList();
+    ((IJavaScriptExecutor)driver).ExecuteScript(
+        "arguments[0].scrollTop = 0;", contenedor);
 
-            if (columnas.Count < 2)
-                throw new Exception("No se pudieron agrupar correctamente las columnas numéricas del picker.");
+            for (int i = 0; i < 25; i++)
+            {
+                IWebElement? itemVisible = driver.FindElements(itemsLocator)
+                    .FirstOrDefault(e =>
+                        EsVisible(e) &&
+                        LimpiarTexto(e.Text) == valorBuscado);
 
-            return columnas;
+                if (itemVisible is not null)
+                {
+                    ScrollToElement(itemVisible);
+                    CentrarEnPantalla(itemVisible);
+                    return itemVisible;
+                }
+
+                ((IJavaScriptExecutor)driver).ExecuteScript(
+                    "arguments[0].scrollTop = arguments[0].scrollTop + 20;", contenedor);
+            }
+
+            return null;
+        }
+
+        private void EsperarHasta(Func<IWebDriver, bool> condicion, int segundos = 10)
+        {
+            new WebDriverWait(driver, TimeSpan.FromSeconds(segundos)).Until(condicion);
+        }
+
+        private bool EsperarHastaRetornando(Func<IWebDriver, bool> condicion, int segundos = 10)
+        {
+            try
+            {
+                new WebDriverWait(driver, TimeSpan.FromSeconds(segundos)).Until(condicion);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private void CerrarDatePickerSiEstaAbierto()
         {
             try
             {
-                driver.FindElement(By.TagName("body")).SendKeys(Keys.Escape);
-                Thread.Sleep(400);
+                if (driver.FindElements(datePickerPopup).Any(EsVisible))
+                {
+                    driver.FindElement(By.TagName("body")).SendKeys(Keys.Escape);
+                    EsperarHasta(d => !d.FindElements(datePickerPopup).Any(EsVisible), 3);
+                }
             }
             catch
             {
             }
         }
 
-        private int ObtenerNumeroMes(string nombreMes)
+        private void ScrollToElement(IWebElement? element)
         {
-            string[] meses =
-            {
-                "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-            };
+            if (element is null)
+                throw new ArgumentNullException(nameof(element));
 
-            int indice = Array.FindIndex(meses, m =>
-                m.Equals(nombreMes.Trim(), StringComparison.OrdinalIgnoreCase));
-
-            if (indice == -1)
-                throw new Exception("No se reconoció el mes del calendario: " + nombreMes);
-
-            return indice + 1;
-        }
-
-        private void ScrollToElement(IWebElement element)
-        {
             ((IJavaScriptExecutor)driver)
                 .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", element);
         }
 
-        private void ClickSeguro(IWebElement element)
+        private void ClickSeguro(IWebElement? element)
         {
+            if (element is null)
+                throw new ArgumentNullException(nameof(element));
+
             try
             {
                 element.Click();
@@ -738,11 +814,12 @@ namespace SIGES3_0.Pages.PedidoPages
         {
             try
             {
-                return wait.Until(d => d.FindElement(locator)).GetAttribute("value")?.Trim() ?? "";
+                IWebElement elemento = wait.Until(d => d.FindElement(locator));
+                return elemento.GetAttribute("value")?.Trim() ?? string.Empty;
             }
             catch
             {
-                return "";
+                return string.Empty;
             }
         }
 
@@ -750,12 +827,34 @@ namespace SIGES3_0.Pages.PedidoPages
         {
             try
             {
-                return element != null && element.Displayed;
+                return element.Displayed;
             }
             catch
             {
                 return false;
             }
+        }
+
+        private bool TieneClase(IWebElement element, string clase)
+        {
+            try
+            {
+                string classes = element.GetAttribute("class") ?? string.Empty;
+                return classes.Contains(clase, StringComparison.OrdinalIgnoreCase);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private string LimpiarTexto(string? texto)
+        {
+            return (texto ?? string.Empty)
+                .Replace("\r", " ")
+                .Replace("\n", " ")
+                .Replace("  ", " ")
+                .Trim();
         }
     }
 }
