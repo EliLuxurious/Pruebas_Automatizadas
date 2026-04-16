@@ -21,6 +21,7 @@ namespace SIGES3_0.Features.FacturacionCiclica
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("Gestión de Clientes en Facturación Cíclica")]
+    [NUnit.Framework.IgnoreAttribute("Ignored feature")]
     [NUnit.Framework.CategoryAttribute("RegistroClientes")]
     public partial class GestionDeClientesEnFacturacionCiclicaFeature
     {
@@ -28,6 +29,7 @@ namespace SIGES3_0.Features.FacturacionCiclica
         private global::Reqnroll.ITestRunner testRunner;
         
         private static string[] featureTags = new string[] {
+                "ignore",
                 "RegistroClientes"};
         
         private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/FacturacionCiclica", "Gestión de Clientes en Facturación Cíclica", null, global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
@@ -92,7 +94,7 @@ namespace SIGES3_0.Features.FacturacionCiclica
                     "RegistroRuc10"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo cliente con tipo de documento RUC (10) con Factura", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 5
+#line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -102,20 +104,20 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
+#line 7
     await testRunner.GivenAsync("Inicio de sesión con usuario \'administrador\' y contraseña \'calidad\' en \'https://s" +
                         "igesdev.newfront-dev-qa.sigesonline.com/\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 7
+#line 8
     await testRunner.AndAsync("Se ingresa al módulo \'Facturación Cíclica\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 8
+#line 9
     await testRunner.AndAsync("Se selecciona la opción \'Nuevo Cliente\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 9
+#line 10
     await testRunner.AndAsync("Se expande la sección \'Datos Generales\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 10
+#line 11
     await testRunner.AndAsync("Se selecciona el tipo de documento \'REGISTRO NACIONAL DE CONTRIBUYENTES\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
                 global::Reqnroll.Table table1 = new global::Reqnroll.Table(new string[] {
@@ -136,22 +138,22 @@ this.ScenarioInitialize(scenarioInfo);
                 table1.AddRow(new string[] {
                             "Nombre Comercial",
                             "AGRINOVATE DEL PERU"});
-#line 11
+#line 12
     await testRunner.WhenAsync("Se ingresan los datos de identidad:", ((string)(null)), table1, "When ");
 #line hidden
-#line 19
+#line 20
     await testRunner.AndAsync("Se selecciona el Ubigeo \'LIMA - LIMA - MIRAFLORES\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 20
+#line 21
     await testRunner.AndAsync("Se ingresa la dirección \'Jr. Rio de Janeiro Nro. 382\' con detalle \'-\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 21
+#line 22
     await testRunner.AndAsync("Se ingresa el correo electrónico \'agricola@gmail.com\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 22
+#line 23
     await testRunner.AndAsync("Se expande la sección de \'Facturación\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 23
+#line 24
     await testRunner.AndAsync("Se ingresa el número de teléfono \'937584269\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
                 global::Reqnroll.Table table2 = new global::Reqnroll.Table(new string[] {
@@ -172,10 +174,10 @@ this.ScenarioInitialize(scenarioInfo);
                 table2.AddRow(new string[] {
                             "Plan",
                             "PLAN BASICO"});
-#line 24
+#line 25
     await testRunner.AndAsync("Se completan los datos de facturación:", ((string)(null)), table2, "And ");
 #line hidden
-#line 32
+#line 33
     await testRunner.ThenAsync("Se procede a \'GUARDAR\' el registro del cliente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

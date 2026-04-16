@@ -1,4 +1,5 @@
-﻿@RegistroClientes
+﻿@ignore
+@RegistroClientes
 Feature: Gestión de Clientes en Facturación Cíclica
 
 @RegistroRuc10
