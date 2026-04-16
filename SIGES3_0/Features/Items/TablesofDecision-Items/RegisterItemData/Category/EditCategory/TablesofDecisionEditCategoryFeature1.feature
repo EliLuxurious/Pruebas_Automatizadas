@@ -12,12 +12,14 @@ And el usuario selecciona Registrar Datos de Concepto
 Scenario: Editar Categoria de la categoría SAD
 When el usuario va a la opcion categoria
 And el usuario edita la categoria "sad"
-And el usuario ingresa la descripcion de categoría "estoy triste"
-Then el sistema guarda los cambios al editar categoria
+And el usuario ingresa la descripcion de categoría " estoy"
+When el sistema guarda los cambios al editar categoria
+Then el sistema muestra un mensaje de confirmacion
 
 
-Scenario: Edición inválida de Categoria de la categoría GOL
+
+Scenario: Edición inválida de Categoria de la categoría traje
 When el usuario va a la opcion categoria
-And el usuario edita la categoria "gol"
+And el usuario edita la categoria "traje"
 Then el sistema no guarda los cambios de editar categoria
-
+Then el sistema muestra un mensaje de error

@@ -101,16 +101,19 @@ await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(nu
 #line 9
 await testRunner.AndAsync("el usuario selecciona Registrar Datos de Concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
+#line 10
+await testRunner.AndAsync("el usuario va a la opcion Presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Dar de Baja Presentación a la presentación GGG")]
-        public async System.Threading.Tasks.Task DarDeBajaPresentacionALaPresentacionGGG()
+        [NUnit.Framework.DescriptionAttribute("Dar de Baja Presentación a la presentación")]
+        public async System.Threading.Tasks.Task DarDeBajaPresentacionALaPresentacion()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Presentación a la presentación GGG", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 11
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Presentación a la presentación", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 13
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -122,31 +125,31 @@ this.ScenarioInitialize(scenarioInfo);
                 await this.ScenarioStartAsync();
 #line 5
 await this.FeatureBackgroundAsync();
-#line hidden
-#line 12
-await testRunner.WhenAsync("el usuario va a la opcion Presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 13
-await testRunner.AndAsync("el usuario elimina la presentacion \"GGG\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 14
-await testRunner.AndAsync("el usuario selecciona la presentacion a reasignar \"Frasco\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.WhenAsync("el usuario elimina la presentacion \"BOTELLAS\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 15
-await testRunner.ThenAsync("el usuario reasigna y elimina la presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+await testRunner.AndAsync("el usuario selecciona la presentacion a reasignar \"LATA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 16
+await testRunner.AndAsync("el usuario reasigna y elimina la presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 17
+await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Dar de Baja Presentación a la presentación neymar")]
-        public async System.Threading.Tasks.Task DarDeBajaPresentacionALaPresentacionNeymar()
+        [NUnit.Framework.DescriptionAttribute("Dar de Baja Presentación a la presentación PAQUETE")]
+        public async System.Threading.Tasks.Task DarDeBajaPresentacionALaPresentacionPAQUETE()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Presentación a la presentación neymar", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 18
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Presentación a la presentación PAQUETE", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 20
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -158,31 +161,31 @@ this.ScenarioInitialize(scenarioInfo);
                 await this.ScenarioStartAsync();
 #line 5
 await this.FeatureBackgroundAsync();
-#line hidden
-#line 19
-await testRunner.WhenAsync("el usuario va a la opcion Presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 20
-await testRunner.AndAsync("el usuario elimina la presentacion \"neymar\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 21
-await testRunner.AndAsync("el usuario elimina el concepto al eliminar la presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.WhenAsync("el usuario elimina la presentacion \"PAQUETE\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 22
-await testRunner.ThenAsync("el usuario reasigna y elimina la presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+await testRunner.AndAsync("el usuario elimina todos los conceptos de la tabla", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 23
+await testRunner.AndAsync("el usuario reasigna y elimina la presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 24
+await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Dar de Baja Presentación a la presentación 18956131")]
-        public async System.Threading.Tasks.Task DarDeBajaPresentacionALaPresentacion18956131()
+        [NUnit.Framework.DescriptionAttribute("Dar de Baja Presentación a la presentación SACO")]
+        public async System.Threading.Tasks.Task DarDeBajaPresentacionALaPresentacionSACO()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Presentación a la presentación 18956131", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 25
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Presentación a la presentación SACO", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 27
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -195,10 +198,37 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 26
-await testRunner.WhenAsync("el usuario va a la opcion Presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line 28
+await testRunner.WhenAsync("el usuario elimina la presentacion \"SACO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 27
+#line 29
+await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Dar de Baja Presentación a la presentación locazos")]
+        public async System.Threading.Tasks.Task DarDeBajaPresentacionALaPresentacionLocazos()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Presentación a la presentación locazos", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 32
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 5
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 33
 await testRunner.ThenAsync("el usuario desactiva la presentación \"locazos\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -206,13 +236,13 @@ await testRunner.ThenAsync("el usuario desactiva la presentación \"locazos\"", 
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Dar de Baja Presentació inválido a la presentación 369")]
-        public async System.Threading.Tasks.Task DarDeBajaPresentacioInvalidoALaPresentacion369()
+        [NUnit.Framework.DescriptionAttribute("Dar de Baja Presentació inválido a la presentación Frasco (EN ESPERA)")]
+        public async System.Threading.Tasks.Task DarDeBajaPresentacioInvalidoALaPresentacionFrascoENESPERA()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Presentació inválido a la presentación 369", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 30
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Presentació inválido a la presentación Frasco (EN ESPERA)", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 36
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -225,10 +255,7 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 31
-await testRunner.WhenAsync("el usuario va a la opcion Presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 32
+#line 37
 await testRunner.ThenAsync("el usuario desactiva la presentación \"Frasco\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

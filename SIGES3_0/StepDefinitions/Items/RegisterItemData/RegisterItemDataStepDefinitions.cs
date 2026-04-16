@@ -143,7 +143,7 @@ namespace SIGES3_0.StepDefinitions.Items.RegisterItemData
         [When("el usuario guarda los cambios de familia")]
         public void WhenElUsuarioGuardaLosCambiosDeFamilia()
         {
-            conceptosPage.GuardarEdicionFamilia();
+            conceptosPage.GuardarCambiosGenerales();
         }
 
         [When("el usuario oculta el menu")]
@@ -152,17 +152,10 @@ namespace SIGES3_0.StepDefinitions.Items.RegisterItemData
             conceptosPage.CerrarSidebar();
         }
 
-        [When("el usuario elimina el concepto a editar familia")]
-        public void WhenElUsuarioEliminaElConcepto()
-        {
-            conceptosPage.EliminarConceptoEditarFamilia();
-        }
-
-
-        [Then("el usuario aplica los cambios de familia")]
+        [When("el usuario aplica los cambios de familia")]
         public void WhenElUsuarioAplicaLosCambiosDeFamilia()
         {
-            conceptosPage.AplicarCambiosEdicionFamilia();
+            conceptosPage.AplicarNuevosCambios();
         }
 
 
@@ -186,41 +179,22 @@ namespace SIGES3_0.StepDefinitions.Items.RegisterItemData
             conceptosPage.SeleccionarCaracteristica(caracteristica);
         }
 
-        [When("el usuario elimina el concepto a dar de baja")]
-        public void WhenElUsuarioEliminaElConceptoADarDeBaja()
-        {
-            conceptosPage.EliminarConceptoParaBajaFamilia();
-        }
-
         [When("el usuario guarda los cambios de reasignacion")]
         public void WhenElUsuarioGuardaLosCambios()
         {
-            conceptosPage.GuardarReasignacionFamilia();
+            conceptosPage.GuardarCambiosGenerales();
         }
 
-        [When("el usuario desactiva la familia {string}")]
+        [Then("el usuario desactiva la familia {string}")]
         public void WhenElUsuarioDesactivaLaFamilia(string familia)
         {
             conceptosPage.DesactivarFamiliaDesdeGrilla(familia);
         }
 
-        [Then("el sistema muestra un mensaje de confirmación de baja de familia")]
-        public void ThenElSistemaMuestraUnMensajeDeConfirmacionDeBajaDeFamilia()
-        {
-            conceptosPage.confirmarBajaFamilia();
-        }
-
-        [Then("el sistema muestra un mensaje de error al dar de baja")]
-        public void ThenElSistemaMuestraUnMensajeDeError()
-        {
-            conceptosPage.ConfirmarReasignacionFamilia();
-        }
-
-
-        [Then("el usuario confirma la reasignación")]
+        [When("el usuario confirma la reasignación")]
         public void WhenElUsuarioConfirmaLaReasignacion()
         {
-            conceptosPage.ConfirmarReasignacionFamilia();
+            conceptosPage.ConfirmarReasignacionYEliminar();
         }
 
         //---------------------------------------------------------------------------------------------------------
@@ -266,19 +240,19 @@ namespace SIGES3_0.StepDefinitions.Items.RegisterItemData
             conceptosPage.EditarCategoria(categoria);
         }
 
-        [Then("el sistema guarda los cambios al editar categoria")]
+        [When("el sistema guarda los cambios al editar categoria")]
         public void ThenElSistemaGuardaLosCambiosAlEditarCategoria()
         {
-            conceptosPage.GuardarCambiosCategoria();
+            conceptosPage.GuardarCambiosGenerales();
         }
 
         [Then("el sistema no guarda los cambios de editar categoria")]
         public void ThenElSistemaNoGuardaLosCambiosDeEditarCategoria()
         {
-            conceptosPage.GuardarCambiosCategoria();
+            conceptosPage.GuardarCambiosGenerales();
         }
 
-        [Then("el usuario elimina la categoria {string}")]
+        [When("el usuario elimina la categoria {string}")]
         public void ThenElUsuarioEliminaLaCategoria(string categoria)
         {
             conceptosPage.EliminarCategoria(categoria);
@@ -330,19 +304,13 @@ namespace SIGES3_0.StepDefinitions.Items.RegisterItemData
         [When("el usuario guarda los cambios al editar presentacion")]
         public void WhenElUsuarioGuardaLosCambiosAlEditarPresentacion()
         {
-            conceptosPage.GuardarCambiosEditarPresentacion();
+            conceptosPage.GuardarCambiosGenerales();
         }
 
-        [When("el usuario elimina el concepto al editar presentacion")]
-        public void WhenElUsuarioEliminaElConceptoAlEditarPresentacion()
-        {
-            conceptosPage.eliminarConceptoEditarPresentacion();
-        }
-
-        [Then("el usuario aplica los cambios al editar presentacion")]
+        [When("el usuario aplica los cambios al editar presentacion")]
         public void ThenElUsuarioAplicaLosCambiosAlEditarPresentacion()
         {
-            conceptosPage.aplicarcambiosEditarPresentacion();
+            conceptosPage.AplicarNuevosCambios();
         }
 
         //ELIMINAR PRESENTACION
@@ -358,22 +326,16 @@ namespace SIGES3_0.StepDefinitions.Items.RegisterItemData
             conceptosPage.SeleccionarNuevaPresentacionParaReasignar(nuevapresentacion);
         }
 
-        [When("el usuario elimina el concepto al eliminar la presentacion")]
-        public void WhenElUsuarioEliminaElConceptoAlEliminarLaPresentacion()
-        {
-            conceptosPage.eliminarConceptoEliminarPresentacion();
-        }
-
         [Then("el usuario desactiva la presentación {string}")]
         public void ThenElUsuarioDesactivaLaPresentacion(string nombre)
         {
             conceptosPage.DesactivarPresentacionDesdeGrilla(nombre);
         }
 
-        [Then("el usuario reasigna y elimina la presentacion")]
+        [When("el usuario reasigna y elimina la presentacion")]
         public void ThenElUsuarioReasignaYEliminaLaPresentacion()
         {
-            conceptosPage.reasignarEliminarPresentacion();
+            conceptosPage.ConfirmarReasignacionYEliminar();
         }
 
 
@@ -409,10 +371,10 @@ namespace SIGES3_0.StepDefinitions.Items.RegisterItemData
             conceptosPage.EditarCaracteristicaComun(nombre);
         }
 
-        [Then("el usuario guarda los cambios al editar caracteristica comun")]
+        [When("el usuario guarda los cambios al editar caracteristica comun")]
         public void ThenElUsuarioGuardaLosCambiosAlEditarCaracteristicaComun()
         {
-            conceptosPage.guardarcambiosCaracteristicaComun();
+            conceptosPage.GuardarCambiosGenerales();
         }
 
         [When("el usuario ingresa el codigo de caracteristica propia {string}")]
@@ -442,10 +404,10 @@ namespace SIGES3_0.StepDefinitions.Items.RegisterItemData
             conceptosPage.EditarCaracteristicaPropia(nombre);
         }
 
-        [Then("el usuario guarda los cambios al editar caracteristica propia")]
+        [When("el usuario guarda los cambios al editar caracteristica propia")]
         public void ThenElUsuarioGuardaLosCambiosAlEditarCaracteristicaPropia()
         {
-            conceptosPage.guardarcambiosCaracteristicaPropia();
+            conceptosPage.GuardarCambiosGenerales();
         }
 
         //-------------------------------------------------------------------------------------------------------------
@@ -473,14 +435,8 @@ namespace SIGES3_0.StepDefinitions.Items.RegisterItemData
             conceptosPage.IngresarValorCaracteristicaComun(valor);
         }
 
-        [Then("se guarda el valor de caracteristica comun")]
+        [When("el usuario guarda el valor de caracteristica comun")]
         public void ThenSeGuardaElValorDeCaracteristicaComun()
-        {
-            conceptosPage.guardarValorCaracteristicaComun();
-        }
-
-        [Then("no se guarda el valor de caracteristica comun")]
-        public void ThenNoSeGuardaElValorDeCaracteristicaComun()
         {
             conceptosPage.guardarValorCaracteristicaComun();
         }
@@ -494,16 +450,10 @@ namespace SIGES3_0.StepDefinitions.Items.RegisterItemData
         [When("el usuario guarda los cambios al editar valor de caracteristica comun")]
         public void WhenElUsuarioGuardaLosCambiosAlEditarValorDeCaracteristicaComun()
         {
-            conceptosPage.guardarcambiosEditarValorCaracteristicaComun();
+            conceptosPage.GuardarCambiosGenerales();
         }
 
-        [When("el usuario elimina el concepto registrado al editar valor de caracteristica comun")]
-        public void WhenElUsuarioEliminaElConceptoRegistradoAlEditarValorDeCaracteristicaComun()
-        {
-            conceptosPage.eliminarconceptoEditarValorCaracteristicaComun();
-        }
-
-        [Then("el usuario acepta actualizar el concepto con el valor de caracteristica comun")]
+        [When("el usuario acepta actualizar el concepto con el valor de caracteristica comun")]
         public void ThenElUsuarioAceptaActualizarElConceptoConElValorDeCaracteristicaComun()
         {
             conceptosPage.actualizarValorCaracteristicaComun();
@@ -519,12 +469,6 @@ namespace SIGES3_0.StepDefinitions.Items.RegisterItemData
         public void WhenElUsuarioSeleccionaNuevoValorCaracteristicaComun(string valor)
         {
             conceptosPage.SeleccionarNuevoValorCaracteristicaComun(valor);
-        }
-
-        [When("el usuario elimina el concepto registrado al eliminar valor de caracteristica comun")]
-        public void WhenElUsuarioEliminaElConceotoRegistradoAlEliminarValorDeCaracteristicaComun()
-        {
-            conceptosPage.eliminarconceptoEliminarValorCaracteristicaComun();
         }
 
         //-------------------------------------------------------------------------------------------------------------
@@ -567,6 +511,39 @@ namespace SIGES3_0.StepDefinitions.Items.RegisterItemData
 
         //-----------------------------------------------------------------------------------------------------------------------------------
 
+        //PASOS GENERALES PARA ELIMINAR CONCEPTOS EN FAMILIA, PRESENTACION, VALOR DE CARACTERISTICA
+        [When("el usuario elimina todos los conceptos de la tabla")]
+        public void WhenElUsuarioEliminaTodosLosConceptosDeLaTabla()
+        {
+            conceptosPage.EliminarTodosLosConceptos();
+        }
+
+        [When("el usuario elimina los siguientes conceptos:")]
+        public void WhenElUsuarioEliminaLosSiguientesConceptos(Table table)
+        {
+            // Convertimos la tabla Gherkin en una Lista para tu método dinámico
+            List<string> nombres = new List<string>();
+            foreach (var row in table.Rows)
+            {
+                nombres.Add(row[0]);
+            }
+
+            conceptosPage.EliminarConceptosPorNombre(nombres);
+        }
+
+        [Then("el sistema muestra un mensaje de confirmacion")]
+        public void WhenElSistemaMuestraUnMensajeDeConfirmacion()
+        {
+            conceptosPage.SistemaMensajeOk();
+        }
+
+        [Then("el sistema muestra un mensaje de error")]
+        public void WhenElSistemaMuestraUnMensajeDeError()
+        {
+            conceptosPage.SistemaMensajeOk();
+        }
+
+        //PASOS GENERALES PARA GUARDAR O NO GUARDAR REGISTROS EN FAMILIA, CATEGORIA, PRESENTACION, CARACTERISTICA, ETC.
 
         [Then("se guarda el registro")]
         public void ThenSeGuardaElRegistro()

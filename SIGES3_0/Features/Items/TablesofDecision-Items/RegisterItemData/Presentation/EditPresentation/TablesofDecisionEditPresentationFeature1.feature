@@ -7,33 +7,36 @@ Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonlin
 When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña 'calidad'
 And el usuario accede al módulo Conceptos
 And el usuario selecciona Registrar Datos de Concepto
+And el usuario va a la opcion Presentacion
 
-
-Scenario: Editar Presentación a la presentación 369
-When el usuario va a la opcion Presentacion
-And el usuario edita la presentacion "369"
-And el usuario ingresa el codigo de presentación "0"
+Scenario: Editar Presentación a la presentación CAJA
+When el usuario edita la presentacion "CAJA"
+And el usuario ingresa el codigo de presentación " 1"
 And el usuario guarda los cambios al editar presentacion
-And el usuario elimina el concepto al editar presentacion
-Then el usuario aplica los cambios al editar presentacion
+And el usuario elimina los siguientes conceptos:
+  | NombreConcepto                    |
+  | Gaseosa INKA KOLA CLEVER CAJA 1 L |
+  | Gaseosa KR CLEVER CAJA 1 L        |
+And el usuario aplica los cambios al editar presentacion
+Then el sistema muestra un mensaje de confirmacion
 
 
-Scenario: Editar Presentación a la presentación neymar
-When el usuario va a la opcion Presentacion
-And el usuario edita la presentacion "neymar"
-And el usuario ingresa la descripcion de presentación "ista"
+Scenario: Editar Presentación a la presentación BOTELLAS
+When el usuario edita la presentacion "BOTELLAS"
+And el usuario ingresa la descripcion de presentación " 1"
 And el usuario guarda los cambios al editar presentacion
-Then el usuario aplica los cambios al editar presentacion
+And el usuario aplica los cambios al editar presentacion
+Then el sistema muestra un mensaje de confirmacion
 
 
 Scenario: Editar Presentación a la presentación 0123
-When el usuario va a la opcion Presentacion
-And el usuario edita la presentacion "0123"
+When el usuario edita la presentacion "0123"
 And el usuario ingresa la descripcion de presentación "es"
 And el usuario guarda los cambios al editar presentacion
+Then el sistema muestra un mensaje de confirmacion
 
 
-Scenario: Editar Presnetación inválida a la presentación martinez
-When el usuario va a la opcion Presentacion
-And el usuario edita la presentacion "martinez"
+Scenario: Editar Presnetación inválida a la presentación locazos
+When el usuario edita la presentacion "locazos"
 And el usuario guarda los cambios al editar presentacion
+Then el sistema muestra un mensaje de error

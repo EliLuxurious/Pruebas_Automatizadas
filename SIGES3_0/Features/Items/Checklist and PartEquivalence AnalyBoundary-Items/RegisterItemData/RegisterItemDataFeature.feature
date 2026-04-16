@@ -145,7 +145,8 @@ And el usuario selecciona Registrar Datos de Concepto
 And el usuario selecciona la opcion Valor de Caracteristica
 And el usuario selecciona la caracteristica comun "COLOR"
 And el usuario ingresa el valor de caracteristica comun "AGUAMARINA"
-Then se guarda el valor de caracteristica comun
+And el usuario guarda el valor de caracteristica comun
+Then el sistema muestra un mensaje de confirmacion
 
 
 
@@ -156,7 +157,7 @@ And el usuario accede al módulo Conceptos
 And el usuario selecciona Registrar Datos de Concepto
 And el usuario selecciona la opcion Asignar Valor de Caracteristica
 And el usuario selecciona la Familia a asignar "Cuaderno"
-And el usuario ingresa el valor a asignar "PRUEBA2"
-And el usuario arrastra el valor "PRUEBA2"
+And el usuario ingresa el valor a asignar "PRUEBA3"
+And el usuario arrastra el valor "PRUEBA3"
 Then se guarda la asignacion
 

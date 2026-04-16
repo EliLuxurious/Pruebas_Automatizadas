@@ -13,4 +13,5 @@ And el usuario selecciona el tipo de Caracteristica "Propia"
 Scenario: Editar Característica Propia a la característica propia PROCESADOR
 When el usuario edita la característica propia "PROCESADOR"
 And el usuario ingresa el codigo de caracteristica propia "7"
-Then el usuario guarda los cambios al editar caracteristica propia
+And el usuario guarda los cambios al editar caracteristica propia
+Then el sistema muestra un mensaje de confirmacion

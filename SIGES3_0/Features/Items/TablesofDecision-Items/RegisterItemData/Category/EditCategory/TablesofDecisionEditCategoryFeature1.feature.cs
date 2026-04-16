@@ -128,23 +128,26 @@ await testRunner.WhenAsync("el usuario va a la opcion categoria", ((string)(null
 await testRunner.AndAsync("el usuario edita la categoria \"sad\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 15
-await testRunner.AndAsync("el usuario ingresa la descripcion de categoría \"estoy triste\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario ingresa la descripcion de categoría \" estoy\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 16
-await testRunner.ThenAsync("el sistema guarda los cambios al editar categoria", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+await testRunner.WhenAsync("el sistema guarda los cambios al editar categoria", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 17
+await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Edición inválida de Categoria de la categoría GOL")]
-        public async System.Threading.Tasks.Task EdicionInvalidaDeCategoriaDeLaCategoriaGOL()
+        [NUnit.Framework.DescriptionAttribute("Edición inválida de Categoria de la categoría traje")]
+        public async System.Threading.Tasks.Task EdicionInvalidaDeCategoriaDeLaCategoriaTraje()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Edición inválida de Categoria de la categoría GOL", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 19
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Edición inválida de Categoria de la categoría traje", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 21
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -157,14 +160,17 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 20
+#line 22
 await testRunner.WhenAsync("el usuario va a la opcion categoria", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 21
-await testRunner.AndAsync("el usuario edita la categoria \"gol\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 23
+await testRunner.AndAsync("el usuario edita la categoria \"traje\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 22
+#line 24
 await testRunner.ThenAsync("el sistema no guarda los cambios de editar categoria", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 25
+await testRunner.ThenAsync("el sistema muestra un mensaje de error", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

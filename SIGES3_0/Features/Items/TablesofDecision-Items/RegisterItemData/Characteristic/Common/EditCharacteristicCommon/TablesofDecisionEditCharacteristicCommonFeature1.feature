@@ -11,6 +11,7 @@ And el usuario selecciona la opción Características
 And el usuario selecciona el tipo de Caracteristica "Comun"
 
 Scenario: Editar Característica Común a la Característica Común FONDO
-When el usuario edita la característica común "FONDO"
-And el usuario ingresa el nombre de Caracteristica Comun "S"
-Then el usuario guarda los cambios al editar caracteristica comun
+When el usuario edita la característica común "FONDOS"
+And el usuario ingresa el nombre de Caracteristica Comun " RICO"
+And el usuario guarda los cambios al editar caracteristica comun
+Then el sistema muestra un mensaje de confirmacion

@@ -136,7 +136,10 @@ await testRunner.WhenAsync("el usuario edita la característica propia \"PROCESA
 await testRunner.AndAsync("el usuario ingresa el codigo de caracteristica propia \"7\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 16
-await testRunner.ThenAsync("el usuario guarda los cambios al editar caracteristica propia", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+await testRunner.AndAsync("el usuario guarda los cambios al editar caracteristica propia", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 17
+await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

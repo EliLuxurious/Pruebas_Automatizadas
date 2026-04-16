@@ -101,15 +101,18 @@ await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(nu
 #line 9
 await testRunner.AndAsync("el usuario selecciona Registrar Datos de Concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
+#line 10
+await testRunner.AndAsync("el usuario va a la opcion Presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Editar Presentación a la presentación 369")]
-        public async System.Threading.Tasks.Task EditarPresentacionALaPresentacion369()
+        [NUnit.Framework.DescriptionAttribute("Editar Presentación a la presentación CAJA")]
+        public async System.Threading.Tasks.Task EditarPresentacionALaPresentacionCAJA()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Presentación a la presentación 369", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Presentación a la presentación CAJA", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -124,35 +127,41 @@ this.ScenarioInitialize(scenarioInfo);
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 13
-await testRunner.WhenAsync("el usuario va a la opcion Presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario edita la presentacion \"CAJA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 14
-await testRunner.AndAsync("el usuario edita la presentacion \"369\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario ingresa el codigo de presentación \" 1\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 15
-await testRunner.AndAsync("el usuario ingresa el codigo de presentación \"0\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 16
 await testRunner.AndAsync("el usuario guarda los cambios al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 17
-await testRunner.AndAsync("el usuario elimina el concepto al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+                global::Reqnroll.Table table8 = new global::Reqnroll.Table(new string[] {
+                            "NombreConcepto"});
+                table8.AddRow(new string[] {
+                            "Gaseosa INKA KOLA CLEVER CAJA 1 L"});
+                table8.AddRow(new string[] {
+                            "Gaseosa KR CLEVER CAJA 1 L"});
+#line 16
+await testRunner.AndAsync("el usuario elimina los siguientes conceptos:", ((string)(null)), table8, "And ");
 #line hidden
-#line 18
-await testRunner.ThenAsync("el usuario aplica los cambios al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line 20
+await testRunner.AndAsync("el usuario aplica los cambios al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 21
+await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Editar Presentación a la presentación neymar")]
-        public async System.Threading.Tasks.Task EditarPresentacionALaPresentacionNeymar()
+        [NUnit.Framework.DescriptionAttribute("Editar Presentación a la presentación BOTELLAS")]
+        public async System.Threading.Tasks.Task EditarPresentacionALaPresentacionBOTELLAS()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Presentación a la presentación neymar", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 21
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Presentación a la presentación BOTELLAS", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 24
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -165,20 +174,20 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 22
-await testRunner.WhenAsync("el usuario va a la opcion Presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 23
-await testRunner.AndAsync("el usuario edita la presentacion \"neymar\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 24
-await testRunner.AndAsync("el usuario ingresa la descripcion de presentación \"ista\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
 #line 25
-await testRunner.AndAsync("el usuario guarda los cambios al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.WhenAsync("el usuario edita la presentacion \"BOTELLAS\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 26
-await testRunner.ThenAsync("el usuario aplica los cambios al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+await testRunner.AndAsync("el usuario ingresa la descripcion de presentación \" 1\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 27
+await testRunner.AndAsync("el usuario guarda los cambios al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 28
+await testRunner.AndAsync("el usuario aplica los cambios al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 29
+await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -191,7 +200,7 @@ await testRunner.ThenAsync("el usuario aplica los cambios al editar presentacion
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Presentación a la presentación 0123", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 29
+#line 32
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -204,30 +213,30 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 30
-await testRunner.WhenAsync("el usuario va a la opcion Presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line 33
+await testRunner.WhenAsync("el usuario edita la presentacion \"0123\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 31
-await testRunner.AndAsync("el usuario edita la presentacion \"0123\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 32
+#line 34
 await testRunner.AndAsync("el usuario ingresa la descripcion de presentación \"es\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 33
+#line 35
 await testRunner.AndAsync("el usuario guarda los cambios al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 36
+await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Editar Presnetación inválida a la presentación martinez")]
-        public async System.Threading.Tasks.Task EditarPresnetacionInvalidaALaPresentacionMartinez()
+        [NUnit.Framework.DescriptionAttribute("Editar Presnetación inválida a la presentación locazos")]
+        public async System.Threading.Tasks.Task EditarPresnetacionInvalidaALaPresentacionLocazos()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Presnetación inválida a la presentación martinez", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 36
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Presnetación inválida a la presentación locazos", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 39
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -240,14 +249,14 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 37
-await testRunner.WhenAsync("el usuario va a la opcion Presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line 40
+await testRunner.WhenAsync("el usuario edita la presentacion \"locazos\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 38
-await testRunner.AndAsync("el usuario edita la presentacion \"martinez\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 39
+#line 41
 await testRunner.AndAsync("el usuario guarda los cambios al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 42
+await testRunner.ThenAsync("el sistema muestra un mensaje de error", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

@@ -12,10 +12,13 @@ And el usuario selecciona la opcion Valor de Caracteristica
 Scenario: Registrar Valor de Caracteristica Común
 When el usuario selecciona la caracteristica comun "COLOR"
 And el usuario ingresa el valor de caracteristica comun "LIMA LIMÓN"
-Then se guarda el valor de caracteristica comun
+And el usuario guarda el valor de caracteristica comun
+Then el sistema muestra un mensaje de confirmacion
+
 
 
 Scenario: Registro inválido de Valor de Caracteristica Común (VALOR DE CARACTERISTICA EXISTENTE)
 When el usuario selecciona la caracteristica comun "COLOR"
 And el usuario ingresa el valor de caracteristica comun "AGUAMARINA"
-Then no se guarda el valor de caracteristica comun
+And el usuario guarda el valor de caracteristica comun
+Then el sistema muestra un mensaje de error

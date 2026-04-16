@@ -130,22 +130,19 @@ await this.FeatureBackgroundAsync();
 await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"COLOR\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 15
-await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"MARCA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 16
-await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"COLOR\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 17
 await testRunner.AndAsync("el usuario edita el valor de característica común \"ROJOS\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 18
+#line 16
 await testRunner.AndAsync("el usuario ingresa el valor de caracteristica comun \" VIVOS\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 19
+#line 17
 await testRunner.AndAsync("el usuario guarda los cambios al editar valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 20
-await testRunner.ThenAsync("el usuario acepta actualizar el concepto con el valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line 18
+await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 19
+await testRunner.WhenAsync("el usuario acepta actualizar el concepto con el valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -158,7 +155,7 @@ await testRunner.ThenAsync("el usuario acepta actualizar el concepto con el valo
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Valor de Caracteristica Común (SE ELIMINA EL CONCEPTO) EN ESPERA", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 23
+#line 22
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -171,30 +168,32 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 24
+#line 23
 await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"COLOR\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 24
+await testRunner.AndAsync("el usuario edita el valor de característica común \"AZULES\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 25
-await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"MARCA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.AndAsync("el usuario ingresa el valor de caracteristica comun \" CLAROS\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 26
-await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"COLOR\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 27
-await testRunner.AndAsync("el usuario edita el valor de característica común \"ROJOS VIVOS\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 28
-await testRunner.AndAsync("el usuario ingresa el valor de caracteristica comun \" BRILLOSOS\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 29
 await testRunner.AndAsync("el usuario guarda los cambios al editar valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 30
-await testRunner.AndAsync("el usuario elimina el concepto registrado al editar valor de caracteristica comun" +
-                        "", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 27
+await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 31
-await testRunner.ThenAsync("el usuario acepta actualizar el concepto con el valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+                global::Reqnroll.Table table6 = new global::Reqnroll.Table(new string[] {
+                            "NombreConcepto"});
+                table6.AddRow(new string[] {
+                            "Cuaderno upipi AZULES Bolsa de plástico 1 UN"});
+                table6.AddRow(new string[] {
+                            "Cuaderno doble doble AZULES Bolsa de plástico 1 UN"});
+#line 28
+await testRunner.WhenAsync("el usuario elimina los siguientes conceptos:", ((string)(null)), table6, "When ");
+#line hidden
+#line 33
+await testRunner.WhenAsync("el usuario acepta actualizar el concepto con el valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -207,7 +206,7 @@ await testRunner.ThenAsync("el usuario acepta actualizar el concepto con el valo
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Valor de Caracteristica Común (NO TIENE CONCEPTOS REGISTRADOS) EN ESPERA", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 34
+#line 36
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -220,23 +219,20 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 35
-await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"COLOR\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 36
-await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"MARCA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
 #line 37
 await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"COLOR\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 38
-await testRunner.AndAsync("el usuario edita el valor de característica común \"AZULES\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario edita el valor de característica común \"turquesa\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 39
-await testRunner.AndAsync("el usuario ingresa el valor de caracteristica comun \"CLAROS\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario ingresa el valor de caracteristica comun \" b\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 40
 await testRunner.AndAsync("el usuario guarda los cambios al editar valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 41
+await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -249,7 +245,7 @@ await testRunner.AndAsync("el usuario guarda los cambios al editar valor de cara
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Edición inválida de  Valor de Caracteristica Común (NO MODIFICÓ NADA) EN ESPERA", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 44
+#line 45
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -262,20 +258,17 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 45
-await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"COLOR\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
 #line 46
-await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"MARCA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"COLOR\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 47
-await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"COLOR\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.AndAsync("el usuario edita el valor de característica común \"PRUEBA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 48
-await testRunner.AndAsync("el usuario edita el valor de característica común \"AZULES\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario guarda los cambios al editar valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 49
-await testRunner.AndAsync("el usuario guarda los cambios al editar valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.ThenAsync("el sistema muestra un mensaje de error", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
