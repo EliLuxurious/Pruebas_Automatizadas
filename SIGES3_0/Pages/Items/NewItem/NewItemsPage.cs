@@ -18,7 +18,7 @@ namespace SIGES3_0.Pages.Items.NewItem
         }
 
         // MENU CONCEPTOS
-        private By conceptosMenu = By.XPath("//span[text()='Conceptos']/following::input[1]");
+        private By conceptosMenu = By.XPath("//span[normalize-space()='Conceptos']");
 
         // SUBMENU
         private By nuevoConcepto = By.XPath("//span[normalize-space()='Nuevo Concepto']");

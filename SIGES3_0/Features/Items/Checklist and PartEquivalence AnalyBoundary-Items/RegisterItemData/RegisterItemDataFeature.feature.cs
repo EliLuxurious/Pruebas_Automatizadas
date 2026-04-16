@@ -652,7 +652,10 @@ await testRunner.AndAsync("el usuario selecciona la caracteristica comun \"COLOR
 await testRunner.AndAsync("el usuario ingresa el valor de caracteristica comun \"AGUAMARINA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 148
-await testRunner.ThenAsync("se guarda el valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+await testRunner.AndAsync("el usuario guarda el valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 149
+await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -665,7 +668,7 @@ await testRunner.ThenAsync("se guarda el valor de caracteristica comun", ((strin
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro exitoso de asignar valor de característica  a Familia", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 152
+#line 153
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -675,33 +678,33 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 153
+#line 154
 await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
                         "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 154
+#line 155
 await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
                         "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 155
+#line 156
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 156
+#line 157
 await testRunner.AndAsync("el usuario selecciona Registrar Datos de Concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 157
+#line 158
 await testRunner.AndAsync("el usuario selecciona la opcion Asignar Valor de Caracteristica", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 158
+#line 159
 await testRunner.AndAsync("el usuario selecciona la Familia a asignar \"Cuaderno\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 159
-await testRunner.AndAsync("el usuario ingresa el valor a asignar \"PRUEBA2\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
 #line 160
-await testRunner.AndAsync("el usuario arrastra el valor \"PRUEBA2\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario ingresa el valor a asignar \"PRUEBA3\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 161
+await testRunner.AndAsync("el usuario arrastra el valor \"PRUEBA3\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 162
 await testRunner.ThenAsync("se guarda la asignacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

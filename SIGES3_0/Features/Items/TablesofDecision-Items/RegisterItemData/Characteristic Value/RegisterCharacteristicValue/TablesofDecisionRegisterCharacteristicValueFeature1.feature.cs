@@ -133,7 +133,10 @@ await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"COLO
 await testRunner.AndAsync("el usuario ingresa el valor de caracteristica comun \"LIMA LIMÓN\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 15
-await testRunner.ThenAsync("se guarda el valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+await testRunner.AndAsync("el usuario guarda el valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 16
+await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -148,7 +151,7 @@ await testRunner.ThenAsync("se guarda el valor de caracteristica comun", ((strin
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro inválido de Valor de Caracteristica Común (VALOR DE CARACTERISTICA EXIST" +
                     "ENTE)", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 18
+#line 20
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -161,14 +164,17 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 19
+#line 21
 await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"COLOR\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 20
+#line 22
 await testRunner.AndAsync("el usuario ingresa el valor de caracteristica comun \"AGUAMARINA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 21
-await testRunner.ThenAsync("no se guarda el valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line 23
+await testRunner.AndAsync("el usuario guarda el valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 24
+await testRunner.ThenAsync("el sistema muestra un mensaje de error", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

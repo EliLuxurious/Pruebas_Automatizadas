@@ -23,7 +23,7 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
         }
 
         // MENU CONCEPTOS
-        private By conceptosMenu = By.XPath("//span[text()='Conceptos']/following::input[1]");
+        private By conceptosMenu = By.XPath("//span[normalize-space()='Conceptos']");
 
         // SUBMENU REGISTRAR DATOS DE CONCEPTO
         private By registrarDatoConcepto = By.XPath("//span[normalize-space()='Registrar Datos de Concepto']");
@@ -228,6 +228,23 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
             utilities.ClickButton(opcion);
         }
 
+        public void SeleccionarCaracteristica(string nombreCaracteristica, string estadoObligatorio)
+        {
+            // 1. Buscamos y hacemos clic en el checkbox de SELECCIÓN de la característica
+            By checkboxSeleccion = By.XPath($"//td[normalize-space()='{nombreCaracteristica}']/parent::tr/td[1]/input");
+            utilities.ClickButton(checkboxSeleccion);
+
+            // 2. Evaluamos si debe ser obligatorio. 
+            // Como ya hicimos clic arriba, el checkbox de obligatorio ya debe estar habilitado.
+            // Solo hacemos clic si queremos que sea "ACTIVO" o "SI" (por defecto asumimos que está desmarcado)
+            if (!string.IsNullOrWhiteSpace(estadoObligatorio) &&
+               (estadoObligatorio.ToUpper() == "ACTIVO" || estadoObligatorio.ToUpper() == "SI"))
+            {
+                By checkboxObligatorio = By.XPath($"//td[normalize-space()='{nombreCaracteristica}']/parent::tr/td[3]/input");
+                utilities.ClickButton(checkboxObligatorio);
+            }
+        }
+
         public void MostrarTodasLasCaracteristicas()
         {
             try
@@ -272,67 +289,13 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
 
             utilities.ClickButton(botonEditar);
             Thread.Sleep(500);
-
-            By dropdownFamilia = By.XPath("//button[@aria-controls='collapse-edición-familia']");
-            utilities.ClickButton(dropdownFamilia);
         }
-
-
-        public void SeleccionarCaracteristica(string nombreCaracteristica, string estadoObligatorio)
-        {
-            // 1. Buscamos y hacemos clic en el checkbox de SELECCIÓN de la característica
-            By checkboxSeleccion = By.XPath($"//td[normalize-space()='{nombreCaracteristica}']/parent::tr/td[1]/input");
-            utilities.ClickButton(checkboxSeleccion);
-
-            // 2. Evaluamos si debe ser obligatorio. 
-            // Como ya hicimos clic arriba, el checkbox de obligatorio ya debe estar habilitado.
-            // Solo hacemos clic si queremos que sea "ACTIVO" o "SI" (por defecto asumimos que está desmarcado)
-            if (!string.IsNullOrWhiteSpace(estadoObligatorio) &&
-               (estadoObligatorio.ToUpper() == "ACTIVO" || estadoObligatorio.ToUpper() == "SI"))
-            {
-                By checkboxObligatorio = By.XPath($"//td[normalize-space()='{nombreCaracteristica}']/parent::tr/td[3]/input");
-                utilities.ClickButton(checkboxObligatorio);
-            }
-        }
-
 
         //ESTO ES SOLO PARA EDITAR FAMILIA
         public void IrAOpcionFamilia()
         {
             utilities.ClickButton(opcionFamilia);
         }
-
-        //GUARDA CAMBIOS AL EDITAR FAMILIA
-        public void GuardarEdicionFamilia()
-        {
-            By botonGuardar = By.XPath("//button[normalize-space()='Guardar Cambios']");
-            utilities.ClickButton(botonGuardar);
-        }
-
-        //OCULTA SIDEBAR
-        public void CerrarSidebar()
-        {
-            By botonCerrarSidebar = By.XPath("//i[@class='bi bi-list']");
-            utilities.ClickButton(botonCerrarSidebar);
-        }
-
-        //ELIMINAR CONCEPTO AL EDITAR FAMILIA
-        public void EliminarConceptoEditarFamilia()
-        {
-            By checkEliminarConcepto = By.XPath("//input[@class='ng-untouched ng-pristine ng-valid ng-star-inserted']");
-            utilities.ClickButton(checkEliminarConcepto);
-        }
-
-
-        //APLICAR CAMBIOS DE EDICIÓN DE FAMILIA
-        public void AplicarCambiosEdicionFamilia()
-        {
-            By botonAplicarCambios = By.XPath("//button[normalize-space()='Crear nueva y aplicar cambios (1)']");
-            utilities.ClickButton(botonAplicarCambios);
-            By botonOk = By.XPath("//button[normalize-space()='OK']");
-            utilities.ClickButton(botonOk);
-        }
-
 
         public void EliminarFamilia(string nombreFamilia)
         {
@@ -343,7 +306,7 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
             utilities.ClickButton(botonEliminar);
             Thread.Sleep(500);
 
-            By botonConfirmar = By.XPath("//button[normalize-space()='Sí, eliminar']");
+            By botonConfirmar = By.XPath("//button[normalize-space()='Sí, ¡elimínalo!']");
             utilities.ClickButton(botonConfirmar);
         }
 
@@ -391,28 +354,6 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
             utilities.ClickButton(opcionCaracteristica);
         }
 
-        public void GuardarReasignacionFamilia()
-        {
-            By botonGuardarReasignacion = By.XPath("//button[normalize-space()='Guardar cambios']");
-            utilities.ClickButton(botonGuardarReasignacion);
-        }
-
-
-        //CONFIRMAR REASIGNACIÓN DE CONCEPTOS A OTRA FAMILIA
-        public void ConfirmarReasignacionFamilia()
-        {
-            By botonConfirmarReasignacion = By.XPath("//button[normalize-space()='Reasignar y eliminar (1)']");
-            utilities.ClickButton(botonConfirmarReasignacion);
-        }
-
-
-        //ELIMINAR CONCEPTO PARA LA FUNCIONALIDAD DAR DE BAJA A FAMILIA
-        public void EliminarConceptoParaBajaFamilia()
-        {
-            By checkEliminarConcepto = By.XPath("//input[@class='ng-untouched ng-pristine ng-valid ng-star-inserted']");
-            utilities.ClickButton(checkEliminarConcepto);
-        }
-
         public void DesactivarFamiliaDesdeGrilla(string nombreFamilia)
         {
             MostrarTodasLasFamilias();
@@ -435,13 +376,6 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
 
                 utilities.ClickButton(switchAlternativo);
             }
-        }
-
-
-        public void confirmarBajaFamilia()
-        {
-            By botonConfirmarBaja = By.XPath("//button[normalize-space()='OK']");
-            utilities.ClickButton(botonConfirmarBaja);
         }
 
 
@@ -517,12 +451,7 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
                 {
                     // Click en editar
                     utilities.ClickButton(botonEditar);
-
-                    Thread.Sleep(500); // pequeña espera para que cargue el panel
-
-                    // Abrir dropdown de edición de categoría
-                    By dropdownCategoria = By.XPath("//button[@aria-controls='collapse-edición-categoría' and @aria-expanded='false']");
-                    utilities.ClickButton(dropdownCategoria);
+                    Thread.Sleep(500);
                 }
                 else
                 {
@@ -535,16 +464,6 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
                 throw;
             }
         }
-
-
-        public void GuardarCambiosCategoria()
-        {
-            By botonGuardarCambiosCategoria = By.XPath("//button[normalize-space()='Guardar Cambios']");
-            utilities.ClickButton(botonGuardarCambiosCategoria);
-            By botonOK = By.XPath("//button[normalize-space()='OK']");
-            utilities.ClickButton(botonOK);
-        }
-
 
         public void EliminarCategoria(string nombreCategoria)
         {
@@ -563,10 +482,10 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
                     // Click en eliminar
                     utilities.ClickButton(botonEliminar);
 
-                    Thread.Sleep(500); // esperar que aparezca el modal
+                    Thread.Sleep(500);
 
                     // 3. Confirmar eliminación
-                    By botonConfirmar = By.XPath("//button[normalize-space()='Sí, eliminar']");
+                    By botonConfirmar = By.XPath("//button[normalize-space()='Sí, ¡elimínalo!']");
                     utilities.ClickButton(botonConfirmar);
                 }
                 else
@@ -580,9 +499,6 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
                 throw;
             }
         }
-
-
-
 
 
         //-----------------------------------------------------------------------------------------------------------------------
@@ -654,12 +570,7 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
                 {
                     // Click en editar
                     utilities.ClickButton(botonEditar);
-
                     Thread.Sleep(500);
-
-                    // 3. Abrir dropdown de edición
-                    By dropdown = By.XPath("//button[@aria-controls='collapse-edicion-presentacion' and @aria-expanded='false']");
-                    utilities.ClickButton(dropdown);
                 }
                 else
                 {
@@ -671,30 +582,6 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
                 Console.WriteLine("Error al editar la presentación: " + ex.Message);
                 throw;
             }
-        }
-
-
-        //GUARDAR CAMBIOS AL EDITAR PRESENTACION
-        public void GuardarCambiosEditarPresentacion()
-        {
-            By guardarcambiosPresentacion = By.XPath("//button[normalize-space()='Guardar Cambios']");
-            utilities.ClickButton(guardarcambiosPresentacion);
-        }
-
-        //ELIMINAR CONCEPTO AL EDITAR PRESENTACION
-        public void eliminarConceptoEditarPresentacion()
-        {
-            By eliminarconceptoEditarPresentacion = By.XPath("//input[@class='ng-untouched ng-pristine ng-valid ng-star-inserted']");
-            utilities.ClickButton(eliminarconceptoEditarPresentacion);
-        }
-
-        // CREAR NUEVA Y APLICAR CAMBIOS EDITAR PRESENTACION
-        public void aplicarcambiosEditarPresentacion()
-        {
-            By aplicarcambiosEditarPresentacion = By.XPath("//button[normalize-space()='Crear nueva y aplicar cambios (1)']");
-            utilities.ClickButton(aplicarcambiosEditarPresentacion);
-            By botonOK = By.XPath("//button[normalize-space()='OK']");
-            utilities.ClickButton(botonOK);
         }
 
         //METODO PARA ELIMINAR PRESENTACION
@@ -714,7 +601,7 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
 
                     Thread.Sleep(500);
 
-                    By confirmar = By.XPath("//button[normalize-space()='Sí, eliminar']");
+                    By confirmar = By.XPath("//button[normalize-space()='Sí, ¡elimínalo!']");
                     utilities.ClickButton(confirmar);
                 }
                 else
@@ -762,18 +649,6 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
                 Console.WriteLine("Error al reasignar presentación: " + ex.Message);
                 throw;
             }
-        }
-
-        public void eliminarConceptoEliminarPresentacion()
-        {
-            By checkeliminarconcepto = By.XPath("//input[@class='ng-untouched ng-pristine ng-valid ng-star-inserted']");
-            utilities.ClickButton(checkeliminarconcepto);
-        }
-
-        public void reasignarEliminarPresentacion()
-        {
-            By botonreasignarEliminarPresentacion = By.XPath("//button[normalize-space()='Reasignar y eliminar (1)']");
-            utilities.ClickButton(botonreasignarEliminarPresentacion);
         }
 
         public void DesactivarPresentacionDesdeGrilla(string nombrePresentacion)
@@ -847,14 +722,6 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
             }
         }
 
-        public void guardarcambiosCaracteristicaComun()
-        {
-            By botonguardarcambiosCaracteristicaComun = By.XPath("//button[normalize-space()='Guardar Cambios']");
-            utilities.ClickButton(botonguardarcambiosCaracteristicaComun);
-            By botonOK = By.XPath("//button[normalize-space()='OK']");
-            utilities.ClickButton(botonOK);
-        }
-
         public void IngresarCodigoCaracteristicaPropia(string codigo)
         {
             utilities.EnterText(codigoCaracteristicaPropia, codigo);
@@ -910,13 +777,6 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
             }
         }
 
-        public void guardarcambiosCaracteristicaPropia()
-        {
-            By botonguardarcambiosCaracteristicaComun = By.XPath("//button[normalize-space()='Guardar Cambios']");
-            utilities.ClickButton(botonguardarcambiosCaracteristicaComun);
-            By botonOK = By.XPath("//button[normalize-space()='OK']");
-            utilities.ClickButton(botonOK);
-        }
 
         //-------------------------------------------------------------------------------------------------------------
 
@@ -947,8 +807,6 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
         {
             By botonagregar = By.XPath("//i[@class='icon-plus']");
             utilities.ClickButton(botonagregar);
-            By botonok = By.XPath("//button[normalize-space()='OK']");
-            utilities.ClickButton(botonok);
         }
 
         public void EditarValorCaracteristicaComun(string valor)
@@ -967,25 +825,10 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
             }
         }
 
-
-        public void guardarcambiosEditarValorCaracteristicaComun()
-        {
-            By botonguardarcambiosValorCaracteristicacomun = By.XPath("//button[normalize-space()='Guardar Cambios']");
-            utilities.ClickButton(botonguardarcambiosValorCaracteristicacomun);
-            By botonOK = By.XPath("//button[normalize-space()='OK']");
-            utilities.ClickButton(botonOK);
-        }
-
         public void actualizarValorCaracteristicaComun()
         {
             By botonSI = By.XPath("//button[normalize-space()='SI']");
             utilities.ClickButton(botonSI);
-        }
-
-        public void eliminarconceptoEditarValorCaracteristicaComun()
-        {
-            By checkeliminarconceptoValorCaracteristicaComun = By.XPath("//input[@class='ng-untouched ng-pristine ng-valid ng-star-inserted']");
-            utilities.ClickButton(checkeliminarconceptoValorCaracteristicaComun);
         }
 
         
@@ -1000,7 +843,7 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
                 utilities.ClickButton(botonEliminar);
 
                 // Confirmación modal
-                By botonConfirmar = By.XPath("//button[normalize-space()='Sí, eliminar']");
+                By botonConfirmar = By.XPath("//button[normalize-space()='Sí, ¡elimínalo!']");
                 utilities.ClickButton(botonConfirmar);
             }
             else
@@ -1024,13 +867,6 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
             By opcion = By.XPath($"//div[contains(@class,'modal-content')]//select[contains(@class,'form-select')]//option[normalize-space()='{nuevoValor}']");
 
             utilities.ClickButton(opcion);
-        }
-
-
-        public void eliminarconceptoEliminarValorCaracteristicaComun()
-        {
-            By checkeliminarconceptoEliminarValorCaracteristicaComun = By.XPath("//input[@class='ng-untouched ng-pristine ng-valid ng-star-inserted']");
-            utilities.ClickButton(checkeliminarconceptoEliminarValorCaracteristicaComun);
         }
 
 
@@ -1082,9 +918,95 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
             By botonGuardar = By.XPath("//button[normalize-space()='Guardar asignaciones']");
             utilities.ClickButton(botonGuardar);
         }
-        
+
 
         //-------------------------------------------------------------------------------------------------------------
+
+        // OTROS MÉTODOS PARA USAR - GENERALES
+
+        // POR SI SE QUIERE OCULTAR EL SIDEBAR
+        public void CerrarSidebar()
+        {
+            By botonCerrarSidebar = By.XPath("//i[@class='bi bi-list']");
+            utilities.ClickButton(botonCerrarSidebar);
+        }
+
+        // APLICAR NUEVOS CAMBIOS AL EDITAR (FAMILIA, PRESENTACIÓN)
+        public void AplicarNuevosCambios()
+        {
+            By botonAplicarCambios = By.XPath("//button[contains(normalize-space(), 'Crear nueva y aplicar cambios')]");
+            utilities.ClickButton(botonAplicarCambios);
+        }
+
+        // REASIGNAR Y ELIMINAR (FAMILIA, PRESENTACIÓN)
+        public void ConfirmarReasignacionYEliminar()
+        {
+            By botonReasignarEliminar = By.XPath("//button[contains(normalize-space(), 'Reasignar y eliminar')]");
+            utilities.ClickButton(botonReasignarEliminar);
+        }
+
+        // ELIMINAR CONCEPTO POR NOMBRE (MÉTODO DINÁMICO PARA USAR EN FAMILIA, PRESENTACIÓN Y VALOR DE CARACTERISTICA)
+        public void EliminarConceptosPorNombre(List<string> nombresConceptos)
+        {
+            foreach (string nombre in nombresConceptos)
+            {
+                // Fíjate cómo este nuevo XPath ya no tiene el td[1] problemático
+                By checkboxConcepto = By.XPath($"//tbody/tr[.//td[normalize-space()='{nombre}']]//input[@type='checkbox']");
+
+                try
+                {
+                    utilities.ClickButton(checkboxConcepto);
+                    Thread.Sleep(500);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al intentar seleccionar el concepto '{nombre}': " + ex.Message);
+                    throw;
+                }
+            }
+        }
+
+        //ELIMINAR TODOS LOS CONCEPTOS DE LA TABLA
+        public void EliminarTodosLosConceptos()
+        {
+            // Solo buscamos checkboxes que vivan estrictamente dentro de la ventana emergente ("modal-content")
+            // (Opcionalmente, si también lo usabas en la tabla principal, buscamos en la etiqueta de la tabla que usaste en ese feature)
+            By todosLosCheckboxes = By.XPath("//div[contains(@class,'modal-content')]//tbody//tr//input[@type='checkbox']");
+
+            var elementos = driver.FindElements(todosLosCheckboxes);
+
+            if (elementos.Count > 0)
+            {
+                foreach (var checkbox in elementos)
+                {
+                    // Ahora estamos 100% seguros de que solo son los del Modal
+                    ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView({block: 'center'});", checkbox);
+                    Thread.Sleep(200);
+
+                    checkbox.Click();
+                }
+            }
+            else
+            {
+                Console.WriteLine("No se encontraron conceptos para eliminar en el modal.");
+            }
+        }
+
+
+        // GUARDAR CAMBIOS GENERALES
+        // Solo y exclusivamente para presionar el botón de Guardar
+        public void GuardarCambiosGenerales()
+        {
+            // El 'or' soluciona el problema de que un botón diga 'Cambios' y otro 'cambios'
+            By botonGuardar = By.XPath("//button[normalize-space()='Guardar Cambios' or normalize-space()='Guardar cambios']");
+            utilities.ClickButton(botonGuardar);
+        }
+
+        public void SistemaMensajeOk()
+        {
+            By botonOK = By.XPath("//button[normalize-space()='OK']");
+            utilities.ClickButton(botonOK);
+        }
 
         public void GuardarRegistro()
         {

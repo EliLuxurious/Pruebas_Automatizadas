@@ -2,50 +2,43 @@
 
 Editar las familias con tablas de decisiones
 
-Scenario: Editar Familia a la Familia BARRA DE ENSALADA
+Background: 
 Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'
 When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña 'calidad'
 And el usuario accede al módulo Conceptos
 And el usuario selecciona Registrar Datos de Concepto
-When el usuario va a la opcion Familia
-And el usuario edita la familia "Barra de Ensaladas"
-And el usuario selecciona el tipo "Servicio"
-And el usuario selecciona el tipo de tratamiento "IGV Restaurantes"
+And el usuario va a la opcion Familia
+
+
+Scenario: Editar Familia a la Familia Harina Igv18
+When el usuario edita la familia "Harina Igv18"
+And el usuario ingresa el código de familia " 1"
 And el usuario guarda los cambios de familia
-And el usuario elimina el concepto a editar familia
-Then el usuario aplica los cambios de familia
+And el usuario elimina los siguientes conceptos:
+  | NombreConcepto       |
+  | Harina Para Hornear B l a n c a F l o r SP UN |
+And el usuario aplica los cambios de familia
+Then el sistema muestra un mensaje de confirmacion
 
 
-Scenario: Editar Familia a la Familia PLANTAS
-Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'
-When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña 'calidad'
-And el usuario accede al módulo Conceptos
-And el usuario selecciona Registrar Datos de Concepto
-When el usuario va a la opcion Familia
-And el usuario edita la familia "PLANTAS"
-And el usuario selecciona el tipo de tratamiento "Exoneracion IGV"
-And el usuario selecciona la categoria "SIN CATEGORÍA"
+Scenario: Editar Familia a la Familia PLANTASs ExoIgv
+When el usuario edita la familia "PLANTASs ExoIgv"
+And el usuario ingresa el código de familia " 1"
 And el usuario guarda los cambios de familia
-Then el usuario aplica los cambios de familia
+And el usuario aplica los cambios de familia
+Then el sistema muestra un mensaje de confirmacion
 
 
-Scenario: Editar Familia a la Familia Platos de Fondos
-Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'
-When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña 'calidad'
-And el usuario accede al módulo Conceptos
-And el usuario selecciona Registrar Datos de Concepto
-When el usuario va a la opcion Familia
-And el usuario edita la familia "Platos de Fondos"
-And el usuario ingresa el nombre de familia " Ricos"
+
+Scenario: Editar Familia a la Familia KEKE Igv18
+When el usuario edita la familia "KEKE Igv18"
+And el usuario ingresa el código de familia " 1"
 And el usuario guarda los cambios de familia
+Then el sistema muestra un mensaje de confirmacion
 
 
 
 Scenario: Edición inválida de Familia a la Familia SLAS
-Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'
-When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña 'calidad'
-And el usuario accede al módulo Conceptos
-And el usuario selecciona Registrar Datos de Concepto
-When el usuario va a la opcion Familia
-And el usuario edita la familia "slas"
+When el usuario edita la familia "slas"
 And el usuario guarda los cambios de familia
+Then el sistema muestra un mensaje de error
