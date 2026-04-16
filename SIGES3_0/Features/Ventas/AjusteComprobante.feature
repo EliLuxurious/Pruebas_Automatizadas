@@ -85,10 +85,10 @@ Scenario Outline: ND por aumento en el valor - <caso>
   # ⚠️ MÓDULO ALMACÉN: no existe aún. Validaciones de stock pendientes.
 
 
-# ═══════════════════════════════════════════════════════════════════════
-# NOTAS DE CRÉDITO - ANULACIÓN / DEVOLUCIÓN TOTAL
+#════════════════════════════════════════════════════════════════════════════
+############## NOTAS DE CRÉDITO - ANULACIÓN / DEVOLUCIÓN TOTAL ##############
+#════════════════════════════════════════════════════════════════════════════
 # precondición variable: entrega y tipo de pago según caso
-# ═══════════════════════════════════════════════════════════════════════
 
 @NotaCredito
 Scenario Outline: NC por anulacion / devolucion total - <caso>
