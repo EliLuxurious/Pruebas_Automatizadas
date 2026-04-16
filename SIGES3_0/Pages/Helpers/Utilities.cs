@@ -20,13 +20,13 @@ namespace SIGES3_0.Pages.Helpers
         public void ClickButton(By _path)
         {
             driver.FindElement(_path).Click();
-            Thread.Sleep(4000);
+            Thread.Sleep(5000);
         }
 
         public void EnterText(By _path, string _field)
         {
             driver.FindElement(_path).SendKeys(_field);
-            Thread.Sleep(4000);
+            Thread.Sleep(5000);
         }
 
         public void ClearAndEnterText(By _path, string _field)
