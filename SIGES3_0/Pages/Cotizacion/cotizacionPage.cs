@@ -421,7 +421,7 @@ namespace SIGES3_0.Pages.CotizacionPage
                 if (filtro != null)
                 {
                     filtro.Clear();
-                    filtro.SendKeys("S");
+                    filtro.SendKeys("NO");
                     Thread.Sleep(1000);
                 }
             }

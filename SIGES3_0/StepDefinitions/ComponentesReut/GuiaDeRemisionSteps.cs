@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using Reqnroll;
 using SIGES3_0.Pages.Componentes;
@@ -33,7 +32,9 @@ namespace SIGES3_0.StepDefinitions.GuiaRemisionStep
             string cliente, string entrega)
         {
             verPedidosPage.FiltrarPedidoBaseParaConfirmar(false);
-            if (verPedidosPage.ExistePedidoBaseParaConfirmar(false)) return;
+
+            if (verPedidosPage.ExistePedidoBaseParaConfirmar(false))
+                return;
 
             verPedidosPage.SeleccionarOpcion("Nuevo Pedido");
             verPedidosPage.SeleccionarFamilia(familia);
@@ -64,56 +65,88 @@ namespace SIGES3_0.StepDefinitions.GuiaRemisionStep
         }
 
         [When(@"el usuario valida el destinatario autocompletado")]
-        public void WhenElUsuarioValidaElDestinatarioAutocompletado() =>
+        public void WhenElUsuarioValidaElDestinatarioAutocompletado()
+        {
             guiaRemisionPage.ValidarDestinatarioAutocompletado();
+        }
 
         [When(@"el usuario ingresa fecha de traslado '(.*)'")]
-        public void WhenElUsuarioIngresaFechaDeTraslado(string fecha) =>
+        public void WhenElUsuarioIngresaFechaDeTraslado(string fecha)
+        {
             guiaRemisionPage.IngresarFechaTraslado(fecha);
+        }
 
         [When(@"el usuario ingresa peso bruto '(.*)'")]
-        public void WhenElUsuarioIngresaPesoBruto(string pesoBruto) =>
+        public void WhenElUsuarioIngresaPesoBruto(string pesoBruto)
+        {
             guiaRemisionPage.IngresarPesoBruto(pesoBruto);
+        }
 
         [When(@"el usuario ingresa numero de bultos '(.*)'")]
-        public void WhenElUsuarioIngresaNumeroDeBultos(string cantidadBultos) =>
+        public void WhenElUsuarioIngresaNumeroDeBultos(string cantidadBultos)
+        {
             guiaRemisionPage.IngresarNumeroBultos(cantidadBultos);
+        }
 
         [When(@"el usuario selecciona transporte '(.*)'")]
-        public void WhenElUsuarioSeleccionaTransporte(string tipoTransporte) =>
+        public void WhenElUsuarioSeleccionaTransporte(string tipoTransporte)
+        {
             guiaRemisionPage.SeleccionarTipoTransporte(tipoTransporte);
+        }
+
+        [When(@"el usuario ingresa transportista privado '(.*)'")]
+        public void WhenElUsuarioIngresaTransportistaPrivado(string transportista)
+        {
+            guiaRemisionPage.IngresarTransportistaPrivado(transportista);
+        }
 
         [When(@"el usuario ingresa RUC transportista '(.*)'")]
-        public void WhenElUsuarioIngresaRUCTransportista(string ruc) =>
+        public void WhenElUsuarioIngresaRUCTransportista(string ruc)
+        {
             guiaRemisionPage.IngresarTransportistaPublico(ruc);
+        }
 
         [When(@"el usuario ingresa licencia '(.*)'")]
-        public void WhenElUsuarioIngresaLicencia(string licencia) =>
+        public void WhenElUsuarioIngresaLicencia(string licencia)
+        {
             guiaRemisionPage.IngresarNumeroLicencia(licencia);
+        }
 
         [When(@"el usuario ingresa placa '(.*)'")]
-        public void WhenElUsuarioIngresaPlaca(string placa) =>
+        public void WhenElUsuarioIngresaPlaca(string placa)
+        {
             guiaRemisionPage.IngresarNumeroPlaca(placa);
+        }
 
         [When(@"el usuario selecciona direccion de origen '(.*)'")]
-        public void WhenElUsuarioSeleccionaDireccionDeOrigen(string direccion) =>
+        public void WhenElUsuarioSeleccionaDireccionDeOrigen(string direccion)
+        {
             guiaRemisionPage.SeleccionarDireccionOrigen(direccion);
+        }
 
         [When(@"el usuario selecciona detalle de direccion de origen '(.*)'")]
-        public void WhenElUsuarioSeleccionaDetalleDeOrigen(string detalle) =>
+        public void WhenElUsuarioSeleccionaDetalleDeOrigen(string detalle)
+        {
             guiaRemisionPage.IngresarDetalleOrigen(detalle);
+        }
 
         [When(@"el usuario selecciona direccion de destino '(.*)'")]
-        public void WhenElUsuarioSeleccionaDireccionDeDestino(string direccion) =>
+        public void WhenElUsuarioSeleccionaDireccionDeDestino(string direccion)
+        {
             guiaRemisionPage.SeleccionarDireccionDestino(direccion);
+        }
 
         [When(@"el usuario selecciona detalle de direccion de destino '(.*)'")]
-        public void WhenElUsuarioSeleccionaDetalleDeDestino(string detalle) =>
+        public void WhenElUsuarioSeleccionaDetalleDeDestino(string detalle)
+        {
             guiaRemisionPage.IngresarDetalleDestino(detalle);
+        }
 
         [When(@"el usuario emite la guia")]
-        public void WhenElUsuarioEmiteLaGuia() =>
+        public void WhenElUsuarioEmiteLaGuia()
+        {
             guiaRemisionPage.GuardarGuia();
+        }
 
         [Then(@"el sistema valida el resultado de la guia '(.*)'")]
         public void ThenElSistemaValidaElResultadoDeLaGuia(string resultadoEsperado)

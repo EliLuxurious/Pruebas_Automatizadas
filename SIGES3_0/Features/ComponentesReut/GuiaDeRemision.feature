@@ -13,13 +13,14 @@ Background:
 
 @EmitirGuia
 Scenario Outline: Validar emision de guia de remision
-	Given existe un pedido base para emitir guia con familia 'Azúcar' concepto '7751234001115' cantidad '20' cliente '75971755' entrega 'diferida'
+	Given existe un pedido base para emitir guia con familia 'Azúcar' concepto '7751234001115' cantidad '10' cliente '75971755' entrega 'diferida'
 	When el usuario abre el flujo de guia de remision con comprobante 'boleta de venta electronica' serie 'B002' cliente '75971755' entrega 'inmediata'
 	And el usuario valida el destinatario autocompletado
 	And el usuario ingresa fecha de traslado '<fecha_de_inicio_traslado>'
 	And el usuario ingresa peso bruto '<peso_bruto>'
 	And el usuario ingresa numero de bultos '<cantidad_bultos>'
 	And el usuario selecciona transporte '<tipo_transporte>'
+	And el usuario ingresa transportista privado '<transportista_privado>'
 	And el usuario ingresa RUC transportista '<transportista_ruc>'
 	And el usuario ingresa licencia '<numero_licencia>'
 	And el usuario ingresa placa '<numero_placa>'
@@ -31,13 +32,11 @@ Scenario Outline: Validar emision de guia de remision
 	Then el sistema valida el resultado de la guia '<resultado_esperado>'
 
 Examples:
-	| caso | fecha_de_inicio_traslado | peso_bruto | cantidad_bultos | tipo_transporte | transportista_ruc | numero_licencia | numero_placa | direccion_origen           | detalle_origen | direccion_destino        | detalle_destino | resultado_esperado                  |
-	|    1 | Hoy                      |        100 |              10 | Publico         |       20602945589 | NA              | NA           | Huanuco-Leoncio-Rupa Rupa  | Av amazonas C9 | Lima-Lima-Lima           | Av San Juna C1  | Guia emitida correctamente          |
-	|    2 | Hoy                      |         80 |               5 | Publico         |       ninguno     | NA              | NA           | Huanuco-Leoncio-Rupa Rupa  | Av amazonas C9 | Lima-Lima-Lima           | Av San Juna C1  | Transportista debe tener RUC valido |
-	|    3 | Hoy                      | Ninguno    | Ninguno         | Publico         |       20123456789 | NA              | NA           | Huanuco-Leoncio-Rupa Rupa  | Av amazonas C9 | Lima-Lima-Lima           | Av San Juna C1  | Falta peso y numero de bultos       |
-	|    4 | Hoy                      |        100 |              10 | Privado         | NA                | M-71310154      | 2770XS       | Arequipa-Arequipa-Arequipa | Av amazonas C9 | Lima-Lima-Lima           | Av San Juna C1  | Guia emitida correctamente          |
-	|    5 | Hoy                      |         10 |               2 | Privado         | NA                | Ninguno         | 2770XS       | Arequipa-Arequipa-Arequipa | Av amazonas C9 | Lima-Lima-Lima           | Av San Juna C1  | Ingrese numero de licencia          |
-	|    6 | Hoy                      |         10 |               2 | Privado         | NA                | M-71310154      | Ninguno      | Huanuco-Leoncio-Rupa Rupa  | Av amazonas C9 | Lima-Lima-Lima           | Av San Juna C1  | Ingrese numero de placa             |
-
-
+	| caso | fecha_de_inicio_traslado | peso_bruto | cantidad_bultos | tipo_transporte | transportista_privado | transportista_ruc | numero_licencia | numero_placa | direccion_origen           | detalle_origen | direccion_destino | detalle_destino | resultado_esperado                  |
+	|    1 | Hoy                      |        100 |              10 | Publico         | NA                    | 20602945589       | NA              | NA           | Huanuco-Leoncio-Rupa Rupa  | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | Guia emitida correctamente          |
+	|    2 | Hoy                      |         80 |               5 | Publico         | NA                    | ninguno           | NA              | NA           | Huanuco-Leoncio-Rupa Rupa  | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | Transportista debe tener RUC valido |
+	|    3 | Hoy                      | Ninguno    | Ninguno         | Publico         | NA                    | 20123456789       | NA              | NA           | Huanuco-Leoncio-Rupa Rupa  | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | Falta peso y numero de bultos       |
+	|    4 | Hoy                      |        100 |              10 | Privado         | 20123456789           | NA                | M-71310154      | 2770XS       | Arequipa-Arequipa-Arequipa | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | Guia emitida correctamente          |
+	|    5 | Hoy                      |         10 |               2 | Privado         | 20123456789           | NA                | Ninguno         | 2770XS       | Arequipa-Arequipa-Arequipa | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | Ingrese numero de licencia          |
+	|    6 | Hoy                      |         10 |               2 | Privado         | 20123456789           | NA                | M-71310154      | Ninguno      | Huanuco-Leoncio-Rupa Rupa  | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | Ingrese numero de placa             |
 
