@@ -22,6 +22,8 @@
   <ItemGroup>
     <Folder Include="Drivers\" />
     <Folder Include="Features\FacturacionCiclica\" />
+    <Folder Include="Features\Cotizacion\" />
+    <Folder Include="Features\Pedido\" />
     <Folder Include="Support\" />
   </ItemGroup>
 
