@@ -56,8 +56,14 @@ namespace SIGES3_0.Hooks
         [BeforeScenario(Order = 1)]
         public void FirstBeforeScenario(ScenarioContext scenarioContext)
         {
+
+            var options = new ChromeOptions();
+            options.AddArgument("--start-maximized");
+            IWebDriver driver = new ChromeDriver(options);
+
             IWebDriver driver = CreateChromeDriver();
             driver.Manage().Window.Maximize();
+
 
             _container.RegisterInstanceAs<IWebDriver>(driver);
 
