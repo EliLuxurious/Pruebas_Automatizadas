@@ -35,7 +35,7 @@ namespace SIGES3_0.StepDefinitions.CotizacionStep
                 verPedidosPage.ActivarDetUnif("false");
                 verPedidosPage.ConfigurarDescuento("false", "NA", "NA", "0");
                 cotizacionPage.BuscarCliente("00000000");
-                cotizacionPage.IngresarFechaFinal("31/03/2026 12:00:am");
+                cotizacionPage.IngresarFechaFinal("30/04/2026 12:00:am");
                 cotizacionPage.RegistrarCotizacion();
                 cotizacionPage.ObtenerResultadoSistema();
             }
