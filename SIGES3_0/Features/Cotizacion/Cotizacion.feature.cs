@@ -182,7 +182,7 @@ await this.FeatureBackgroundAsync();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Editar cotización - Casos variados")]
         [NUnit.Framework.CategoryAttribute("EditarCotizacion")]
-        [NUnit.Framework.TestCaseAttribute("1", "NO_CAMBIO", "NO_CAMBIO", "NO_CAMBIO", "NO_CAMBIO", "true", "item", "%", "10", "NO_CAMBIO", "NO_CAMBIO", "se registro correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("1", "NO_CAMBIO", "NO_CAMBIO", "15", "NO_CAMBIO", "false", "NA", "NA", "0", "NO_CAMBIO", "NO_CAMBIO", "se registro correctamente", null)]
         [NUnit.Framework.TestCaseAttribute("2", "NO_CAMBIO", "NO_CAMBIO", "NO_CAMBIO", "NO_CAMBIO", "false", "NA", "NA", "0", "NO_CAMBIO", "NO_CAMBIO", "debe realizar alguna modificacion", null)]
         public async System.Threading.Tasks.Task EditarCotizacion_CasosVariados(string caso, string familia, string concepto, string cantidad, string igv, string descuento, string tipo_Descuento, string modo_Descuento, string valor_Descuento, string cliente, string fecha_Final, string resultado_Esperado, string[] exampleTags)
         {

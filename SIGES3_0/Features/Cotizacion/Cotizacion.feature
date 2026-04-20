@@ -49,5 +49,5 @@ Scenario Outline: Editar cotización - Casos variados
 
 	Examples:
 	| caso | familia   | concepto      | cantidad  | igv       | descuento | tipo_descuento | modo_descuento | valor_descuento | cliente   | fecha_final         | resultado_esperado                 |
-	| 1    | NO_CAMBIO | NO_CAMBIO     | NO_CAMBIO | NO_CAMBIO | true      | item           | %              | 10              | NO_CAMBIO | NO_CAMBIO           | se registro correctamente          |
+	| 1    | NO_CAMBIO | NO_CAMBIO     | 15        | NO_CAMBIO | false     | NA             | NA             | 0               | NO_CAMBIO | NO_CAMBIO           | se registro correctamente          |
 	| 2    | NO_CAMBIO | NO_CAMBIO     | NO_CAMBIO | NO_CAMBIO | false     | NA             | NA             | 0               | NO_CAMBIO | NO_CAMBIO           | debe realizar alguna modificacion  |

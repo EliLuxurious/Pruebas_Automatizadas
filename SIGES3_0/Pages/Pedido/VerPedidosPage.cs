@@ -2601,14 +2601,24 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
 
                     if (hayInconsistencia)
                     {
+                        var detalles = driver.FindElements(detalleInconsistenciaRegistro)
+                            .Where(e => e.Displayed)
+                            .Select(e => (e.Text ?? "").Trim())
+                            .ToList();
+
+                        if (detalles.Any(t =>
+                            t.Contains("Cantidad debe ser menor al stock", StringComparison.OrdinalIgnoreCase) ||
+                            t.Contains("menor al stock", StringComparison.OrdinalIgnoreCase) ||
+                            t.Contains("stock", StringComparison.OrdinalIgnoreCase)))
+                        {
+                            return "Cantidad debe ser menor al stock";
+                        }
+
                         if (driver.FindElements(mensajeSinProductoRegistro).Any(e => e.Displayed))
                             return "Ningún producto seleccionado";
 
-                        if (driver.FindElements(mensajeInconsistenciaRegistro).Any(e => e.Displayed) ||
-                            driver.FindElements(detalleInconsistenciaRegistro).Any(e => e.Displayed))
-                        {
+                        if (driver.FindElements(mensajeInconsistenciaRegistro).Any(e => e.Displayed) || detalles.Any())
                             return "muestra mensaje de inconsistencia";
-                        }
                     }
                 }
                 catch { }

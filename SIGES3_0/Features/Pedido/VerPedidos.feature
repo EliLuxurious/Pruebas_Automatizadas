@@ -36,7 +36,7 @@ Examples:
 	|    2 | ninguno | ninguno       |        0 | false | false    | false     | NA             | NA             |               0 |    75971755 | diferida     | Ningún producto seleccionado      |
 	|    3 | Gaseosa | 7753234003313 |       12 | true  | true     | true      | item           | $              |               1 |    75971755 | inmediata    | el pedido se guardo correctamente |
 	|    4 | Azúcar  | 7751234001115 |       20 | false | false    | true      | global         | %              |              10 | 20542245671 | diferida     | el pedido se guardo correctamente |
-	|    5 | Gaseosa | 7753234003313 |900500000 | false | false    | false     | NA             | NA             |               0 |    75971755 | inmediata    | muestra mensaje de inconsistencia |
+	|    5 | Gaseosa | 7753234003313 |900500000 | false | false    | false     | NA             | NA             |               0 |    75971755 | inmediata    | Cantidad debe ser menor al stock  |
 
 @EditarPedido
 Scenario Outline: Ver pedido - editar pedido
