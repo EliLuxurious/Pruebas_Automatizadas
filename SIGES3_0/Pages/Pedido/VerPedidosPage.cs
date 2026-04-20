@@ -25,8 +25,8 @@ namespace SIGES3_0.Pages.PedidoPage
 
         // --- Nuevo pedido ---
         private By btnNuevoPedido = By.XPath("//button[normalize-space()='Nuevo Pedido']");
-        private By cmbFamilia = By.XPath("//span[normalize-space()='Seleccionar familia']");
-        private By cmbConcepto = By.XPath("//span[normalize-space()='Seleccionar un concepto']");
+        private By cmbFamilia = By.XPath("//span[normalize-space()='Seleccione una familia']");
+        private By cmbConcepto = By.XPath("//span[normalize-space()='Seleccione un concepto']");
         private By txtCantidad = By.XPath("// table/tbody/tr[1]//input");
         private By chkIGV = By.XPath("//label[normalize-space()='IGV']");
         private By chkDetUnif = By.XPath("//label[normalize-space()='DET.UNIF.']");
@@ -49,7 +49,7 @@ namespace SIGES3_0.Pages.PedidoPage
         // mensajes de advertencia
         private By mensajeInconsistenciaRegistro = By.XPath("//strong[normalize-space()='Se encontraron inconsistencias en los datos:']");
         private By detalleInconsistenciaRegistro = By.XPath("//div[contains(@class,'alert-danger')]//li");
-        private By mensajeSinProductoRegistro = By.XPath("//*[contains(text(),'Ningún producto seleccionado')]");
+        private By mensajeSinProductoRegistro = By.XPath("//span[@class='badge-status danger']");
 
         // EDITAR PEDIDO
         private By btnEditarPrimerRegistro = By.XPath("//tbody/tr[1]/td[9]/div[1]/button[1]");
@@ -84,11 +84,24 @@ namespace SIGES3_0.Pages.PedidoPage
         private By btnCerrarEntregaConfirmacion = By.XPath("(//*[contains(@class,'ri-arrow-up-s-line') or contains(@class,'ri-arrow-down-s-line')])[2]");
 
         // PAGO CONFIRMAR
-        private By rbtContadoConfirmacion = By.XPath("//label[normalize-space()='Contado']");
+        private By rbtContadoConfirmacion = By.XPath("//label[normalize-space()='Al contado']");
         private By tabEfectivoConfirmacion = By.XPath("//*[contains(text(),'EFECTIVO')]");
-        private By txtRecibidoEfectivo = By.XPath("//input[@id='amountReceived']");
+        private By txtRecibidoEfectivoConfirmacion = By.XPath("//input[@id='amountReceived']");
 
         // CONFIRMAR PEDIDO - MEDIOS DE PAGOS
+        // PAGO CONFIRMAR
+        private By bodyPagoConfirmacion = By.XPath(
+            "//div[contains(@class,'accordion-body')]" +
+            "[.//label[normalize-space()='Contado' or normalize-space()='Crédito']]");
+
+        private By tabEfectivoActivoConfirmacion = By.XPath(
+            "//span[normalize-space()='EFECTIVO']/ancestor::*[" +
+            "contains(@class,'active') or contains(@class,'selected') or @aria-selected='true']");
+
+        private By inputMontoEfectivoConfirmacion = By.XPath("//input[@id='amountReceived']");
+        //---------------
+
+
         private By chkMultipagoConfirmacion = By.XPath("//input[@id='checkTypePaymentMethod']");
 
         private By tabTarjetaCreditoConfirmacion = By.XPath("//span[normalize-space()='TARJETAS DE CREDITO']");
@@ -1474,31 +1487,52 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
 
         private void AbrirPagoConfirmacion()
         {
-            var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20))
+            {
+                PollingInterval = TimeSpan.FromMilliseconds(200)
+            };
 
-            var elemento = waitLong.Until(
-                ExpectedConditions.ElementToBeClickable(seccionPagoConfirmacion)
-            );
+            bool yaVisible = driver.FindElements(bodyPagoConfirmacion).Any(e => e.Displayed);
+            if (yaVisible)
+            {
+                Console.WriteLine("[AbrirPagoConfirmacion] Ya está visible, no se hace click.");
+                return;
+            }
 
-            ((IJavaScriptExecutor)driver)
-                .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", elemento);
-
-            ((IJavaScriptExecutor)driver)
-                .ExecuteScript("arguments[0].click();", elemento);
-
-            // Esperar contenido de Pago visible
-            waitLong.Until(d =>
+            var header = waitLong.Until(d =>
             {
                 try
                 {
-                    var el = d.FindElement(rbtContadoConfirmacion);
-                    return el.Displayed;
+                    var el = d.FindElements(seccionPagoConfirmacion)
+                        .FirstOrDefault(e => e.Displayed && e.Enabled);
+                    return el;
                 }
                 catch
                 {
-                    return false;
+                    return null;
                 }
             });
+
+            if (header == null)
+                throw new Exception("No se encontró la sección Pago de confirmación.");
+
+            ((IJavaScriptExecutor)driver)
+                .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", header);
+
+            Thread.Sleep(250);
+
+            try
+            {
+                header.Click();
+            }
+            catch
+            {
+                ((IJavaScriptExecutor)driver)
+                    .ExecuteScript("arguments[0].click();", header);
+            }
+
+            waitLong.Until(d =>
+                d.FindElements(bodyPagoConfirmacion).Any(e => e.Displayed));
         }
 
         public void SeleccionarConfirmarPedido()
@@ -1658,9 +1692,31 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
         {
             try
             {
+                var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(20))
+                {
+                    PollingInterval = TimeSpan.FromMilliseconds(200)
+                };
+
                 AbrirPagoConfirmacion();
-                SeleccionarTipoPagoConfirmacion("contado");
+
+                // usar el parámetro real
+                SeleccionarTipoPagoConfirmacion(tipoPago);
+
                 SeleccionarTabMedioPagoConfirmacion("efectivo");
+
+                waitLong.Until(d =>
+                {
+                    try
+                    {
+                        return d.FindElements(txtRecibidoEfectivoConfirmacion)
+                            .Any(e => e.Displayed && e.Enabled);
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                });
+
                 IngresarMontoEfectivoConfirmacion(montoCubreTotal);
             }
             catch (Exception e)
@@ -1901,7 +1957,7 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
                 // EFECTIVO
                 if (ultimoMedioPagoConfirmacion == "efectivo")
                 {
-                    var inputEfectivo = driver.FindElements(txtRecibidoEfectivo)
+                    var inputEfectivo = driver.FindElements(txtRecibidoEfectivoConfirmacion)
                         .FirstOrDefault(e => e.Displayed && e.Enabled);
 
                     if (inputEfectivo != null)
@@ -2051,52 +2107,54 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
 
         private void SeleccionarTabMedioPagoConfirmacion(string medioPago)
         {
-            string medio = medioPago.Trim().ToLower();
+            string medio = medioPago.Trim().ToLowerInvariant();
             ultimoMedioPagoConfirmacion = medio;
 
-            if (medio == "efectivo")
+            switch (medio)
             {
-                ClickTabConfirmacion(tabEfectivoConfirmacion);
-                Thread.Sleep(600);
-                return;
-            }
+                case "efectivo":
+                    ClickTabConfirmacion(tabEfectivoConfirmacion);
 
-            if (medio == "tarjeta_credito")
-            {
-                ClickTabConfirmacion(tabTarjetaCreditoConfirmacion);
-                Thread.Sleep(800);
-                return;
-            }
+                    new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                    {
+                        PollingInterval = TimeSpan.FromMilliseconds(150)
+                    }.Until(d =>
+                    {
+                        try
+                        {
+                            return d.FindElements(txtRecibidoEfectivoConfirmacion)
+                                .Any(e => e.Displayed && e.Enabled);
+                        }
+                        catch
+                        {
+                            return false;
+                        }
+                    });
+                    return;
 
-            if (medio == "tarjeta_debito")
-            {
-                ClickTabConfirmacion(tabTarjetaDebitoConfirmacion);
-                Thread.Sleep(800);
-                return;
-            }
+                case "tarjeta_credito":
+                    ClickTabConfirmacion(tabTarjetaCreditoConfirmacion);
+                    return;
 
-            if (medio == "transferencia_fondos")
-            {
-                ClickTabConfirmacion(tabTransferenciaConfirmacion);
-                Thread.Sleep(1000);
-                return;
-            }
+                case "tarjeta_debito":
+                    ClickTabConfirmacion(tabTarjetaDebitoConfirmacion);
+                    return;
 
-            if (medio == "deposito_cuenta")
-            {
-                ClickTabConfirmacion(tabDepositosConfirmacion);
-                Thread.Sleep(1000);
-                return;
-            }
+                case "transferencia_fondos":
+                    ClickTabConfirmacion(tabTransferenciaConfirmacion);
+                    return;
 
-            if (medio == "puntos")
-            {
-                ClickTabConfirmacion(tabPuntosConfirmacion);
-                Thread.Sleep(500);
-                return;
-            }
+                case "deposito_cuenta":
+                    ClickTabConfirmacion(tabDepositosConfirmacion);
+                    return;
 
-            throw new Exception($"Medio de pago no soportado: {medioPago}");
+                case "puntos":
+                    ClickTabConfirmacion(tabPuntosConfirmacion);
+                    return;
+
+                default:
+                    throw new Exception($"Medio de pago no soportado: {medioPago}");
+            }
         }
 
         private void ConfigurarMedioPagoConfirmacion(
@@ -2203,14 +2261,21 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
             string valor = ResolverMontoPago(monto);
             Console.WriteLine($"[Efectivo] Parámetro recibido: '{monto}'");
             Console.WriteLine($"[Efectivo] Monto resuelto: '{valor}'");
-            if (string.IsNullOrWhiteSpace(valor)) return;
 
-            var input = wait.Until(d =>
+            if (string.IsNullOrWhiteSpace(valor))
+                throw new Exception("No se resolvió un monto válido para efectivo.");
+
+            var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(15))
+            {
+                PollingInterval = TimeSpan.FromMilliseconds(150)
+            };
+
+            var input = waitLong.Until(d =>
             {
                 try
                 {
-                    var elementos = d.FindElements(txtRecibidoEfectivo);
-                    return elementos.FirstOrDefault(e => e.Displayed && e.Enabled);
+                    return d.FindElements(txtRecibidoEfectivoConfirmacion)
+                        .FirstOrDefault(e => e.Displayed && e.Enabled);
                 }
                 catch
                 {
@@ -2224,35 +2289,35 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
             ((IJavaScriptExecutor)driver)
                 .ExecuteScript("arguments[0].scrollIntoView({block:'center'});", input);
 
-            Thread.Sleep(400);
-
-            // Forzar foco
-            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].focus();", input);
-
-            // Limpiar valor y disparar evento input
-            ((IJavaScriptExecutor)driver).ExecuteScript(@"
-            arguments[0].value = '';
-            arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
-            arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
-            ", input);
-
             Thread.Sleep(200);
 
-            // Escribir valor
+            try
+            {
+                input.Click();
+            }
+            catch
+            {
+                ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].focus();", input);
+            }
+
+            input.SendKeys(Keys.Control + "a");
+            input.SendKeys(Keys.Delete);
+            Thread.Sleep(150);
             input.SendKeys(valor);
-
-            Thread.Sleep(200);
-
-            // Disparar eventos después de escribir
-            ((IJavaScriptExecutor)driver).ExecuteScript(@"
-            arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
-            arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
-            arguments[0].blur();
-        ", input);
-
             input.SendKeys(Keys.Tab);
 
-            Thread.Sleep(800);
+            waitLong.Until(d =>
+            {
+                try
+                {
+                    var v = input.GetAttribute("value") ?? "";
+                    return !string.IsNullOrWhiteSpace(v);
+                }
+                catch
+                {
+                    return false;
+                }
+            });
         }
 
         private void SeleccionarBancoConfirmacion(string banco)
