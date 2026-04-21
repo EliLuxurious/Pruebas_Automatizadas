@@ -972,13 +972,21 @@ namespace SIGES3_0.Pages.PedidoPage
                 accion.Trim().Equals("Sí", StringComparison.OrdinalIgnoreCase) ||
                 accion.Trim().Equals("Si", StringComparison.OrdinalIgnoreCase))
             {
-                var botonSi = wait.Until(
-                    ExpectedConditions.ElementIsVisible(btnSiInvalidar)
+                var waitLong = new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                {
+                    PollingInterval = TimeSpan.FromMilliseconds(200)
+                };
+
+                var botonSi = waitLong.Until(
+                    SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(btnSiInvalidar)
                 );
+
+                Thread.Sleep(500);
 
                 bool deshabilitado =
                     !botonSi.Enabled ||
-                    botonSi.GetAttribute("disabled") != null ||
+                    (botonSi.GetAttribute("disabled") ?? "").Trim().Length > 0 ||
+                    (botonSi.GetAttribute("aria-disabled") ?? "").Trim().Equals("true", StringComparison.OrdinalIgnoreCase) ||
                     (botonSi.GetAttribute("class") ?? "").ToLower().Contains("disabled");
 
                 if (deshabilitado)
@@ -988,39 +996,29 @@ namespace SIGES3_0.Pages.PedidoPage
                     return;
                 }
 
-                var inputMotivo = wait.Until(
-                    ExpectedConditions.ElementIsVisible(txtMotivoInvalidacion)
-                );
-
-                wait.Until(d =>
-                {
-                    try
-                    {
-                        var valor = inputMotivo.GetAttribute("value") ?? "";
-                        return valor.Trim().Length > 0;
-                    }
-                    catch
-                    {
-                        return false;
-                    }
-                });
-
                 ultimaAccion = "invalidar";
 
-                ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", botonSi);
+                try
+                {
+                    botonSi.Click();
+                }
+                catch
+                {
+                    ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", botonSi);
+                }
+
                 return;
             }
 
             if (accion.Trim().Equals("NO", StringComparison.OrdinalIgnoreCase))
             {
                 var botonNo = wait.Until(
-                    ExpectedConditions.ElementToBeClickable(btnNoInvalidar)
+                    SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(btnNoInvalidar)
                 );
 
                 ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", botonNo);
             }
         }
-
         public bool ExistePedidoBaseParaConfirmar(bool esMayor700)
         {
             try
@@ -2676,15 +2674,6 @@ return ComprobanteSeleccionadoCoincide(tipoComprobante);
                         ultimaAccion = "";
                         return "Boton SI deshabilitado";
                     }
-
-                    var botonSi = driver.FindElement(btnSiInvalidar);
-                    bool deshabilitado =
-                        !botonSi.Enabled ||
-                        botonSi.GetAttribute("disabled") != null ||
-                        botonSi.GetAttribute("class")?.ToLower().Contains("disabled") == true;
-
-                    if (deshabilitado)
-                        return "Boton SI deshabilitado";
                 }
                 catch { }
 
