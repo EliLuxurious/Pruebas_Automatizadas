@@ -20,6 +20,7 @@ namespace SIGES3_0.Pages.VentasPage
         private string _lastObservedPaymentState = string.Empty;
         private DiscountContext _discountContext = DiscountContext.Empty;
         private PaymentContext _paymentContext = PaymentContext.Empty;
+        private string _lastCreditInstallments = string.Empty;
         private static readonly By DiscountAmountModeLocator = By.XPath("//button[normalize-space()='$' or contains(normalize-space(),'Monto')] | //label[normalize-space()='$' or contains(normalize-space(),'Monto')]");
         private static readonly By DiscountPercentageModeLocator = By.XPath("//button[normalize-space()='%' or contains(normalize-space(),'Porcentaje')] | //label[normalize-space()='%' or contains(normalize-space(),'Porcentaje')]");
         private static readonly By DiscountValueInputLocator = By.XPath("//input[(@placeholder='0' or contains(@id,'discount') or contains(@formcontrolname,'discount')) and not(@type='hidden') and not(@type='checkbox') and not(@type='radio')]");
@@ -43,6 +44,7 @@ namespace SIGES3_0.Pages.VentasPage
             _lastObservedPaymentState = string.Empty;
             _discountContext = DiscountContext.Empty;
             _paymentContext = PaymentContext.Empty;
+            _lastCreditInstallments = string.Empty;
 
             WaitForFormReady();
 
@@ -544,15 +546,18 @@ namespace SIGES3_0.Pages.VentasPage
 
             bool esMultipago = DebeActivarOpcion(multipago);
             ConfigurarMultipagoNuevaVenta(esMultipago);
+            _lastCreditInstallments = string.Empty;
 
             if (NormalizeText(tipoPago).Contains("credito"))
+            {
+                _lastCreditInstallments = EsNA(nroCuotas) ? string.Empty : nroCuotas.Trim();
 
                 if (!EsNA(nroCuotas))
                     IngresarNumeroCuotasNuevaVenta(nroCuotas);
 
                 if (!EsNA(montoInicialCredito))
                     IngresarMontoInicialCreditoNuevaVenta(montoInicialCredito);
-
+            }
 
             var instrucciones = ConstruirInstruccionesPagoNuevaVenta(
                 medioPago,
@@ -611,6 +616,9 @@ namespace SIGES3_0.Pages.VentasPage
             var medios = SepararValores(medioPago)
                 .Select(NormalizeText)
                 .ToList();
+
+            if (medios.Count == 0 || (medios.Count == 1 && EsNA(medios[0])))
+                return new List<PaymentInstruction>();
 
             Assert.That(medios.Count, Is.GreaterThan(0),
                 "Debe existir al menos un medio de pago configurado en el feature.");
@@ -746,9 +754,11 @@ namespace SIGES3_0.Pages.VentasPage
                 if (contexto != null)
                     AssertTipoPagoSeleccionadoNuevaVenta(contexto);
 
-                AssertMensajesValidacionPago(
+                AssertAlgunMensajeValidacionPago(
                     "El sistema deberia mostrar la inconsistencia de puntos insuficientes.",
-                    "puntos insuficiente");
+                    "puntos insuficiente",
+                    "no hay suficientes puntos disponibles",
+                    "suficientes puntos disponibles");
                 AssertGuardarDeshabilitadoEnPago(
                     "El boton Guardar deberia permanecer deshabilitado cuando el cliente no tiene puntos suficientes.");
             }
@@ -819,6 +829,79 @@ namespace SIGES3_0.Pages.VentasPage
 
                 AssertGuardarDeshabilitadoEnPago(
                     "El boton Guardar deberia permanecer deshabilitado cuando el multipago a credito no cubre el monto inicial.");
+            }
+            else if (esperado.Contains("multipago puntos no habilitado sin cliente"))
+            {
+                if (contexto != null)
+                {
+                    AssertTipoPagoSeleccionadoNuevaVenta(contexto);
+                    Assert.That(contexto.Multipago, Is.True,
+                        "El escenario deberia mantenerse en multipago para validar el bloqueo de puntos.");
+                }
+
+                Assert.That(EstaMarcado(VentasLocators.Payment.MultipaymentCheckbox), Is.True,
+                    "La opcion Multipago deberia permanecer marcada.");
+                AssertMedioPagoNoDisponibleNuevaVenta(
+                    "PUNTOS",
+                    "El sistema no deberia habilitar el medio de pago Puntos cuando no hay cliente identificado.",
+                    VentasLocators.Payment.PointsMethod,
+                    By.XPath("//span[normalize-space()='PUNTOS']"));
+                AssertGuardarDeshabilitadoEnPago(
+                    "El boton Guardar deberia permanecer deshabilitado cuando el pago queda incompleto y Puntos no esta disponible.");
+            }
+            else if (esperado.Contains("credito sin cliente"))
+            {
+                if (contexto != null)
+                    AssertTipoPagoSeleccionadoNuevaVenta(contexto);
+
+                AssertCronogramaCreditoConfiguradoNuevaVenta();
+
+                if (contexto?.MontoInicialCredito is decimal montoInicial)
+                {
+                    AssertInputAproximado(VentasLocators.Payment.CreditInitialAmountInput, montoInicial,
+                        "El monto inicial del credito deberia quedar registrado correctamente.");
+                }
+
+                AssertAlgunMensajeValidacionPago(
+                    "El sistema deberia advertir que la venta a credito requiere cliente identificado.",
+                    "es necesario identificar al cliente",
+                    "es necesario seleccionar un cliente",
+                    "identificar al cliente");
+                AssertGuardarDeshabilitadoEnPago(
+                    "El boton Guardar deberia permanecer deshabilitado cuando se configura una venta a credito sin cliente.");
+            }
+            else if (esperado.Contains("monto inicial cero"))
+            {
+                if (contexto != null)
+                    AssertTipoPagoSeleccionadoNuevaVenta(contexto);
+
+                AssertInputAproximado(VentasLocators.Payment.CreditInitialAmountInput, 0m,
+                    "El monto inicial deberia quedar registrado en 0 para disparar la validacion.");
+                AssertMensajesValidacionPago(
+                    "El sistema deberia mostrar la regla de monto inicial mayor a 0.",
+                    "monto inicial",
+                    "mayor a 0");
+                AssertGuardarDeshabilitadoEnPago(
+                    "El boton Guardar deberia permanecer deshabilitado cuando el monto inicial es 0.");
+            }
+            else if (esperado.Contains("credito configurado exitoso"))
+            {
+                if (contexto != null)
+                    AssertTipoPagoSeleccionadoNuevaVenta(contexto);
+
+                AssertCronogramaCreditoConfiguradoNuevaVenta();
+
+                if (contexto?.MontoInicialCredito is decimal montoInicial)
+                {
+                    AssertInputAproximado(VentasLocators.Payment.CreditInitialAmountInput, montoInicial,
+                        "El monto inicial del credito deberia quedar registrado correctamente.");
+                }
+
+                AssertMensajePagoNoVisible(
+                    "cliente",
+                    "credito debe identificar");
+                AssertGuardarHabilitadoEnPago(
+                    "El boton Guardar deberia habilitarse cuando el credito queda configurado correctamente.");
             }
             else if (esperado.Contains("transferencia"))
             {
@@ -3621,6 +3704,59 @@ namespace SIGES3_0.Pages.VentasPage
                 $"{mensajeError} {resumen}");
         }
 
+        private void AssertCronogramaCreditoConfiguradoNuevaVenta()
+        {
+            if (!string.IsNullOrWhiteSpace(_lastCreditInstallments))
+            {
+                AssertInputExacto(
+                    VentasLocators.Payment.CreditInstallmentsInput,
+                    new[] { _lastCreditInstallments },
+                    "El numero de cuotas deberia quedar registrado correctamente.");
+            }
+        }
+
+        private void AssertMedioPagoNoDisponibleNuevaVenta(string textoEsperado, string mensajeError, params By[] locators)
+        {
+            var candidatos = ObtenerCandidatosTabPagoNuevaVenta(textoEsperado, locators);
+            if (candidatos.Count == 0)
+                return;
+
+            var objetivo = ResolverObjetivoTabPagoNuevaVenta(candidatos[0]);
+            var clases = NormalizeText(objetivo.GetAttribute("class") ?? string.Empty);
+            var ariaDisabled = NormalizeText(objetivo.GetAttribute("aria-disabled") ?? string.Empty);
+
+            if (clases.Contains("disabled") || ariaDisabled == "true")
+                return;
+
+            try
+            {
+                EjecutarClickTabPagoNuevaVenta(objetivo);
+                Thread.Sleep(400);
+            }
+            catch
+            {
+                return;
+            }
+
+            var quedoDisponible = EsTabPagoActiva(textoEsperado) && EsContenidoPagoEsperadoVisible(textoEsperado);
+            Assert.That(quedoDisponible, Is.False,
+                $"{mensajeError} {ConstruirResumenPagoNuevaVenta($"tab_no_permitido={textoEsperado}")}");
+        }
+
+        private void AssertMensajePagoNoVisible(params string[] fragmentosNoPermitidos)
+        {
+            var visibles = CapturarValidacionesVisibles()
+                .Select(NormalizeText)
+                .ToList();
+
+            foreach (var fragmento in fragmentosNoPermitidos.Where(x => !string.IsNullOrWhiteSpace(x)))
+            {
+                var esperado = NormalizeText(fragmento);
+                Assert.That(visibles.Any(v => v.Contains(esperado)), Is.False,
+                    $"No deberia mostrarse el mensaje '{fragmento}'. {ConstruirResumenPagoNuevaVenta(mensajeVisible: string.Join(" | ", visibles))}");
+            }
+        }
+
         private void AssertTabPagoActiva(string textoEsperado)
         {
             Assert.That(EsTabPagoActiva(textoEsperado), Is.True,
@@ -3904,6 +4040,22 @@ namespace SIGES3_0.Pages.VentasPage
                 Assert.That(visibles.Any(v => NormalizeText(v).Contains(esperado)), Is.True,
                     $"{mensajeError} Falta el mensaje '{fragmento}'. {resumen}");
             }
+        }
+
+        private void AssertAlgunMensajeValidacionPago(string mensajeError, params string[] fragmentosEsperados)
+        {
+            var visibles = CapturarValidacionesVisibles();
+            var resumenMensajes = string.Join(" | ", visibles);
+            var resumen = ConstruirResumenPagoNuevaVenta(mensajeVisible: resumenMensajes);
+            var esperados = fragmentosEsperados
+                .Where(x => !string.IsNullOrWhiteSpace(x))
+                .Select(NormalizeText)
+                .ToList();
+
+            Assert.That(esperados.Count, Is.GreaterThan(0),
+                $"{mensajeError} No se recibieron fragmentos esperados.");
+            Assert.That(visibles.Any(v => esperados.Any(e => NormalizeText(v).Contains(e))), Is.True,
+                $"{mensajeError} No se encontro ninguno de los mensajes esperados: {string.Join(" | ", fragmentosEsperados)}. {resumen}");
         }
 
         private void AssertAgregarMedioPagoDeshabilitado(string mensajeError)

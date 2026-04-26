@@ -148,6 +148,8 @@ namespace SIGES3_0.Pages.VentasPage
             public static readonly By CashReceivedContingency = By.CssSelector("#amountReceived");
             public static readonly By CreditInitialAmountInput =
                 By.XPath("(//*[normalize-space()='Monto inicial']/following::input[not(@type='date') and not(@type='hidden')])[1]");
+            public static readonly By CreditInstallmentsInput =
+                By.XPath("(//label[contains(normalize-space(),'Numero de cuotas') or contains(normalize-space(),'Número de cuotas') or contains(normalize-space(),'Nro. de cuotas')]/following::input[@type='number'][1]) | //input[@type='number'][@min='1'][@max='60']");
             public static readonly By Change = By.CssSelector("#change");
             public static readonly By PaymentObservation = By.XPath(
                 "//textarea[@id='observation' or @id='observacion' or contains(@name,'observ') or contains(@formcontrolname,'observ') or contains(@placeholder,'Observ') or contains(@placeholder,'observ')] | " +

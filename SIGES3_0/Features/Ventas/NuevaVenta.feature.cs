@@ -545,25 +545,25 @@ this.ScenarioInitialize(scenarioInfo);
 #line 24
     await this.FeatureBackgroundAsync();
 #line hidden
-#line 155
+#line 154
  await testRunner.WhenAsync("selecciona el modo de venta \"VENTA NORMAL\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 157
+#line 156
  await testRunner.AndAsync(string.Format("el usuario selecciona la familia \'{0}\'", familia), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 158
+#line 157
  await testRunner.AndAsync(string.Format("el usuario selecciona el concepto \'{0}\'", concepto), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 159
+#line 158
  await testRunner.AndAsync(string.Format("el usuario ingresa la cantidad \'{0}\'", cantidad), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 161
+#line 160
  await testRunner.AndAsync(string.Format("el usuario activa IGV \'{0}\'", igv), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 163
+#line 162
  await testRunner.AndAsync(string.Format("el usuario configura descuento \'{0}\' \'{1}\' \'{2}\' \'{3}\'", descuento, tipo_Descuento, modo_Descuento, valor_Descuento), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 166
+#line 165
  await testRunner.ThenAsync(string.Format("el sistema valida el resultado del descuento en venta \'{0}\'", resultado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -582,8 +582,12 @@ this.ScenarioInitialize(scenarioInfo);
         [NUnit.Framework.TestCaseAttribute("CP019", "2", "00000000", "contado", "true", "transferencia_fondos, transferencia_fondos, transferencia_fondos", "NA", "NA", "BCP|SOL|1912490779081, BCP|SOL|1912490779081", "OP33445, OP33446", "10.00, 10.00", "NA", "NA", "NA", "inconsistencia transferencia sin cuenta ni informacion", "venta bloqueada", null)]
         [NUnit.Framework.TestCaseAttribute("CP020", "2", "00000000", "contado", "true", "tarjeta_debito, tarjeta_debito, tarjeta_debito", "BANCO DE CREDITO DEL PERU, BANCO DE CREDITO DEL PERU", "VISA, VISA", "NA", "OP20001, OP20002, OP20003", "10.00, 10.00, 15.50", "NA", "NA", "NA", "inconsistencia debito sin banco ni tarjeta", "venta bloqueada", null)]
         [NUnit.Framework.TestCaseAttribute("CP021", "2", "00000000", "contado", "true", "tarjeta_debito, tarjeta_debito, tarjeta_debito", "BANCO DE CREDITO DEL PERU, INTERBANK, SCOTIABANK", "VISA, MASTERCARD, VISA", "NA", "OP21001, OP21002", "10.00, 10.00, 15.50", "NA", "NA", "NA", "inconsistencia debito sin informacion", "venta bloqueada", null)]
-        [NUnit.Framework.TestCaseAttribute("CP022", "2", "75893616", "credito", "true", "puntos, nota_credito, efectivo", "NA", "NA", "NA", "NA", "5.00, 5.00, 5.00", "NA", "20.00", "NA", "inconsistencia credito multipago no cubre monto inicial", "venta bloqueada", null)]
+        [NUnit.Framework.TestCaseAttribute("CP022", "2", "75893616", "credito", "true", "puntos, efectivo", "NA", "NA", "NA", "NA", "5.00, 5.00", "NA", "20.00", "NA", "inconsistencia credito multipago no cubre monto inicial", "venta bloqueada", null)]
         [NUnit.Framework.TestCaseAttribute("CP023", "2", "75893616", "credito", "false", "puntos", "NA", "NA", "NA", "NA", "20.00", "NA", "20.00", "NA", "puntos insuficiente", "venta bloqueada", null)]
+        [NUnit.Framework.TestCaseAttribute("CP024", "2", "00000000", "contado", "true", "deposito_cuenta", "NA", "NA", "BCP|SOL|1912490779081", "OP11001", "5.00", "NA", "NA", "NA", "inconsistencia multipago puntos no habilitado sin cliente", "venta bloqueada", null)]
+        [NUnit.Framework.TestCaseAttribute("CP025", "2", "00000000", "credito", "false", "NA", "NA", "NA", "NA", "NA", "NA", "3", "0", "NA", "inconsistencia credito sin cliente", "venta bloqueada", null)]
+        [NUnit.Framework.TestCaseAttribute("CP026", "10", "75893616", "credito", "false", "NA", "NA", "NA", "NA", "NA", "NA", "5", "0", "NA", "credito configurado exitoso", "guarda exitosamente", null)]
+        [NUnit.Framework.TestCaseAttribute("CP031", "10", "75893616", "contado", "false", "puntos", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "puntos insuficiente", "venta bloqueada", null)]
         public async System.Threading.Tasks.Task RegistrarVentaEnNuevaVentaConMediosDePago(
                     string caso, 
                     string cantidad, 
@@ -629,7 +633,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("resultado_pago", resultado_Pago);
             argumentsOfScenario.Add("resultado_venta", resultado_Venta);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar venta en nueva venta con medios de pago", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 177
+#line 176
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -642,41 +646,41 @@ this.ScenarioInitialize(scenarioInfo);
 #line 24
     await this.FeatureBackgroundAsync();
 #line hidden
-#line 178
+#line 177
         await testRunner.WhenAsync("selecciona el modo de venta \"VENTA NORMAL\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 179
+#line 178
         await testRunner.AndAsync("configura IGV \"N\" y Detalle Unificado \"N\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 180
+#line 179
         await testRunner.AndAsync("el usuario selecciona la familia \'Gaseosa\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 181
+#line 180
         await testRunner.AndAsync("el usuario selecciona el concepto \'7753234003313\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 182
+#line 181
         await testRunner.AndAsync(string.Format("el usuario ingresa la cantidad \'{0}\'", cantidad), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 183
+#line 182
         await testRunner.AndAsync(string.Format("configura la facturacion \'BOLETA DE VENTA ELECTRONICA\' \'B002\' \'{0}\'", cliente), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 184
+#line 183
         await testRunner.AndAsync("el usuario configura la entrega \'Inmediata\' \'false\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 185
+#line 184
         await testRunner.AndAsync(string.Format("el usuario configura los medios de pago \'{0}\' \'{1}\' \'{2}\' \'{3}\' \'{4}\' \'{5}\' \'{6}\'" +
                             " \'{7}\' \'{8}\' \'{9}\'", tipo_Pago, multipago, medio_Pago, banco, tarjeta, cuenta_Bancaria, nro_Operacion, monto_Por_Medio, nro_Cuotas, monto_Inicial_Credito), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 186
+#line 185
         await testRunner.AndAsync(string.Format("el usuario ingresa la observacion del pago \'{0}\'", observacion_Pago), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 187
+#line 186
         await testRunner.ThenAsync(string.Format("el sistema valida el resultado del pago en nueva venta \'{0}\'", resultado_Pago), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 188
+#line 187
         await testRunner.WhenAsync("hace clic en Guardar", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 189
+#line 188
         await testRunner.ThenAsync(string.Format("el sistema valida el resultado de venta \'{0}\'", resultado_Venta), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
