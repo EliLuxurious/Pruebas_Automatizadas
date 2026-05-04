@@ -20,19 +20,19 @@ namespace SIGES3_0.Features.Adquisicion
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Reqnroll", "2.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("Nueva Adquicision - Tipo de Documento NotaInterna")]
-    [NUnit.Framework.CategoryAttribute("NuevaAdquisicionB")]
-    public partial class NuevaAdquicision_TipoDeDocumentoNotaInternaFeature
+    [NUnit.Framework.DescriptionAttribute("Ver Adquisicion Nueva Adquisicion")]
+    [NUnit.Framework.CategoryAttribute("VerAdquisicionNuevaAdquisicion")]
+    public partial class VerAdquisicionNuevaAdquisicionFeature
     {
         
         private global::Reqnroll.ITestRunner testRunner;
         
         private static string[] featureTags = new string[] {
-                "NuevaAdquisicionB"};
+                "VerAdquisicionNuevaAdquisicion"};
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Adquisicion", "Nueva Adquicision - Tipo de Documento NotaInterna", null, global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Adquisicion", "Ver Adquisicion Nueva Adquisicion", null, global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
-#line 1 "NuevaAdquisicionNota.feature"
+#line 1 "VerAdquisicioNuevaAdquisicion.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
@@ -84,15 +84,13 @@ namespace SIGES3_0.Features.Adquisicion
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Registro exitoso con Nota Interna")]
-        [NUnit.Framework.CategoryAttribute("RegistroAdquisicionExitosa-Nota")]
-        public async System.Threading.Tasks.Task RegistroExitosoConNotaInterna()
+        [NUnit.Framework.DescriptionAttribute("Registrar nueva adquisición desde el modal en Ver Adquisición")]
+        public async System.Threading.Tasks.Task RegistrarNuevaAdquisicionDesdeElModalEnVerAdquisicion()
         {
-            string[] tagsOfScenario = new string[] {
-                    "RegistroAdquisicionExitosa-Nota"};
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro exitoso con Nota Interna", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 4
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nueva adquisición desde el modal en Ver Adquisición", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 3
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -102,65 +100,92 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 5
+#line 4
  await testRunner.GivenAsync("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
                         "y contraseña \'calidad\' en \'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/" +
                         "login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 6
+#line 5
  await testRunner.AndAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 7
- await testRunner.AndAsync("Entro al submódulo específico de \'Nueva Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 6
+ await testRunner.AndAsync("Entro al submódulo específico de \'Ver Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table105 = new global::Reqnroll.Table(new string[] {
+#line 7
+ await testRunner.WhenAsync("Hago clic en el botón superior de \'Nueva Compra\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+                global::Reqnroll.Table table125 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table105.AddRow(new string[] {
+                table125.AddRow(new string[] {
                             "Documento",
-                            "NOTA DE COMPRA (INTERNA)"});
-                table105.AddRow(new string[] {
+                            "BOLETA DE VENTA ELECTRONICA"});
+                table125.AddRow(new string[] {
+                            "Serie",
+                            "B001"});
+                table125.AddRow(new string[] {
+                            "Correlativo",
+                            "00000010"});
+                table125.AddRow(new string[] {
+                            "Fecha de emisión",
+                            "04/03/2026"});
+                table125.AddRow(new string[] {
                             "Proveedor",
                             "10759012017"});
-                table105.AddRow(new string[] {
+                table125.AddRow(new string[] {
                             "Información Adicional",
-                            "Nota Exitosa"});
+                            "Compra desde Modal"});
 #line 9
- await testRunner.WhenAsync("Se configuran los datos de \'Facturación\':", ((string)(null)), table105, "When ");
+ await testRunner.AndAsync("Se configuran los datos de \'Facturación\':", ((string)(null)), table125, "And ");
 #line hidden
-#line 15
+#line 18
  await testRunner.AndAsync("Se selecciona el tipo de entrega \'Inmediata\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table106 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table126 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table106.AddRow(new string[] {
+                table126.AddRow(new string[] {
                             "Rol",
                             "Item Comercial"});
-                table106.AddRow(new string[] {
+                table126.AddRow(new string[] {
                             "Establecimiento",
                             "RECSA - CENTRAL"});
-                table106.AddRow(new string[] {
+                table126.AddRow(new string[] {
                             "Almacén",
                             "CENTRO COMERCIAL CENTRAL"});
-#line 16
- await testRunner.AndAsync("Se configuran los datos de \'Entrega\':", ((string)(null)), table106, "And ");
+#line 20
+ await testRunner.AndAsync("Se configuran los datos de \'Entrega\':", ((string)(null)), table126, "And ");
 #line hidden
-                global::Reqnroll.Table table107 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table127 = new global::Reqnroll.Table(new string[] {
                             "Producto",
                             "Cantidad",
                             "V. U"});
-                table107.AddRow(new string[] {
+                table127.AddRow(new string[] {
                             "7751234001115|Azúcar Rubia",
-                            "1500",
+                            "100",
                             "6.9"});
-#line 22
- await testRunner.AndAsync("Se selecciona y configura el producto a adquirir:", ((string)(null)), table107, "And ");
-#line hidden
 #line 26
+ await testRunner.AndAsync("Se selecciona y configura el producto a adquirir:", ((string)(null)), table127, "And ");
+#line hidden
+                global::Reqnroll.Table table128 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table128.AddRow(new string[] {
+                            "Tipo",
+                            "Contado"});
+                table128.AddRow(new string[] {
+                            "Método",
+                            "Efectivo"});
+                table128.AddRow(new string[] {
+                            "Observación",
+                            "NINGUNO"});
+#line 30
+ await testRunner.AndAsync("Se configuran los datos de \'Pago\':", ((string)(null)), table128, "And ");
+#line hidden
+#line 36
  await testRunner.ThenAsync("Se procede a guardar la adquisición mediante la acción \'SavePurchase\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 27
+#line 37
  await testRunner.AndAsync("Se confirma el registro exitoso con el mensaje \'Se registró correctamente.\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }

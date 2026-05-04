@@ -43,7 +43,7 @@ Scenario: Validar que el sistema exija RUC al elegir Factura Electrónica
 	| Correlativo           | 00000011            |
 	| Fecha de emisión      | 04/03/2026          |
 	| Proveedor             | 75901201            |
-	| Información Adicional | Factura Exitosa     |
+	| Información Adicional | Factura con DNI     |
 
 	And Se selecciona el tipo de entrega 'Inmediata'
 	And Se configuran los datos de 'Entrega':

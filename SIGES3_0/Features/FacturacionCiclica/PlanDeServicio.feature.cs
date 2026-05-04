@@ -117,47 +117,47 @@ this.ScenarioInitialize(scenarioInfo);
 #line 10
  await testRunner.AndAsync("Se selecciona \'Detalles del Plan\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table70 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table131 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table70.AddRow(new string[] {
+                table131.AddRow(new string[] {
                             "Valor mínimo",
                             "50"});
-                table70.AddRow(new string[] {
+                table131.AddRow(new string[] {
                             "Valor máximo",
                             "500"});
-#line 10
- await testRunner.WhenAsync("Se configuran los límites de los comprobantes:", ((string)(null)), table70, "When ");
+#line 11
+ await testRunner.WhenAsync("Se configuran los límites de los comprobantes:", ((string)(null)), table131, "When ");
 #line hidden
-                global::Reqnroll.Table table71 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table132 = new global::Reqnroll.Table(new string[] {
                             "Entidad",
                             "Mínimo",
                             "Máximo"});
-                table71.AddRow(new string[] {
+                table132.AddRow(new string[] {
                             "Locales",
                             "1",
                             "5"});
-                table71.AddRow(new string[] {
+                table132.AddRow(new string[] {
                             "Usuarios",
                             "2",
                             "15"});
-#line 15
- await testRunner.AndAsync("Se configuran los límites de locales y usuarios:", ((string)(null)), table71, "And ");
+#line 16
+ await testRunner.AndAsync("Se configuran los límites de locales y usuarios:", ((string)(null)), table132, "And ");
 #line hidden
 #line 21
  await testRunner.AndAsync("Se selecciona la pestaña \'Datos Generales\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table72 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table133 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table72.AddRow(new string[] {
+                table133.AddRow(new string[] {
                             "Nombre del plan",
                             "Plan Agro"});
-                table72.AddRow(new string[] {
+                table133.AddRow(new string[] {
                             "Descripción",
                             "Plan orientadas a empresas agroindustriales."});
-#line 21
- await testRunner.AndAsync("Se ingresa la información básica del plan:", ((string)(null)), table72, "And ");
+#line 22
+ await testRunner.AndAsync("Se ingresa la información básica del plan:", ((string)(null)), table133, "And ");
 #line hidden
 #line 27
  await testRunner.AndAsync("Se selecciona el ciclo de facturación \'MENSUAL\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

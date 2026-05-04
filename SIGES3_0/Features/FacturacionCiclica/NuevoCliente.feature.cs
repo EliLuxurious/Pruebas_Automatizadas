@@ -120,26 +120,26 @@ this.ScenarioInitialize(scenarioInfo);
 #line 11
     await testRunner.AndAsync("Se selecciona el tipo de documento \'REGISTRO NACIONAL DE CONTRIBUYENTES\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table68 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table129 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table68.AddRow(new string[] {
+                table129.AddRow(new string[] {
                             "Numero documento",
                             "10123456789"});
-                table68.AddRow(new string[] {
+                table129.AddRow(new string[] {
                             "Nombres",
                             "Luis"});
-                table68.AddRow(new string[] {
+                table129.AddRow(new string[] {
                             "Apellido Paterno",
                             "Nakamura"});
-                table68.AddRow(new string[] {
+                table129.AddRow(new string[] {
                             "Apellido Materno",
                             "Pontorielo"});
-                table68.AddRow(new string[] {
+                table129.AddRow(new string[] {
                             "Nombre Comercial",
                             "AGRINOVATE DEL PERU"});
-#line 11
-    await testRunner.WhenAsync("Se ingresan los datos de identidad:", ((string)(null)), table68, "When ");
+#line 12
+    await testRunner.WhenAsync("Se ingresan los datos de identidad:", ((string)(null)), table129, "When ");
 #line hidden
 #line 20
     await testRunner.AndAsync("Se selecciona el Ubigeo \'LIMA - LIMA - MIRAFLORES\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -156,26 +156,26 @@ this.ScenarioInitialize(scenarioInfo);
 #line 24
     await testRunner.AndAsync("Se ingresa el número de teléfono \'937584269\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table69 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table130 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table69.AddRow(new string[] {
+                table130.AddRow(new string[] {
                             "Tipo comprobante",
                             "FACTURA ELECTRONICA"});
-                table69.AddRow(new string[] {
+                table130.AddRow(new string[] {
                             "Ciclo facturacion",
                             "MENSUAL"});
-                table69.AddRow(new string[] {
+                table130.AddRow(new string[] {
                             "Forma de pago",
                             "VENCIDO"});
-                table69.AddRow(new string[] {
+                table130.AddRow(new string[] {
                             "Fecha inicio",
                             "02/28/2026"});
-                table69.AddRow(new string[] {
+                table130.AddRow(new string[] {
                             "Plan",
                             "PLAN BASICO"});
-#line 24
-    await testRunner.AndAsync("Se completan los datos de facturación:", ((string)(null)), table69, "And ");
+#line 25
+    await testRunner.AndAsync("Se completan los datos de facturación:", ((string)(null)), table130, "And ");
 #line hidden
 #line 33
     await testRunner.ThenAsync("Se procede a \'GUARDAR\' el registro del cliente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
