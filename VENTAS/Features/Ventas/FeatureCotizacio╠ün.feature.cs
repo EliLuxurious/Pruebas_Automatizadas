@@ -30,7 +30,7 @@ namespace SigesCore.Features.Ventas
         
         private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Ventas", "Cotización de ventas", "Realizar cotizaciones para pregenerar pedidos y ventas", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
-#line 1 "FeatureCotización.feature"
+#line 1 "FeatureCotizacio╠ün.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
