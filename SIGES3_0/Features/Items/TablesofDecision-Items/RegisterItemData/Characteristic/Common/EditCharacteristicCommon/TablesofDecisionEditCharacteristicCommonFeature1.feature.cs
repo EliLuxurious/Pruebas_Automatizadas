@@ -28,8 +28,8 @@ namespace SIGES3_0.Features.Items.TablesofDecision_Items.RegisterItemData.Charac
         
         private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Items/TablesofDecision-Items/RegisterItemData/Characteristic/Common/Edit" +
-                "CharacteristicCommon", "TablesofDecisionEditCharacteristicCommonFeature1", "Edicion de Caracteristica común utilizando la técnica de Tablas de Decisiones", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), ("Features/Items/TablesofDecision-Items/RegisterItemData/Characteristic/Common/Edit" +
+                "CharacteristicCommon"), "TablesofDecisionEditCharacteristicCommonFeature1", "Edicion de Caracteristica común utilizando la técnica de Tablas de Decisiones", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
 #line 1 "TablesofDecisionEditCharacteristicCommonFeature1.feature"
 #line hidden
@@ -87,12 +87,12 @@ namespace SIGES3_0.Features.Items.TablesofDecision_Items.RegisterItemData.Charac
 #line 5
 #line hidden
 #line 6
-await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                    "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                    "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 7
-await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                    "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                    "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 8
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
