@@ -157,20 +157,11 @@ namespace SIGES3_0.Pages.PedidoPage
         public void RegistrarPedido()
         {
             ultimaAccion = "registrar";
-
             var boton = wait.Until(ExpectedConditions.ElementExists(btnRegistrarPedido));
-
             ScrollToElement(boton);
-            Thread.Sleep(500); 
+            Thread.Sleep(500);
 
-            try
-            {
-                boton.Click();
-            }
-            catch
-            {
-                JsClick(boton);
-            }
+            try { boton.Click(); } catch { JsClick(boton); }
         }
 
         public void AbrirSeccion(string seccion)
@@ -205,7 +196,6 @@ namespace SIGES3_0.Pages.PedidoPage
 
         public void VolverAVerPedidos() => ClickSeguro(By.XPath("//span[contains(text(),'Ver Pedidos')]"));
 
-        // --- ACTUALIZAR PEDIDO ---
         public void ActualizarPedido(
             string familia, string concepto, string cantidad, string igv,
             string detUnif, string descuentoActivo, string tipoDescuento,
@@ -321,6 +311,8 @@ namespace SIGES3_0.Pages.PedidoPage
 
         public void ConfigurarFacturacionConfirmacion(string tipoComprobante, string serie, string cliente)
         {
+            if (!string.IsNullOrEmpty(mensajeErrorCapturado)) return;
+
             AbrirFacturacionConfirmacion();
 
             if (!EsValorIgnorado(cliente) && cliente != "00000000" && cliente.ToLower() != "varios")
@@ -329,15 +321,11 @@ namespace SIGES3_0.Pages.PedidoPage
                 driver.FindElement(txtClienteConfirmacion).SendKeys(Keys.Enter);
             }
 
-            // Lógica original de comprobante mantenida (compleja interacción UI en Angular)
             ClickSeguro(cmbTipoComprobanteConfirmacion);
             string busqueda = ObtenerTextoBusquedaComprobante(tipoComprobante);
 
             var inputs = driver.FindElements(By.XPath("//ng-select//input[@type='text']")).Where(e => e.Displayed).ToList();
-            if (inputs.Any())
-            {
-                inputs.First().SendKeys(busqueda);
-            }
+            if (inputs.Any()) inputs.First().SendKeys(busqueda);
 
             var opcion = wait.Until(d => d.FindElements(By.CssSelector(".option-item, .ng-option, [role='option']"))
                 .FirstOrDefault(e => e.Displayed && CoincideComprobante((e.Text ?? "").Trim(), tipoComprobante)));
@@ -366,8 +354,11 @@ namespace SIGES3_0.Pages.PedidoPage
             if (!yaVisible) ClickSeguro(seccionFacturacionConfirmacion);
         }
 
+        // AQUÍ ESTÁ LA CORRECCIÓN CLAVE
         public void ConfigurarEntregaConfirmacion(string tipoEntrega, string guiaRemision)
         {
+            if (!string.IsNullOrEmpty(mensajeErrorCapturado)) return;
+
             bool yaVisible = driver.FindElements(By.XPath("//label[normalize-space()='Inmediata' or normalize-space()='Diferida']")).Any(e => e.Displayed);
             if (!yaVisible) ClickSeguro(By.XPath("//*[.//span[normalize-space()='Entrega'] or normalize-space()='Entrega'][self::div or self::button or self::h2]"));
 
@@ -379,23 +370,56 @@ namespace SIGES3_0.Pages.PedidoPage
 
             if (guiaRemision.Trim().Equals("true", StringComparison.OrdinalIgnoreCase))
             {
-                // Agregamos una espera explícita para que el botón de guía aparezca en el DOM
                 var btnGuia = wait.Until(d => d.FindElements(btnGuiaRemisionConfirmacion).FirstOrDefault(e => e.Displayed));
 
-                if (btnGuia == null || BotonEstaDeshabilitado(btnGuia))
+                if (btnGuia == null)
                 {
                     mensajeErrorCapturado = "Boton de guia de remision inhabilitado Para guia de remision Necesita identificar al cliente con RUC o DNI";
                     return;
                 }
 
-                ClickSeguro(btnGuia);
+                ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", btnGuia);
+                Thread.Sleep(300);
 
-                // RESTAURADO: Validar que el modal realmente se abrió (vital para el Caso 6)
+                // ¡PROHIBIDO FORZAR! Verificamos los atributos HTML para ver si Angular lo bloqueó visualmente
+                bool estaDeshabilitadoHTML = !btnGuia.Enabled ||
+                                             btnGuia.GetAttribute("disabled") != null ||
+                                             (btnGuia.GetAttribute("class") ?? "").Contains("disabled");
+
+                if (estaDeshabilitadoHTML)
+                {
+                    mensajeErrorCapturado = "Boton de guia de remision inhabilitado Para guia de remision Necesita identificar al cliente con RUC o DNI";
+                    return;
+                }
+
+                // Usamos Click NATIVO (.Click()). Si Angular bloqueó el botón pero no le puso "disabled",
+                // el click rebotará y el catch atrapará el error. ¡Nada de JavaScript aquí!
+                try
+                {
+                    btnGuia.Click();
+                }
+                catch
+                {
+                    mensajeErrorCapturado = "Boton de guia de remision inhabilitado Para guia de remision Necesita identificar al cliente con RUC o DNI";
+                    return;
+                }
+
+                Thread.Sleep(1000);
+
+                // Validamos la alerta INMEDIATAMENTE
+                var alertaInmediata = driver.FindElements(By.XPath("//*[contains(text(),'Necesita identificar al cliente con RUC o DNI')]")).FirstOrDefault(e => e.Displayed);
+                if (alertaInmediata != null)
+                {
+                    mensajeErrorCapturado = "Boton de guia de remision inhabilitado Para guia de remision Necesita identificar al cliente con RUC o DNI";
+                    return;
+                }
+
+                // Confirmamos si el modal de verdad se abrió
                 bool modalAbierto = false;
                 try
                 {
                     new WebDriverWait(driver, TimeSpan.FromSeconds(3)).Until(d =>
-                        d.FindElements(By.XPath("//button[normalize-space()='Aceptar']")).Any(e => e.Displayed));
+                        d.FindElements(By.XPath("//*[contains(text(),'Peso Bruto') or contains(text(),'Número de Bultos')]")).Any(e => e.Displayed));
                     modalAbierto = true;
                 }
                 catch { }
@@ -410,6 +434,8 @@ namespace SIGES3_0.Pages.PedidoPage
 
         public void ConfigurarPagoConfirmacion(string tipoPago, string montoCubreTotal)
         {
+            if (!string.IsNullOrEmpty(mensajeErrorCapturado)) return; // ESCUDO ACTIVADO
+
             AbrirPagoConfirmacion();
             SeleccionarTipoPagoConfirmacion(tipoPago);
             ClickSeguro(tabEfectivoConfirmacion);
@@ -418,16 +444,17 @@ namespace SIGES3_0.Pages.PedidoPage
 
         public void ConfirmarPedidoPreparado()
         {
+            if (!string.IsNullOrEmpty(mensajeErrorCapturado)) return; // ESCUDO ACTIVADO
+
             ultimaAccion = "confirmar";
             var boton = waitLong.Until(ExpectedConditions.ElementExists(btnConfirmarPedidoFinal));
             ScrollToElement(boton);
 
-            // PRIMERO: Revisar si hay campos obligatorios vacíos ANTES de hacer click
             string? errorPreClick = VerificarErrorCamposPago();
             if (errorPreClick != null)
             {
                 mensajeErrorCapturado = errorPreClick;
-                return; // NO hacemos click, capturamos el error negativo directamente
+                return;
             }
 
             if (BotonEstaDeshabilitado(boton))
@@ -438,7 +465,6 @@ namespace SIGES3_0.Pages.PedidoPage
 
             ClickSeguro(boton);
 
-            // SEGUNDO: Revisar si apareció un error dinámico DESPUÉS de hacer el click
             string? errorPostClick = VerificarErrorCamposPago();
             if (errorPostClick != null) mensajeErrorCapturado = errorPostClick;
         }
@@ -462,7 +488,6 @@ namespace SIGES3_0.Pages.PedidoPage
             if (!string.IsNullOrWhiteSpace(valor)) LimpiarEIngresarTexto(txtRecibidoEfectivoConfirmacion, valor);
         }
 
-        // Funciones de validación de texto mantenidas intactas
         private string ObtenerTextoBusquedaComprobante(string tipo)
         {
             string t = (tipo ?? "").Trim().ToUpperInvariant();
@@ -496,7 +521,7 @@ namespace SIGES3_0.Pages.PedidoPage
 
         public string ObtenerResultadoSistema()
         {
-            // 1. Si capturamos el error ANTES del click (durante ConfirmarPedidoPreparado)
+            // 1. Entregamos el error INTACTO de la Guía
             if (!string.IsNullOrEmpty(mensajeErrorCapturado))
             {
                 string msg = mensajeErrorCapturado;
@@ -506,11 +531,29 @@ namespace SIGES3_0.Pages.PedidoPage
 
             try
             {
-                // 2. Revisamos si hay errores de pago activos en pantalla
+                // 2. PRIORIDAD MÁXIMA PARA LAS ALERTAS
+                string[] xpathErroresGenerales = {
+                    "//*[contains(text(),'RUC (11 dígitos)')]",
+                    "//*[contains(text(),'numero de serie') or contains(text(),'número de serie')]",
+                    "//*[contains(text(),'mayor a S/.700')]",
+                    "//*[contains(text(),'Necesita identificar al cliente con RUC o DNI')]"
+                };
+
+                foreach (var xpath in xpathErroresGenerales)
+                {
+                    var el = driver.FindElements(By.XPath(xpath)).FirstOrDefault(e => e.Displayed);
+                    if (el != null)
+                    {
+                        if (el.Text.Contains("Necesita identificar al cliente con RUC o DNI"))
+                            return "Boton de guia de remision inhabilitado Para guia de remision Necesita identificar al cliente con RUC o DNI";
+                        return el.Text.Trim();
+                    }
+                }
+
+                // 3. Revisamos los errores genéricos
                 string? errorPago = VerificarErrorCamposPago();
                 if (errorPago != null) return errorPago;
 
-                // 3. Validaciones de Inconsistencia y Stock (Nuevo Pedido)
                 if (driver.FindElements(mensajeInconsistenciaRegistro).Any(e => e.Displayed))
                 {
                     var detalles = driver.FindElements(detalleInconsistenciaRegistro).Where(e => e.Displayed).Select(e => e.Text).ToList();
@@ -523,21 +566,6 @@ namespace SIGES3_0.Pages.PedidoPage
                 if (ultimaAccion == "editar_deshabilitado" || ultimaAccion == "editar_sin_cambio") return "Boton deshabilitado";
                 if (ultimaAccion == "invalidar_deshabilitado") return "Boton SI deshabilitado";
 
-                // 4. Validaciones de Facturación / Guías (Popups o alertas)
-                string[] xpathErroresGenerales = {
-                    "//*[contains(text(),'RUC (11 dígitos)')]",
-                    "//*[contains(text(),'numero de serie') or contains(text(),'número de serie')]",
-                    "//*[contains(text(),'mayor a S/.700')]",
-                    "//*[contains(text(),'Necesita identificar al cliente con RUC o DNI')]"
-                };
-
-                foreach (var xpath in xpathErroresGenerales)
-                {
-                    var el = driver.FindElements(By.XPath(xpath)).FirstOrDefault(e => e.Displayed);
-                    if (el != null) return el.Text.Trim();
-                }
-
-                // 5. Validar Modal de Éxito
                 var btnOk = new WebDriverWait(driver, TimeSpan.FromSeconds(5))
                             .Until(ExpectedConditions.ElementIsVisible(btnOKConfirmacion));
 
@@ -571,7 +599,6 @@ namespace SIGES3_0.Pages.PedidoPage
 
         private string? VerificarErrorCamposPago()
         {
-            // 1. Mensajes específicos de negocio (Puntos, Montos, Créditos)
             string[] xpathErrores = {
                 "//*[contains(text(),'No hay suficientes puntos disponibles')]",
                 "//*[contains(text(),'Monto insuficiente')]",
@@ -585,13 +612,11 @@ namespace SIGES3_0.Pages.PedidoPage
                 if (el != null) return el.Text.Trim();
             }
 
-            // 2. NUEVO: Capturar las advertencias 
             bool hayBadgeRequeridos = driver.FindElements(By.XPath("//*[contains(text(),'Complete los campos requeridos')]")).Any(e => e.Displayed);
             bool hayTextoObligatorio = driver.FindElements(By.XPath("//*[contains(text(),'Este campo es obligatorio')]")).Any(e => e.Displayed);
 
             if (hayBadgeRequeridos || hayTextoObligatorio)
             {
-                
                 if (ultimoMedioPagoConfirmacion == "tarjeta_credito" || ultimoMedioPagoConfirmacion == "tarjeta_debito")
                     return "Seleccione una entidad bancaria";
 
@@ -604,9 +629,10 @@ namespace SIGES3_0.Pages.PedidoPage
             return null;
         }
 
-        // --- FLUJO COMPLETO DE MEDIOS DE PAGO ---
         public void ConfigurarMediosDePagoConfirmacion(string tipoPago, string multipago, string medioPago, string banco, string tarjeta, string cuenta, string nroOp, string monto, string nroCuotas, string montoInicial)
         {
+            if (!string.IsNullOrEmpty(mensajeErrorCapturado)) return; // ESCUDO ACTIVADO
+
             AbrirPagoConfirmacion();
             SeleccionarTipoPagoConfirmacion(tipoPago);
 
@@ -626,7 +652,6 @@ namespace SIGES3_0.Pages.PedidoPage
             var cuentas = new Queue<string>(cuenta.Split(',').Select(x => x.Trim()).Where(x => !EsValorIgnorado(x)));
             var operaciones = new Queue<string>(nroOp.Split(',').Select(x => x.Trim()).Where(x => !EsValorIgnorado(x)));
 
-            // Los montos los manejamos por posición estricta para que cuadren con la cantidad de medios
             var montosArr = monto.Split(',').Select(x => x.Trim()).ToArray();
 
             for (int i = 0; i < medios.Count; i++)
@@ -639,12 +664,11 @@ namespace SIGES3_0.Pages.PedidoPage
 
                 if (esMultipago)
                 {
-                    // Validamos si el botón está habilitado antes de forzar el clic para evitar Timeouts
                     var btnAgregar = waitLong.Until(ExpectedConditions.ElementExists(btnAgregarMedioPagoConfirmacion));
                     if (!BotonEstaDeshabilitado(btnAgregar))
                     {
                         ClickSeguro(btnAgregar);
-                        Thread.Sleep(600); // Tiempo para que Angular pinte la nueva fila
+                        Thread.Sleep(600);
                     }
                 }
             }
@@ -682,7 +706,6 @@ namespace SIGES3_0.Pages.PedidoPage
                     SeleccionarComboNativo(cmbTarjetaConfirmacion, tarjetas.Count > 0 ? tarjetas.Dequeue() : "NA");
                     IngresarMontoGenerico(monto);
 
-                    // Ahora SOLO extraemos la operación si es Tarjeta (El efectivo no lo roba)
                     string opTarjeta = operaciones.Count > 0 ? operaciones.Dequeue() : "NA";
                     if (!EsValorIgnorado(opTarjeta)) LimpiarEIngresarTexto(txtInformacionConfirmacion, opTarjeta);
                     break;
@@ -692,7 +715,6 @@ namespace SIGES3_0.Pages.PedidoPage
                     SeleccionarComboNativo(cmbCuentaBancariaConfirmacion, cuentas.Count > 0 ? cuentas.Dequeue() : "NA");
                     IngresarMontoGenerico(monto);
 
-                    // Ahora SOLO extraemos la operación si es Transferencia/Depósito
                     string opTransferencia = operaciones.Count > 0 ? operaciones.Dequeue() : "NA";
                     if (!EsValorIgnorado(opTransferencia)) LimpiarEIngresarTexto(txtInformacionConfirmacion, opTransferencia);
                     break;
@@ -706,7 +728,6 @@ namespace SIGES3_0.Pages.PedidoPage
         {
             if (EsValorIgnorado(valor)) return;
 
-            // ESPERA CRÍTICA: Esperar a que el combo tenga más de 1 opción 
             var selectEl = wait.Until(d => {
                 var el = d.FindElements(locator).LastOrDefault(e => e.Displayed && e.Enabled);
                 if (el != null)
@@ -731,7 +752,6 @@ namespace SIGES3_0.Pages.PedidoPage
                 else throw new Exception($"Opción '{valor}' no encontrada en el combo.");
             }
 
-            // Notificar del cambio
             ((IJavaScriptExecutor)driver).ExecuteScript(@"
                 var el = arguments[0]; 
                 el.dispatchEvent(new Event('input',  { bubbles: true }));

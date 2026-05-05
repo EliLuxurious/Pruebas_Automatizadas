@@ -22,7 +22,7 @@ Scenario Outline: Validar filtro de fechas en reporte de pedidos
 
 Examples:
 	| caso | establecimiento | puntoVenta | fechaHoraInicial    | fechaHoraFinal      | tipoReporte | resultadoEsperado                         |
-	| 1    | Todos           | Todos      | 10/04/2026 12:00 am | 09/04/2026 11:59 pm | Invalidados | No permite aplicar el filtro Inhabilitado |
-	| 2    | Todos           | Todos      | 09/04/2026 12:00 am | 15/04/2026 11:59 pm | Invalidados | Aplica el filtro correctamente            |
-	| 3    | Todos           | Todos      | 08/04/2026 12:00 am | 12/04/2026 11:59 pm | Invalidados | Aplica el filtro correctamente            |
-	| 4    | Todos           | Todos      | 14/04/2026 12:00 am | 15/05/2026 11:59 pm | Invalidados | Aplica el filtro correctamente            |
+	| 1    | Todos           | Todos      | 05/05/2026 12:00 am | 09/05/2026 11:59 pm | Invalidados | No permite aplicar el filtro Inhabilitado |
+	| 2    | Todos           | Todos      | 04/05/2026 12:00 am | 15/05/2026 11:59 pm | Invalidados | Aplica el filtro correctamente            |
+	| 3    | Todos           | Todos      | 03/05/2026 12:00 am | 12/05/2026 11:59 pm | Invalidados | Aplica el filtro correctamente            |
+	| 4    | Todos           | Todos      | 01/05/2026 12:00 am | 15/05/2026 11:59 pm | Invalidados | Aplica el filtro correctamente            |

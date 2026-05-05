@@ -39,7 +39,7 @@ Examples:
 	|    4 | Hoy                      |        100 |              10 | Privado         | 75971755              | NA                | M-71310154      | 2770XS       | Arequipa-Arequipa-Arequipa | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | Guia emitida correctamente          |
 	|    5 | Hoy                      |         10 |               2 | Privado         | 75971755              | NA                | Ninguno         | 2770XS       | Arequipa-Arequipa-Arequipa | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | Ingrese numero de licencia          |
 	|    6 | Hoy                      |         10 |               2 | Privado         | 75971755              | NA                | M-71310154      | Ninguno      | Huanuco-Leoncio-Rupa Rupa  | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | Ingrese numero de placa             |
-	|    7 | Hoy                      |         10 |               2 | Privado         | 00000000              | NA                | M-71310154      | Ninguno      | Huanuco-Leoncio-Rupa Rupa  | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | Identifique conductor con DNI       |
+	|    7 | Hoy                      |         10 |               2 | Privado         | 00000000              | NA                | M-71310154      | 2770XS       | Huanuco-Leoncio-Rupa Rupa  | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | Identifique conductor con DNI       |
 
 
 
