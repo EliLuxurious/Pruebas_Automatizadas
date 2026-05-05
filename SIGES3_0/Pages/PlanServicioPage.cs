@@ -27,7 +27,7 @@ namespace SIGES3_0.Pages
         private By logo = By.XPath("//img[@alt='Logo']");
 
         // --- Selectores para Navegación ---
-        private By moduloFacturacionCiclica = By.XPath("//span[normalize-space()='Facturación Cíclica']/ancestor::a"); //con IA  //app-item-list-accordion[8]//nav[1]//ul[1]//li[1]//a[1]//input[1]
+        private By moduloFacturacionCiclica = By.XPath("//span[normalize-space()='Facturación Cíclica']/ancestor::a"); //con IA 
         private By submoduloPlanServicio = By.XPath("//span[normalize-space()='Plan de Servicio']/ancestor::a"); //con IA
 
         // --- Selectores para Detalles del Plan (Límites) ---

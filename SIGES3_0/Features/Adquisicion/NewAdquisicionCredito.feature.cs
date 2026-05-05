@@ -103,9 +103,9 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 6
- await testRunner.GivenAsync("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
+ await testRunner.GivenAsync(("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
                         "y contraseña \'calidad\' en \'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/" +
-                        "login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+                        "login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 7
  await testRunner.AndAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -209,9 +209,9 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 40
- await testRunner.GivenAsync("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
+ await testRunner.GivenAsync(("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
                         "y contraseña \'calidad\' en \'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/" +
-                        "login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+                        "login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 41
  await testRunner.AndAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -315,9 +315,9 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 74
- await testRunner.GivenAsync("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
+ await testRunner.GivenAsync(("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
                         "y contraseña \'calidad\' en \'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/" +
-                        "login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+                        "login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 75
  await testRunner.AndAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -431,9 +431,9 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 111
- await testRunner.GivenAsync("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
+ await testRunner.GivenAsync(("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
                         "y contraseña \'calidad\' en \'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/" +
-                        "login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+                        "login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 112
  await testRunner.AndAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -544,9 +544,9 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 147
- await testRunner.GivenAsync("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
+ await testRunner.GivenAsync(("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
                         "y contraseña \'calidad\' en \'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/" +
-                        "login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+                        "login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 148
  await testRunner.AndAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -657,9 +657,9 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 183
- await testRunner.GivenAsync("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
+ await testRunner.GivenAsync(("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
                         "y contraseña \'calidad\' en \'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/" +
-                        "login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+                        "login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 184
  await testRunner.AndAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -773,9 +773,9 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 220
- await testRunner.GivenAsync("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
+ await testRunner.GivenAsync(("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
                         "y contraseña \'calidad\' en \'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/" +
-                        "login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+                        "login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 221
  await testRunner.AndAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
