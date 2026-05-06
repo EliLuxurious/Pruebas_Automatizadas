@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace SIGES3_0.Features
+namespace SIGES3_0.Features.Adquisicion
 {
     using Reqnroll;
     using System;
@@ -20,19 +20,19 @@ namespace SIGES3_0.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Reqnroll", "2.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("LoginFeature")]
-    [NUnit.Framework.IgnoreAttribute("Ignored feature")]
-    public partial class LoginFeatureFeature
+    [NUnit.Framework.DescriptionAttribute("Ver Adquicision NotaDebito")]
+    [NUnit.Framework.CategoryAttribute("VerAdquisicionNotaDebito")]
+    public partial class VerAdquicisionNotaDebitoFeature
     {
         
         private global::Reqnroll.ITestRunner testRunner;
         
         private static string[] featureTags = new string[] {
-                "ignore"};
+                "VerAdquisicionNotaDebito"};
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "LoginFeature", "Prueba de Login Exitoso", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Adquisicion", "Ver Adquicision NotaDebito", null, global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
-#line 1 "LoginFeature.feature"
+#line 1 "VerAdquisicionNotaDebito.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
@@ -84,15 +84,13 @@ namespace SIGES3_0.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Inicio de sesion exitoso")]
-        [NUnit.Framework.CategoryAttribute("InicioSesion")]
-        public async System.Threading.Tasks.Task InicioDeSesionExitoso()
+        [NUnit.Framework.DescriptionAttribute("Ver adquisicion Nota de Debito")]
+        public async System.Threading.Tasks.Task VerAdquisicionNotaDeDebito()
         {
-            string[] tagsOfScenario = new string[] {
-                    "InicioSesion"};
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Inicio de sesion exitoso", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 7
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Ver adquisicion Nota de Debito", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 3
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -102,13 +100,40 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 8
-    await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line 4
+ await testRunner.GivenAsync(("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
+                        "y contraseña \'calidad\' en \'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/" +
+                        "login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 9
-    await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line 5
+ await testRunner.AndAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 6
+ await testRunner.AndAsync("Entro al submódulo específico de \'Ver Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table124 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table124.AddRow(new string[] {
+                            "Fecha Inicial",
+                            "01/01/2026"});
+                table124.AddRow(new string[] {
+                            "Fecha Final",
+                            "25/03/2026"});
+                table124.AddRow(new string[] {
+                            "Proveedor",
+                            "KRISTELL VALERIA-FALCON-VILLEGAS"});
+#line 7
+ await testRunner.WhenAsync("Se configuran los filtros de búsqueda:", ((string)(null)), table124, "When ");
+#line hidden
+#line 12
+    await testRunner.AndAsync("Se hace clic en el botón de buscar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 13
+    await testRunner.AndAsync("Selecciono el primer registro de la tabla para ver su detalle", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 14
+    await testRunner.AndAsync("Se hace click en el boton de \'Nota de Debito\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
