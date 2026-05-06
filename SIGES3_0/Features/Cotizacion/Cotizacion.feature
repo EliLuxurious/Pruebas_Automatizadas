@@ -19,33 +19,33 @@ Scenario Outline: Registro de nueva cotización - Casos variados
 	And el usuario ingresa la cantidad '<cantidad>'
 	And el usuario activa IGV '<igv>'
 	And el usuario configura descuento '<descuento>' '<tipo_descuento>' '<modo_descuento>' '<valor_descuento>'
-	And el usuario busca el cliente cotizacion '<cliente>'
+	And el usuario busca el cliente '<cliente>'
 	And el usuario ingresa la fecha final '<fecha_final>'
 	And el usuario registra la cotizacion
 	Then el sistema valida el resultado de la cotizacion '<resultado_esperado>'
 
 Examples:
 	| caso | familia | concepto      | cantidad | igv   | descuento | tipo_descuento | modo_descuento | valor_descuento | cliente  | fecha_final         | resultado_esperado                    |
-	|    1 | Gaseosa | 7753234003320 |       10 | true  | true      | item           | %              |               5 | 00000000 | 30/04/2026 12:00:am | la cotizacion se guardo correctamente |
-	|    2 | ninguno | ninguno       |        0 | false | false     | NA             | NA             |               0 | 00000000 | 30/04/2026 01:00:am | Debe seleccionar un producto o servicio          |
-	|    3 | Gaseosa | 7753234003320 |999999990 | true  | true      | global         | %              |              10 | 75971755 | 30/04/2026 02:00:am | Cantidad debe ser menor al stock      |
+	|    1 | Gaseosa | 7753234003320 |       10 | true  | true      | item           | %              |               5 | 00000000 | 20/05/2026 12:00:am | la cotizacion se guardo correctamente |
+	|    2 | ninguno | ninguno       |        0 | false | false     | NA             | NA             |               0 | 00000000 | 24/05/2026 01:00:am | Debe seleccionar un producto o servicio |
+	|    3 | Gaseosa | 7753234003320 |999999990 | true  | true      | global         | %              |              10 | 75971755 | 19/05/2026 02:00:am | Cantidad debe ser menor al stock      |
 	|    4 | Azúcar  | 7751234001115 |       20 | false | true      | item           | $              |               1 | 00000000 | 20/03/2026 12:30:am | Boton de fechas  deshabilitado        |
-	|    5 | Gaseosa | 7753234003320 |       10 | false | true      | global         | %              |               5 | 75971755 | 30/04/2026 12:10:am | la cotizacion se guardo correctamente |
+	|    5 | Gaseosa | 7753234003320 |       10 | false | true      | global         | %              |               5 | 75971755 | 15/05/2026 12:10:am | la cotizacion se guardo correctamente |
 
 @EditarCotizacion
 Scenario Outline: Editar cotización - Casos variados
 
-	Given existe una cotizacion editable
+	Given existe una cotizacion editable con familia 'Gaseosa' concepto '7753234003320' cantidad '10' cliente '00000000' fecha '29/05/2026 12:00:am'
 	When el usuario selecciona editar la cotizacion
 	And el usuario selecciona la familia '<familia>'
 	And el usuario selecciona el concepto '<concepto>'
 	And el usuario ingresa la cantidad '<cantidad>'
 	And el usuario activa IGV '<igv>'
 	And el usuario configura descuento '<descuento>' '<tipo_descuento>' '<modo_descuento>' '<valor_descuento>'
-	And el usuario busca el cliente cotizacion '<cliente>'
+	And el usuario busca el cliente '<cliente>'
 	And el usuario ingresa la fecha final '<fecha_final>'
 	And el usuario actualiza la cotizacion
-	Then el sistema valida el resultado de la cotizacion '<resultado_esperado>'	
+	Then el sistema valida el resultado de la cotizacion '<resultado_esperado>'
 
 	Examples:
 	| caso | familia   | concepto      | cantidad  | igv       | descuento | tipo_descuento | modo_descuento | valor_descuento | cliente   | fecha_final         | resultado_esperado                 |
