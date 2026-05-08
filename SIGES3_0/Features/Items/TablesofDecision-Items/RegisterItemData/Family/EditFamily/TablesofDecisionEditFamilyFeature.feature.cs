@@ -136,12 +136,12 @@ await testRunner.AndAsync("el usuario ingresa el código de familia \" 1\"", ((s
 #line 17
 await testRunner.AndAsync("el usuario guarda los cambios de familia", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table8 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table136 = new global::Reqnroll.Table(new string[] {
                             "NombreConcepto"});
-                table8.AddRow(new string[] {
+                table136.AddRow(new string[] {
                             "Harina Para Hornear B l a n c a F l o r SP UN"});
 #line 18
-await testRunner.AndAsync("el usuario elimina los siguientes conceptos:", ((string)(null)), table8, "And ");
+await testRunner.AndAsync("el usuario elimina los siguientes conceptos:", ((string)(null)), table136, "And ");
 #line hidden
 #line 21
 await testRunner.AndAsync("el usuario aplica los cambios de familia", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
