@@ -108,10 +108,10 @@ namespace SIGES3_0.Features.Pedido
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Validar filtro de fechas en reporte de pedidos")]
         [NUnit.Framework.CategoryAttribute("FiltroFechas")]
-        [NUnit.Framework.TestCaseAttribute("1", "Todos", "Todos", "10/04/2026 12:00 am", "09/04/2026 11:59 pm", "Invalidados", "No permite aplicar el filtro Inhabilitado", null)]
-        [NUnit.Framework.TestCaseAttribute("2", "Todos", "Todos", "09/04/2026 12:00 am", "15/04/2026 11:59 pm", "Invalidados", "Aplica el filtro correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("3", "Todos", "Todos", "08/04/2026 12:00 am", "12/04/2026 11:59 pm", "Invalidados", "Aplica el filtro correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("4", "Todos", "Todos", "14/04/2026 12:00 am", "15/05/2026 11:59 pm", "Invalidados", "Aplica el filtro correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("1", "Todos", "Todos", "05/05/2026 12:00 am", "09/05/2026 11:59 pm", "Invalidados", "No permite aplicar el filtro Inhabilitado", null)]
+        [NUnit.Framework.TestCaseAttribute("2", "Todos", "Todos", "04/05/2026 12:00 am", "15/05/2026 11:59 pm", "Invalidados", "Aplica el filtro correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("3", "Todos", "Todos", "03/05/2026 12:00 am", "12/05/2026 11:59 pm", "Invalidados", "Aplica el filtro correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("4", "Todos", "Todos", "01/05/2026 12:00 am", "15/05/2026 11:59 pm", "Invalidados", "Aplica el filtro correctamente", null)]
         public async System.Threading.Tasks.Task ValidarFiltroDeFechasEnReporteDePedidos(string caso, string establecimiento, string puntoVenta, string fechaHoraInicial, string fechaHoraFinal, string tipoReporte, string resultadoEsperado, string[] exampleTags)
         {
             string[] @__tags = new string[] {

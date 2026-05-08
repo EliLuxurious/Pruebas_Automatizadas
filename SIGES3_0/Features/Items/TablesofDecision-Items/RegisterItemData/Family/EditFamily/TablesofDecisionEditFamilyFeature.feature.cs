@@ -102,6 +102,9 @@ await testRunner.AndAsync("el usuario selecciona Registrar Datos de Concepto", (
 #line 10
 await testRunner.AndAsync("el usuario va a la opcion Familia", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
+#line 11
+await testRunner.AndAsync("el usuario cierra el sidebar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
@@ -111,7 +114,7 @@ await testRunner.AndAsync("el usuario va a la opcion Familia", ((string)(null)),
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Familia a la Familia Harina Igv18", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 13
+#line 14
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -124,26 +127,26 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 14
+#line 15
 await testRunner.WhenAsync("el usuario edita la familia \"Harina Igv18\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 15
+#line 16
 await testRunner.AndAsync("el usuario ingresa el código de familia \" 1\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 16
+#line 17
 await testRunner.AndAsync("el usuario guarda los cambios de familia", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table7 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table8 = new global::Reqnroll.Table(new string[] {
                             "NombreConcepto"});
-                table7.AddRow(new string[] {
+                table8.AddRow(new string[] {
                             "Harina Para Hornear B l a n c a F l o r SP UN"});
-#line 17
-await testRunner.AndAsync("el usuario elimina los siguientes conceptos:", ((string)(null)), table7, "And ");
-#line hidden
-#line 20
-await testRunner.AndAsync("el usuario aplica los cambios de familia", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 18
+await testRunner.AndAsync("el usuario elimina los siguientes conceptos:", ((string)(null)), table8, "And ");
 #line hidden
 #line 21
+await testRunner.AndAsync("el usuario aplica los cambios de familia", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 22
 await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -157,7 +160,7 @@ await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((st
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Familia a la Familia PLANTASs ExoIgv", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 24
+#line 25
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -170,19 +173,19 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 25
+#line 26
 await testRunner.WhenAsync("el usuario edita la familia \"PLANTASs ExoIgv\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 26
+#line 27
 await testRunner.AndAsync("el usuario ingresa el código de familia \" 1\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 27
+#line 28
 await testRunner.AndAsync("el usuario guarda los cambios de familia", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 28
+#line 29
 await testRunner.AndAsync("el usuario aplica los cambios de familia", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 29
+#line 30
 await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -196,7 +199,7 @@ await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((st
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Familia a la Familia KEKE Igv18", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 33
+#line 34
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -209,16 +212,16 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 34
+#line 35
 await testRunner.WhenAsync("el usuario edita la familia \"KEKE Igv18\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 35
+#line 36
 await testRunner.AndAsync("el usuario ingresa el código de familia \" 1\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 36
+#line 37
 await testRunner.AndAsync("el usuario guarda los cambios de familia", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 37
+#line 38
 await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -232,7 +235,7 @@ await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((st
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Edición inválida de Familia a la Familia SLAS", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 41
+#line 42
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -245,13 +248,13 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 42
+#line 43
 await testRunner.WhenAsync("el usuario edita la familia \"slas\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 43
+#line 44
 await testRunner.AndAsync("el usuario guarda los cambios de familia", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 44
+#line 45
 await testRunner.ThenAsync("el sistema muestra un mensaje de error", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

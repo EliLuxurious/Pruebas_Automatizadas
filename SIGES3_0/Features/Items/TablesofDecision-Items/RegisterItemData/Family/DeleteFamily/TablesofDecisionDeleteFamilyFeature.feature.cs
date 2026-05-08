@@ -86,12 +86,12 @@ namespace SIGES3_0.Features.Items.TablesofDecision_Items.RegisterItemData.Family
 #line 6
 #line hidden
 #line 7
-await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                    "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                    "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 8
-await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                    "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                    "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 9
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -102,6 +102,9 @@ await testRunner.AndAsync("el usuario selecciona Registrar Datos de Concepto", (
 #line 11
 await testRunner.AndAsync("el usuario va a la opcion Familia", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
+#line 12
+await testRunner.AndAsync("el usuario cierra el sidebar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
@@ -111,7 +114,7 @@ await testRunner.AndAsync("el usuario va a la opcion Familia", ((string)(null)),
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Familia a la Familia  ANTICIPO", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 14
+#line 15
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -123,98 +126,23 @@ this.ScenarioInitialize(scenarioInfo);
                 await this.ScenarioStartAsync();
 #line 6
 await this.FeatureBackgroundAsync();
-#line hidden
-#line 15
-await testRunner.WhenAsync("el usuario da de baja la familia \"ANTICIPO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 16
-await testRunner.AndAsync("el usuario reasigna los conceptos a la nueva familia \"Cuaderno\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.WhenAsync("el usuario da de baja la familia \"ANTICIPO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 17
-await testRunner.AndAsync("el usuario selecciona la característica \"VERDES\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario reasigna los conceptos a la nueva familia \"Cuaderno\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 18
-await testRunner.AndAsync("el usuario guarda los cambios de reasignacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario selecciona la característica \"VERDES\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 19
-await testRunner.AndAsync("el usuario confirma la reasignación", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 20
-await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-            }
-            await this.ScenarioCleanupAsync();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Dar de Baja Familia a la Familia frutas Igv18")]
-        public async System.Threading.Tasks.Task DarDeBajaFamiliaALaFamiliaFrutasIgv18()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Familia a la Familia frutas Igv18", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 24
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                await this.ScenarioStartAsync();
-#line 6
-await this.FeatureBackgroundAsync();
-#line hidden
-#line 25
-await testRunner.WhenAsync("el usuario da de baja la familia \"frutas Igv18\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 26
-await testRunner.AndAsync("el usuario elimina todos los conceptos de la tabla", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 27
-await testRunner.AndAsync("el usuario confirma la reasignación", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 28
-await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-            }
-            await this.ScenarioCleanupAsync();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Dar de Baja Familia a la Familia agua")]
-        public async System.Threading.Tasks.Task DarDeBajaFamiliaALaFamiliaAgua()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Familia a la Familia agua", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 32
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                await this.ScenarioStartAsync();
-#line 6
-await this.FeatureBackgroundAsync();
-#line hidden
-#line 33
-await testRunner.WhenAsync("el usuario da de baja la familia \"agua\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 34
-await testRunner.AndAsync("el usuario reasigna los conceptos a la nueva familia \"prueba\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 35
 await testRunner.AndAsync("el usuario guarda los cambios de reasignacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 36
-await testRunner.WhenAsync("el usuario confirma la reasignación", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line 20
+await testRunner.AndAsync("el usuario confirma la reasignación", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 37
+#line 21
 await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -222,13 +150,13 @@ await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((st
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Dar de Baja Familia a la Familia Internets Igv18")]
-        public async System.Threading.Tasks.Task DarDeBajaFamiliaALaFamiliaInternetsIgv18()
+        [NUnit.Framework.DescriptionAttribute("Dar de Baja Familia a la Familia Barra de Ensaladas ExoIgv")]
+        public async System.Threading.Tasks.Task DarDeBajaFamiliaALaFamiliaBarraDeEnsaladasExoIgv()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Familia a la Familia Internets Igv18", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 40
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Familia a la Familia Barra de Ensaladas ExoIgv", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 25
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -241,10 +169,85 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 await this.FeatureBackgroundAsync();
 #line hidden
+#line 26
+await testRunner.WhenAsync("el usuario da de baja la familia \"Barra de Ensaladas ExoIgv\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 27
+await testRunner.AndAsync("el usuario elimina todos los conceptos de la tabla", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 28
+await testRunner.AndAsync("el usuario confirma la reasignación", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 29
+await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Dar de Baja Familia a la Familia Maquillajes")]
+        public async System.Threading.Tasks.Task DarDeBajaFamiliaALaFamiliaMaquillajes()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Familia a la Familia Maquillajes", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 33
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 6
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 34
+await testRunner.WhenAsync("el usuario da de baja la familia \"Maquillajes\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 35
+await testRunner.AndAsync("el usuario reasigna los conceptos a la nueva familia \"prueba\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 36
+await testRunner.AndAsync("el usuario guarda los cambios de reasignacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 37
+await testRunner.WhenAsync("el usuario confirma la reasignación", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 38
+await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Dar de Baja Familia a la Familia vocefala Igv10")]
+        public async System.Threading.Tasks.Task DarDeBajaFamiliaALaFamiliaVocefalaIgv10()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Familia a la Familia vocefala Igv10", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 41
-await testRunner.WhenAsync("el usuario da de baja la familia \"Internets Igv18\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 6
+await this.FeatureBackgroundAsync();
 #line hidden
 #line 42
+await testRunner.WhenAsync("el usuario da de baja la familia \"vocefala Igv10\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 43
 await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -258,7 +261,7 @@ await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((st
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Familia a la Familia slas", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 45
+#line 46
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -271,7 +274,7 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 46
+#line 47
 await testRunner.ThenAsync("el usuario desactiva la familia \"slas\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -285,7 +288,7 @@ await testRunner.ThenAsync("el usuario desactiva la familia \"slas\"", ((string)
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Familia inválida a la Familia Azúcar", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 50
+#line 51
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -298,7 +301,7 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 51
+#line 52
 await testRunner.ThenAsync("el usuario desactiva la familia \"Azúcar\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -312,7 +315,7 @@ await testRunner.ThenAsync("el usuario desactiva la familia \"Azúcar\"", ((stri
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Familia inválida a la Familia Bebidas Frías", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 54
+#line 55
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -325,13 +328,13 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 55
+#line 56
 await testRunner.WhenAsync("el usuario da de baja la familia \"Bebidas Frías\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 56
+#line 57
 await testRunner.AndAsync("el usuario confirma la reasignación", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 57
+#line 58
 await testRunner.ThenAsync("el sistema muestra un mensaje de error", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

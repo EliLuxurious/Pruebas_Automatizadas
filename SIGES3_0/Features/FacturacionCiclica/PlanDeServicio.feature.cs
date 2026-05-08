@@ -105,8 +105,8 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 7
- await testRunner.GivenAsync("Inicio de sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calidad\' en \'h" +
-                        "ttps://sigesdev.newfrontdev-qa.sigesonline.com/auth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync(("Inicio de sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calidad\' en \'h" +
+                        "ttps://sigesdev.newfrontdev-qa.sigesonline.com/auth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 8
  await testRunner.AndAsync("Se ingresa al módulo \'Facturación Cíclica\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -117,47 +117,47 @@ this.ScenarioInitialize(scenarioInfo);
 #line 10
  await testRunner.AndAsync("Se selecciona \'Detalles del Plan\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table3 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table131 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table3.AddRow(new string[] {
+                table131.AddRow(new string[] {
                             "Valor mínimo",
                             "50"});
-                table3.AddRow(new string[] {
+                table131.AddRow(new string[] {
                             "Valor máximo",
                             "500"});
 #line 11
- await testRunner.WhenAsync("Se configuran los límites de los comprobantes:", ((string)(null)), table3, "When ");
+ await testRunner.WhenAsync("Se configuran los límites de los comprobantes:", ((string)(null)), table131, "When ");
 #line hidden
-                global::Reqnroll.Table table4 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table132 = new global::Reqnroll.Table(new string[] {
                             "Entidad",
                             "Mínimo",
                             "Máximo"});
-                table4.AddRow(new string[] {
+                table132.AddRow(new string[] {
                             "Locales",
                             "1",
                             "5"});
-                table4.AddRow(new string[] {
+                table132.AddRow(new string[] {
                             "Usuarios",
                             "2",
                             "15"});
 #line 16
- await testRunner.AndAsync("Se configuran los límites de locales y usuarios:", ((string)(null)), table4, "And ");
+ await testRunner.AndAsync("Se configuran los límites de locales y usuarios:", ((string)(null)), table132, "And ");
 #line hidden
 #line 21
  await testRunner.AndAsync("Se selecciona la pestaña \'Datos Generales\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table5 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table133 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table5.AddRow(new string[] {
+                table133.AddRow(new string[] {
                             "Nombre del plan",
                             "Plan Agro"});
-                table5.AddRow(new string[] {
+                table133.AddRow(new string[] {
                             "Descripción",
                             "Plan orientadas a empresas agroindustriales."});
 #line 22
- await testRunner.AndAsync("Se ingresa la información básica del plan:", ((string)(null)), table5, "And ");
+ await testRunner.AndAsync("Se ingresa la información básica del plan:", ((string)(null)), table133, "And ");
 #line hidden
 #line 27
  await testRunner.AndAsync("Se selecciona el ciclo de facturación \'MENSUAL\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

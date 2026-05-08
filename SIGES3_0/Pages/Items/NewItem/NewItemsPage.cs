@@ -65,6 +65,9 @@ namespace SIGES3_0.Pages.Items.NewItem
         //UNIDAD DE MEDIDA
         private By DropdownUnidadMedida = By.XPath("//div[contains(@class,'select-trigger')][.//span[normalize-space()='UN']]");
 
+        // STOCK MINIMO
+        private By CampoStockMinimo = By.XPath("//input[@formcontrolname='minStock']");
+
         //BOTÓN GUARDAR
         private By BotonGuardar = By.XPath("//button[normalize-space()='Guardar']");
 
@@ -183,6 +186,11 @@ namespace SIGES3_0.Pages.Items.NewItem
             utilities.EnterText(buscador, unidadMedida);
             By opcion = By.XPath($"//span[@class='option-label' and normalize-space()='{unidadMedida}']");
             utilities.ClickButton(opcion);
+        }
+
+        public void IngresarStockMinimo(string stockMinimo)
+        {
+            utilities.ClearAndEnterText(CampoStockMinimo, stockMinimo);
         }
 
         public void SeleccionarTarifa(string tarifa)

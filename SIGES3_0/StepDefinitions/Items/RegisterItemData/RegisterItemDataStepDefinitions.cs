@@ -456,7 +456,7 @@ namespace SIGES3_0.StepDefinitions.Items.RegisterItemData
         [When("el usuario acepta actualizar el concepto con el valor de caracteristica comun")]
         public void ThenElUsuarioAceptaActualizarElConceptoConElValorDeCaracteristicaComun()
         {
-            conceptosPage.actualizarValorCaracteristicaComun();
+            conceptosPage.SiValorCaracteristicaComun();
         }
 
         [When("el usuario elimina el valor de característica común {string}")]
@@ -469,6 +469,12 @@ namespace SIGES3_0.StepDefinitions.Items.RegisterItemData
         public void WhenElUsuarioSeleccionaNuevoValorCaracteristicaComun(string valor)
         {
             conceptosPage.SeleccionarNuevoValorCaracteristicaComun(valor);
+        }
+
+        [When("el usuario acepta eliminar el concepto con el valor de caracteristica comun")]
+        public void ThenElUsuarioAceptaEliminarElConceptoConElValorDeCaracteristicaComun()
+        {
+            conceptosPage.SiValorCaracteristicaComun();
         }
 
         //-------------------------------------------------------------------------------------------------------------
@@ -530,6 +536,13 @@ namespace SIGES3_0.StepDefinitions.Items.RegisterItemData
 
             conceptosPage.EliminarConceptosPorNombre(nombres);
         }
+
+        [When(@"el usuario cierra el sidebar")]
+        public void WhenElUsuarioCierraElSidebar()
+        {
+            conceptosPage.CerrarSidebar();
+        }
+
 
         [Then("el sistema muestra un mensaje de confirmacion")]
         public void WhenElSistemaMuestraUnMensajeDeConfirmacion()

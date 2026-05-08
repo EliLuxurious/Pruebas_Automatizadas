@@ -8,6 +8,7 @@ When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña
 And el usuario accede al módulo Conceptos
 And el usuario selecciona Registrar Datos de Concepto
 And el usuario va a la opcion Familia
+And el usuario cierra el sidebar
 
 
 Scenario: Editar Familia a la Familia Harina Igv18
