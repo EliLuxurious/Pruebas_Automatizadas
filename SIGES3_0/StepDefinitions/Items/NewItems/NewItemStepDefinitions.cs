@@ -142,6 +142,14 @@ namespace SIGES3_0.StepDefinitions.Items.NewItems
             conceptosPage.SeleccionarUnidadMedida(unidadMedida);
         }
 
+        [When("el usuario ingresa el stock mínimo {string}")]
+        public void WhenElUsuarioIngresaElStockMinimo(string stockMinimo)
+        {
+            if (string.IsNullOrEmpty(stockMinimo)) return;
+
+            conceptosPage.IngresarStockMinimo(stockMinimo);
+        }
+
         [When("el usuario selecciona la tarifa {string}")]
         public void WhenElUsuarioSeleccionaLaTarifa(string tarifa)
         {

@@ -8,6 +8,8 @@ When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña
 And el usuario accede al módulo Conceptos
 And el usuario selecciona Registrar Datos de Concepto
 And el usuario va a la opcion Presentacion
+And el usuario cierra el sidebar
+
 
 
 Scenario: Dar de Baja Presentación a la presentación
@@ -17,8 +19,8 @@ And el usuario reasigna y elimina la presentacion
 Then el sistema muestra un mensaje de confirmacion
 
 
-Scenario: Dar de Baja Presentación a la presentación PAQUETE
-When el usuario elimina la presentacion "PAQUETE"
+Scenario: Dar de Baja Presentación a la presentación Bolsa de plástico
+When el usuario elimina la presentacion "Bolsa de plástico"
 And el usuario elimina todos los conceptos de la tabla
 And el usuario reasigna y elimina la presentacion
 Then el sistema muestra un mensaje de confirmacion
