@@ -59,6 +59,18 @@ namespace SIGES3_0.StepDefinitions.Items.ViewItems
             conceptosPage.LimpiarBusqueda();
         }
 
+        [When("el usuario edita el concepto {string}")]
+        public void WhenElUsuarioEditaElConcepto(string nombreConcepto)
+        {
+            conceptosPage.EditarConcepto(nombreConcepto);
+        }
+
+        [When("el usuario elimina el concepto {string}")]
+        public void WhenElUsuarioEliminaElConcepto(string nombreConcepto)
+        {
+            conceptosPage.EliminarConcepto(nombreConcepto);
+        }
+
         [Then("el sistema muestra conceptos asociados")]
         public void ThenElSistemaMuestraConceptosAsociados()
         {

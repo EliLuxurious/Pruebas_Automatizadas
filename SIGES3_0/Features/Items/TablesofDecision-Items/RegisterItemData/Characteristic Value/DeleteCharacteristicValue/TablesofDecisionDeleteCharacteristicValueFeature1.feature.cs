@@ -104,6 +104,9 @@ await testRunner.AndAsync("el usuario selecciona Registrar Datos de Concepto", (
 #line 10
 await testRunner.AndAsync("el usuario selecciona la opcion Valor de Caracteristica", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
+#line 11
+await testRunner.AndAsync("el usuario cierra el sidebar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
@@ -113,7 +116,7 @@ await testRunner.AndAsync("el usuario selecciona la opcion Valor de Caracteristi
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja  Valor de Caracteristica Común sin conceptos asociados", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 13
+#line 14
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -126,11 +129,129 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 14
+#line 15
 await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"MODALIDAD\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 15
+#line 16
 await testRunner.AndAsync("el usuario elimina el valor de característica común \"SEMI-PRESENCIAL\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 17
+await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Dar de Baja  Valor de Caracteristica Común con conceptos asociados (SE ELIMINA EL" +
+            " CONCEPTO REGISTRADO)")]
+        public async System.Threading.Tasks.Task DarDeBajaValorDeCaracteristicaComunConConceptosAsociadosSEELIMINAELCONCEPTOREGISTRADO()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja  Valor de Caracteristica Común con conceptos asociados (SE ELIMINA EL" +
+                    " CONCEPTO REGISTRADO)", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 20
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 5
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 21
+await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"MARCA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 22
+await testRunner.AndAsync("el usuario elimina el valor de característica común \"CLEVER\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table6 = new global::Reqnroll.Table(new string[] {
+                            "NombreConcepto"});
+                table6.AddRow(new string[] {
+                            "BALANZA ELECTRONICA SP 30 KG"});
+#line 23
+await testRunner.AndAsync("el usuario elimina los siguientes conceptos:", ((string)(null)), table6, "And ");
+#line hidden
+#line 26
+await testRunner.AndAsync("el usuario acepta eliminar el concepto con el valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Dar de Baja  Valor de Caracteristica Común con conceptos asociados (SE REASIGNA N" +
+            "UEVO VALOR)")]
+        public async System.Threading.Tasks.Task DarDeBajaValorDeCaracteristicaComunConConceptosAsociadosSEREASIGNANUEVOVALOR()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja  Valor de Caracteristica Común con conceptos asociados (SE REASIGNA N" +
+                    "UEVO VALOR)", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 30
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 5
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 31
+await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"MARCA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 32
+await testRunner.AndAsync("el usuario elimina el valor de característica común \"CLEVER\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 33
+await testRunner.AndAsync("el usuario selecciona el nuevo valor de característica común \"FANTA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 34
+await testRunner.AndAsync("el usuario acepta eliminar el concepto con el valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Dar de Baja  Valor de Caracteristica Común de forma inválida (NO REASIGNA UN NUEV" +
+            "O VALOR) EN ESPERA")]
+        public async System.Threading.Tasks.Task DarDeBajaValorDeCaracteristicaComunDeFormaInvalidaNOREASIGNAUNNUEVOVALORENESPERA()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja  Valor de Caracteristica Común de forma inválida (NO REASIGNA UN NUEV" +
+                    "O VALOR) EN ESPERA", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 38
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 5
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 39
+await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"MARCA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 40
+await testRunner.AndAsync("el usuario elimina el valor de característica común \"ELVIVE\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 41
+await testRunner.AndAsync("el usuario acepta eliminar el concepto con el valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

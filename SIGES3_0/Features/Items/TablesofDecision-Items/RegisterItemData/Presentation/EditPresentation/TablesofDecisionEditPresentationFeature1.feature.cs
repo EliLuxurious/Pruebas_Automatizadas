@@ -104,16 +104,19 @@ await testRunner.AndAsync("el usuario selecciona Registrar Datos de Concepto", (
 #line 10
 await testRunner.AndAsync("el usuario va a la opcion Presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
+#line 11
+await testRunner.AndAsync("el usuario cierra el sidebar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Editar Presentación a la presentación CAJA")]
-        public async System.Threading.Tasks.Task EditarPresentacionALaPresentacionCAJA()
+        [NUnit.Framework.DescriptionAttribute("Editar Presentación a la presentación Frasco")]
+        public async System.Threading.Tasks.Task EditarPresentacionALaPresentacionFrasco()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Presentación a la presentación CAJA", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 12
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Presentación a la presentación Frasco", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 15
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -126,28 +129,26 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 13
-await testRunner.WhenAsync("el usuario edita la presentacion \"CAJA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line 16
+await testRunner.WhenAsync("el usuario edita la presentacion \"Frasco\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 14
+#line 17
 await testRunner.AndAsync("el usuario ingresa el codigo de presentación \" 1\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 15
+#line 18
 await testRunner.AndAsync("el usuario guarda los cambios al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table8 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table9 = new global::Reqnroll.Table(new string[] {
                             "NombreConcepto"});
-                table8.AddRow(new string[] {
-                            "Gaseosa INKA KOLA CLEVER CAJA 1 L"});
-                table8.AddRow(new string[] {
-                            "Gaseosa KR CLEVER CAJA 1 L"});
-#line 16
-await testRunner.AndAsync("el usuario elimina los siguientes conceptos:", ((string)(null)), table8, "And ");
+                table9.AddRow(new string[] {
+                            "Gaseosa de Naranja INKA COLA Frasco 3 L"});
+#line 19
+await testRunner.AndAsync("el usuario elimina los siguientes conceptos:", ((string)(null)), table9, "And ");
 #line hidden
-#line 20
+#line 22
 await testRunner.AndAsync("el usuario aplica los cambios al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 21
+#line 23
 await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -161,7 +162,7 @@ await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((st
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Presentación a la presentación BOTELLAS", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 24
+#line 26
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -174,19 +175,19 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 25
+#line 27
 await testRunner.WhenAsync("el usuario edita la presentacion \"BOTELLAS\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 26
+#line 28
 await testRunner.AndAsync("el usuario ingresa la descripcion de presentación \" 1\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 27
+#line 29
 await testRunner.AndAsync("el usuario guarda los cambios al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 28
+#line 30
 await testRunner.AndAsync("el usuario aplica los cambios al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 29
+#line 31
 await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -200,7 +201,7 @@ await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((st
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Presentación a la presentación 0123", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 32
+#line 34
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -213,16 +214,16 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 33
+#line 35
 await testRunner.WhenAsync("el usuario edita la presentacion \"0123\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 34
+#line 36
 await testRunner.AndAsync("el usuario ingresa la descripcion de presentación \"es\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 35
+#line 37
 await testRunner.AndAsync("el usuario guarda los cambios al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 36
+#line 38
 await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -236,7 +237,7 @@ await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((st
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Presnetación inválida a la presentación locazos", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 39
+#line 41
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -249,13 +250,13 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 40
+#line 42
 await testRunner.WhenAsync("el usuario edita la presentacion \"locazos\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 41
+#line 43
 await testRunner.AndAsync("el usuario guarda los cambios al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 42
+#line 44
 await testRunner.ThenAsync("el sistema muestra un mensaje de error", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
