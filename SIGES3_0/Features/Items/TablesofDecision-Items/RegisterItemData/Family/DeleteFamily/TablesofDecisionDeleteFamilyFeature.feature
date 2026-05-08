@@ -9,6 +9,7 @@ When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña
 And el usuario accede al módulo Conceptos
 And el usuario selecciona Registrar Datos de Concepto
 And el usuario va a la opcion Familia
+And el usuario cierra el sidebar
 
 
 Scenario: Dar de Baja Familia a la Familia  ANTICIPO
@@ -21,24 +22,24 @@ Then el sistema muestra un mensaje de confirmacion
 
 
 
-Scenario: Dar de Baja Familia a la Familia frutas Igv18
-When el usuario da de baja la familia "frutas Igv18"
+Scenario: Dar de Baja Familia a la Familia Barra de Ensaladas ExoIgv
+When el usuario da de baja la familia "Barra de Ensaladas ExoIgv"
 And el usuario elimina todos los conceptos de la tabla
 And el usuario confirma la reasignación
 Then el sistema muestra un mensaje de confirmacion
 
 
 
-Scenario: Dar de Baja Familia a la Familia agua
-When el usuario da de baja la familia "agua"
+Scenario: Dar de Baja Familia a la Familia Maquillajes
+When el usuario da de baja la familia "Maquillajes"
 And el usuario reasigna los conceptos a la nueva familia "prueba"
 And el usuario guarda los cambios de reasignacion
 When el usuario confirma la reasignación
 Then el sistema muestra un mensaje de confirmacion
 
 
-Scenario: Dar de Baja Familia a la Familia Internets Igv18
-When el usuario da de baja la familia "Internets Igv18"
+Scenario: Dar de Baja Familia a la Familia vocefala Igv10
+When el usuario da de baja la familia "vocefala Igv10"
 Then el sistema muestra un mensaje de confirmacion
 
 

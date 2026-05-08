@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace SIGES3_0.Features.Items.TablesofDecision_Items.RegisterItemData.CharacteristicValue.DeleteCharacteristicValue
+namespace SIGES3_0.Features.Items.ChecklistAndPartEquivalenceAnalyBoundary_Items.Equivalencies_Combos
 {
     using Reqnroll;
     using System;
@@ -20,19 +20,18 @@ namespace SIGES3_0.Features.Items.TablesofDecision_Items.RegisterItemData.Charac
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Reqnroll", "2.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("TablesofDecisionDeleteCharacteristicValueFeature1")]
-    public partial class TablesofDecisionDeleteCharacteristicValueFeature1Feature
+    [NUnit.Framework.DescriptionAttribute("EquivalenciesCombosFeature")]
+    public partial class EquivalenciesCombosFeatureFeature
     {
         
         private global::Reqnroll.ITestRunner testRunner;
         
         private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), ("Features/Items/TablesofDecision-Items/RegisterItemData/Characteristic Value/Delet" +
-                "eCharacteristicValue"), "TablesofDecisionDeleteCharacteristicValueFeature1", ("Eliminar Valor de Caracteristica Comun utilizando la técnica de Tablas de Decisio" +
-                "nes"), global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Items/Checklist and PartEquivalence AnalyBoundary-Items/Equivalencies-Co" +
+                "mbos", "EquivalenciesCombosFeature", "Registrar Equivalencias entre Productos y Combos ", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
-#line 1 "TablesofDecisionDeleteCharacteristicValueFeature1.feature"
+#line 1 "EquivalenciesCombosFeature.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
@@ -88,35 +87,29 @@ namespace SIGES3_0.Features.Items.TablesofDecision_Items.RegisterItemData.Charac
 #line 5
 #line hidden
 #line 6
-await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                    "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                    "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 7
-await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                    "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                    "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 8
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 9
-await testRunner.AndAsync("el usuario selecciona Registrar Datos de Concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 10
-await testRunner.AndAsync("el usuario selecciona la opcion Valor de Caracteristica", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 11
-await testRunner.AndAsync("el usuario cierra el sidebar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario selecciona Equivalencia entre Productos y Combos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Dar de Baja  Valor de Caracteristica Común sin conceptos asociados")]
-        public async System.Threading.Tasks.Task DarDeBajaValorDeCaracteristicaComunSinConceptosAsociados()
+        [NUnit.Framework.DescriptionAttribute("Registrar Equivalencia Entre Producto")]
+        public async System.Threading.Tasks.Task RegistrarEquivalenciaEntreProducto()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja  Valor de Caracteristica Común sin conceptos asociados", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 14
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar Equivalencia Entre Producto", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -129,28 +122,32 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
+#line 13
+await testRunner.WhenAsync("el usuario selecciona la opcion Equivalencia entre Productos", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 14
+await testRunner.AndAsync("el usuario selecciona este producto \"Azúcar Rubia\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
 #line 15
-await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"MODALIDAD\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.AndAsync("el usuario ingresa la cantidad \"3\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 16
-await testRunner.AndAsync("el usuario elimina el valor de característica común \"SEMI-PRESENCIAL\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario selecciona de este producto \"Azúcar 4651 K G SP 156 UN\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 17
-await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+await testRunner.ThenAsync("el sistema agrega la equivalencia", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Dar de Baja  Valor de Caracteristica Común con conceptos asociados (SE ELIMINA EL" +
-            " CONCEPTO REGISTRADO)")]
-        public async System.Threading.Tasks.Task DarDeBajaValorDeCaracteristicaComunConConceptosAsociadosSEELIMINAELCONCEPTOREGISTRADO()
+        [NUnit.Framework.DescriptionAttribute("Registrar Combos")]
+        public async System.Threading.Tasks.Task RegistrarCombos()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja  Valor de Caracteristica Común con conceptos asociados (SE ELIMINA EL" +
-                    " CONCEPTO REGISTRADO)", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar Combos", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 20
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -165,34 +162,37 @@ this.ScenarioInitialize(scenarioInfo);
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 21
-await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"MARCA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario selecciona la opcion Combos", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 22
-await testRunner.AndAsync("el usuario elimina el valor de característica común \"CLEVER\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario selecciona el concepto \"Ajo Pelado KG\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table6 = new global::Reqnroll.Table(new string[] {
-                            "NombreConcepto"});
-                table6.AddRow(new string[] {
-                            "BALANZA ELECTRONICA SP 30 KG"});
 #line 23
-await testRunner.AndAsync("el usuario elimina los siguientes conceptos:", ((string)(null)), table6, "And ");
+await testRunner.AndAsync("el usuario ingresa la cantidad del concepto \"3\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 24
+await testRunner.AndAsync("el usuario agrega el concepto al combo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 25
+await testRunner.AndAsync("el usuario selecciona el producto final del combo \"Ají de Gallina\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 26
-await testRunner.AndAsync("el usuario acepta eliminar el concepto con el valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario guarda el combo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 27
+await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion exitosa", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Dar de Baja  Valor de Caracteristica Común con conceptos asociados (SE REASIGNA N" +
-            "UEVO VALOR)")]
-        public async System.Threading.Tasks.Task DarDeBajaValorDeCaracteristicaComunConConceptosAsociadosSEREASIGNANUEVOVALOR()
+        [NUnit.Framework.DescriptionAttribute("Editar Equivalencia Entre Producto")]
+        public async System.Threading.Tasks.Task EditarEquivalenciaEntreProducto()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja  Valor de Caracteristica Común con conceptos asociados (SE REASIGNA N" +
-                    "UEVO VALOR)", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Equivalencia Entre Producto", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 30
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -207,31 +207,29 @@ this.ScenarioInitialize(scenarioInfo);
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 31
-await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"MARCA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario edita la equivalencia \"Azúcar Rubia\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 32
-await testRunner.AndAsync("el usuario elimina el valor de característica común \"CLEVER\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario selecciona de este producto \"Azúcar roja SP 1 UN\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 33
-await testRunner.AndAsync("el usuario selecciona el nuevo valor de característica común \"FANTA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario ingresa la cantidad \"3\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 34
-await testRunner.AndAsync("el usuario acepta eliminar el concepto con el valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.ThenAsync("el sistema agrega la equivalencia", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Dar de Baja  Valor de Caracteristica Común de forma inválida (NO REASIGNA UN NUEV" +
-            "O VALOR) EN ESPERA")]
-        public async System.Threading.Tasks.Task DarDeBajaValorDeCaracteristicaComunDeFormaInvalidaNOREASIGNAUNNUEVOVALORENESPERA()
+        [NUnit.Framework.DescriptionAttribute("Editar Equivalencia Entre Producto y eliminar equivalencia")]
+        public async System.Threading.Tasks.Task EditarEquivalenciaEntreProductoYEliminarEquivalencia()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja  Valor de Caracteristica Común de forma inválida (NO REASIGNA UN NUEV" +
-                    "O VALOR) EN ESPERA", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 38
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Equivalencia Entre Producto y eliminar equivalencia", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 37
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -244,14 +242,14 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
+#line 38
+await testRunner.WhenAsync("el usuario edita la equivalencia \"Azúcar Rubia\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
 #line 39
-await testRunner.WhenAsync("el usuario selecciona la caracteristica comun \"MARCA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.AndAsync("el usuario elimina la equivalencia \"Azúcar roja SP 1 UN\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 40
-await testRunner.AndAsync("el usuario elimina el valor de característica común \"ELVIVE\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 41
-await testRunner.AndAsync("el usuario acepta eliminar el concepto con el valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.ThenAsync("el sistema agrega la equivalencia", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
