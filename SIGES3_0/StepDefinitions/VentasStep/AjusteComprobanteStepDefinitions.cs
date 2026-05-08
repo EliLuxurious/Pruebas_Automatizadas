@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using OpenQA.Selenium;
 using Reqnroll;
 using SIGES3_0.Pages.VentasPage;
@@ -8,68 +10,64 @@ namespace SIGES3_0.StepDefinitions.VentasStep
     public class AjusteComprobanteStepDefinitions
     {
         private readonly AjusteComprobantePage _ajustePage;
+        private readonly ScenarioContext _scenarioContext;
 
-        public AjusteComprobanteStepDefinitions(IWebDriver driver)
+        public AjusteComprobanteStepDefinitions(IWebDriver driver, ScenarioContext scenarioContext)
         {
             _ajustePage = new AjusteComprobantePage(driver);
-        }
-        // ── Ver Ventas: filtrar por ayer ─────────────────────────────────────
-        [StepDefinition("filtra ventas por fecha de ayer")]
-        public void FiltraVentasPorFechaDeAyer()
-        {
-            _ajustePage.FiltrarVentasPorFechaAyer();
+            _scenarioContext = scenarioContext;
         }
 
-        // ── Ver Ventas: filtrar N días atrás (ej: "8" para CP068) ─────────────
-        [StepDefinition("filtra ventas de {int} dias atras")]
-        public void FiltraVentasDeDiasAtras(int dias)
+        [StepDefinition("abre el modal ajustes de comprobante")]
+        public void AbreElModalAjustesDeComprobante()
         {
-            _ajustePage.FiltrarVentasPorDiasAtras(dias);
+            _ajustePage.AbrirModalAjustesDeComprobante();
         }
 
-        // ── Abrir modal de ajuste ───────────────────────────────────────────
-        [StepDefinition("accede a las opciones del comprobante recien registrado")]
-        public void AccedeALasOpcionesDelComprobanteRecienRegistrado()
+        [StepDefinition("selecciona la opcion {string} del modal ajustes de comprobante")]
+        public void SeleccionaLaOpcionDelModalAjustesDeComprobante(string opcion)
         {
-            _ajustePage.ClickAccionPrimerComprobante();
+            _ajustePage.SeleccionarOpcionDesdeAcciones(opcion);
+
+            if (opcion.Trim().Equals("Invalidar", StringComparison.OrdinalIgnoreCase)
+                && _scenarioContext.ScenarioInfo.Tags.Contains("FueraDePlazo"))
+            {
+                Console.WriteLine("[Invalidar] Validando internamente que la seccion Entrega no se muestre por fuera de plazo.");
+                _ajustePage.VerificarSeccionEntregaNoVisibleEnInvalidacion();
+            }
         }
 
-        // ── Tab del modal ───────────────────────────────────────────────────
         [StepDefinition("selecciona {string} en el modal de ajuste")]
         public void SeleccionaEnElModalDeAjuste(string tab)
         {
-            _ajustePage.SeleccionarTabAjuste(tab);
+            AbreElModalAjustesDeComprobante();
+            SeleccionaLaOpcionDelModalAjustesDeComprobante(tab);
         }
 
-        // ── Tipo nota de débito ─────────────────────────────────────────────
         [StepDefinition("selecciona tipo de nota de debito {string}")]
         public void SeleccionaTipoDeNotaDeDebito(string tipo)
         {
             _ajustePage.SeleccionarTipoNotaDebito(tipo);
         }
 
-        // ── Tipo nota de crédito ────────────────────────────────────────────
         [StepDefinition("selecciona tipo de nota de credito {string}")]
         public void SeleccionaTipoDeNotaDeCredito(string tipo)
         {
             _ajustePage.SeleccionarTipoNotaCredito(tipo);
         }
 
-        // ── Comprobante destino ─────────────────────────────────────────────
         [StepDefinition("selecciona comprobante destino {string}")]
         public void SeleccionaComprobanteDestino(string comprobante)
         {
             _ajustePage.SeleccionarComprobanteDestino(comprobante);
         }
 
-        // ── Serie en ajuste ─────────────────────────────────────────────────
         [StepDefinition("selecciona serie {string} en el ajuste")]
         public void SeleccionaSerieEnElAjuste(string serie)
         {
             _ajustePage.SeleccionarSerie(serie);
         }
 
-        // ── Motivo o Sustento ───────────────────────────────────────────────
         [StepDefinition("ingresa motivo o sustento {string}")]
         public void IngresaMotivoOSustento(string motivo)
         {
@@ -77,28 +75,24 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             _ajustePage.IngresarMotivoSustento(motivo);
         }
 
-        // ── Monto del interés ───────────────────────────────────────────────
         [StepDefinition("ingresa monto del interes {string}")]
         public void IngresaMontoDelInteres(string monto)
         {
             _ajustePage.IngresarMontoInteres(monto);
         }
 
-        // ── Importe NC ─────────────────────────────────────────────────────
         [StepDefinition("ingresa importe NC {string}")]
         public void IngresaImporteNC(string importe)
         {
             _ajustePage.IngresarImporteNC(importe);
         }
 
-        // ── Importe detalle por ítem ────────────────────────────────────────
         [StepDefinition("ingresa importe detalle {string} para el item")]
         public void IngresaImporteDetalleParaElItem(string importe)
         {
             _ajustePage.IngresarImporteDetalle(importe);
         }
 
-        // ── Cantidad a devolver ─────────────────────────────────────────────
         [StepDefinition("ingresa cantidad a devolver {string}")]
         public void IngresaCantidadADevolver(string cantidad)
         {
@@ -106,7 +100,6 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             _ajustePage.IngresarCantidadDevolver(cantidad);
         }
 
-        // ── Total aumento del valor ─────────────────────────────────────────
         [StepDefinition("ingresa total aumento del valor {string}")]
         public void IngresaTotalAumentoDelValor(string monto)
         {
@@ -114,72 +107,65 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             _ajustePage.IngresarTotalAumentoValor(monto);
         }
 
-        // ── Expandir sección ────────────────────────────────────────────────
         [StepDefinition("expande la seccion {string} del ajuste")]
         public void ExpandeLaSeccionDelAjuste(string nombre)
         {
             _ajustePage.ExpandirSeccion(nombre);
         }
 
-        // ── Tipo de pago en ajuste ──────────────────────────────────────────
         [StepDefinition("selecciona tipo de pago {string} en la seccion pago del ajuste")]
         public void SeleccionaTipoDePagoEnElAjuste(string tipo)
         {
             _ajustePage.SeleccionarTipoPagoAjuste(tipo);
         }
 
-        // ── Monto inicial ───────────────────────────────────────────────────
         [StepDefinition("ingresa monto inicial {string} en el ajuste")]
         public void IngresaMontoInicialEnElAjuste(string monto)
         {
             _ajustePage.IngresarMontoInicial(monto);
         }
 
-        // ── Medio de pago ───────────────────────────────────────────────────
         [StepDefinition("selecciona medio de pago {string} en el ajuste")]
         public void SeleccionaMedioDePagoEnElAjuste(string medio)
         {
             _ajustePage.SeleccionarMedioPago(medio);
         }
 
-        // ── Observación ─────────────────────────────────────────────────────
         [StepDefinition("ingresa observacion {string} en el ajuste")]
         public void IngresaObservacionEnElAjuste(string observacion)
         {
             _ajustePage.IngresarObservacion(observacion);
         }
 
-        // ── Entrega (NC) ───────────────────────────────────────────────────
         [StepDefinition("selecciona entrega {string} en el ajuste")]
         public void SeleccionaEntregaEnElAjuste(string tipo)
         {
             _ajustePage.SeleccionarEntrega(tipo);
         }
 
-        // ── Devolución (NC) ─────────────────────────────────────────────────
         [StepDefinition("selecciona devolucion {string} en el ajuste")]
         public void SeleccionaDevolucionEnElAjuste(string tipo)
         {
             _ajustePage.SeleccionarDevolucion(tipo);
         }
 
-        // ── Guardar ajuste ─────────────────────────────────────────────────
         [StepDefinition("hace clic en Guardar en el modal de ajuste")]
         public void HaceClicEnGuardarEnElModalDeAjuste()
         {
             _ajustePage.ClickGuardarAjuste();
         }
 
-        // ── Validaciones ───────────────────────────────────────────────────
         [Then("el sistema genera el comprobante de ajuste exitosamente")]
         public void ThenElSistemaGeneraElComprobanteDeAjusteExitosamente()
         {
+            LogResultadoEsperado("genera el comprobante de ajuste exitosamente");
             _ajustePage.VerificarAjusteExitoso();
         }
 
         [Then("el sistema bloquea el guardado del ajuste")]
         public void ThenElSistemaBloqueaElGuardadoDelAjuste()
         {
+            LogResultadoEsperado("bloquea el guardado del ajuste");
             _ajustePage.VerificarBloqueoGuardar();
         }
 
@@ -194,10 +180,6 @@ namespace SIGES3_0.StepDefinitions.VentasStep
         {
             _ajustePage.VerificarMensajeCantidadMayor();
         }
-
-        // ═══════════════════════════════════════════════════════════════════
-        // Pasos opcionales para Scenario Outline (valor "-" = omitir paso)
-        // ═══════════════════════════════════════════════════════════════════
 
         private static bool EsOpcionalVacio(string valor) =>
             string.IsNullOrWhiteSpace(valor) || valor.Trim() == "-";
@@ -258,11 +240,6 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             _ajustePage.IngresarImporteDetalle(importe);
         }
 
-        // ═══════════════════════════════════════════════════════════════════
-        // Pasos de Invalidar Venta
-        // ═══════════════════════════════════════════════════════════════════
-
-        // ── Devolución en modal de Invalidar (reutiliza SeleccionarEntrega) ─
         [StepDefinition("selecciona devolucion {string} en el modal de invalidacion")]
         public void SeleccionaDevolucionEnElModalDeInvalidacion(string tipo)
         {
@@ -270,31 +247,64 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             _ajustePage.SeleccionarEntrega(tipo);
         }
 
-        // ── Observación de invalidación ─────────────────────────────────────
         [StepDefinition("ingresa observacion de invalidacion {string}")]
         public void IngresaObservacionDeInvalidacion(string observacion)
         {
             _ajustePage.IngresarObservacionInvalidacion(observacion);
         }
 
-        // ── Click Invalidar en el modal ─────────────────────────────────────
-        [StepDefinition("hace clic en Invalidar en el modal de invalidacion")]
-        public void HaceClicEnInvalidarEnElModalDeInvalidacion()
-        {
-            _ajustePage.ClickInvalidarEnModal();
-        }
-
-        // ── Verificaciones de Invalidar ─────────────────────────────────────
         [Then("el sistema procesa la invalidacion correctamente")]
         public void ThenElSistemaProcesamLaInvalidacionCorrectamente()
         {
+            LogResultadoEsperado("procesa la invalidacion correctamente");
+            _ajustePage.ClickInvalidarEnModal();
             _ajustePage.VerificarInvalidacionExitosa();
         }
 
-        [Then("el sistema no activa el boton Invalidar")]
-        public void ThenElSistemaNoActivaElBotonInvalidar()
+        [Then("el sistema muestra el resultado esperado de la invalidacion {string}")]
+        public void ThenElSistemaMuestraElResultadoEsperadoDeLaInvalidacion(string resultadoEsperado)
         {
-            _ajustePage.VerificarBotonInvalidarNoActivo();
+            LogResultadoEsperado(resultadoEsperado);
+            switch (resultadoEsperado.Trim())
+            {
+                case "procesa la invalidacion correctamente":
+                    _ajustePage.ClickInvalidarEnModal();
+                    _ajustePage.VerificarInvalidacionExitosa();
+                    break;
+                case "no activa el boton Invalidar":
+                    _ajustePage.VerificarBotonInvalidarNoActivo();
+                    break;
+                default:
+                    throw new ArgumentException($"Resultado esperado de invalidacion no reconocido: {resultadoEsperado}");
+            }
+        }
+
+        [Then("el sistema muestra el mensaje fuera de plazo para invalidar")]
+        public void ThenElSistemaMuestraElMensajeFueraDePlazoParaInvalidar()
+        {
+            LogResultadoEsperado("muestra el mensaje fuera de plazo para invalidar");
+            _ajustePage.VerificarBotonInvalidarNoVisible();
+            _ajustePage.VerificarMensajeFueraDePlazoInvalidacion();
+        }
+
+        [Then("el sistema no muestra la opcion {string} en el modal ajustes de comprobante")]
+        public void ThenElSistemaNoMuestraLaOpcionEnElModalAjustesDeComprobante(string opcion)
+        {
+            LogResultadoEsperado($"no muestra la opcion {opcion} en el modal ajustes de comprobante");
+            _ajustePage.VerificarOpcionDelModalAjustesNoVisible(opcion);
+        }
+
+        private void LogResultadoEsperado(string verificacion)
+        {
+            var escenario = (_scenarioContext.ScenarioInfo.Title ?? "Escenario sin titulo")
+                .Replace(" - <caso>", string.Empty, StringComparison.OrdinalIgnoreCase);
+            var argumentos = _scenarioContext.ScenarioInfo.Arguments;
+            var caso = argumentos != null && argumentos.Count > 0
+                ? argumentos[0]?.ToString() ?? "(sin caso)"
+                : "(sin caso)";
+
+            Console.WriteLine(
+                $"[Ajuste][Validacion] escenario='{escenario}', caso='{caso}', esperado='{verificacion}'.");
         }
     }
 }

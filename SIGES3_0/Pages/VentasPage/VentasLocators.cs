@@ -428,6 +428,9 @@ namespace SIGES3_0.Pages.VentasPage
         ////////////////////////////////////////////////////////////////////////////////////////
         public static class AjusteComprobante
         {
+            private const string AjusteModalRootXPath =
+                "//div[contains(@class,'modal') and .//*[contains(normalize-space(),'Ajuste de Comprobante')]]";
+
             // ── Verificar que la tabla tiene filas ──────────────────────────────
             public static readonly By TablaFilaPrimera =
                 By.XPath("//tbody/tr[1]");
@@ -442,13 +445,19 @@ namespace SIGES3_0.Pages.VentasPage
 
             // ── Tabs del modal ──────────────────────────────────────────────────
             public static readonly By TabNotaDebito =
-                By.XPath("//span[normalize-space()='Nota de débito']");
+                By.XPath($"{AjusteModalRootXPath}//span[normalize-space()='Nota de débito']");
             public static readonly By TabNotaCredito =
-                By.XPath("//span[normalize-space()='Nota de crédito']");
+                By.XPath($"{AjusteModalRootXPath}//span[normalize-space()='Nota de crédito']");
             public static readonly By TabVerDocumento =
-                By.XPath("//span[normalize-space()='Ver Documento']");
+                By.XPath($"{AjusteModalRootXPath}//span[normalize-space()='Ver Documento']");
             public static readonly By TabInvalidar =
-                By.XPath("//span[normalize-space()='Invalidar']");
+                By.XPath($"{AjusteModalRootXPath}//span[normalize-space()='Invalidar']");
+            public static By OpcionAccionEnModal(string texto) =>
+                By.XPath(
+                    $"{AjusteModalRootXPath}//button[normalize-space()='{texto}' or .//*[normalize-space()='{texto}'] or contains(normalize-space(),'{texto}')] | " +
+                    $"{AjusteModalRootXPath}//a[normalize-space()='{texto}' or .//*[normalize-space()='{texto}'] or contains(normalize-space(),'{texto}')] | " +
+                    $"{AjusteModalRootXPath}//span[normalize-space()='{texto}']/ancestor::*[self::button or self::a][1] | " +
+                    $"{AjusteModalRootXPath}//span[normalize-space()='{texto}']");
 
             // ── Datos generales — Nota de débito ────────────────────────────────
             public static readonly By TipoNotaDebitoSelect =
@@ -494,43 +503,48 @@ namespace SIGES3_0.Pages.VentasPage
 
             // ── Secciones accordion del modal ───────────────────────────────────
             public static By SeccionAccordion(string nombre) =>
-                By.XPath($"//button[contains(@class,'accordion-button')][.//*[contains(normalize-space(),'{nombre}')] or contains(normalize-space(),'{nombre}')]");
+                By.XPath($"{AjusteModalRootXPath}//button[contains(@class,'accordion-button')][.//*[contains(normalize-space(),'{nombre}')] or contains(normalize-space(),'{nombre}')]");
 
             // ── Pago en modal de ajuste ─────────────────────────────────────────
             public static readonly By PagoContadoRadio =
-                By.XPath("//label[normalize-space()='Contado']");
+                By.XPath($"{AjusteModalRootXPath}//label[normalize-space()='Al contado' or normalize-space()='Contado']");
             public static readonly By PagoCreditoRadio =
-                By.XPath("//label[normalize-space()='Crédito']");
+                By.XPath($"{AjusteModalRootXPath}//label[normalize-space()='Crédito']");
             public static readonly By MontoInicialInput =
-                By.XPath("(//*[normalize-space()='Monto inicial']/following::input[not(@type='date') and not(@type='hidden')])[1]");
+                By.XPath($"({AjusteModalRootXPath}//*[normalize-space()='Monto inicial']/following::input[not(@type='date') and not(@type='hidden')])[1]");
             public static readonly By MedioPagoEfectivo =
-                By.XPath("//div[contains(@class,'custom-tab')][.//span[contains(normalize-space(),'EFECTIVO')]] | //span[contains(normalize-space(),'EFECTIVO')]/ancestor::div[contains(@class,'tab')]");
+                By.XPath($"{AjusteModalRootXPath}//div[contains(@class,'custom-tab')][.//span[contains(normalize-space(),'EFECTIVO')]] | {AjusteModalRootXPath}//span[contains(normalize-space(),'EFECTIVO')]/ancestor::div[contains(@class,'tab')]");
 
             // ── Pago — Observación ──────────────────────────────────────────────
             public static readonly By ObservacionPago =
-                By.XPath("//textarea[contains(@id,'observacion') or contains(@name,'observacion')] | //input[contains(@id,'observacion')]");
+                By.XPath($"{AjusteModalRootXPath}//textarea[contains(@id,'observacion') or contains(@name,'observacion')] | {AjusteModalRootXPath}//input[contains(@id,'observacion')]");
 
             // ── Entrega (Nota de crédito) ───────────────────────────────────────
             public static readonly By EntregaInmediata =
-                By.XPath("//label[contains(normalize-space(),'Inmediata')]/preceding-sibling::input | //label[contains(normalize-space(),'Inmediata')]");
+                By.XPath($"{AjusteModalRootXPath}//label[contains(normalize-space(),'Inmediata')]/preceding-sibling::input | {AjusteModalRootXPath}//label[contains(normalize-space(),'Inmediata')]");
             public static readonly By EntregaDiferida =
-                By.XPath("//label[contains(normalize-space(),'Diferida')]/preceding-sibling::input | //label[contains(normalize-space(),'Diferida')]");
+                By.XPath($"{AjusteModalRootXPath}//label[contains(normalize-space(),'Diferida')]/preceding-sibling::input | {AjusteModalRootXPath}//label[contains(normalize-space(),'Diferida')]");
 
             // ── Devolución (Nota de crédito — pago) ─────────────────────────────
             public static readonly By DevolucionContado =
-                By.XPath("//label[normalize-space()='Contado']");
+                By.XPath($"{AjusteModalRootXPath}//label[normalize-space()='Al contado' or normalize-space()='Contado']");
             public static readonly By DevolucionCredito =
-                By.XPath("//label[normalize-space()='Crédito']");
+                By.XPath($"{AjusteModalRootXPath}//*[contains(normalize-space(),'Devoluci')]/following::label[normalize-space()='Crédito'][1] | ({AjusteModalRootXPath}//label[normalize-space()='Crédito'])[last()]");
 
             // ── Nota de crédito: Importe NC ─────────────────────────────────────
             public static readonly By ImporteNCInput =
-                By.XPath("//input[contains(@placeholder,'Importe') or contains(@id,'importeNC') or contains(@formcontrolname,'importeNC')]");
+                By.XPath(
+                    $"{AjusteModalRootXPath}//input[contains(@placeholder,'Monto del descuento') or contains(@placeholder,'Importe') or contains(@id,'importeNC') or contains(@formcontrolname,'importeNC')] | " +
+                    $"({AjusteModalRootXPath}//*[contains(normalize-space(),'Monto del descuento') or contains(normalize-space(),'Importe')]/following::input[not(@type='hidden')][1])[1]");
 
             // ── Nota de crédito: Detalle — cantidad a devolver ──────────────────
             public static readonly By CantidadDevolverInput =
                 By.XPath("(//table//tbody//tr[1]//input[contains(@type,'number') or contains(@placeholder,'Cant')])[1]");
             public static readonly By ImporteDetalleInput =
-                By.XPath("(//table//tbody//tr[1]//input[contains(@type,'number') or contains(@placeholder,'Import')])[1]");
+                By.XPath(
+                    $"{AjusteModalRootXPath}//input[contains(@placeholder,'Monto del descuento') or contains(@placeholder,'Importe') or contains(@id,'importeDetalle') or contains(@formcontrolname,'importeDetalle')] | " +
+                    $"({AjusteModalRootXPath}//table//tbody//tr[1]//input[not(@type='hidden')][contains(@type,'number') or contains(@placeholder,'Importe') or contains(@placeholder,'Monto del descuento')])[1] | " +
+                    $"({AjusteModalRootXPath}//*[contains(normalize-space(),'Monto del descuento') or contains(normalize-space(),'Importe')]/following::input[not(@type='hidden')][1])[1]");
 
             // ── Guardar / Cancelar del modal ────────────────────────────────────
             public static readonly By GuardarAjuste =
@@ -562,20 +576,33 @@ namespace SIGES3_0.Pages.VentasPage
         /////////////////////////////////////////////////////////////////////////////////////////
         public static class InvalidarVenta
         {
+            public static readonly By ModalInvalidar =
+                By.XPath("//div[contains(@class,'modal') and .//*[contains(normalize-space(),'Invalidar venta') or contains(normalize-space(),'Invalidar Venta')]]");
+
+            public static readonly By SeccionEntregaAccordion =
+                By.XPath("//div[contains(@class,'modal') and .//*[contains(normalize-space(),'Invalidar venta') or contains(normalize-space(),'Invalidar Venta')]]//button[contains(@class,'accordion-button')][.//*[contains(normalize-space(),'Entrega')] or contains(normalize-space(),'Entrega')]");
+
             // ── Observación obligatoria ─────────────────────────────────────────
             public static readonly By ObservacionInvalidar =
-                By.XPath("//div[@class='observation-section my-4']//textarea[@id='observation']");
+                By.XPath("//div[contains(@class,'modal') and .//*[contains(normalize-space(),'Invalidar venta') or contains(normalize-space(),'Invalidar Venta')]]//div[contains(@class,'observation-section')]//textarea[@id='observation']");
 
-            // ── Botón Invalidar (modal header, top-right) ───────────────────────
+            // ── Botón final de confirmación Invalidar ───────────────────────────
             public static readonly By BotonInvalidar =
-                By.XPath("//button[.//span[normalize-space()='Invalidar'] or normalize-space()='Invalidar']");
+                By.XPath("//div[contains(@class,'modal') and .//*[contains(normalize-space(),'Invalidar venta') or contains(normalize-space(),'Invalidar Venta')]]//button[not(contains(@class,'close')) and not(@aria-label='Close') and (normalize-space()='Invalidar' or .//span[normalize-space()='Invalidar'])]");
 
             // ── Confirmación de invalidación exitosa ────────────────────────────
             public static readonly By MensajeExitoInvalidar =
                 By.XPath("//*[contains(@class,'toast-success')] | " +
                          "//*[contains(@class,'swal2-success')] | " +
+                          "//*[contains(@class,'swal2-popup') and .//*[contains(normalize-space(),'Correcto') or contains(normalize-space(),'registró correctamente')]] | " +
                          "//*[contains(@class,'swal2-title') and (contains(normalize-space(),'nvalidado') or contains(normalize-space(),'xito'))] | " +
-                         "//*[contains(@class,'toast-message') and (contains(normalize-space(),'nvalidado') or contains(normalize-space(),'xito'))]");
+                          "//*[contains(@class,'toast-message') and (contains(normalize-space(),'nvalidado') or contains(normalize-space(),'xito') or contains(normalize-space(),'registró correctamente'))] | " +
+                          "//*[contains(normalize-space(),'Se registró correctamente')]");
+
+            public static readonly By MensajeFueraDePlazoInvalidar =
+                By.XPath("//*[contains(normalize-space(),'Fuera de plazo')] | " +
+                         "//*[contains(normalize-space(),'usar Nota de Crédito')] | " +
+                         "//*[contains(normalize-space(),'usar Nota de Credito')]");
         }
 
     }

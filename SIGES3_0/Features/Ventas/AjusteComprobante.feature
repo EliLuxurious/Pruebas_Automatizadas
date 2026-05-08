@@ -1,34 +1,36 @@
+@NuevaVenta
 Feature: AjusteComprobante
 
-  Cobertura de Ajuste de Comprobante: Notas de Débito y Notas de Crédito.
-  Se crean las ventas como precondición y luego se aplica el ajuste desde Ver Ventas.
+  Cobertura de Ajuste de Comprobante: Notas de Debito y Notas de Credito.
+  Se crean las ventas como precondicion y luego se aplica el ajuste desde Ver Ventas.
 
   NOTA: Tras crear la venta, al acceder a "Ver Ventas" el comprobante
   aparece primero en la lista sin necesidad de filtrar por fecha.
-
 
 Background:
     Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'
     When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña 'calidad'
     And el usuario accede al módulo 'Ventas'
 
-# ═══════════════════════════════════════════════════════════════════════
-# NOTAS DE DÉBITO — precondición fija: FACTURA / Inmediata / Contado
-# ═══════════════════════════════════════════════════════════════════════
+# ============================================================================
+# NOTAS DE DEBITO - precondicion fija: FACTURA / Inmediata / Contado
+# ============================================================================
 
 @NotaDebito
 Scenario Outline: ND por intereses por mora - <caso>
-    Given el usuario accede al submodulo 'Nueva Venta'
-    And selecciona familia "gaseosa" y concepto "7753234003313"
-    And actualiza la cantidad "50"
-    And ingresa el documento del cliente "20542245671"
-    And selecciona comprobante "FACTURA ELECTRONICA" con serie "F002"
-    And selecciona tipo de entrega "Inmediata"
-    And selecciona tipo de pago "Contado"
+    When el usuario accede al submodulo 'Nueva Venta'
+    And selecciona el modo de venta "VENTA NORMAL"
+    And configura IGV "N" y Detalle Unificado "N"
+    And el usuario selecciona la familia 'Gaseosa'
+    And el usuario selecciona el concepto '7753234003313'
+    And el usuario ingresa la cantidad '1'
+    And configura la facturacion 'FACTURA ELECTRONICA' 'F002' '20542245671'
+    And el usuario configura la entrega 'Inmediata' 'false'
+    And configura el pago "Contado"
     And hace clic en Guardar
     When el usuario accede al submodulo 'Ver Ventas'
-    And accede a las opciones del comprobante recien registrado
-    And selecciona "Nota de débito" en el modal de ajuste
+    And abre el modal ajustes de comprobante
+    And selecciona la opcion "Nota de débito" del modal ajustes de comprobante
     And selecciona tipo de nota de debito "INTERESES POR MORA"
     And selecciona serie "B002" en el ajuste
     And ingresa motivo o sustento "<motivo>"
@@ -41,23 +43,25 @@ Scenario Outline: ND por intereses por mora - <caso>
     Then el sistema genera el comprobante de ajuste exitosamente
 
     Examples:
-      | caso | motivo                       | interes | montoInicial | medioPago |
-      | ND01 | Interés por mora de prueba   | 5.00    | 2.00         | Efectivo  |
-      | ND02 | Interés por mora sin inicial | 5.00    | -            | -         |
+      | caso | motivo                     | interes | montoInicial | medioPago |
+      | ND01 | Interes por mora de prueba | 5.00    | 2.00         | Efectivo  |
+      | ND02 | Interes por mora sin inicial | 5.00  | -            | -         |
 
 @NotaDebito
 Scenario Outline: ND por aumento en el valor - <caso>
-    Given el usuario accede al submodulo 'Nueva Venta'
-    And selecciona familia "gaseosa" y concepto "7753234003313"
-    And actualiza la cantidad "50"
-    And ingresa el documento del cliente "20542245671"
-    And selecciona comprobante "FACTURA ELECTRONICA" con serie "F002"
-    And selecciona tipo de entrega "Inmediata"
-    And selecciona tipo de pago "Contado"
+    When el usuario accede al submodulo 'Nueva Venta'
+    And selecciona el modo de venta "VENTA NORMAL"
+    And configura IGV "N" y Detalle Unificado "N"
+    And el usuario selecciona la familia 'Gaseosa'
+    And el usuario selecciona el concepto '7753234003313'
+    And el usuario ingresa la cantidad '1'
+    And configura la facturacion 'FACTURA ELECTRONICA' 'F002' '20542245671'
+    And el usuario configura la entrega 'Inmediata' 'false'
+    And configura el pago "Contado"
     And hace clic en Guardar
     When el usuario accede al submodulo 'Ver Ventas'
-    And accede a las opciones del comprobante recien registrado
-    And selecciona "Nota de débito" en el modal de ajuste
+    And abre el modal ajustes de comprobante
+    And selecciona la opcion "Nota de débito" del modal ajustes de comprobante
     And selecciona tipo de nota de debito "AUMENTO EN EL VALOR"
     And selecciona serie "B002" en el ajuste
     And ingresa motivo o sustento "<motivo>"
@@ -70,79 +74,82 @@ Scenario Outline: ND por aumento en el valor - <caso>
     Then el sistema <verificacion>
 
     Examples: Casos validos
-      | caso | motivo                        | aumento | observacion     | verificacion                                 |
-      | ND03 | Aumento en el valor de prueba | 3.00    | Pago contado ND | genera el comprobante de ajuste exitosamente |
+      | caso | motivo                      | aumento | observacion     | verificacion                                 |
+      | ND03 | Aumento en el valor de prueba | 3.00  | Pago contado ND | genera el comprobante de ajuste exitosamente |
 
     @Inconsistencia
     Examples: Casos invalidos
-      | caso | motivo                       | aumento  | observacion     | verificacion                                 |
-      | ND04 | Ajuste inválido de prueba    | -        | -               | bloquea el guardado del ajuste               |
+      | caso | motivo                    | aumento | observacion | verificacion                   |
+      | ND04 | Ajuste invalido de prueba | -       | -           | bloquea el guardado del ajuste |
 
-# ═══════════════════════════════════════════════════════════════════════════════════
-# ################################## NOTAS DE CRÉDITO ###############################
-# ═══════════════════════════════════════════════════════════════════════════════════
+# ============================================================================
+# NOTAS DE CREDITO
+# ============================================================================
 
-  # ⚠️ MÓDULO ALMACÉN: no existe aún. Validaciones de stock pendientes.
+# MODULO ALMACEN: no existe aun. Validaciones de stock pendientes.
 
-
-# ═══════════════════════════════════════════════════════════════════════
-# NOTAS DE CRÉDITO - ANULACIÓN / DEVOLUCIÓN TOTAL
-# precondición variable: entrega y tipo de pago según caso
-# ═══════════════════════════════════════════════════════════════════════
+# ============================================================================
+# NOTAS DE CREDITO - ANULACION / DEVOLUCION TOTAL
+# precondicion variable: entrega y tipo de pago segun caso
+# ============================================================================
 
 @NotaCredito
 Scenario Outline: NC por anulacion / devolucion total - <caso>
-    Given el usuario accede al submodulo 'Nueva Venta'
-    And selecciona familia "gaseosa" y concepto "7753234003313"
-    And actualiza la cantidad "50"
-    And ingresa el documento del cliente "75893616"
-    And selecciona comprobante "BOLETA DE VENTA ELECTRONICA" con serie "B002"
-    And selecciona tipo de entrega "<entregaVenta>"
-    And selecciona tipo de pago "<tipoPagoVenta>"
-    And ingresa monto inicial del pago "<montoInicialVenta>"
+    When el usuario accede al submodulo 'Nueva Venta'
+    And selecciona el modo de venta "VENTA NORMAL"
+    And configura IGV "N" y Detalle Unificado "N"
+    And el usuario selecciona la familia 'Gaseosa'
+    And el usuario selecciona el concepto '7753234003320'
+    And el usuario ingresa la cantidad '1'
+    And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'
+    And el usuario configura la entrega '<entregaVenta>' 'false'
+    And el usuario configura los medios de pago '<tipoPagoVenta>' 'false' '<medioPagoVenta>' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '<montoInicialVenta>' 'NA'
     And hace clic en Guardar
     When el usuario accede al submodulo 'Ver Ventas'
-    And accede a las opciones del comprobante recien registrado
-    And selecciona "Nota de crédito" en el modal de ajuste
+    And abre el modal ajustes de comprobante
+    And selecciona la opcion "Nota de crédito" del modal ajustes de comprobante
     And selecciona tipo de nota de credito "<tipoNC>"
     And selecciona serie "B002" en el ajuste
     And ingresa motivo o sustento "<motivo>"
     And selecciona entrega "<entregaAjuste>" en el ajuste
     And selecciona devolucion "<devolucion>" en el ajuste
+    And opcionalmente ingresa monto inicial "<montoInicialAjuste>" en el ajuste
     And hace clic en Guardar en el modal de ajuste
     Then el sistema <verificacion>
 
     Examples: Casos validos
-      | caso | entregaVenta | tipoPagoVenta | montoInicialVenta | tipoNC                    | motivo                                                | entregaAjuste | devolucion | verificacion                                 |
-      | NC01 | Diferida     | Credito       | -                 | ANULACIÓN DE LA OPERACIÓN | Anulación total de la operación por error de registro | -             | -          | genera el comprobante de ajuste exitosamente |
-      | NC03 | Inmediata    | Contado       | -                 | ANULACIÓN DE LA OPERACIÓN | Anulación de la operación con devolución pendiente    | Diferida      | Contado    | genera el comprobante de ajuste exitosamente |
-      | NC04 | Inmediata    | Contado       | -                 | ANULACIÓN DE LA OPERACIÓN | Anulación de la operación con devolución a crédito    | Inmediata     | Credito    | genera el comprobante de ajuste exitosamente |
-      | NC13 | Diferida     | Credito       | 30                | DEVOLUCIÓN TOTAL          | Devolución total de ítems no entregados               | Diferida      | Contado    | genera el comprobante de ajuste exitosamente |
+      | caso  | entregaVenta | tipoPagoVenta | medioPagoVenta | montoInicialVenta | tipoNC                    | motivo                                                | entregaAjuste | devolucion | montoInicialAjuste | verificacion                                 |
+      | NC001 | Diferida     | Credito       | NA             | NA                | ANULACIÓN DE LA OPERACIÓN | Anulacion total de la operacion por error de registro | -             | -          | -                  | genera el comprobante de ajuste exitosamente |
+      | NC003 | Inmediata    | Contado       | efectivo       | NA                | ANULACIÓN DE LA OPERACIÓN | Anulacion de la operacion con devolucion pendiente    | Diferida      | Contado    | -                  | genera el comprobante de ajuste exitosamente |
+      | NC004 | Inmediata    | Contado       | efectivo       | NA                | ANULACIÓN DE LA OPERACIÓN | Anulacion de la operacion con devolucion a credito    | Inmediata     | Credito    | 2                  | genera el comprobante de ajuste exitosamente |
 
     @Inconsistencia
     Examples: Casos invalidos
-      | caso  | entregaVenta | tipoPagoVenta | montoInicialVenta | tipoNC                    | motivo | entregaAjuste | devolucion | verificacion                   |
-      | INC02 | Diferida     | Credito       | -                 | ANULACIÓN DE LA OPERACIÓN | -      | -             | -          | bloquea el guardado del ajuste |
-    # NC02 — NC anulación con entrega mixta: ❌ NO REALIZABLE — solo TODOS entregados o TODOS diferidos
+      | caso  | entregaVenta | tipoPagoVenta | medioPagoVenta | montoInicialVenta | tipoNC                    | motivo | entregaAjuste | devolucion | montoInicialAjuste | verificacion                   |
+      | NC015 | Diferida     | Credito       | NA             | 3                 | ANULACIÓN DE LA OPERACIÓN | -      | -             | -          | -                  | bloquea el guardado del ajuste |
+        ##Se cambio NC015 para que en la automatizacion se integre un monto inicial a la precondicion de credito##
 
-# ═══════════════════════════════════════════════════════════════════════
-# NOTAS DE CRÉDITO - DESCUENTO GLOBAL
-# ═══════════════════════════════════════════════════════════════════════
+    # NC002 y NC013 - NC anulacion con entrega mixta: NO REALIZABLE - solo TODOS entregados o TODOS diferidos
+
+# ============================================================================
+# NOTAS DE CREDITO - DESCUENTO GLOBAL
+# ============================================================================
 
 @NotaCredito
 Scenario Outline: NC por descuento global - <caso>
-    Given el usuario accede al submodulo 'Nueva Venta'
-    And selecciona familia "gaseosa" y concepto "7753234003313"
-    And actualiza la cantidad "50"
-    And ingresa el documento del cliente "75893616"
-    And selecciona comprobante "BOLETA DE VENTA ELECTRONICA" con serie "B002"
-    And selecciona tipo de entrega "Inmediata"
-    And selecciona tipo de pago "<tipoPagoVenta>"
-    And ingresa monto inicial del pago "<montoInicialVenta>"
+    When el usuario accede al submodulo 'Nueva Venta'
+    And selecciona el modo de venta "VENTA NORMAL"
+    And configura IGV "N" y Detalle Unificado "N"
+    And el usuario selecciona la familia 'Gaseosa'
+    And el usuario selecciona el concepto '7753234003313'
+    And el usuario ingresa la cantidad '1'
+    And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'
+    And el usuario configura la entrega 'Inmediata' 'false'
+    And el usuario configura los medios de pago '<tipoPagoVenta>' 'false' '<medioPagoVenta>' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '<montoInicialVenta>' 'NA'
     And hace clic en Guardar
     When el usuario accede al submodulo 'Ver Ventas'
-    And accede a las opciones del comprobante recien registrado
-    And selecciona "Nota de crédito" en el modal de ajuste
+    And abre el modal ajustes de comprobante
+    And selecciona la opcion "Nota de crédito" del modal ajustes de comprobante
     And selecciona tipo de nota de credito "DESCUENTO GLOBAL"
     And selecciona serie "B002" en el ajuste
     And ingresa motivo o sustento "<motivo>"
@@ -152,30 +159,31 @@ Scenario Outline: NC por descuento global - <caso>
     Then el sistema <verificacion>
 
     Examples: Casos validos
-      | caso | tipoPagoVenta | montoInicialVenta | motivo                                         | importeNC | devolucion | verificacion                                 |
-      | NC05 | Credito       | 1                 | Descuento global aplicado posterior a la venta | 10.00     | Contado    | genera el comprobante de ajuste exitosamente |
-    # NC07 — Descuento global importe ≤ cuotas (Credito | 1): 🐛 PENDIENTE DE BUG — sección Pago no se oculta cuando la NC absorbe las cuotas
-    # NC09 — Descuento global sin cash pagado (Credito | -): 🐛 PENDIENTE DE BUG — sección Pago no se oculta aunque no hay efectivo que devolver
+      | caso | tipoPagoVenta | medioPagoVenta | montoInicialVenta | motivo                                         | importeNC | devolucion | verificacion                                 |
+      | NC05 | Credito       | NA             | 3                 | Descuento global aplicado posterior a la venta | 6.00      | Contado    | genera el comprobante de ajuste exitosamente |
+    # NC07 - Descuento global importe <= cuotas (Credito | 1): PENDIENTE DE BUG; aqui no se devuelve nada
+    # NC09 - Descuento global sin cash pagado (Credito | NA): PENDIENTE DE BUG; aqui no se devuelve nada
 
     @Inconsistencia
     Examples: Casos invalidos
-      | caso  | tipoPagoVenta | montoInicialVenta | motivo                            | importeNC | devolucion | verificacion                            |
-      | INC01 | Contado       | -                 | Ajuste de descuento mal ingresado | 99999.00  | -          | muestra mensaje de monto mayor al total |
+      | caso  | tipoPagoVenta | medioPagoVenta | montoInicialVenta | motivo                            | importeNC | devolucion | verificacion                            |
+      | NC014 | Contado       | efectivo       | NA                | Ajuste de descuento mal ingresado | 99999.00  | -          | muestra mensaje de monto mayor al total |
 
 @NotaCredito
 Scenario Outline: NC por descuento por item - <caso>
-    Given el usuario accede al submodulo 'Nueva Venta'
-    And selecciona familia "gaseosa" y concepto "7753234003313"
-    And actualiza la cantidad "50"
-    And ingresa el documento del cliente "75893616"
-    And selecciona comprobante "BOLETA DE VENTA ELECTRONICA" con serie "B002"
-    And selecciona tipo de entrega "Inmediata"
-    And selecciona tipo de pago "<tipoPagoVenta>"
-    And ingresa monto inicial del pago "<montoInicialVenta>"
+    When el usuario accede al submodulo 'Nueva Venta'
+    And selecciona el modo de venta "VENTA NORMAL"
+    And configura IGV "N" y Detalle Unificado "N"
+    And el usuario selecciona la familia 'Gaseosa'
+    And el usuario selecciona el concepto '7753234003313'
+    And el usuario ingresa la cantidad '2'
+    And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'
+    And el usuario configura la entrega 'Inmediata' 'false'
+    And el usuario configura los medios de pago '<tipoPagoVenta>' 'false' '<medioPagoVenta>' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '<montoInicialVenta>' 'NA'
     And hace clic en Guardar
     When el usuario accede al submodulo 'Ver Ventas'
-    And accede a las opciones del comprobante recien registrado
-    And selecciona "Nota de crédito" en el modal de ajuste
+    And abre el modal ajustes de comprobante
+    And selecciona la opcion "Nota de crédito" del modal ajustes de comprobante
     And selecciona tipo de nota de credito "DESCUENTO POR ÍTEM"
     And selecciona serie "B002" en el ajuste
     And ingresa motivo o sustento "<motivo>"
@@ -185,28 +193,29 @@ Scenario Outline: NC por descuento por item - <caso>
     Then el sistema genera el comprobante de ajuste exitosamente
 
     Examples:
-      | caso | tipoPagoVenta | montoInicialVenta | motivo                                              | importeDetalle | devolucion |
-      | NC06 | Credito       | 1                 | Descuento aplicado por ajuste comercial posterior   | 6.00           | Credito    |
-      | NC08 | Contado       | -                 | Descuento por ajuste comercial en un ítem facturado | 3.00           | Contado    |
+      | caso | tipoPagoVenta | medioPagoVenta | montoInicialVenta | motivo                                              | importeDetalle  | devolucion |
+      | NC06 | Credito       | NA             | 6                 | Descuento aplicado por ajuste comercial posterior   | 12.00           | Credito    |
+      | NC08 | Contado       | efectivo       | NA                | Descuento por ajuste comercial en un item facturado | 3.00            | Contado    |
 
-# ═══════════════════════════════════════════════════════════════════════
-# NOTAS DE CRÉDITO - DEVOLUCIÓN POR ÍTEM
-# ═══════════════════════════════════════════════════════════════════════
+# ============================================================================
+# NOTAS DE CREDITO - DEVOLUCION POR ITEM
+# ============================================================================
 
 @NotaCredito
 Scenario Outline: NC por devolucion por item - <caso>
-    Given el usuario accede al submodulo 'Nueva Venta'
-    And selecciona familia "gaseosa" y concepto "7753234003313"
-    And actualiza la cantidad "50"
-    And ingresa el documento del cliente "75893616"
-    And selecciona comprobante "BOLETA DE VENTA ELECTRONICA" con serie "B002"
-    And selecciona tipo de entrega "<entregaVenta>"
-    And selecciona tipo de pago "<tipoPagoVenta>"
-    And ingresa monto inicial del pago "<montoInicialVenta>"
+    When el usuario accede al submodulo 'Nueva Venta'
+    And selecciona el modo de venta "VENTA NORMAL"
+    And configura IGV "N" y Detalle Unificado "N"
+    And el usuario selecciona la familia 'Gaseosa'
+    And el usuario selecciona el concepto '7753234003313'
+    And el usuario ingresa la cantidad '50'
+    And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'
+    And el usuario configura la entrega '<entregaVenta>' 'false'
+    And el usuario configura los medios de pago '<tipoPagoVenta>' 'false' '<medioPagoVenta>' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '<montoInicialVenta>' 'NA'
     And hace clic en Guardar
     When el usuario accede al submodulo 'Ver Ventas'
-    And accede a las opciones del comprobante recien registrado
-    And selecciona "Nota de crédito" en el modal de ajuste
+    And abre el modal ajustes de comprobante
+    And selecciona la opcion "Nota de crédito" del modal ajustes de comprobante
     And selecciona tipo de nota de credito "DEVOLUCIÓN POR ÍTEM"
     And selecciona serie "B002" en el ajuste
     And ingresa motivo o sustento "<motivo>"
@@ -217,80 +226,73 @@ Scenario Outline: NC por devolucion por item - <caso>
     Then el sistema genera el comprobante de ajuste exitosamente
 
     Examples:
-      | caso | entregaVenta | tipoPagoVenta | montoInicialVenta | motivo                                             | entregaAjuste | cantDevolver | devolucion |
-      | NC11 | Inmediata    | Credito       | 1                 | Devolución parcial (se aplica a cuotas pendientes) | Diferida      | 1            | -          |
-      | NC12 | Diferida     | Contado       | -                 | Anulación de ítem no entregado                     | -             | -            | Credito    |
-    # NC02 — NC devolución por ítem con entrega mixta (Inmediata+Diferida): ❌ NO REALIZABLE — solo TODOS entregados o TODOS diferidos
-    # NC10 — NC devolución parcial por ítem (mitad/mitad): ❌ NO REALIZABLE — misma restricción que NC02
+      | caso | entregaVenta | tipoPagoVenta | medioPagoVenta | montoInicialVenta | motivo                                           | entregaAjuste | cantDevolver | devolucion |
+      | NC11 | Inmediata    | Credito       | NA             | 1                 | Devolucion parcial (se aplica a cuotas pendientes) | Diferida    | 1            | -          |
+      | NC12 | Diferida     | Contado       | efectivo       | NA                | Anulacion de item no entregado                   | -             | -            | Credito    |
+    # NC10 - NC devolucion parcial por item (mitad/mitad): NO REALIZABLE
 
-# ═══════════════════════════════════════════════════════════════════════
+# ============================================================================
 # PRUEBAS NO REALIZADAS
-# ═══════════════════════════════════════════════════════════════════════
-#
-# ❌ DEFINITIVAMENTE NO REALIZABLES — funcionalidad no implementada:
+# ============================================================================
+#-----------------------------------------------------------------------------
+# DEFINITIVAMENTE NO REALIZABLES - funcionalidad no implementada:
 #   NC02, NC10, INC04: requieren productos parcialmente entregados
 #   (mitad/mitad). Solo se permite TODOS entregados o TODOS diferidos.
-#
-# 🐛 PENDIENTE DE BUG — realizables cuando se corrija el sistema:
-#   NC07: Descuento global (Credito | 1), importe ≤ cuotas pendientes.
-#         El sistema no oculta la sección Pago aunque toda la NC
+#-----------------------------------------------------------------------------
+# PENDIENTE DE BUG - realizables cuando se corrija el sistema:
+#   NC07: Descuento global (Credito | 1), importe <= cuotas pendientes.
+#         El sistema no oculta la seccion Pago aunque toda la NC
 #         se absorbe en cuotas y no hay efectivo que devolver.
-#   NC09: Descuento global (Credito | -), sin pagos al contado.
-#         El sistema no oculta la sección Pago aunque no existe
-#         ningún pago en efectivo registrado que devolver.
+#   NC09: Descuento global (Credito | NA), sin pagos al contado.
+#         El sistema no oculta la seccion Pago aunque no existe
+#         ningun pago en efectivo registrado que devolver.
 #   INC03: Segunda NC sobre comprobante con importe vigente agotado.
 #          El sistema no bloquea el intento aunque el importe disponible
-#          ya es 0 tras la primera NC de anulación.
-#
-# ⚠️ MÓDULO ALMACÉN: no existe aún. Validaciones de stock, ingreso de
-# mercadería y revocación de órdenes de salida quedan PENDIENTES.
-# ═══════════════════════════════════════════════════════════════════════
+#          ya es 0 tras la primera NC de anulacion.
+#------------------------------------------------------------------------------
+# MODULO ALMACEN: no existe aun. Validaciones de stock, ingreso de
+# mercaderia y revocacion de ordenes de salida quedan PENDIENTES.
 
-# ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════
-# ############################################# INVALIDAR VENTA #################################################
-# ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+# ============================================================================
+# INVALIDAR VENTA
+# ============================================================================
 
 @Invalidar
-Scenario Outline: Invalidar venta dentro de plazo 
-    Given el usuario accede al submodulo 'Nueva Venta'
-    And selecciona familia "gaseosa" y concepto "7753234003313"
-    And actualiza la cantidad "50"
-    And ingresa el documento del cliente "<docCliente>"
-    And selecciona comprobante "<comprobante>" con serie "<serie>"
-    And selecciona tipo de entrega "<entregaVenta>"
-    And selecciona tipo de pago "<tipoPagoVenta>"
-    And ingresa monto inicial del pago "<montoInicialVenta>"
+Scenario Outline: Invalidar venta dentro de plazo - <caso>
+    When el usuario accede al submodulo 'Nueva Venta'
+    And selecciona el modo de venta "VENTA NORMAL"
+    And configura IGV "N" y Detalle Unificado "N"
+    And el usuario selecciona la familia 'Gaseosa'
+    And el usuario selecciona el concepto '7753234003313'
+    And el usuario ingresa la cantidad '1'
+    And configura la facturacion '<comprobante>' '<serie>' '<docCliente>'
+    And el usuario configura la entrega '<entregaVenta>' 'false'
+    And el usuario configura los medios de pago '<tipoPagoVenta>' 'false' '<medioPagoVenta>' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '<montoInicialVenta>' 'NA'
     And hace clic en Guardar
     When el usuario accede al submodulo 'Ver Ventas'
-    And accede a las opciones del comprobante recien registrado
-    And selecciona "Invalidar" en el modal de ajuste
+    And abre el modal ajustes de comprobante
+    And selecciona la opcion "Invalidar" del modal ajustes de comprobante
     And selecciona devolucion "<devolucionInvalidar>" en el modal de invalidacion
     And ingresa observacion de invalidacion "<observacion>"
-    And hace clic en Invalidar en el modal de invalidacion
-    Then el sistema procesa la invalidacion correctamente
+    Then el sistema muestra el resultado esperado de la invalidacion "<resultadoEsperado>"
 
     Examples:
-      | caso  | docCliente  | comprobante                 | serie | entregaVenta | tipoPagoVenta | montoInicialVenta | devolucionInvalidar | observacion                                          |
-      | CP064 | 20542245671 | FACTURA ELECTRONICA         | F002  | Inmediata    | Contado       | -                 | Inmediata           | Invalidación dentro de plazo con pago al contado     |
-      | CP066 | 75893616    | BOLETA DE VENTA ELECTRONICA | B002  | Diferida     | Credito       | -                 | -                   | Invalidación de venta diferida sin pago              |
-      | CP069 | 75893616    | BOLETA DE VENTA ELECTRONICA | B002  | Inmediata    | Credito       | 2                 | Diferida            | Invalidación dentro de plazo con devolución diferida |
-    # CP065 — ❌ NO REALIZABLE — requiere venta con "productos entregados Y diferidos" (entrega mixta/parcial). Solo TODOS entregados (Inmediata) o TODOS diferidos.
-    # CP066: 🐛 PENDIENTE — el modal debería ocultar las secciones Entrega y Pago (solo diferidos y sin pago al contado), pero actualmente las muestra.
+      | caso  | docCliente  | comprobante                 | serie | entregaVenta | tipoPagoVenta | medioPagoVenta | montoInicialVenta | devolucionInvalidar | observacion                                           | resultadoEsperado                     |
+      | CP101 | 20542245671 | FACTURA ELECTRONICA         | F002  | Inmediata    | Contado       | efectivo       | NA                | Inmediata           | Invalidacion dentro de plazo con pago al contado      | procesa la invalidacion correctamente |
+      | CP103 | 75893616    | BOLETA DE VENTA ELECTRONICA | B002  | Diferida     | Credito       | NA             | NA                | -                   | Invalidacion de venta diferida sin pago               | procesa la invalidacion correctamente |
+      | CP104 | 20542245671 | FACTURA ELECTRONICA         | F002  | Inmediata    | Contado       | efectivo       | NA                | Inmediata           |                                                       | no activa el boton Invalidar          |
+      | CP106 | 75893616    | BOLETA DE VENTA ELECTRONICA | B002  | Inmediata    | Credito       | NA             | 2                 | Diferida            | Invalidacion dentro de plazo con devolucion diferida  | procesa la invalidacion correctamente |
+    # CP102 - NO REALIZABLE - requiere venta con entrega mixta/parcial
+    # CP0103: PENDIENTE - el modal deberia ocultar las secciones Entrega y Pago
 
 @Invalidar
 @Inconsistencia
-Scenario: CP067 - No permitir invalidar venta sin observacion obligatoria
-    Given el usuario accede al submodulo 'Ver Ventas'
-    And filtra ventas de 8 dias atras
-    And accede a las opciones del comprobante recien registrado
-    And selecciona "Invalidar" en el modal de ajuste
-    And selecciona devolucion "Inmediata" en el modal de invalidacion
-    Then el sistema no activa el boton Invalidar
-
-# CP068 — Mostrar mensaje fuera de plazo (>7 días): ❌ NO REALIZABLE AUTOMÁTICAMENTE.
-# Requiere una venta fuera de plazo (>7 días), diferida, con pago registrado y cuotas pendientes,
-# que no puede crearse dentro del flujo automatizado (la venta siempre es "hoy").
-# Ejecución manual: buscar en Ver Ventas una venta con fecha anterior (diferida, con pago y cuotas),
-# abrir Ajuste de Comprobante > Invalidar, ingresar observación y hacer clic en Invalidar.
-# Resultado esperado: el sistema muestra "Fuera de plazo (usar Nota de Crédito)".
-# 🐛 PENDIENTE — el modal actualmente muestra la sección Entrega para ventas fuera de plazo; debería ocultarse.
+@FueraDePlazo
+Scenario: CP105 Invalidar venta fuera de plazo
+    When el usuario accede al submodulo 'Ver Ventas'
+    And el usuario selecciona la fecha y hora inicial "hace 8 dias 12:00 am" en el campo "Fecha y Hora Inicial"
+    And el usuario selecciona la fecha y hora final "hace 8 dias 11:59 pm" en el campo "Fecha y Hora Final"
+    And hace clic en consultar ventas
+    And abre el modal ajustes de comprobante
+    Then el sistema no muestra la opcion "Invalidar" en el modal ajustes de comprobante
