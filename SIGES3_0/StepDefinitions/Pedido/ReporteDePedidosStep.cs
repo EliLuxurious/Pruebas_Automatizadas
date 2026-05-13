@@ -43,13 +43,13 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
             reportePage.SeleccionarPuntoDeVenta(puntoDeVenta);
         }
 
-        [When("el usuario ingresa la fecha y hora inicial {string}")]
+        [When("usuario ingresa la fecha y hora inicial {string}")]
         public void WhenElUsuarioIngresaLaFechaYHoraInicial(string fechaHoraInicial)
         {
             reportePage.IngresarFechaHoraInicial(fechaHoraInicial);
         }
 
-        [When("el usuario ingresa la fecha y hora final {string}")]
+        [When("usuario ingresa la fecha y hora final {string}")]
         public void WhenElUsuarioIngresaLaFechaYHoraFinal(string fechaHoraFinal)
         {
             reportePage.IngresarFechaHoraFinal(fechaHoraFinal);
@@ -69,7 +69,7 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
         // VALIDACIÓN
         // =========================
 
-        [Then("el sistema muestra el resultado esperado del reporte {string}")]
+        [Then("sistema muestra el resultado esperado del reporte {string}")]
         public void ThenElSistemaMuestraElResultadoEsperadoDelReporte(string resultadoEsperado)
         {
             reportePage.ValidarResultadoEsperado(resultadoEsperado);

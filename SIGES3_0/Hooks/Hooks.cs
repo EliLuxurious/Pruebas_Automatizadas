@@ -61,8 +61,8 @@ namespace SIGES3_0.Hooks
             options.AddArgument("--start-maximized");
             IWebDriver driver = new ChromeDriver(options);
 
-            IWebDriver driver = CreateChromeDriver();
-            driver.Manage().Window.Maximize();
+            //IWebDriver driver = CreateChromeDriver();
+            //driver.Manage().Window.Maximize();
 
 
             _container.RegisterInstanceAs<IWebDriver>(driver);

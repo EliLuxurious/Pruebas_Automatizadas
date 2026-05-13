@@ -18,7 +18,7 @@ namespace SIGES3_0.Pages.PedidoPages
         public ReporteDePedidosPage(IWebDriver driver)
         {
             this.driver = driver;
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(25));
         }
 
         // =========================

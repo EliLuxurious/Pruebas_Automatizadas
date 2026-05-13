@@ -8,18 +8,47 @@ Para gestionar pedidos de clientes
 Background:
 	Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'
 	When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña 'calidad'
-	And el usuario accede al módulo 'Pedidos'
-	And el usuario accede al submodulo 'Ver Pedidos'
+	#And el usuario accede al módulo 'Pedidos'
+	#And el usuario accede al submodulo 'Ver Pedidos'
 	
 
 
 @RegistrarPedido
 Scenario Outline: Registro de nuevo pedido - Casos variados
 
+#	Given Navego al módulo de 'Adquisición'
+#	And Entro al submódulo específico de 'Nueva Adquisición'
+#	
+#	When Se configuran los datos de 'Facturación':
+#	| Campo                 | Valor               |
+#	| Documento             | FACTURA ELECTRONICA |
+#	| Serie                 | F001                |
+#	| Correlativo           | 00000010            |
+#	| Fecha de emisión      | 04/03/2026          |
+#	| Proveedor             | 10759012017         |
+#	| Información Adicional | Factura Exitosa     |
+#
+#	And Se selecciona el tipo de entrega 'Inmediata'
+#	And Se configuran los datos de 'Entrega':
+#	| Campo           | Valor                    |
+#	| Rol             | Item Comercial           |
+#	| Establecimiento | RECSA - CENTRAL          |
+#	| Almacén         | CENTRO COMERCIAL CENTRAL |
+#
+#	And Se selecciona y configura el producto a adquirir:
+#	| Producto										| Cantidad  | V. U |
+#	| 7753234003320\|Coca-Cola Gaseosa Botella 1.5L |  130      | 6.9  |
+#	| 7753234003313\|Inca Kola Gaseosa Botella 1.5L |  130      | 7.1  |
+#	| 7751234001115\|Azúcar Rubia				    |  30       | 3.2  |
+#
+#	
+#	Then Se procede a guardar la adquisición mediante la acción 'SavePurchase'
+#	And Se confirma el registro exitoso con el mensaje 'Se registró correctamente.'
+
+	When el usuario accede al módulo 'Pedidos'
+	And el usuario accede al submodulo 'Ver Pedidos'
 	And el usuario selecciona la opción 'Nuevo Pedido'
-	When el usuario selecciona la familia '<familia>'
-	And el usuario selecciona el concepto '<concepto>'
-	And el usuario ingresa la cantidad '<cantidad>'
+	And el usuario prepara producto para pedido con familia '<familia>' concepto '<concepto>' cantidad '<cantidad>' resultado '<resultado_esperado>'
 	And el usuario activa IGV '<igv>'
 	And el usuario activa DET.UNIF '<det_unif>'
 	And el usuario configura descuento '<descuento>' '<tipo_descuento>' '<modo_descuento>' '<valor_descuento>'
@@ -32,7 +61,7 @@ Scenario Outline: Registro de nuevo pedido - Casos variados
 
 Examples:
 	| caso | familia | concepto      | cantidad | igv   | det_unif | descuento | tipo_descuento | modo_descuento | valor_descuento | cliente     | tipo_entrega | resultado_esperado                |
-	|    1 | Gaseosa | 7753234003320 |       10 | false | false    | false     | NA             | NA             |               0 |    00000000 | inmediata    | el pedido se guardo correctamente |
+	|    1 | Gaseosa | 7753234003320 |      100 | false | false    | false     | NA             | NA             |               0 |    00000000 | inmediata    | el pedido se guardo correctamente |
 	|    2 | ninguno | ninguno       |        0 | false | false    | false     | NA             | NA             |               0 |    75971755 | diferida     | Ningún producto seleccionado      |
 	|    3 | Gaseosa | 7753234003313 |       12 | true  | true     | true      | item           | $              |               1 |    75971755 | inmediata    | el pedido se guardo correctamente |
 	|    4 | Azúcar  | 7751234001115 |       20 | false | false    | true      | global         | %              |              10 | 20542245671 | diferida     | el pedido se guardo correctamente |
@@ -40,6 +69,9 @@ Examples:
 
 @EditarPedido
 Scenario Outline: Ver pedido - editar pedido
+	
+	When el usuario accede al módulo 'Pedidos'
+	And el usuario accede al submodulo 'Ver Pedidos'
 	Given existe un pedido en estado registrado para invalidar con familia 'Gaseosa' concepto '7753234003320' cantidad '10' cliente '75971755' entrega 'inmediata'
 	When el usuario selecciona la opción 'Editar pedido'
 	And el usuario actualiza el pedido con familia '<familia>' concepto '<concepto>' cantidad '<cantidad>' igv '<igv>' detUnif '<detUnif>' descuento '<descuentoActivo>' tipoDescuento '<tipoDescuento>' modoDescuento '<modoDescuento>' valorDescuento '<valorDescuento>' cliente '<cliente>' entrega '<tipoEntrega>'
@@ -55,7 +87,9 @@ Examples:
 
 @InvalidarPedido
 Scenario Outline: Invalidar pedido - Casos variados
-
+	
+	When el usuario accede al módulo 'Pedidos'
+	And el usuario accede al submodulo 'Ver Pedidos'
 	Given existe un pedido en estado registrado para invalidar con familia 'Gaseosa' concepto '7753234003320' cantidad '10' cliente '75971755' entrega 'inmediata'
 	When el usuario selecciona la opción 'Invalidar pedido'
 	And el usuario ingresa el motivo '<motivo>'
@@ -73,6 +107,8 @@ Examples:
 @ConfirmarPedido
 Scenario Outline: Confirmar pedido Comprobantes - Casos variados
 
+	When el usuario accede al módulo 'Pedidos'
+	And el usuario accede al submodulo 'Ver Pedidos'
 	Given existe un pedido base registrado para confirmar con total mayor a 700 '<total_mayor_700>' familia '<familia_base>' concepto '<concepto_base>' cantidad '<cantidad_base>' cliente '<cliente_base>' entrega '<entrega_base>'
 	When el usuario selecciona la opción 'Confirmar pedido'
 	And el usuario configura la facturacion '<tipo_comprobante>' '<serie>' '<cliente>'
@@ -99,6 +135,8 @@ Examples:
 @ConfirmarPedidoMediosDePago
 Scenario Outline: Confirmar pedido con medios de pago - Casos variados
 
+	When el usuario accede al módulo 'Pedidos'
+	And el usuario accede al submodulo 'Ver Pedidos'
 	Given existe un pedido base registrado para confirmar con total mayor a 700 '<total_mayor_700>' familia '<familia_base>' concepto '<concepto_base>' cantidad '<cantidad_base>' cliente '<cliente_base>' entrega '<entrega_base>'
 	When el usuario selecciona la opción 'Confirmar pedido'
 	And el usuario configura la facturacion '<tipo_comprobante>' '<serie>' '<cliente>'
