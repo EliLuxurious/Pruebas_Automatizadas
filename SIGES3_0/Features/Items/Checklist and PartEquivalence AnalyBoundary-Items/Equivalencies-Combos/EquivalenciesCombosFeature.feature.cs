@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace SIGES3_0.Features.Items.TablesofDecision_Items.RegisterItemData.Presentation.DeletePresentation
+namespace SIGES3_0.Features.Items.ChecklistAndPartEquivalenceAnalyBoundary_Items.Equivalencies_Combos
 {
     using Reqnroll;
     using System;
@@ -20,19 +20,18 @@ namespace SIGES3_0.Features.Items.TablesofDecision_Items.RegisterItemData.Presen
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Reqnroll", "2.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("TablesofDecisionDeletePresentationFeature1")]
-    public partial class TablesofDecisionDeletePresentationFeature1Feature
+    [NUnit.Framework.DescriptionAttribute("EquivalenciesCombosFeature")]
+    public partial class EquivalenciesCombosFeatureFeature
     {
         
         private global::Reqnroll.ITestRunner testRunner;
         
         private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Items/TablesofDecision-Items/RegisterItemData/Presentation/DeletePresent" +
-                "ation", "TablesofDecisionDeletePresentationFeature1", "Dar de Baja Presentacion de forma válida e inválida utilizando la técnica de Tabl" +
-                "as de Decisiones", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Items/Checklist and PartEquivalence AnalyBoundary-Items/Equivalencies-Co" +
+                "mbos", "EquivalenciesCombosFeature", "Registrar Equivalencias entre Productos y Combos ", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
-#line 1 "TablesofDecisionDeletePresentationFeature1.feature"
+#line 1 "EquivalenciesCombosFeature.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
@@ -99,24 +98,18 @@ await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 9
-await testRunner.AndAsync("el usuario selecciona Registrar Datos de Concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 10
-await testRunner.AndAsync("el usuario va a la opcion Presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 11
-await testRunner.AndAsync("el usuario cierra el sidebar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario selecciona Equivalencia entre Productos y Combos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Dar de Baja Presentación a la presentación")]
-        public async System.Threading.Tasks.Task DarDeBajaPresentacionALaPresentacion()
+        [NUnit.Framework.DescriptionAttribute("Registrar Equivalencia Entre Producto")]
+        public async System.Threading.Tasks.Task RegistrarEquivalenciaEntreProducto()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Presentación a la presentación", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 15
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar Equivalencia Entre Producto", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -128,31 +121,34 @@ this.ScenarioInitialize(scenarioInfo);
                 await this.ScenarioStartAsync();
 #line 5
 await this.FeatureBackgroundAsync();
+#line hidden
+#line 13
+await testRunner.WhenAsync("el usuario selecciona la opcion Equivalencia entre Productos", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 14
+await testRunner.AndAsync("el usuario selecciona este producto \"Azúcar Rubia\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 15
+await testRunner.AndAsync("el usuario ingresa la cantidad \"3\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 16
-await testRunner.WhenAsync("el usuario elimina la presentacion \"BOTELLAS\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.AndAsync("el usuario selecciona de este producto \"Azúcar 4651 K G SP 156 UN\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 17
-await testRunner.AndAsync("el usuario selecciona la presentacion a reasignar \"LATA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 18
-await testRunner.AndAsync("el usuario reasigna y elimina la presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 19
-await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+await testRunner.ThenAsync("el sistema agrega la equivalencia", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Dar de Baja Presentación a la presentación Bolsa de plástico")]
-        public async System.Threading.Tasks.Task DarDeBajaPresentacionALaPresentacionBolsaDePlastico()
+        [NUnit.Framework.DescriptionAttribute("Registrar Combos")]
+        public async System.Threading.Tasks.Task RegistrarCombos()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Presentación a la presentación Bolsa de plástico", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 22
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar Combos", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 20
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -164,31 +160,40 @@ this.ScenarioInitialize(scenarioInfo);
                 await this.ScenarioStartAsync();
 #line 5
 await this.FeatureBackgroundAsync();
+#line hidden
+#line 21
+await testRunner.WhenAsync("el usuario selecciona la opcion Combos", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 22
+await testRunner.AndAsync("el usuario selecciona el concepto \"Ajo Pelado KG\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 23
-await testRunner.WhenAsync("el usuario elimina la presentacion \"Bolsa de plástico\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.AndAsync("el usuario ingresa la cantidad del concepto \"3\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 24
-await testRunner.AndAsync("el usuario elimina todos los conceptos de la tabla", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario agrega el concepto al combo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 25
-await testRunner.AndAsync("el usuario reasigna y elimina la presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario selecciona el producto final del combo \"Ají de Gallina\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 26
-await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+await testRunner.AndAsync("el usuario guarda el combo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 27
+await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion exitosa", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Dar de Baja Presentación a la presentación SACO")]
-        public async System.Threading.Tasks.Task DarDeBajaPresentacionALaPresentacionSACO()
+        [NUnit.Framework.DescriptionAttribute("Editar Equivalencia Entre Producto")]
+        public async System.Threading.Tasks.Task EditarEquivalenciaEntreProducto()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Presentación a la presentación SACO", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 29
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Equivalencia Entre Producto", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 30
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -200,52 +205,31 @@ this.ScenarioInitialize(scenarioInfo);
                 await this.ScenarioStartAsync();
 #line 5
 await this.FeatureBackgroundAsync();
-#line hidden
-#line 30
-await testRunner.WhenAsync("el usuario elimina la presentacion \"SACO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 31
-await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+await testRunner.WhenAsync("el usuario edita la equivalencia \"Azúcar Rubia\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-            }
-            await this.ScenarioCleanupAsync();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Dar de Baja Presentación a la presentación locazos")]
-        public async System.Threading.Tasks.Task DarDeBajaPresentacionALaPresentacionLocazos()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Presentación a la presentación locazos", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 32
+await testRunner.AndAsync("el usuario selecciona de este producto \"Azúcar roja SP 1 UN\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 33
+await testRunner.AndAsync("el usuario ingresa la cantidad \"3\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
 #line 34
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                await this.ScenarioStartAsync();
-#line 5
-await this.FeatureBackgroundAsync();
-#line hidden
-#line 35
-await testRunner.ThenAsync("el usuario desactiva la presentación \"locazos\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+await testRunner.ThenAsync("el sistema agrega la equivalencia", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Dar de Baja Presentació inválido a la presentación Frasco (EN ESPERA)")]
-        public async System.Threading.Tasks.Task DarDeBajaPresentacioInvalidoALaPresentacionFrascoENESPERA()
+        [NUnit.Framework.DescriptionAttribute("Editar Equivalencia Entre Producto y eliminar equivalencia")]
+        public async System.Threading.Tasks.Task EditarEquivalenciaEntreProductoYEliminarEquivalencia()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de Baja Presentació inválido a la presentación Frasco (EN ESPERA)", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 38
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar Equivalencia Entre Producto y eliminar equivalencia", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 37
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -257,9 +241,15 @@ this.ScenarioInitialize(scenarioInfo);
                 await this.ScenarioStartAsync();
 #line 5
 await this.FeatureBackgroundAsync();
+#line hidden
+#line 38
+await testRunner.WhenAsync("el usuario edita la equivalencia \"Azúcar Rubia\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 39
-await testRunner.ThenAsync("el usuario desactiva la presentación \"Frasco\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+await testRunner.AndAsync("el usuario elimina la equivalencia \"Azúcar roja SP 1 UN\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 40
+await testRunner.ThenAsync("el sistema agrega la equivalencia", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

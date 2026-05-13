@@ -8,15 +8,17 @@ When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña
 And el usuario accede al módulo Conceptos
 And el usuario selecciona Registrar Datos de Concepto
 And el usuario va a la opcion Presentacion
+And el usuario cierra el sidebar
 
-Scenario: Editar Presentación a la presentación CAJA
-When el usuario edita la presentacion "CAJA"
+
+
+Scenario: Editar Presentación a la presentación Frasco
+When el usuario edita la presentacion "Frasco"
 And el usuario ingresa el codigo de presentación " 1"
 And el usuario guarda los cambios al editar presentacion
 And el usuario elimina los siguientes conceptos:
-  | NombreConcepto                    |
-  | Gaseosa INKA KOLA CLEVER CAJA 1 L |
-  | Gaseosa KR CLEVER CAJA 1 L        |
+  | NombreConcepto                          |
+  | Gaseosa de Naranja INKA COLA Frasco 3 L |
 And el usuario aplica los cambios al editar presentacion
 Then el sistema muestra un mensaje de confirmacion
 

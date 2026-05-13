@@ -81,6 +81,26 @@ namespace SIGES3_0.Features.Items.ChecklistAndPartEquivalenceAnalyBoundary_Items
             await testRunner.CollectScenarioErrorsAsync();
         }
         
+        public virtual async System.Threading.Tasks.Task FeatureBackgroundAsync()
+        {
+#line 5
+#line hidden
+#line 6
+await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                    "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 7
+await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                    "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 8
+await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 9
+await testRunner.AndAsync("el usuario selecciona Ver Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+        }
+        
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Filtrado de conceptos por el modo de Familia y Categoria")]
         public async System.Threading.Tasks.Task FiltradoDeConceptosPorElModoDeFamiliaYCategoria()
@@ -88,7 +108,7 @@ namespace SIGES3_0.Features.Items.ChecklistAndPartEquivalenceAnalyBoundary_Items
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Filtrado de conceptos por el modo de Familia y Categoria", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 5
+#line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -98,6 +118,7 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
+<<<<<<< HEAD
 #line 6
 await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
                         "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
@@ -120,8 +141,21 @@ await testRunner.AndAsync("el usuario selecciona el filtro Categoria \"SIN CATEG
 #line hidden
 #line 12
 await testRunner.AndAsync("el usuario presiona el botón Buscar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+=======
+#line 5
+await this.FeatureBackgroundAsync();
+>>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line hidden
 #line 13
+await testRunner.WhenAsync("el usuario selecciona el filtro Familia \"BALANZA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 14
+await testRunner.AndAsync("el usuario selecciona el filtro Categoria \"SIN CATEGORÍA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 15
+await testRunner.AndAsync("el usuario presiona el botón Buscar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 16
 await testRunner.ThenAsync("el sistema no muestra conceptos asociados", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -135,7 +169,7 @@ await testRunner.ThenAsync("el sistema no muestra conceptos asociados", ((string
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Búsqueda fallida de los conceptos por la equivocación del usuario", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 16
+#line 19
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -145,6 +179,7 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
+<<<<<<< HEAD
 #line 17
 await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
                         "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
@@ -155,14 +190,15 @@ await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@
 #line hidden
 #line 19
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+=======
+#line 5
+await this.FeatureBackgroundAsync();
+>>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line hidden
 #line 20
-await testRunner.AndAsync("el usuario selecciona Ver Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.WhenAsync("el usuario ingresa la palabra clave \"cuaaderno\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 21
-await testRunner.AndAsync("el usuario ingresa la palabra clave \"cuaaderno\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 22
 await testRunner.ThenAsync("el sistema no muestra conceptos asociados", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -176,7 +212,7 @@ await testRunner.ThenAsync("el sistema no muestra conceptos asociados", ((string
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Limpieza de filtros y listado de todos los conceptos", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 25
+#line 24
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -186,7 +222,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
+#line 5
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 25
+await testRunner.WhenAsync("el usuario selecciona el filtro Familia \"INDIVIDUAL\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
 #line 26
+<<<<<<< HEAD
 await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
                         "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
@@ -204,18 +247,20 @@ await testRunner.AndAsync("el usuario selecciona Ver Conceptos", ((string)(null)
 await testRunner.AndAsync("el usuario selecciona el filtro Familia \"INDIVIDUAL\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 31
+=======
+>>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 await testRunner.AndAsync("el usuario selecciona el filtro Categoria \"HERRAMIENTA DE COCINA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 32
+#line 27
 await testRunner.AndAsync("el usuario presiona el botón Buscar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 33
+#line 28
 await testRunner.AndAsync("el usuario restablece los filtros", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 34
+#line 29
 await testRunner.AndAsync("el usuario presiona el botón Buscar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 35
+#line 30
 await testRunner.ThenAsync("el sistema muestra conceptos asociados", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -231,6 +276,47 @@ await testRunner.ThenAsync("el sistema muestra conceptos asociados", ((string)(n
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Filtrar conceptos con la partición positiva con respecto al campo nombre de conce" +
                     "pto", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 33
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 5
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 34
+await testRunner.WhenAsync("el usuario ingresa la palabra clave \"GAS\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 35
+await testRunner.ThenAsync("el sistema muestra conceptos asociados", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+<<<<<<< HEAD
+        [NUnit.Framework.DescriptionAttribute("Filtrar conceptos con la partición positiva con respecto al campo nombre de conce" +
+            "pto")]
+        public async System.Threading.Tasks.Task FiltrarConceptosConLaParticionPositivaConRespectoAlCampoNombreDeConcepto()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Filtrar conceptos con la partición positiva con respecto al campo nombre de conce" +
+                    "pto", null, tagsOfScenario, argumentsOfScenario, featureTags);
+=======
+        [NUnit.Framework.DescriptionAttribute("Editar el concepto Instalación NodeJs")]
+        public async System.Threading.Tasks.Task EditarElConceptoInstalacionNodeJs()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar el concepto Instalación NodeJs", null, tagsOfScenario, argumentsOfScenario, featureTags);
+>>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line 38
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -241,25 +327,62 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
+#line 5
+await this.FeatureBackgroundAsync();
+#line hidden
 #line 39
+<<<<<<< HEAD
 await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
                         "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 40
 await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
                         "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+=======
+await testRunner.WhenAsync("el usuario cierra el sidebar", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 40
+await testRunner.AndAsync("el usuario edita el concepto \"Instalación NodeJs\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+>>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line hidden
 #line 41
-await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario ingresa el Precio \"6\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 42
-await testRunner.AndAsync("el usuario selecciona Ver Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.ThenAsync("Guardar concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 43
-await testRunner.AndAsync("el usuario ingresa la palabra clave \"GAS\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Eliminar el concepto Plan_Auto_0204_0926")]
+        public async System.Threading.Tasks.Task EliminarElConceptoPlan_Auto_0204_0926()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Eliminar el concepto Plan_Auto_0204_0926", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 45
+this.ScenarioInitialize(scenarioInfo);
 #line hidden
-#line 44
-await testRunner.ThenAsync("el sistema muestra conceptos asociados", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 5
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 46
+await testRunner.WhenAsync("el usuario cierra el sidebar", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 47
+await testRunner.AndAsync("el usuario elimina el concepto \"Plan_Auto_0204_0926\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 48
+await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

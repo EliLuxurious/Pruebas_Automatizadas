@@ -63,6 +63,8 @@ namespace SIGES3_0.Hooks
 
             //IWebDriver driver = CreateChromeDriver();
             //driver.Manage().Window.Maximize();
+            _ = CreateChromeDriver();
+            driver.Manage().Window.Maximize();
 
 
             _container.RegisterInstanceAs<IWebDriver>(driver);

@@ -81,6 +81,26 @@ namespace SIGES3_0.Features.Items.ChecklistAndPartEquivalenceAnalyBoundary_Items
             await testRunner.CollectScenarioErrorsAsync();
         }
         
+        public virtual async System.Threading.Tasks.Task FeatureBackgroundAsync()
+        {
+#line 5
+#line hidden
+#line 6
+await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                    "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 7
+await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                    "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 8
+await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 9
+await testRunner.AndAsync("el usuario selecciona Nuevo Concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+        }
+        
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Registrar nuevo concepto con el tipo Rol ITEM COMERCIAL")]
         public async System.Threading.Tasks.Task RegistrarNuevoConceptoConElTipoRolITEMCOMERCIAL()
@@ -88,7 +108,7 @@ namespace SIGES3_0.Features.Items.ChecklistAndPartEquivalenceAnalyBoundary_Items
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo concepto con el tipo Rol ITEM COMERCIAL", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 5
+#line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -98,6 +118,7 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
+<<<<<<< HEAD
 #line 6
 await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
                         "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
@@ -120,38 +141,51 @@ await testRunner.AndAsync("el usuario selecciona Auto al Código", ((string)(nul
 #line hidden
 #line 12
 await testRunner.AndAsync("el usuario ingresa el Sufijo \"Carbón Ultractivado\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+=======
+#line 5
+await this.FeatureBackgroundAsync();
+>>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line hidden
 #line 13
-await testRunner.AndAsync("el usuario selecciona la U.M.Comercial \"ML\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.WhenAsync("el usuario selecciona la Familia \"Shampoo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 14
-await testRunner.AndAsync("el usuario selecciona la U.Medida \"ML\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario selecciona Auto al Código", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 15
-await testRunner.AndAsync("el usuario selecciona el Rol \"Item Comercial\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario ingresa el Sufijo \"Carbón Ultractivado\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 16
-await testRunner.AndAsync("el usuario selecciona el Módulo a Mostrar \"MOD0001\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario selecciona la U.M.Comercial \"ML\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 17
-await testRunner.AndAsync("el usuario selecciona la Marca \"ELVIVE\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario selecciona la U.Medida \"ML\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 18
-await testRunner.AndAsync("el usuario selecciona la Presentación \"Frasco\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario selecciona el Rol \"Item Comercial\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 19
-await testRunner.AndAsync("el usuario ingresa la Cantidad \"780\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario selecciona el Módulo a Mostrar \"MOD0001\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 20
-await testRunner.AndAsync("el usuario selecciona la Unidad de Medida \"ML\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario selecciona la Marca \"ELVIVE\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 21
-await testRunner.AndAsync("el usuario selecciona la tarifa \"POR UNIDAD\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario selecciona la Presentación \"Frasco\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 22
-await testRunner.AndAsync("el usuario ingresa el Precio \"10\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario ingresa la Cantidad \"780\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 23
+await testRunner.AndAsync("el usuario selecciona la Unidad de Medida \"ML\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 24
+await testRunner.AndAsync("el usuario selecciona la tarifa \"POR UNIDAD\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 25
+await testRunner.AndAsync("el usuario ingresa el Precio \"10\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 26
 await testRunner.ThenAsync("Guardar concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -165,7 +199,7 @@ await testRunner.ThenAsync("Guardar concepto", ((string)(null)), ((global::Reqnr
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo concepto con el tipo Rol INSUMO", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 26
+#line 29
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -175,6 +209,7 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
+<<<<<<< HEAD
 #line 27
 await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
                         "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
@@ -185,44 +220,45 @@ await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@
 #line hidden
 #line 29
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+=======
+#line 5
+await this.FeatureBackgroundAsync();
+>>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line hidden
 #line 30
-await testRunner.AndAsync("el usuario selecciona Nuevo Concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.WhenAsync("el usuario selecciona la Familia \"Harina\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 31
-await testRunner.AndAsync("el usuario selecciona la Familia \"Harina\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 32
 await testRunner.AndAsync("el usuario ingresa el Código \"HA008\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 33
+#line 32
 await testRunner.AndAsync("el usuario ingresa el Sufijo \"Para Hornear\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 34
+#line 33
 await testRunner.AndAsync("el usuario selecciona la U.M.Comercial \"KG\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 35
+#line 34
 await testRunner.AndAsync("el usuario selecciona la U.Medida \"KG\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 36
+#line 35
 await testRunner.AndAsync("el usuario selecciona el Rol \"Insumo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 37
+#line 36
 await testRunner.AndAsync("el usuario selecciona el Módulo a Mostrar \"MOD0003\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 38
+#line 37
 await testRunner.AndAsync("el usuario selecciona la Marca \"Blanca Flor\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 39
+#line 38
 await testRunner.AndAsync("el usuario selecciona la Presentación \"SP\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 40
+#line 39
 await testRunner.AndAsync("el usuario selecciona la tarifa \"PORMA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 41
+#line 40
 await testRunner.AndAsync("el usuario ingresa el Precio \"50\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 42
+#line 41
 await testRunner.ThenAsync("Guardar concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -238,7 +274,11 @@ await testRunner.ThenAsync("Guardar concepto", ((string)(null)), ((global::Reqnr
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro inválido del concepto por tipo rol ITEM COMERCIAL - Sufijo faltante, Mod" +
                     "ulo a mostrar faltante", null, tagsOfScenario, argumentsOfScenario, featureTags);
+<<<<<<< HEAD
 #line 45
+=======
+#line 44
+>>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -248,7 +288,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
+#line 5
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 45
+await testRunner.WhenAsync("el usuario selecciona la Familia \"CEREALES\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
 #line 46
+<<<<<<< HEAD
 await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
                         "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
@@ -266,27 +313,29 @@ await testRunner.AndAsync("el usuario selecciona Nuevo Concepto", ((string)(null
 await testRunner.AndAsync("el usuario selecciona la Familia \"CEREALES\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 51
+=======
+>>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 await testRunner.AndAsync("el usuario selecciona Auto al Código", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 52
+#line 47
 await testRunner.AndAsync("el usuario selecciona el Rol \"Item Comercial\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 53
+#line 48
 await testRunner.ButAsync("el usuario selecciona el Módulo a Mostrar \"VACIO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "But ");
 #line hidden
-#line 54
+#line 49
 await testRunner.AndAsync("el usuario selecciona la Presentación \"CAJA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 55
+#line 50
 await testRunner.AndAsync("el usuario ingresa la Cantidad \"900\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 56
+#line 51
 await testRunner.AndAsync("el usuario selecciona la tarifa \"PORMA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 57
+#line 52
 await testRunner.AndAsync("el usuario ingresa el Precio \"50\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 58
+#line 53
 await testRunner.ThenAsync("No se guarda concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -302,7 +351,11 @@ await testRunner.ThenAsync("No se guarda concepto", ((string)(null)), ((global::
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro inválido del concepto por tipo rol ITEM COMERCIAL - Familia faltante, Pr" +
                     "ecio faltante", null, tagsOfScenario, argumentsOfScenario, featureTags);
+<<<<<<< HEAD
 #line 61
+=======
+#line 56
+>>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -312,6 +365,7 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
+<<<<<<< HEAD
 #line 62
 await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
                         "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
@@ -319,38 +373,36 @@ await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.n
 #line 63
 await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
                         "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+=======
+#line 5
+await this.FeatureBackgroundAsync();
 #line hidden
-#line 64
-await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 57
+await testRunner.WhenAsync("el usuario ingresa el Código \"9630\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+>>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line hidden
-#line 65
-await testRunner.AndAsync("el usuario selecciona Nuevo Concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 66
-await testRunner.AndAsync("el usuario ingresa el Código \"9630\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 67
+#line 58
 await testRunner.AndAsync("el usuario ingresa el Sufijo \"Hola\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 68
+#line 59
 await testRunner.AndAsync("el usuario selecciona la U.M.Comercial \"KG\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 69
+#line 60
 await testRunner.AndAsync("el usuario selecciona la U.Medida \"KG\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 70
+#line 61
 await testRunner.AndAsync("el usuario selecciona el Rol \"Insumo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 71
+#line 62
 await testRunner.AndAsync("el usuario selecciona el Módulo a Mostrar \"MOD0003\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 72
+#line 63
 await testRunner.AndAsync("el usuario selecciona la Presentación \"SP\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 73
+#line 64
 await testRunner.AndAsync("el usuario selecciona la tarifa \"POR UNIDAD\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 74
+#line 65
 await testRunner.ThenAsync("No se guarda concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -364,7 +416,7 @@ await testRunner.ThenAsync("No se guarda concepto", ((string)(null)), ((global::
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar un concepto con la partición positiva con respecto al campo Cantidad", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 78
+#line 69
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -374,6 +426,7 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
+<<<<<<< HEAD
 #line 79
 await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
                         "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
@@ -381,53 +434,51 @@ await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.n
 #line 80
 await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
                         "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+=======
+#line 5
+await this.FeatureBackgroundAsync();
 #line hidden
-#line 81
-await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 70
+await testRunner.WhenAsync("el usuario selecciona la Familia \"Gaseosa\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+>>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line hidden
-#line 82
-await testRunner.AndAsync("el usuario selecciona Nuevo Concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 83
-await testRunner.AndAsync("el usuario selecciona la Familia \"Gaseosa\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 84
+#line 71
 await testRunner.AndAsync("el usuario selecciona Auto al Código", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 85
+#line 72
 await testRunner.AndAsync("el usuario ingresa el Sufijo \"PRUEBA1\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 86
+#line 73
 await testRunner.AndAsync("el usuario selecciona la U.M.Comercial \"ML\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 87
+#line 74
 await testRunner.AndAsync("el usuario selecciona la U.Medida \"ML\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 88
+#line 75
 await testRunner.AndAsync("el usuario selecciona el Rol \"Item Comercial\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 89
+#line 76
 await testRunner.AndAsync("el usuario selecciona el Módulo a Mostrar \"MOD0001\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 90
+#line 77
 await testRunner.AndAsync("el usuario selecciona la Marca \"KR\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 91
+#line 78
 await testRunner.AndAsync("el usuario selecciona la Presentación \"BOTELLAS\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 92
+#line 79
 await testRunner.AndAsync("el usuario ingresa la Cantidad \"196\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 93
+#line 80
 await testRunner.AndAsync("el usuario selecciona la Unidad de Medida \"ML\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 94
+#line 81
 await testRunner.AndAsync("el usuario selecciona la tarifa \"POR UNIDAD\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 95
+#line 82
 await testRunner.AndAsync("el usuario ingresa el Precio \"4\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 96
+#line 83
 await testRunner.ThenAsync("Guardar concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -441,7 +492,7 @@ await testRunner.ThenAsync("Guardar concepto", ((string)(null)), ((global::Reqnr
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar un concepto con la partición positiva con respecto al campo Precio", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 100
+#line 87
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -451,6 +502,7 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
+<<<<<<< HEAD
 #line 101
 await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
                         "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
@@ -458,47 +510,116 @@ await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.n
 #line 102
 await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
                         "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+=======
+#line 5
+await this.FeatureBackgroundAsync();
 #line hidden
-#line 103
-await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 88
+await testRunner.WhenAsync("el usuario selecciona la Familia \"Harina\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+>>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line hidden
-#line 104
-await testRunner.AndAsync("el usuario selecciona Nuevo Concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 105
-await testRunner.AndAsync("el usuario selecciona la Familia \"Harina\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 106
+#line 89
 await testRunner.AndAsync("el usuario selecciona Auto al Código", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 107
+#line 90
 await testRunner.AndAsync("el usuario ingresa el Sufijo \"PRUEBA4\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 108
+#line 91
 await testRunner.AndAsync("el usuario selecciona la U.M.Comercial \"KG\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 109
+#line 92
 await testRunner.AndAsync("el usuario selecciona la U.Medida \"KG\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 110
+#line 93
 await testRunner.AndAsync("el usuario selecciona el Rol \"Insumo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 111
+#line 94
 await testRunner.AndAsync("el usuario selecciona el Módulo a Mostrar \"MOD0003\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 112
+#line 95
 await testRunner.AndAsync("el usuario selecciona la Marca \"Flor Blanca\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 113
+#line 96
 await testRunner.AndAsync("el usuario selecciona la Presentación \"SP\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 114
+#line 97
 await testRunner.AndAsync("el usuario selecciona la tarifa \"PORMA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 115
+#line 98
 await testRunner.AndAsync("el usuario ingresa el Precio \"50\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
+#line 99
+await testRunner.ThenAsync("Guardar concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar un concepto con la partición positiva con respecto al campo Stock minim" +
+            "o")]
+        public async System.Threading.Tasks.Task RegistrarUnConceptoConLaParticionPositivaConRespectoAlCampoStockMinimo()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar un concepto con la partición positiva con respecto al campo Stock minim" +
+                    "o", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 102
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 5
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 103
+await testRunner.WhenAsync("el usuario selecciona la Familia \"Gaseosa\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 104
+await testRunner.AndAsync("el usuario selecciona Auto al Código", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 105
+await testRunner.AndAsync("el usuario ingresa el Sufijo \"prueba p\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 106
+await testRunner.AndAsync("el usuario selecciona la U.M.Comercial \"ML\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 107
+await testRunner.AndAsync("el usuario selecciona la U.Medida \"ML\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 108
+await testRunner.AndAsync("el usuario selecciona el Rol \"Item Comercial\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 109
+await testRunner.AndAsync("el usuario selecciona el Módulo a Mostrar \"MOD0004\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 110
+await testRunner.AndAsync("el usuario selecciona la Marca \"KR\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 111
+await testRunner.AndAsync("el usuario selecciona la Presentación \"BOTELLAS\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 112
+await testRunner.AndAsync("el usuario ingresa la Cantidad \"588\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 113
+await testRunner.AndAsync("el usuario selecciona la Unidad de Medida \"ML\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 114
+await testRunner.AndAsync("el usuario ingresa el stock mínimo \"15\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 115
+await testRunner.AndAsync("el usuario selecciona la tarifa \"POR UNIDAD\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
 #line 116
+await testRunner.AndAsync("el usuario ingresa el Precio \"50\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 117
 await testRunner.ThenAsync("Guardar concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

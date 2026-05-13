@@ -297,13 +297,12 @@ await this.FeatureBackgroundAsync();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("<Caso> Canjear <CantidadNV> NV con comprobante <Comprobante> genera inconsistenci" +
-            "a")]
+        [NUnit.Framework.DescriptionAttribute("Canjear NV con comprobante genera inconsistencia")]
         [NUnit.Framework.CategoryAttribute("CanjearNV")]
         [NUnit.Framework.CategoryAttribute("Inconsistencia")]
         [NUnit.Framework.TestCaseAttribute("CP045", "2", "BOLETA DE VENTA ELECTRONICA", "B002", "05/03/2026 12:00 am", "25/03/2026 11:59 pm", null)]
         [NUnit.Framework.TestCaseAttribute("CP046", "2", "FACTURA ELECTRONICA", "F001", "05/03/2026 12:00 am", "25/03/2026 11:59 pm", null)]
-        public async System.Threading.Tasks.Task CasoCanjearCantidadNVNVConComprobanteComprobanteGeneraInconsistencia(string caso, string cantidadNV, string comprobante, string serie, string fechaHoraInicial, string fechaHoraFinal, string[] exampleTags)
+        public async System.Threading.Tasks.Task CanjearNVConComprobanteGeneraInconsistencia(string caso, string cantidadNV, string comprobante, string serie, string fechaHoraInicial, string fechaHoraFinal, string[] exampleTags)
         {
             string[] @__tags = new string[] {
                     "CanjearNV",
@@ -320,8 +319,7 @@ await this.FeatureBackgroundAsync();
             argumentsOfScenario.Add("Serie", serie);
             argumentsOfScenario.Add("fechaHoraInicial", fechaHoraInicial);
             argumentsOfScenario.Add("fechaHoraFinal", fechaHoraFinal);
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("<Caso> Canjear <CantidadNV> NV con comprobante <Comprobante> genera inconsistenci" +
-                    "a", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Canjear NV con comprobante genera inconsistencia", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 64
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

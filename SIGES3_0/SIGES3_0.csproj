@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -22,7 +22,7 @@
   <ItemGroup>
     <Folder Include="Drivers\" />
     <Folder Include="Features\FacturacionCiclica\" />
-
+    <Folder Include="Features\Items\Checklist and PartEquivalence AnalyBoundary-Items\Equivalencies-Combos\" />
     <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Category\EditCategory\" />
     <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Category\DeleteCategory\" />
     <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Characteristic Value\EditCharacteristicValue\" />
@@ -36,10 +36,6 @@
     <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Presentation\EditPresentation\" />
     <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Presentation\DeletePresentation\" />
     <Folder Include="Features\Items\TablesofDecision-Items\RegisterItemData\Presentation\RegisterPresentation\" />
-
-    <Folder Include="Features\Cotizacion\" />
-    <Folder Include="Features\Pedido\" />
-
     <Folder Include="Support\" />
   </ItemGroup>
 
