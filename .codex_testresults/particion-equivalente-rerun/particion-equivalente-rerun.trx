@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="f701ca28-c56d-4679-9b22-6d8578626ec9" name="abend@LAPTOP-GB5NOPFT 2026-05-13 15:41:11" runUser="LAPTOP-GB5NOPFT\abend" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-05-13T15:41:11.0359794-05:00" queuing="2026-05-13T15:41:11.0359801-05:00" start="2026-05-13T15:39:10.3402630-05:00" finish="2026-05-13T15:42:12.3575052-05:00" />
+  <TestSettings name="default" id="62483c48-c3d0-41be-b0ea-47df6f1fa87b">
+    <Deployment runDeploymentRoot="abend_LAPTOP-GB5NOPFT_2026-05-13_15_41_11" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="c72e5707-698c-44d4-aa0d-2ba42450340f" testId="91e9e05a-b404-7105-213a-8fc30448e115" testName="CP095RegistrarVentaConTotal699_00ConClienteVARIOS" computerName="LAPTOP-GB5NOPFT" duration="00:01:56.8081360" startTime="2026-05-13T15:39:14.1694736-05:00" endTime="2026-05-13T15:41:10.9775322-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c72e5707-698c-44d4-aa0d-2ba42450340f">
+      <Output>
+        <StdOut>Running before feature...&#xD;
+Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (5.8s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña 'calidad'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.WhenElUsuarioIniciaSesionConUsuarioYContrasena("pamela.tone@recsa...", "calidad") (12.2s)&#xD;
+Running after step...&#xD;
+And el usuario accede al módulo 'Ventas'&#xD;
+-&gt; done: VerPedidosStep.WhenElUsuarioAccedeAlModulo("Ventas") (1.6s)&#xD;
+Running after step...&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; done: VerPedidosStep.WhenElUsuarioAccedeAlSubmodulo("Nueva Venta") (0.6s)&#xD;
+Running after step...&#xD;
+When selecciona el modo de venta "VENTA NORMAL"&#xD;
+[15:39:37] Seleccionando modo de venta: VENTA NORMAL&#xD;
+-&gt; done: NuevaVentaStepDefinitions.WhenSeleccionaElModoDeVenta("VENTA NORMAL") (2.8s)&#xD;
+Running after step...&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+[15:39:38] Configurando IGV=N, DetUnificado=N&#xD;
+-&gt; done: NuevaVentaStepDefinitions.WhenConfiguraIgvYDetalleUnificado("N", "N") (1.1s)&#xD;
+Running after step...&#xD;
+And el usuario selecciona la familia 'Plantas'&#xD;
+-&gt; done: NuevaVentaStepDefinitions.WhenElUsuarioSeleccionaLaFamiliaNuevaVenta("Plantas") (9.0s)&#xD;
+Running after step...&#xD;
+And usuario selecciona el concepto 'PLANTAS PL (P.U. 100.00)'&#xD;
+-&gt; error:   No se encontro una opcion visible para 'PLANTAS PL (P.U. 100.00)' en el dropdown de Nueva Venta.&#xD;
+  Expected: not null&#xD;
+  But was:  null&#xD;
+ (81.5s)&#xD;
+Running after step...&#xD;
+And usuario ingresa la cantidad '6'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Plantas'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto 'PLANTAS PL (P.U. 1.00)'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '99'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '00000000'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Contado' 'false' 'transferencia_fondos' 'NA' 'NA' 'BCP|SOL|1912490779081' 'OP699' '699.00' 'NA' 'NA'&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado del pago en nueva venta 'pago contado transferencia exitoso'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta 'guarda exitosamente'&#xD;
+-&gt; skipped because of previous errors</StdOut>
+        <ErrorInfo>
+          <Message>  No se encontro una opcion visible para 'PLANTAS PL (P.U. 100.00)' en el dropdown de Nueva Venta.&#xD;
+  Expected: not null&#xD;
+  But was:  null&#xD;
+</Message>
+          <StackTrace>   at SIGES3_0.Pages.VentasPage.NuevaVentaPage.SeleccionarDropdownCustomNuevaVenta(String texto, IWebElement trigger) in C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\Pages\VentasPage\NuevaVentaPage.cs:line 4747&#xD;
+   at SIGES3_0.Pages.VentasPage.NuevaVentaPage.SeleccionarDropdownCustomNuevaVenta(String texto, By[] triggerLocators) in C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\Pages\VentasPage\NuevaVentaPage.cs:line 4692&#xD;
+   at SIGES3_0.Pages.VentasPage.NuevaVentaPage.SeleccionarConceptoNuevaVenta(String concepto) in C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\Pages\VentasPage\NuevaVentaPage.cs:line 296&#xD;
+   at SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioSeleccionaElConceptoNuevaVenta(String concepto) in C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\StepDefinitions\VentasStep\NuevaVentaStepDefinitions.cs:line 69&#xD;
+   at InvokeStub_Action`2.Invoke(Object, Span`1)&#xD;
+
+1)    at SIGES3_0.Pages.VentasPage.NuevaVentaPage.SeleccionarDropdownCustomNuevaVenta(String texto, IWebElement trigger) in C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\Pages\VentasPage\NuevaVentaPage.cs:line 4747&#xD;
+   at SIGES3_0.Pages.VentasPage.NuevaVentaPage.SeleccionarDropdownCustomNuevaVenta(String texto, By[] triggerLocators) in C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\Pages\VentasPage\NuevaVentaPage.cs:line 4692&#xD;
+   at SIGES3_0.Pages.VentasPage.NuevaVentaPage.SeleccionarConceptoNuevaVenta(String concepto) in C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\Pages\VentasPage\NuevaVentaPage.cs:line 296&#xD;
+   at SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioSeleccionaElConceptoNuevaVenta(String concepto) in C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\StepDefinitions\VentasStep\NuevaVentaStepDefinitions.cs:line 69&#xD;
+   at InvokeStub_Action`2.Invoke(Object, Span`1)&#xD;
+
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="CP095RegistrarVentaConTotal699_00ConClienteVARIOS" storage="c:\users\abend\source\repos\pruebas_automatizadas\siges3_0\bin\debug\net9.0\siges3_0.dll" id="91e9e05a-b404-7105-213a-8fc30448e115">
+      <Execution id="c72e5707-698c-44d4-aa0d-2ba42450340f" />
+      <TestMethod codeBase="C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\bin\Debug\net9.0\SIGES3_0.dll" adapterTypeName="executor://nunit3testexecutor/" className="SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature" name="CP095RegistrarVentaConTotal699_00ConClienteVARIOS" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="91e9e05a-b404-7105-213a-8fc30448e115" executionId="c72e5707-698c-44d4-aa0d-2ba42450340f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Resultados sin formato de lista" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="Todos los resultados cargados" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" passed="0" failed="1" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>NUnit Adapter 4.5.0.0: Test execution started&#xD;
+Running selected tests in C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\bin\Debug\net9.0\SIGES3_0.dll&#xD;
+   NUnit3TestExecutor discovered 9 of 9 NUnit test cases using Current Discovery mode, Non-Explicit run&#xD;
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="LAPTOP-GB5NOPFT" outcome="Warning" timestamp="2026-05-13T15:41:10.9983665-05:00">
+        <Text>Running before feature...&#xD;
+Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (5.8s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña 'calidad'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.WhenElUsuarioIniciaSesionConUsuarioYContrasena("pamela.tone@recsa...", "calidad") (12.2s)&#xD;
+Running after step...&#xD;
+And el usuario accede al módulo 'Ventas'&#xD;
+-&gt; done: VerPedidosStep.WhenElUsuarioAccedeAlModulo("Ventas") (1.6s)&#xD;
+Running after step...&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; done: VerPedidosStep.WhenElUsuarioAccedeAlSubmodulo("Nueva Venta") (0.6s)&#xD;
+Running after step...&#xD;
+When selecciona el modo de venta "VENTA NORMAL"&#xD;
+[15:39:37] Seleccionando modo de venta: VENTA NORMAL&#xD;
+-&gt; done: NuevaVentaStepDefinitions.WhenSeleccionaElModoDeVenta("VENTA NORMAL") (2.8s)&#xD;
+Running after step...&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+[15:39:38] Configurando IGV=N, DetUnificado=N&#xD;
+-&gt; done: NuevaVentaStepDefinitions.WhenConfiguraIgvYDetalleUnificado("N", "N") (1.1s)&#xD;
+Running after step...&#xD;
+And el usuario selecciona la familia 'Plantas'&#xD;
+-&gt; done: NuevaVentaStepDefinitions.WhenElUsuarioSeleccionaLaFamiliaNuevaVenta("Plantas") (9.0s)&#xD;
+Running after step...&#xD;
+And usuario selecciona el concepto 'PLANTAS PL (P.U. 100.00)'&#xD;
+-&gt; error:   No se encontro una opcion visible para 'PLANTAS PL (P.U. 100.00)' en el dropdown de Nueva Venta.&#xD;
+  Expected: not null&#xD;
+  But was:  null&#xD;
+ (81.5s)&#xD;
+Running after step...&#xD;
+And usuario ingresa la cantidad '6'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Plantas'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto 'PLANTAS PL (P.U. 1.00)'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '99'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '00000000'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Contado' 'false' 'transferencia_fondos' 'NA' 'NA' 'BCP|SOL|1912490779081' 'OP699' '699.00' 'NA' 'NA'&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado del pago en nueva venta 'pago contado transferencia exitoso'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta 'guarda exitosamente'&#xD;
+-&gt; skipped because of previous errors&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-GB5NOPFT" outcome="Error" timestamp="2026-05-13T15:42:12.3424891-05:00">
+        <Text>Se ha anulado la serie de pruebas activa. Motivo: Proceso de host de pruebas bloqueado</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

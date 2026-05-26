@@ -18,8 +18,8 @@ Scenario Outline: Registro de nuevo pedido - Casos variados
 
 	And el usuario selecciona la opción 'Nuevo Pedido'
 	When el usuario selecciona la familia '<familia>'
-	And el usuario selecciona el concepto '<concepto>'
-	And el usuario ingresa la cantidad '<cantidad>'
+	And usuario selecciona el concepto '<concepto>'
+	And usuario ingresa la cantidad '<cantidad>'
 	And el usuario activa IGV '<igv>'
 	And el usuario activa DET.UNIF '<det_unif>'
 	And el usuario configura descuento '<descuento>' '<tipo_descuento>' '<modo_descuento>' '<valor_descuento>'

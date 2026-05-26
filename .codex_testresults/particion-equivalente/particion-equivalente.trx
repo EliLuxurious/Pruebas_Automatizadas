@@ -1,0 +1,1101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="ccc294c8-7646-4735-a5fa-9461c0722ade" name="abend@LAPTOP-GB5NOPFT 2026-05-13 15:37:13" runUser="LAPTOP-GB5NOPFT\abend" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-05-13T15:37:13.5732942-05:00" queuing="2026-05-13T15:37:13.5732948-05:00" start="2026-05-13T15:37:01.6476851-05:00" finish="2026-05-13T15:38:09.2032965-05:00" />
+  <TestSettings name="default" id="57279bee-6416-42a2-88e6-df4df81dc4c0">
+    <Deployment runDeploymentRoot="abend_LAPTOP-GB5NOPFT_2026-05-13_15_37_13" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="d11e666c-da6e-44eb-b21f-534ab394e547" testId="8cbb8e58-28d0-bb7f-44ac-af5dd13b3b96" testName="ValidarFechaDeCreditoEnNuevaVenta_Caso(&quot;CP093&quot;,&quot;hoy&quot;,&quot;credito configurado exitoso&quot;,&quot;guarda exitosamente&quot;,null)" computerName="LAPTOP-GB5NOPFT" duration="00:00:06.4114129" startTime="2026-05-13T15:37:33.6534672-05:00" endTime="2026-05-13T15:37:40.0648802-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d11e666c-da6e-44eb-b21f-534ab394e547">
+      <Output>
+        <StdOut>Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (4.9s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesiÃ³n con usuario 'pamela.tone@recsa.com' y contraseÃ±a 'calidad'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario inicia sesiÃ³n con usuario {string} y contraseÃ±a {string}")]&#xD;
+public void WhenElUsuarioIniciaSesiANConUsuarioYContraseAA(string p0, string calidad1)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al mÃ³dulo 'Ventas'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario accede al mÃ³dulo {string}")]&#xD;
+public void WhenElUsuarioAccedeAlMADulo(string ventas0)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When selecciona el modo de venta "VENTA NORMAL"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Gaseosa'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto '7753234003313'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '2'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Credito' 'false' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '2' '4.20' 'NA'&#xD;
+-&gt; binding error: Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Credito' 'false' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '2' '4.20' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)&#xD;
+Then el sistema valida el resultado del pago en nueva venta "credito configurado exitoso"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And ingresa la fecha de credito "hoy"&#xD;
+-&gt; skipped because of previous errors&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta "guarda exitosamente"&#xD;
+-&gt; skipped because of previous errors</StdOut>
+        <ErrorInfo>
+          <Message>Reqnroll.BindingException : Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Credito' 'false' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '2' '4.20' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)</Message>
+          <StackTrace>   at Reqnroll.Infrastructure.TestExecutionEngine.GetStepMatch(StepInstance stepInstance)&#xD;
+   at Reqnroll.Infrastructure.TestExecutionEngine.ExecuteStepAsync(IContextManager contextManager, StepInstance stepInstance)&#xD;
+   at Reqnroll.Infrastructure.TestExecutionEngine.OnAfterLastStepAsync()&#xD;
+   at Reqnroll.TestRunner.CollectScenarioErrorsAsync()&#xD;
+   at SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature.ScenarioCleanupAsync()&#xD;
+   at SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature.ValidarFechaDeCreditoEnNuevaVenta_Caso(String caso, String fechaCredito, String resultadoPago, String resultadoVenta, String[] exampleTags) in C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\Features\Ventas\ParticionEquivalente.feature:line 30&#xD;
+   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.GetResult()&#xD;
+   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
+   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d200ff37-e3cc-4da0-be3f-7e1f2998edf6" testId="91e9e05a-b404-7105-213a-8fc30448e115" testName="CP095RegistrarVentaConTotal699_00ConClienteVARIOS" computerName="LAPTOP-GB5NOPFT" duration="00:00:07.6058890" startTime="2026-05-13T15:37:05.9109065-05:00" endTime="2026-05-13T15:37:13.5167083-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d200ff37-e3cc-4da0-be3f-7e1f2998edf6">
+      <Output>
+        <StdOut>Running before feature...&#xD;
+Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (5.1s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesiÃ³n con usuario 'pamela.tone@recsa.com' y contraseÃ±a 'calidad'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario inicia sesiÃ³n con usuario {string} y contraseÃ±a {string}")]&#xD;
+public void WhenElUsuarioIniciaSesiANConUsuarioYContraseAA(string p0, string calidad)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al mÃ³dulo 'Ventas'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario accede al mÃ³dulo {string}")]&#xD;
+public void WhenElUsuarioAccedeAlMADulo(string ventas)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When selecciona el modo de venta "VENTA NORMAL"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Plantas'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto 'PLANTAS PL (P.U. 100.00)'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '6'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Plantas'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto 'PLANTAS PL (P.U. 1.00)'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '99'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '00000000'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Contado' 'false' 'transferencia_fondos' 'NA' 'NA' 'BCP|SOL|1912490779081' 'OP699' '699.00' 'NA' 'NA' 'NA'&#xD;
+-&gt; binding error: Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Contado' 'false' 'transferencia_fondos' 'NA' 'NA' 'BCP|SOL|1912490779081' 'OP699' '699.00' 'NA' 'NA' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)&#xD;
+Then el sistema valida el resultado del pago en nueva venta 'pago contado transferencia exitoso'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta 'guarda exitosamente'&#xD;
+-&gt; skipped because of previous errors</StdOut>
+        <ErrorInfo>
+          <Message>Reqnroll.BindingException : Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Contado' 'false' 'transferencia_fondos' 'NA' 'NA' 'BCP|SOL|1912490779081' 'OP699' '699.00' 'NA' 'NA' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)</Message>
+          <StackTrace>   at Reqnroll.Infrastructure.TestExecutionEngine.GetStepMatch(StepInstance stepInstance)&#xD;
+   at Reqnroll.Infrastructure.TestExecutionEngine.ExecuteStepAsync(IContextManager contextManager, StepInstance stepInstance)&#xD;
+   at Reqnroll.Infrastructure.TestExecutionEngine.OnAfterLastStepAsync()&#xD;
+   at Reqnroll.TestRunner.CollectScenarioErrorsAsync()&#xD;
+   at SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature.ScenarioCleanupAsync()&#xD;
+   at SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature.CP095RegistrarVentaConTotal699_00ConClienteVARIOS() in C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\Features\Ventas\ParticionEquivalente.feature:line 59&#xD;
+   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.GetResult()&#xD;
+   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
+   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a0efaa20-ecdd-4038-974b-ec0c3e57c8e8" testId="2f0434bf-59e7-badf-db04-176653679c6c" testName="ValidarFechaDeEmisionEnVentaPorContingencia_Caso(&quot;CP099&quot;,&quot;hoy&quot;,&quot;guarda exitosamente&quot;,null)" computerName="LAPTOP-GB5NOPFT" duration="00:00:06.2413160" startTime="2026-05-13T15:37:53.0825244-05:00" endTime="2026-05-13T15:37:59.3238392-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a0efaa20-ecdd-4038-974b-ec0c3e57c8e8">
+      <Output>
+        <StdOut>Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (4.7s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesiÃ³n con usuario 'pamela.tone@recsa.com' y contraseÃ±a 'calidad'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario inicia sesiÃ³n con usuario {string} y contraseÃ±a {string}")]&#xD;
+public void WhenElUsuarioIniciaSesiANConUsuarioYContraseAA(string p0, string calidad1)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al mÃ³dulo 'Ventas'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario accede al mÃ³dulo {string}")]&#xD;
+public void WhenElUsuarioAccedeAlMADulo(string ventas0)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When selecciona el modo de venta "VENTA POR CONTINGENCIA"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Gaseosa'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto '7753234003313'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '2'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '00000000'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And ingresa la fecha de emision "hoy"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Contado' 'false' 'efectivo' 'NA' 'NA' 'NA' 'NA' '20' 'NA' 'NA' 'NA'&#xD;
+-&gt; binding error: Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Contado' 'false' 'efectivo' 'NA' 'NA' 'NA' 'NA' '20' 'NA' 'NA' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)&#xD;
+Then el sistema valida el resultado del pago en nueva venta 'pago contado efectivo con vuelto exitoso'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta "guarda exitosamente"&#xD;
+-&gt; skipped because of previous errors</StdOut>
+        <ErrorInfo>
+          <Message>Reqnroll.BindingException : Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Contado' 'false' 'efectivo' 'NA' 'NA' 'NA' 'NA' '20' 'NA' 'NA' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)</Message>
+          <StackTrace>   at Reqnroll.Infrastructure.TestExecutionEngine.GetStepMatch(StepInstance stepInstance)&#xD;
+   at Reqnroll.Infrastructure.TestExecutionEngine.ExecuteStepAsync(IContextManager contextManager, StepInstance stepInstance)&#xD;
+   at Reqnroll.Infrastructure.TestExecutionEngine.OnAfterLastStepAsync()&#xD;
+   at Reqnroll.TestRunner.CollectScenarioErrorsAsync()&#xD;
+   at SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature.ScenarioCleanupAsync()&#xD;
+   at SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature.ValidarFechaDeEmisionEnVentaPorContingencia_Caso(String caso, String fechaEmision, String resultadoVenta, String[] exampleTags) in C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\Features\Ventas\ParticionEquivalente.feature:line 108&#xD;
+   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.GetResult()&#xD;
+   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
+   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="3f80a655-d2e6-405e-9403-57d43b0f2ca3" testId="0f6ce9aa-4fb2-4250-5f0f-f020d49c4a04" testName="ValidarFechaDeCreditoEnNuevaVenta_Caso(&quot;CP092&quot;,&quot;ayer&quot;,&quot;-&quot;,&quot;inconsistencia: fecha de credito pasada&quot;,null)" computerName="LAPTOP-GB5NOPFT" duration="00:00:06.5973810" startTime="2026-05-13T15:37:27.0560398-05:00" endTime="2026-05-13T15:37:33.6534200-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3f80a655-d2e6-405e-9403-57d43b0f2ca3">
+      <Output>
+        <StdOut>Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (5.1s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesiÃ³n con usuario 'pamela.tone@recsa.com' y contraseÃ±a 'calidad'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario inicia sesiÃ³n con usuario {string} y contraseÃ±a {string}")]&#xD;
+public void WhenElUsuarioIniciaSesiANConUsuarioYContraseAA(string p0, string calidad1)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al mÃ³dulo 'Ventas'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario accede al mÃ³dulo {string}")]&#xD;
+public void WhenElUsuarioAccedeAlMADulo(string ventas0)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When selecciona el modo de venta "VENTA NORMAL"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Gaseosa'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto '7753234003313'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '2'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Credito' 'false' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '2' '4.20' 'NA'&#xD;
+-&gt; binding error: Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Credito' 'false' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '2' '4.20' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)&#xD;
+Then el sistema valida el resultado del pago en nueva venta "-"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And ingresa la fecha de credito "ayer"&#xD;
+-&gt; skipped because of previous errors&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta "inconsistencia: fecha de credito pasada"&#xD;
+-&gt; skipped because of previous errors</StdOut>
+        <ErrorInfo>
+          <Message>Reqnroll.BindingException : Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Credito' 'false' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '2' '4.20' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)</Message>
+          <StackTrace>   at Reqnroll.Infrastructure.TestExecutionEngine.GetStepMatch(StepInstance stepInstance)&#xD;
+   at Reqnroll.Infrastructure.TestExecutionEngine.ExecuteStepAsync(IContextManager contextManager, StepInstance stepInstance)&#xD;
+   at Reqnroll.Infrastructure.TestExecutionEngine.OnAfterLastStepAsync()&#xD;
+   at Reqnroll.TestRunner.CollectScenarioErrorsAsync()&#xD;
+   at SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature.ScenarioCleanupAsync()&#xD;
+   at SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature.ValidarFechaDeCreditoEnNuevaVenta_Caso(String caso, String fechaCredito, String resultadoPago, String resultadoVenta, String[] exampleTags) in C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\Features\Ventas\ParticionEquivalente.feature:line 30&#xD;
+   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.GetResult()&#xD;
+   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
+   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="7c152292-9104-425e-a737-2c7762a7b5ac" testId="8de9bfe7-8006-a3a7-ad84-6aea83bedc74" testName="ValidarFechaDeEmisionEnVentaPorContingencia_Caso(&quot;CP100&quot;,&quot;manana&quot;,&quot;inconsistencia: contingencia fecha futura&quot;,null)" computerName="LAPTOP-GB5NOPFT" duration="00:00:06.6983110" startTime="2026-05-13T15:37:59.3239069-05:00" endTime="2026-05-13T15:38:06.0222167-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7c152292-9104-425e-a737-2c7762a7b5ac">
+      <Output>
+        <StdOut>Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (5.1s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesiÃ³n con usuario 'pamela.tone@recsa.com' y contraseÃ±a 'calidad'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario inicia sesiÃ³n con usuario {string} y contraseÃ±a {string}")]&#xD;
+public void WhenElUsuarioIniciaSesiANConUsuarioYContraseAA(string p0, string calidad1)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al mÃ³dulo 'Ventas'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario accede al mÃ³dulo {string}")]&#xD;
+public void WhenElUsuarioAccedeAlMADulo(string ventas0)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When selecciona el modo de venta "VENTA POR CONTINGENCIA"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Gaseosa'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto '7753234003313'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '2'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '00000000'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And ingresa la fecha de emision "manana"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Contado' 'false' 'efectivo' 'NA' 'NA' 'NA' 'NA' '20' 'NA' 'NA' 'NA'&#xD;
+-&gt; binding error: Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Contado' 'false' 'efectivo' 'NA' 'NA' 'NA' 'NA' '20' 'NA' 'NA' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)&#xD;
+Then el sistema valida el resultado del pago en nueva venta 'pago contado efectivo con vuelto exitoso'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta "inconsistencia: contingencia fecha futura"&#xD;
+-&gt; skipped because of previous errors</StdOut>
+        <ErrorInfo>
+          <Message>Reqnroll.BindingException : Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Contado' 'false' 'efectivo' 'NA' 'NA' 'NA' 'NA' '20' 'NA' 'NA' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)</Message>
+          <StackTrace>   at Reqnroll.Infrastructure.TestExecutionEngine.GetStepMatch(StepInstance stepInstance)&#xD;
+   at Reqnroll.Infrastructure.TestExecutionEngine.ExecuteStepAsync(IContextManager contextManager, StepInstance stepInstance)&#xD;
+   at Reqnroll.Infrastructure.TestExecutionEngine.OnAfterLastStepAsync()&#xD;
+   at Reqnroll.TestRunner.CollectScenarioErrorsAsync()&#xD;
+   at SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature.ScenarioCleanupAsync()&#xD;
+   at SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature.ValidarFechaDeEmisionEnVentaPorContingencia_Caso(String caso, String fechaEmision, String resultadoVenta, String[] exampleTags) in C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\Features\Ventas\ParticionEquivalente.feature:line 108&#xD;
+   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.GetResult()&#xD;
+   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
+   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a4f72aee-5676-48da-bd9a-5483824d80f3" testId="0dc7a3ba-00eb-d035-b25f-545069a0a639" testName="CP097ValidarInconsistenciaConTotal701_00YClienteVARIOS" computerName="LAPTOP-GB5NOPFT" duration="00:00:06.5115770" startTime="2026-05-13T15:37:20.5443283-05:00" endTime="2026-05-13T15:37:27.0559038-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a4f72aee-5676-48da-bd9a-5483824d80f3">
+      <Output>
+        <StdOut>Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (4.9s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesiÃ³n con usuario 'pamela.tone@recsa.com' y contraseÃ±a 'calidad'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario inicia sesiÃ³n con usuario {string} y contraseÃ±a {string}")]&#xD;
+public void WhenElUsuarioIniciaSesiANConUsuarioYContraseAA(string p0, string calidad1)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al mÃ³dulo 'Ventas'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario accede al mÃ³dulo {string}")]&#xD;
+public void WhenElUsuarioAccedeAlMADulo(string ventas0)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When selecciona el modo de venta "VENTA NORMAL"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Plantas'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto 'PLANTAS PL (P.U. 100.00)'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '7'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Plantas'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto 'PLANTAS PL (P.U. 1.00)'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '1'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '00000000'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Contado' 'false' 'transferencia_fondos' 'NA' 'NA' 'BCP|SOL|1912490779081' 'OP701' '701.00' 'NA' 'NA' 'NA'&#xD;
+-&gt; binding error: Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Contado' 'false' 'transferencia_fondos' 'NA' 'NA' 'BCP|SOL|1912490779081' 'OP701' '701.00' 'NA' 'NA' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta 'inconsistencia: identificar cliente'&#xD;
+-&gt; skipped because of previous errors</StdOut>
+        <ErrorInfo>
+          <Message>Reqnroll.BindingException : Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Contado' 'false' 'transferencia_fondos' 'NA' 'NA' 'BCP|SOL|1912490779081' 'OP701' '701.00' 'NA' 'NA' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)</Message>
+          <StackTrace>   at Reqnroll.Infrastructure.TestExecutionEngine.GetStepMatch(StepInstance stepInstance)&#xD;
+   at Reqnroll.Infrastructure.TestExecutionEngine.ExecuteStepAsync(IContextManager contextManager, StepInstance stepInstance)&#xD;
+   at Reqnroll.Infrastructure.TestExecutionEngine.OnAfterLastStepAsync()&#xD;
+   at Reqnroll.TestRunner.CollectScenarioErrorsAsync()&#xD;
+   at SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature.ScenarioCleanupAsync()&#xD;
+   at SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature.CP097ValidarInconsistenciaConTotal701_00YClienteVARIOS() in C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\Features\Ventas\ParticionEquivalente.feature:line 89&#xD;
+   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.GetResult()&#xD;
+   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
+   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="5c57115f-2142-44a6-aa73-db001e43dd01" testId="dc84bf00-de42-48db-960d-7f1d98d51856" testName="ValidarFechaDeEmisionEnVentaPorContingencia_Caso(&quot;CP098&quot;,&quot;ayer&quot;,&quot;guarda exitosamente&quot;,null)" computerName="LAPTOP-GB5NOPFT" duration="00:00:06.7622900" startTime="2026-05-13T15:37:46.3201782-05:00" endTime="2026-05-13T15:37:53.0824671-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5c57115f-2142-44a6-aa73-db001e43dd01">
+      <Output>
+        <StdOut>Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (5.0s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesiÃ³n con usuario 'pamela.tone@recsa.com' y contraseÃ±a 'calidad'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario inicia sesiÃ³n con usuario {string} y contraseÃ±a {string}")]&#xD;
+public void WhenElUsuarioIniciaSesiANConUsuarioYContraseAA(string p0, string calidad1)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al mÃ³dulo 'Ventas'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario accede al mÃ³dulo {string}")]&#xD;
+public void WhenElUsuarioAccedeAlMADulo(string ventas0)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When selecciona el modo de venta "VENTA POR CONTINGENCIA"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Gaseosa'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto '7753234003313'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '2'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '00000000'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And ingresa la fecha de emision "ayer"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Contado' 'false' 'efectivo' 'NA' 'NA' 'NA' 'NA' '20' 'NA' 'NA' 'NA'&#xD;
+-&gt; binding error: Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Contado' 'false' 'efectivo' 'NA' 'NA' 'NA' 'NA' '20' 'NA' 'NA' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)&#xD;
+Then el sistema valida el resultado del pago en nueva venta 'pago contado efectivo con vuelto exitoso'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta "guarda exitosamente"&#xD;
+-&gt; skipped because of previous errors</StdOut>
+        <ErrorInfo>
+          <Message>Reqnroll.BindingException : Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Contado' 'false' 'efectivo' 'NA' 'NA' 'NA' 'NA' '20' 'NA' 'NA' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)</Message>
+          <StackTrace>   at Reqnroll.Infrastructure.TestExecutionEngine.GetStepMatch(StepInstance stepInstance)&#xD;
+   at Reqnroll.Infrastructure.TestExecutionEngine.ExecuteStepAsync(IContextManager contextManager, StepInstance stepInstance)&#xD;
+   at Reqnroll.Infrastructure.TestExecutionEngine.OnAfterLastStepAsync()&#xD;
+   at Reqnroll.TestRunner.CollectScenarioErrorsAsync()&#xD;
+   at SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature.ScenarioCleanupAsync()&#xD;
+   at SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature.ValidarFechaDeEmisionEnVentaPorContingencia_Caso(String caso, String fechaEmision, String resultadoVenta, String[] exampleTags) in C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\Features\Ventas\ParticionEquivalente.feature:line 108&#xD;
+   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.GetResult()&#xD;
+   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
+   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="6e49d12d-bd43-4731-b7ce-aec97f898fd3" testId="d203dafb-46fe-84ab-6fd8-95dc9143d3af" testName="ValidarFechaDeCreditoEnNuevaVenta_Caso(&quot;CP094&quot;,&quot;manana&quot;,&quot;credito configurado exitoso&quot;,&quot;guarda exitosamente&quot;,null)" computerName="LAPTOP-GB5NOPFT" duration="00:00:06.2536240" startTime="2026-05-13T15:37:40.0649173-05:00" endTime="2026-05-13T15:37:46.3185407-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6e49d12d-bd43-4731-b7ce-aec97f898fd3">
+      <Output>
+        <StdOut>Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (4.7s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesiÃ³n con usuario 'pamela.tone@recsa.com' y contraseÃ±a 'calidad'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario inicia sesiÃ³n con usuario {string} y contraseÃ±a {string}")]&#xD;
+public void WhenElUsuarioIniciaSesiANConUsuarioYContraseAA(string p0, string calidad1)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al mÃ³dulo 'Ventas'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario accede al mÃ³dulo {string}")]&#xD;
+public void WhenElUsuarioAccedeAlMADulo(string ventas0)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When selecciona el modo de venta "VENTA NORMAL"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Gaseosa'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto '7753234003313'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '2'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Credito' 'false' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '2' '4.20' 'NA'&#xD;
+-&gt; binding error: Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Credito' 'false' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '2' '4.20' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)&#xD;
+Then el sistema valida el resultado del pago en nueva venta "credito configurado exitoso"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And ingresa la fecha de credito "manana"&#xD;
+-&gt; skipped because of previous errors&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta "guarda exitosamente"&#xD;
+-&gt; skipped because of previous errors</StdOut>
+        <ErrorInfo>
+          <Message>Reqnroll.BindingException : Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Credito' 'false' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '2' '4.20' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)</Message>
+          <StackTrace>   at Reqnroll.Infrastructure.TestExecutionEngine.GetStepMatch(StepInstance stepInstance)&#xD;
+   at Reqnroll.Infrastructure.TestExecutionEngine.ExecuteStepAsync(IContextManager contextManager, StepInstance stepInstance)&#xD;
+   at Reqnroll.Infrastructure.TestExecutionEngine.OnAfterLastStepAsync()&#xD;
+   at Reqnroll.TestRunner.CollectScenarioErrorsAsync()&#xD;
+   at SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature.ScenarioCleanupAsync()&#xD;
+   at SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature.ValidarFechaDeCreditoEnNuevaVenta_Caso(String caso, String fechaCredito, String resultadoPago, String resultadoVenta, String[] exampleTags) in C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\Features\Ventas\ParticionEquivalente.feature:line 30&#xD;
+   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.GetResult()&#xD;
+   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
+   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="3c2dc785-6ecc-4e49-b714-c2f88a20f244" testId="2faa28f4-ea30-cff7-ae36-b2dfc4522412" testName="CP096RegistrarVentaConTotal700_00ConClienteVARIOS" computerName="LAPTOP-GB5NOPFT" duration="00:00:07.0259550" startTime="2026-05-13T15:37:13.5183062-05:00" endTime="2026-05-13T15:37:20.5442610-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3c2dc785-6ecc-4e49-b714-c2f88a20f244">
+      <Output>
+        <StdOut>Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (5.1s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesiÃ³n con usuario 'pamela.tone@recsa.com' y contraseÃ±a 'calidad'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario inicia sesiÃ³n con usuario {string} y contraseÃ±a {string}")]&#xD;
+public void WhenElUsuarioIniciaSesiANConUsuarioYContraseAA(string p0, string calidad1)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al mÃ³dulo 'Ventas'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario accede al mÃ³dulo {string}")]&#xD;
+public void WhenElUsuarioAccedeAlMADulo(string ventas0)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When selecciona el modo de venta "VENTA NORMAL"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Plantas'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto 'PLANTAS PL (P.U. 100.00)'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '7'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '00000000'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Contado' 'false' 'transferencia_fondos' 'NA' 'NA' 'BCP|SOL|1912490779081' 'OP700' '700.00' 'NA' 'NA' 'NA'&#xD;
+-&gt; binding error: Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Contado' 'false' 'transferencia_fondos' 'NA' 'NA' 'BCP|SOL|1912490779081' 'OP700' '700.00' 'NA' 'NA' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)&#xD;
+Then el sistema valida el resultado del pago en nueva venta 'pago contado transferencia exitoso'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta 'guarda exitosamente'&#xD;
+-&gt; skipped because of previous errors</StdOut>
+        <ErrorInfo>
+          <Message>Reqnroll.BindingException : Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Contado' 'false' 'transferencia_fondos' 'NA' 'NA' 'BCP|SOL|1912490779081' 'OP700' '700.00' 'NA' 'NA' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)</Message>
+          <StackTrace>   at Reqnroll.Infrastructure.TestExecutionEngine.GetStepMatch(StepInstance stepInstance)&#xD;
+   at Reqnroll.Infrastructure.TestExecutionEngine.ExecuteStepAsync(IContextManager contextManager, StepInstance stepInstance)&#xD;
+   at Reqnroll.Infrastructure.TestExecutionEngine.OnAfterLastStepAsync()&#xD;
+   at Reqnroll.TestRunner.CollectScenarioErrorsAsync()&#xD;
+   at SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature.ScenarioCleanupAsync()&#xD;
+   at SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature.CP096RegistrarVentaConTotal700_00ConClienteVARIOS() in C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\Features\Ventas\ParticionEquivalente.feature:line 73&#xD;
+   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.GetResult()&#xD;
+   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)&#xD;
+   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.&lt;&gt;c__DisplayClass1_0.&lt;Execute&gt;b__0()&#xD;
+   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="ValidarFechaDeEmisionEnVentaPorContingencia_Caso(&quot;CP100&quot;,&quot;manana&quot;,&quot;inconsistencia: contingencia fecha futura&quot;,null)" storage="c:\users\abend\source\repos\pruebas_automatizadas\siges3_0\bin\debug\net9.0\siges3_0.dll" id="8de9bfe7-8006-a3a7-ad84-6aea83bedc74">
+      <Execution id="7c152292-9104-425e-a737-2c7762a7b5ac" />
+      <TestMethod codeBase="C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\bin\Debug\net9.0\SIGES3_0.dll" adapterTypeName="executor://nunit3testexecutor/" className="SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature" name="ValidarFechaDeEmisionEnVentaPorContingencia_Caso(&quot;CP100&quot;,&quot;manana&quot;,&quot;inconsistencia: contingencia fecha futura&quot;,null)" />
+    </UnitTest>
+    <UnitTest name="ValidarFechaDeCreditoEnNuevaVenta_Caso(&quot;CP094&quot;,&quot;manana&quot;,&quot;credito configurado exitoso&quot;,&quot;guarda exitosamente&quot;,null)" storage="c:\users\abend\source\repos\pruebas_automatizadas\siges3_0\bin\debug\net9.0\siges3_0.dll" id="d203dafb-46fe-84ab-6fd8-95dc9143d3af">
+      <Execution id="6e49d12d-bd43-4731-b7ce-aec97f898fd3" />
+      <TestMethod codeBase="C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\bin\Debug\net9.0\SIGES3_0.dll" adapterTypeName="executor://nunit3testexecutor/" className="SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature" name="ValidarFechaDeCreditoEnNuevaVenta_Caso(&quot;CP094&quot;,&quot;manana&quot;,&quot;credito configurado exitoso&quot;,&quot;guarda exitosamente&quot;,null)" />
+    </UnitTest>
+    <UnitTest name="ValidarFechaDeCreditoEnNuevaVenta_Caso(&quot;CP093&quot;,&quot;hoy&quot;,&quot;credito configurado exitoso&quot;,&quot;guarda exitosamente&quot;,null)" storage="c:\users\abend\source\repos\pruebas_automatizadas\siges3_0\bin\debug\net9.0\siges3_0.dll" id="8cbb8e58-28d0-bb7f-44ac-af5dd13b3b96">
+      <Execution id="d11e666c-da6e-44eb-b21f-534ab394e547" />
+      <TestMethod codeBase="C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\bin\Debug\net9.0\SIGES3_0.dll" adapterTypeName="executor://nunit3testexecutor/" className="SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature" name="ValidarFechaDeCreditoEnNuevaVenta_Caso(&quot;CP093&quot;,&quot;hoy&quot;,&quot;credito configurado exitoso&quot;,&quot;guarda exitosamente&quot;,null)" />
+    </UnitTest>
+    <UnitTest name="CP095RegistrarVentaConTotal699_00ConClienteVARIOS" storage="c:\users\abend\source\repos\pruebas_automatizadas\siges3_0\bin\debug\net9.0\siges3_0.dll" id="91e9e05a-b404-7105-213a-8fc30448e115">
+      <Execution id="d200ff37-e3cc-4da0-be3f-7e1f2998edf6" />
+      <TestMethod codeBase="C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\bin\Debug\net9.0\SIGES3_0.dll" adapterTypeName="executor://nunit3testexecutor/" className="SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature" name="CP095RegistrarVentaConTotal699_00ConClienteVARIOS" />
+    </UnitTest>
+    <UnitTest name="ValidarFechaDeCreditoEnNuevaVenta_Caso(&quot;CP092&quot;,&quot;ayer&quot;,&quot;-&quot;,&quot;inconsistencia: fecha de credito pasada&quot;,null)" storage="c:\users\abend\source\repos\pruebas_automatizadas\siges3_0\bin\debug\net9.0\siges3_0.dll" id="0f6ce9aa-4fb2-4250-5f0f-f020d49c4a04">
+      <Execution id="3f80a655-d2e6-405e-9403-57d43b0f2ca3" />
+      <TestMethod codeBase="C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\bin\Debug\net9.0\SIGES3_0.dll" adapterTypeName="executor://nunit3testexecutor/" className="SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature" name="ValidarFechaDeCreditoEnNuevaVenta_Caso(&quot;CP092&quot;,&quot;ayer&quot;,&quot;-&quot;,&quot;inconsistencia: fecha de credito pasada&quot;,null)" />
+    </UnitTest>
+    <UnitTest name="CP096RegistrarVentaConTotal700_00ConClienteVARIOS" storage="c:\users\abend\source\repos\pruebas_automatizadas\siges3_0\bin\debug\net9.0\siges3_0.dll" id="2faa28f4-ea30-cff7-ae36-b2dfc4522412">
+      <Execution id="3c2dc785-6ecc-4e49-b714-c2f88a20f244" />
+      <TestMethod codeBase="C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\bin\Debug\net9.0\SIGES3_0.dll" adapterTypeName="executor://nunit3testexecutor/" className="SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature" name="CP096RegistrarVentaConTotal700_00ConClienteVARIOS" />
+    </UnitTest>
+    <UnitTest name="ValidarFechaDeEmisionEnVentaPorContingencia_Caso(&quot;CP099&quot;,&quot;hoy&quot;,&quot;guarda exitosamente&quot;,null)" storage="c:\users\abend\source\repos\pruebas_automatizadas\siges3_0\bin\debug\net9.0\siges3_0.dll" id="2f0434bf-59e7-badf-db04-176653679c6c">
+      <Execution id="a0efaa20-ecdd-4038-974b-ec0c3e57c8e8" />
+      <TestMethod codeBase="C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\bin\Debug\net9.0\SIGES3_0.dll" adapterTypeName="executor://nunit3testexecutor/" className="SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature" name="ValidarFechaDeEmisionEnVentaPorContingencia_Caso(&quot;CP099&quot;,&quot;hoy&quot;,&quot;guarda exitosamente&quot;,null)" />
+    </UnitTest>
+    <UnitTest name="CP097ValidarInconsistenciaConTotal701_00YClienteVARIOS" storage="c:\users\abend\source\repos\pruebas_automatizadas\siges3_0\bin\debug\net9.0\siges3_0.dll" id="0dc7a3ba-00eb-d035-b25f-545069a0a639">
+      <Execution id="a4f72aee-5676-48da-bd9a-5483824d80f3" />
+      <TestMethod codeBase="C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\bin\Debug\net9.0\SIGES3_0.dll" adapterTypeName="executor://nunit3testexecutor/" className="SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature" name="CP097ValidarInconsistenciaConTotal701_00YClienteVARIOS" />
+    </UnitTest>
+    <UnitTest name="ValidarFechaDeEmisionEnVentaPorContingencia_Caso(&quot;CP098&quot;,&quot;ayer&quot;,&quot;guarda exitosamente&quot;,null)" storage="c:\users\abend\source\repos\pruebas_automatizadas\siges3_0\bin\debug\net9.0\siges3_0.dll" id="dc84bf00-de42-48db-960d-7f1d98d51856">
+      <Execution id="5c57115f-2142-44a6-aa73-db001e43dd01" />
+      <TestMethod codeBase="C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\bin\Debug\net9.0\SIGES3_0.dll" adapterTypeName="executor://nunit3testexecutor/" className="SIGES3_0.Features.Ventas.ParticionEquivalenteNuevaVentaFeature" name="ValidarFechaDeEmisionEnVentaPorContingencia_Caso(&quot;CP098&quot;,&quot;ayer&quot;,&quot;guarda exitosamente&quot;,null)" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="8cbb8e58-28d0-bb7f-44ac-af5dd13b3b96" executionId="d11e666c-da6e-44eb-b21f-534ab394e547" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="91e9e05a-b404-7105-213a-8fc30448e115" executionId="d200ff37-e3cc-4da0-be3f-7e1f2998edf6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2f0434bf-59e7-badf-db04-176653679c6c" executionId="a0efaa20-ecdd-4038-974b-ec0c3e57c8e8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0f6ce9aa-4fb2-4250-5f0f-f020d49c4a04" executionId="3f80a655-d2e6-405e-9403-57d43b0f2ca3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8de9bfe7-8006-a3a7-ad84-6aea83bedc74" executionId="7c152292-9104-425e-a737-2c7762a7b5ac" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0dc7a3ba-00eb-d035-b25f-545069a0a639" executionId="a4f72aee-5676-48da-bd9a-5483824d80f3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="dc84bf00-de42-48db-960d-7f1d98d51856" executionId="5c57115f-2142-44a6-aa73-db001e43dd01" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d203dafb-46fe-84ab-6fd8-95dc9143d3af" executionId="6e49d12d-bd43-4731-b7ce-aec97f898fd3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2faa28f4-ea30-cff7-ae36-b2dfc4522412" executionId="3c2dc785-6ecc-4e49-b714-c2f88a20f244" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Resultados sin formato de lista" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="Todos los resultados cargados" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="9" executed="9" passed="0" failed="9" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>NUnit Adapter 4.5.0.0: Test execution started&#xD;
+Running selected tests in C:\Users\abend\source\repos\Pruebas_Automatizadas\SIGES3_0\bin\Debug\net9.0\SIGES3_0.dll&#xD;
+   NUnit3TestExecutor discovered 9 of 9 NUnit test cases using Current Discovery mode, Non-Explicit run&#xD;
+NUnit Adapter 4.5.0.0: Test execution complete&#xD;
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="LAPTOP-GB5NOPFT" outcome="Warning" timestamp="2026-05-13T15:37:13.5343652-05:00">
+        <Text>Running before feature...&#xD;
+Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (5.1s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesiÃ³n con usuario 'pamela.tone@recsa.com' y contraseÃ±a 'calidad'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario inicia sesiÃ³n con usuario {string} y contraseÃ±a {string}")]&#xD;
+public void WhenElUsuarioIniciaSesiANConUsuarioYContraseAA(string p0, string calidad)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al mÃ³dulo 'Ventas'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario accede al mÃ³dulo {string}")]&#xD;
+public void WhenElUsuarioAccedeAlMADulo(string ventas)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When selecciona el modo de venta "VENTA NORMAL"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Plantas'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto 'PLANTAS PL (P.U. 100.00)'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '6'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Plantas'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto 'PLANTAS PL (P.U. 1.00)'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '99'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '00000000'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Contado' 'false' 'transferencia_fondos' 'NA' 'NA' 'BCP|SOL|1912490779081' 'OP699' '699.00' 'NA' 'NA' 'NA'&#xD;
+-&gt; binding error: Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Contado' 'false' 'transferencia_fondos' 'NA' 'NA' 'BCP|SOL|1912490779081' 'OP699' '699.00' 'NA' 'NA' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)&#xD;
+Then el sistema valida el resultado del pago en nueva venta 'pago contado transferencia exitoso'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta 'guarda exitosamente'&#xD;
+-&gt; skipped because of previous errors&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-GB5NOPFT" outcome="Warning" timestamp="2026-05-13T15:37:20.5459904-05:00">
+        <Text>Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (5.1s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesiÃ³n con usuario 'pamela.tone@recsa.com' y contraseÃ±a 'calidad'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario inicia sesiÃ³n con usuario {string} y contraseÃ±a {string}")]&#xD;
+public void WhenElUsuarioIniciaSesiANConUsuarioYContraseAA(string p0, string calidad1)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al mÃ³dulo 'Ventas'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario accede al mÃ³dulo {string}")]&#xD;
+public void WhenElUsuarioAccedeAlMADulo(string ventas0)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When selecciona el modo de venta "VENTA NORMAL"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Plantas'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto 'PLANTAS PL (P.U. 100.00)'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '7'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '00000000'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Contado' 'false' 'transferencia_fondos' 'NA' 'NA' 'BCP|SOL|1912490779081' 'OP700' '700.00' 'NA' 'NA' 'NA'&#xD;
+-&gt; binding error: Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Contado' 'false' 'transferencia_fondos' 'NA' 'NA' 'BCP|SOL|1912490779081' 'OP700' '700.00' 'NA' 'NA' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)&#xD;
+Then el sistema valida el resultado del pago en nueva venta 'pago contado transferencia exitoso'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta 'guarda exitosamente'&#xD;
+-&gt; skipped because of previous errors&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-GB5NOPFT" outcome="Warning" timestamp="2026-05-13T15:37:27.0577157-05:00">
+        <Text>Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (4.9s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesiÃ³n con usuario 'pamela.tone@recsa.com' y contraseÃ±a 'calidad'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario inicia sesiÃ³n con usuario {string} y contraseÃ±a {string}")]&#xD;
+public void WhenElUsuarioIniciaSesiANConUsuarioYContraseAA(string p0, string calidad1)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al mÃ³dulo 'Ventas'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario accede al mÃ³dulo {string}")]&#xD;
+public void WhenElUsuarioAccedeAlMADulo(string ventas0)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When selecciona el modo de venta "VENTA NORMAL"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Plantas'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto 'PLANTAS PL (P.U. 100.00)'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '7'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Plantas'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto 'PLANTAS PL (P.U. 1.00)'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '1'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '00000000'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Contado' 'false' 'transferencia_fondos' 'NA' 'NA' 'BCP|SOL|1912490779081' 'OP701' '701.00' 'NA' 'NA' 'NA'&#xD;
+-&gt; binding error: Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Contado' 'false' 'transferencia_fondos' 'NA' 'NA' 'BCP|SOL|1912490779081' 'OP701' '701.00' 'NA' 'NA' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta 'inconsistencia: identificar cliente'&#xD;
+-&gt; skipped because of previous errors&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-GB5NOPFT" outcome="Warning" timestamp="2026-05-13T15:37:33.6550203-05:00">
+        <Text>Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (5.1s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesiÃ³n con usuario 'pamela.tone@recsa.com' y contraseÃ±a 'calidad'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario inicia sesiÃ³n con usuario {string} y contraseÃ±a {string}")]&#xD;
+public void WhenElUsuarioIniciaSesiANConUsuarioYContraseAA(string p0, string calidad1)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al mÃ³dulo 'Ventas'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario accede al mÃ³dulo {string}")]&#xD;
+public void WhenElUsuarioAccedeAlMADulo(string ventas0)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When selecciona el modo de venta "VENTA NORMAL"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Gaseosa'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto '7753234003313'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '2'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Credito' 'false' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '2' '4.20' 'NA'&#xD;
+-&gt; binding error: Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Credito' 'false' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '2' '4.20' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)&#xD;
+Then el sistema valida el resultado del pago en nueva venta "-"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And ingresa la fecha de credito "ayer"&#xD;
+-&gt; skipped because of previous errors&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta "inconsistencia: fecha de credito pasada"&#xD;
+-&gt; skipped because of previous errors&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-GB5NOPFT" outcome="Warning" timestamp="2026-05-13T15:37:40.0659143-05:00">
+        <Text>Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (4.9s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesiÃ³n con usuario 'pamela.tone@recsa.com' y contraseÃ±a 'calidad'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario inicia sesiÃ³n con usuario {string} y contraseÃ±a {string}")]&#xD;
+public void WhenElUsuarioIniciaSesiANConUsuarioYContraseAA(string p0, string calidad1)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al mÃ³dulo 'Ventas'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario accede al mÃ³dulo {string}")]&#xD;
+public void WhenElUsuarioAccedeAlMADulo(string ventas0)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When selecciona el modo de venta "VENTA NORMAL"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Gaseosa'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto '7753234003313'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '2'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Credito' 'false' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '2' '4.20' 'NA'&#xD;
+-&gt; binding error: Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Credito' 'false' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '2' '4.20' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)&#xD;
+Then el sistema valida el resultado del pago en nueva venta "credito configurado exitoso"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And ingresa la fecha de credito "hoy"&#xD;
+-&gt; skipped because of previous errors&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta "guarda exitosamente"&#xD;
+-&gt; skipped because of previous errors&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-GB5NOPFT" outcome="Warning" timestamp="2026-05-13T15:37:46.3195842-05:00">
+        <Text>Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (4.7s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesiÃ³n con usuario 'pamela.tone@recsa.com' y contraseÃ±a 'calidad'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario inicia sesiÃ³n con usuario {string} y contraseÃ±a {string}")]&#xD;
+public void WhenElUsuarioIniciaSesiANConUsuarioYContraseAA(string p0, string calidad1)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al mÃ³dulo 'Ventas'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario accede al mÃ³dulo {string}")]&#xD;
+public void WhenElUsuarioAccedeAlMADulo(string ventas0)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When selecciona el modo de venta "VENTA NORMAL"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Gaseosa'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto '7753234003313'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '2'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Credito' 'false' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '2' '4.20' 'NA'&#xD;
+-&gt; binding error: Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Credito' 'false' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '2' '4.20' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)&#xD;
+Then el sistema valida el resultado del pago en nueva venta "credito configurado exitoso"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And ingresa la fecha de credito "manana"&#xD;
+-&gt; skipped because of previous errors&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta "guarda exitosamente"&#xD;
+-&gt; skipped because of previous errors&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-GB5NOPFT" outcome="Warning" timestamp="2026-05-13T15:37:53.0840376-05:00">
+        <Text>Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (5.0s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesiÃ³n con usuario 'pamela.tone@recsa.com' y contraseÃ±a 'calidad'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario inicia sesiÃ³n con usuario {string} y contraseÃ±a {string}")]&#xD;
+public void WhenElUsuarioIniciaSesiANConUsuarioYContraseAA(string p0, string calidad1)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al mÃ³dulo 'Ventas'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario accede al mÃ³dulo {string}")]&#xD;
+public void WhenElUsuarioAccedeAlMADulo(string ventas0)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When selecciona el modo de venta "VENTA POR CONTINGENCIA"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Gaseosa'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto '7753234003313'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '2'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '00000000'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And ingresa la fecha de emision "ayer"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Contado' 'false' 'efectivo' 'NA' 'NA' 'NA' 'NA' '20' 'NA' 'NA' 'NA'&#xD;
+-&gt; binding error: Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Contado' 'false' 'efectivo' 'NA' 'NA' 'NA' 'NA' '20' 'NA' 'NA' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)&#xD;
+Then el sistema valida el resultado del pago en nueva venta 'pago contado efectivo con vuelto exitoso'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta "guarda exitosamente"&#xD;
+-&gt; skipped because of previous errors&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-GB5NOPFT" outcome="Warning" timestamp="2026-05-13T15:37:59.3252809-05:00">
+        <Text>Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (4.7s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesiÃ³n con usuario 'pamela.tone@recsa.com' y contraseÃ±a 'calidad'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario inicia sesiÃ³n con usuario {string} y contraseÃ±a {string}")]&#xD;
+public void WhenElUsuarioIniciaSesiANConUsuarioYContraseAA(string p0, string calidad1)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al mÃ³dulo 'Ventas'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario accede al mÃ³dulo {string}")]&#xD;
+public void WhenElUsuarioAccedeAlMADulo(string ventas0)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When selecciona el modo de venta "VENTA POR CONTINGENCIA"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Gaseosa'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto '7753234003313'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '2'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '00000000'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And ingresa la fecha de emision "hoy"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Contado' 'false' 'efectivo' 'NA' 'NA' 'NA' 'NA' '20' 'NA' 'NA' 'NA'&#xD;
+-&gt; binding error: Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Contado' 'false' 'efectivo' 'NA' 'NA' 'NA' 'NA' '20' 'NA' 'NA' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)&#xD;
+Then el sistema valida el resultado del pago en nueva venta 'pago contado efectivo con vuelto exitoso'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta "guarda exitosamente"&#xD;
+-&gt; skipped because of previous errors&#xD;
+</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-GB5NOPFT" outcome="Warning" timestamp="2026-05-13T15:38:06.0232284-05:00">
+        <Text>Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'&#xD;
+-&gt; done: LoginFeatureStepDefinitions.GivenElUsuarioIngresaAlAmbiente("https://sigesdev....") (5.1s)&#xD;
+Running after step...&#xD;
+When el usuario inicia sesiÃ³n con usuario 'pamela.tone@recsa.com' y contraseÃ±a 'calidad'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario inicia sesiÃ³n con usuario {string} y contraseÃ±a {string}")]&#xD;
+public void WhenElUsuarioIniciaSesiANConUsuarioYContraseAA(string p0, string calidad1)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al mÃ³dulo 'Ventas'&#xD;
+-&gt; No matching step definition found for the step. Use the following code to create one:&#xD;
+        [When("el usuario accede al mÃ³dulo {string}")]&#xD;
+public void WhenElUsuarioAccedeAlMADulo(string ventas0)&#xD;
+{&#xD;
+    _scenarioContext.Pending();&#xD;
+}&#xD;
+&#xD;
+And el usuario accede al submodulo 'Nueva Venta'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When selecciona el modo de venta "VENTA POR CONTINGENCIA"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura IGV "N" y Detalle Unificado "N"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario selecciona la familia 'Gaseosa'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario selecciona el concepto '7753234003313'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And usuario ingresa la cantidad '2'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '00000000'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And ingresa la fecha de emision "manana"&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura la entrega 'Inmediata' 'false'&#xD;
+-&gt; skipped because of previous errors&#xD;
+And el usuario configura los medios de pago 'Contado' 'false' 'efectivo' 'NA' 'NA' 'NA' 'NA' '20' 'NA' 'NA' 'NA'&#xD;
+-&gt; binding error: Ambiguous step definitions found for step 'When el usuario configura los medios de pago 'Contado' 'false' 'efectivo' 'NA' 'NA' 'NA' 'NA' '20' 'NA' 'NA' 'NA'': SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(String, String, String, String, String, String, String, String, String, String), SIGES3_0:SIGES3_0.StepDefinitions.VentasStep.NuevaVentaStepDefinitions.WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(String, String, String, String, String, String, String, String, String, String, String)&#xD;
+Then el sistema valida el resultado del pago en nueva venta 'pago contado efectivo con vuelto exitoso'&#xD;
+-&gt; skipped because of previous errors&#xD;
+When hace clic en Guardar&#xD;
+-&gt; skipped because of previous errors&#xD;
+Then el sistema valida el resultado de venta "inconsistencia: contingencia fecha futura"&#xD;
+-&gt; skipped because of previous errors&#xD;
+</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

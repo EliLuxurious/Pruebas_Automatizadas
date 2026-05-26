@@ -28,9 +28,9 @@ namespace SIGES3_0.Features.Items.TablesofDecision_Items.RegisterItemData.Presen
         
         private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), ("Features/Items/TablesofDecision-Items/RegisterItemData/Presentation/EditPresentat" +
-                "ion"), "TablesofDecisionEditPresentationFeature1", ("Editar la Presentación de forma válida e inválida usando la técnica de Tablas de " +
-                "Decisiones"), global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Items/TablesofDecision-Items/RegisterItemData/Presentation/EditPresentat" +
+                "ion", "TablesofDecisionEditPresentationFeature1", "Editar la Presentación de forma válida e inválida usando la técnica de Tablas de " +
+                "Decisiones", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
 #line 1 "TablesofDecisionEditPresentationFeature1.feature"
 #line hidden
@@ -88,12 +88,12 @@ namespace SIGES3_0.Features.Items.TablesofDecision_Items.RegisterItemData.Presen
 #line 5
 #line hidden
 #line 6
-await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                    "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                    "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 7
-await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                    "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                    "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 8
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -138,12 +138,12 @@ await testRunner.AndAsync("el usuario ingresa el codigo de presentación \" 1\""
 #line 18
 await testRunner.AndAsync("el usuario guarda los cambios al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table9 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table137 = new global::Reqnroll.Table(new string[] {
                             "NombreConcepto"});
-                table9.AddRow(new string[] {
+                table137.AddRow(new string[] {
                             "Gaseosa de Naranja INKA COLA Frasco 3 L"});
 #line 19
-await testRunner.AndAsync("el usuario elimina los siguientes conceptos:", ((string)(null)), table9, "And ");
+await testRunner.AndAsync("el usuario elimina los siguientes conceptos:", ((string)(null)), table137, "And ");
 #line hidden
 #line 22
 await testRunner.AndAsync("el usuario aplica los cambios al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

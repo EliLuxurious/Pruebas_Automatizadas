@@ -498,6 +498,7 @@ namespace SIGES3_0.Pages.VentasPage
             {
                 waitCorto.Until(d =>
                     d.FindElements(VentasLocators.AjusteComprobante.MensajeExito).Any(Visible) ||
+                    !string.IsNullOrWhiteSpace(ObtenerTextoModalResultado()) ||
                     !d.FindElements(By.XPath("//div[contains(normalize-space(),'Ajuste de Comprobante')]")).Any(Visible));
             }
             catch (WebDriverTimeoutException) { }
@@ -507,14 +508,26 @@ namespace SIGES3_0.Pages.VentasPage
             bool hayExito = mensajeExito != null;
             string textoExito = ResumirTextoResultado(mensajeExito?.Text);
 
-            bool modalCerrado = !_driver.FindElements(
-                By.XPath("//div[contains(normalize-space(),'Ajuste de Comprobante')]"))
-                .Any(Visible);
+            var modalAjuste = _driver.FindElements(By.XPath("//div[contains(normalize-space(),'Ajuste de Comprobante')]"))
+                .FirstOrDefault(Visible);
+            bool modalCerrado = modalAjuste == null;
+            string textoModalResultado = ObtenerTextoModalResultado();
 
             Console.WriteLine(
-                $"[Ajuste][Exito] hayExito={hayExito}, modalCerrado={modalCerrado}, mensaje='{textoExito}'.");
+                $"[Ajuste][Exito] hayExito={hayExito}, modalCerrado={modalCerrado}, mensaje='{textoExito}', modalResultado='{textoModalResultado}'.");
             if (hayExito || modalCerrado)
                 Console.WriteLine("[Ajuste][ResultadoFinal] Ajuste con evidencia de éxito detectada.");
+
+            if (hayExito || modalCerrado)
+            {
+                CerrarPopupSiExiste();
+                return;
+            }
+
+            if (!string.IsNullOrWhiteSpace(textoModalResultado))
+                Assert.Fail($"No se genero el comprobante de ajuste. Modal de resultado: '{textoModalResultado}'.");
+
+            Assert.Fail("No se genero el comprobante de ajuste. No se detecto modal, toast ni alerta de resultado; el modal de ajuste siguio abierto.");
 
             Assert.IsTrue(hayExito || modalCerrado,
                 "No se detectó confirmación de éxito ni cierre del modal de ajuste.");
@@ -778,6 +791,145 @@ namespace SIGES3_0.Pages.VentasPage
                 $"No se esperaba ver la opción '{opcion}' en el modal ajustes de comprobante.");
         }
 
+        public void VerificarModalClonarVisible()
+        {
+            bool visible = _driver.FindElements(VentasLocators.AjusteComprobante.ModalClonar)
+                .Any(Visible);
+
+            Assert.IsTrue(visible, "Se esperaba visualizar el modal 'Clonar venta'.");
+        }
+
+        public void SeleccionarPestanaModoClonar(string modo)
+        {
+            var tab = _wait.Until(d =>
+                d.FindElements(VentasLocators.AjusteComprobante.PestanaModoClonar(modo))
+                    .FirstOrDefault(Visible));
+
+            if (tab == null)
+                Assert.Fail($"No se encontro la pestaña '{modo}' en el modal Clonar venta.");
+
+            ScrollTo(tab);
+            ClickSeguro(tab);
+            Thread.Sleep(800);
+        }
+
+        public void ModificarCantidadPrimerItemClonar(string cantidad)
+        {
+            var input = _wait.Until(ExpectedConditions.ElementToBeClickable(
+                VentasLocators.AjusteComprobante.CantidadPrimerItemClonar));
+
+            ScrollTo(input);
+            input.SendKeys(Keys.Control + "a");
+            input.SendKeys(Keys.Delete);
+            input.SendKeys(cantidad);
+            input.SendKeys(Keys.Tab);
+            Thread.Sleep(800);
+        }
+
+        public void SeleccionarEntregaClonar(string tipo)
+        {
+            bool opcionesVisibles = _driver.FindElements(VentasLocators.AjusteComprobante.EntregaInmediataClonar).Any(Visible)
+                || _driver.FindElements(VentasLocators.AjusteComprobante.EntregaDiferidaClonar).Any(Visible);
+
+            if (!opcionesVisibles)
+            {
+                var seccion = _driver.FindElements(VentasLocators.AjusteComprobante.SeccionEntregaClonar)
+                    .FirstOrDefault(Visible);
+
+                if (seccion != null)
+                {
+                    ScrollTo(seccion);
+                    ClickSeguro(seccion);
+                    Thread.Sleep(600);
+                }
+            }
+
+            By locator = tipo.Trim().Equals("Diferida", StringComparison.OrdinalIgnoreCase)
+                ? VentasLocators.AjusteComprobante.EntregaDiferidaClonar
+                : VentasLocators.AjusteComprobante.EntregaInmediataClonar;
+
+            var opcion = _wait.Until(d => d.FindElements(locator).FirstOrDefault(Visible));
+            if (opcion == null)
+                Assert.Fail($"No se encontro la entrega '{tipo}' en el modal Clonar venta.");
+
+            ScrollTo(opcion);
+            ClickSeguro(opcion);
+            Thread.Sleep(800);
+        }
+
+        public void ClickClonarVenta()
+        {
+            var boton = _wait.Until(d =>
+                d.FindElements(VentasLocators.AjusteComprobante.BotonClonarVenta)
+                    .FirstOrDefault(Visible));
+
+            if (boton == null)
+                Assert.Fail("No se encontro el boton 'Clonar venta' en el modal.");
+
+            ScrollTo(boton);
+            ClickSeguro(boton);
+            Thread.Sleep(1500);
+        }
+
+        public void VerificarClonacionExitosa()
+        {
+            Thread.Sleep(2000);
+
+            bool hayExito = _driver.FindElements(VentasLocators.AjusteComprobante.MensajeExito)
+                .Any(Visible);
+            bool modalCerrado = !_driver.FindElements(VentasLocators.AjusteComprobante.ModalClonar)
+                .Any(Visible);
+
+            Console.WriteLine($"[Clonar][Resultado] hayExito={hayExito}, modalCerrado={modalCerrado}.");
+
+            Assert.IsTrue(
+                hayExito || modalCerrado,
+                "No se detecto confirmacion de exito ni cierre del modal Clonar venta.");
+        }
+
+        private string ObtenerTextoModalResultado()
+        {
+            var selectoresResultado = new[]
+            {
+                ".swal2-popup",
+                ".toast, .toast-message, .toast-error, .toast-warning, .toast-success",
+                ".alert-danger, .alert-warning, .alert-success"
+            };
+
+            foreach (var selector in selectoresResultado)
+            {
+                var texto = _driver.FindElements(By.CssSelector(selector))
+                    .Where(Visible)
+                    .Select(e => ResumirTextoResultado(e.Text))
+                    .FirstOrDefault(TextoPareceResultado);
+
+                if (!string.IsNullOrWhiteSpace(texto))
+                    return texto;
+            }
+
+            return string.Empty;
+        }
+
+        private static bool TextoPareceResultado(string? texto)
+        {
+            if (string.IsNullOrWhiteSpace(texto))
+                return false;
+
+            if (texto.Length > 500)
+                return false;
+
+            return texto.Contains("Correcto", StringComparison.OrdinalIgnoreCase) ||
+                   texto.Contains("Error", StringComparison.OrdinalIgnoreCase) ||
+                   texto.Contains("exito", StringComparison.OrdinalIgnoreCase) ||
+                   texto.Contains("exitos", StringComparison.OrdinalIgnoreCase) ||
+                   texto.Contains("registro correctamente", StringComparison.OrdinalIgnoreCase) ||
+                   texto.Contains("generado correctamente", StringComparison.OrdinalIgnoreCase) ||
+                   texto.Contains("Es necesario", StringComparison.OrdinalIgnoreCase) ||
+                   texto.Contains("Complete los campos", StringComparison.OrdinalIgnoreCase) ||
+                   texto.Contains("no permite", StringComparison.OrdinalIgnoreCase) ||
+                   texto.Contains("monto de nota", StringComparison.OrdinalIgnoreCase);
+        }
+
         private static string ResumirTextoResultado(string? texto)
         {
             if (string.IsNullOrWhiteSpace(texto))
@@ -867,6 +1019,8 @@ namespace SIGES3_0.Pages.VentasPage
                         "//select[@id='tipoNotaDeCredito'] | " +
                         "//*[contains(@class,'select-trigger')][contains(normalize-space(),'Selecciona un tipo de nota')]"))
                     .Any(Visible),
+                "clonar" =>
+                    _driver.FindElements(VentasLocators.AjusteComprobante.ModalClonar).Any(Visible),
                 _ => false
             };
         }
@@ -964,6 +1118,9 @@ namespace SIGES3_0.Pages.VentasPage
                             "//select[@id='tipoNotaDeCredito'] | " +
                             "//*[contains(@class,'select-trigger')][contains(normalize-space(),'Selecciona un tipo de nota')]"))
                         .Any(Visible));
+                    break;
+                case "clonar":
+                    _wait.Until(d => d.FindElements(VentasLocators.AjusteComprobante.ModalClonar).Any(Visible));
                     break;
             }
         }

@@ -14,6 +14,17 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             nuevaVentaPage = new NuevaVentaPage(driver);
         }
 
+        [Given("configura la precondicion del concepto vendible para nueva venta:")]
+        [When("configura la precondicion del concepto vendible para nueva venta:")]
+        public void GivenConfiguraLaPrecondicionDelConceptoVendibleParaNuevaVenta(Table table) =>
+            nuevaVentaPage.ConfigurarPrecondicionConceptoVendibleParaNuevaVenta(
+                table.Rows.ToDictionary(row => row["Campo"], row => row["Valor"]));
+
+        [Given("existe un concepto vendible para nueva venta con familia {string} concepto {string} y stock minimo {string}")]
+        [When("existe un concepto vendible para nueva venta con familia {string} concepto {string} y stock minimo {string}")]
+        public void GivenExisteUnConceptoVendibleParaNuevaVenta(string familia, string concepto, string stockMinimo) =>
+            nuevaVentaPage.AsegurarConceptoVendibleParaNuevaVenta(familia, concepto, stockMinimo);
+
         // ─── MODO DE VENTA ────────────────────────────────────────────────────────────
 
         [StepDefinition("selecciona el modo de venta {string}")]
@@ -24,6 +35,10 @@ namespace SIGES3_0.StepDefinitions.VentasStep
         public void WhenIngresaLaFechaDeEmision(string fecha) =>
             nuevaVentaPage.SetFechaEmisionFlow(fecha);
 
+        [StepDefinition("ingresa la fecha de credito {string}")]
+        public void WhenIngresaLaFechaDeCredito(string fecha) =>
+            nuevaVentaPage.SetFechaCreditoFlow(fecha);
+
         // ─── DETALLE ─────────────────────────────────────────────────────────────────
 
         [StepDefinition("configura IGV {string} y Detalle Unificado {string}")]
@@ -31,6 +46,33 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             nuevaVentaPage.ConfigurarIgvDetUnif(igv, detUnificado);
 
         // ─── FACTURACIÓN ─────────────────────────────────────────────────────────────
+
+        [Scope(Tag = "NuevaVenta")]
+        [When("el usuario selecciona la familia preparada para nueva venta")]
+        public void WhenElUsuarioSeleccionaLaFamiliaPreparadaParaNuevaVenta() =>
+            nuevaVentaPage.SeleccionarFamiliaPreparadaParaNuevaVenta();
+
+        [Scope(Tag = "NuevaVenta")]
+        [When("el usuario selecciona el concepto preparado para nueva venta")]
+        public void WhenElUsuarioSeleccionaElConceptoPreparadoParaNuevaVenta() =>
+            nuevaVentaPage.SeleccionarConceptoPreparadoParaNuevaVenta();
+
+        [Scope(Tag = "NuevaVenta")]
+        [When(@"el usuario selecciona la familia '(.*)'")]
+        public void WhenElUsuarioSeleccionaLaFamiliaNuevaVenta(string familia) =>
+            nuevaVentaPage.SeleccionarFamiliaNuevaVenta(familia);
+
+        [Scope(Tag = "NuevaVenta")]
+        [When(@"el usuario selecciona el concepto '(.*)'")]
+        [When(@"usuario selecciona el concepto '(.*)'")]
+        public void WhenElUsuarioSeleccionaElConceptoNuevaVenta(string concepto) =>
+            nuevaVentaPage.SeleccionarConceptoNuevaVenta(concepto);
+
+        [Scope(Tag = "NuevaVenta")]
+        [When(@"el usuario ingresa la cantidad '(.*)'")]
+        [When(@"usuario ingresa la cantidad '(.*)'")]
+        public void WhenElUsuarioIngresaLaCantidadNuevaVenta(string cantidad) =>
+            nuevaVentaPage.IngresarCantidadNuevaVenta(cantidad);
 
         [StepDefinition("selecciona el punto de venta {string}")]
         public void WhenSeleccionaElPuntoDeVenta(string puntoVenta) =>
@@ -69,6 +111,32 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             nuevaVentaPage.ConfigurePaymentFlow(pago);
 
         // Reutiliza el contrato declarativo de medios de pago sin tocar Pedido.
+        [Scope(Tag = "NuevaVenta")]
+        [When(@"el usuario configura los medios de pago '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)'")]
+        public void WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(
+            string tipoPago,
+            string multipago,
+            string medioPago,
+            string banco,
+            string tarjeta,
+            string cuentaBancaria,
+            string nroOperacion,
+            string montoPorMedio,
+            string nroCuotas,
+            string montoInicialCredito) =>
+            nuevaVentaPage.ConfigurarMediosDePagoNuevaVenta(
+                tipoPago,
+                multipago,
+                medioPago,
+                banco,
+                tarjeta,
+                cuentaBancaria,
+                nroOperacion,
+                montoPorMedio,
+                nroCuotas,
+                montoInicialCredito,
+                string.Empty);
+
         [Scope(Tag = "NuevaVenta")]
         [When(@"el usuario configura los medios de pago '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)'")]
         public void WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(

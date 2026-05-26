@@ -62,7 +62,8 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             _reportesPage.SeleccionarFamilia(familia);
         }
 
-        [When("selecciona la característica {string} en la tarjeta {string}")]
+        [When("selecciona la caracterÃ­stica {string} en la tarjeta {string}")]
+        [When("selecciona la caracteristica {string} en la tarjeta {string}")]
         public void WhenSeleccionaLaCaracteristicaEnLaTarjeta(string caracteristica, string tarjeta)
         {
             _reportesPage.SeleccionarCaracteristica(caracteristica, tarjeta);
@@ -120,7 +121,7 @@ namespace SIGES3_0.StepDefinitions.VentasStep
         [Then("el sistema genera el reporte exitosamente")]
         public void ThenElSistemaGeneraElReporteExitosamente()
         {
-            Assert.IsTrue(_reportesPage.VerificarReporteGenerado(), "El reporte no se genero exitosamente.");
+            _reportesPage.ValidarReporteGeneradoConContenidoYFechas();
         }
     }
 }

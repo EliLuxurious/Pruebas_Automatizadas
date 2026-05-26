@@ -22,8 +22,8 @@ Scenario Outline: ND por intereses por mora - <caso>
     And selecciona el modo de venta "VENTA NORMAL"
     And configura IGV "N" y Detalle Unificado "N"
     And el usuario selecciona la familia 'Gaseosa'
-    And el usuario selecciona el concepto '7753234003313'
-    And el usuario ingresa la cantidad '1'
+    And usuario selecciona el concepto '7753234003313'
+    And usuario ingresa la cantidad '1'
     And configura la facturacion 'FACTURA ELECTRONICA' 'F002' '20542245671'
     And el usuario configura la entrega 'Inmediata' 'false'
     And configura el pago "Contado"
@@ -43,9 +43,9 @@ Scenario Outline: ND por intereses por mora - <caso>
     Then el sistema genera el comprobante de ajuste exitosamente
 
     Examples:
-      | caso | motivo                     | interes | montoInicial | medioPago |
-      | ND01 | Interes por mora de prueba | 5.00    | 2.00         | Efectivo  |
-      | ND02 | Interes por mora sin inicial | 5.00  | -            | -         |
+      | caso | motivo                       | interes | montoInicial | medioPago |
+      | ND01 | Interes por mora de prueba   | 5.00    | 2.00         | Efectivo  |
+      | ND02 | Interes por mora sin inicial | 5.00    | -            | -         |
 
 @NotaDebito
 Scenario Outline: ND por aumento en el valor - <caso>
@@ -53,8 +53,8 @@ Scenario Outline: ND por aumento en el valor - <caso>
     And selecciona el modo de venta "VENTA NORMAL"
     And configura IGV "N" y Detalle Unificado "N"
     And el usuario selecciona la familia 'Gaseosa'
-    And el usuario selecciona el concepto '7753234003313'
-    And el usuario ingresa la cantidad '1'
+    And usuario selecciona el concepto '7753234003313'
+    And usuario ingresa la cantidad '1'
     And configura la facturacion 'FACTURA ELECTRONICA' 'F002' '20542245671'
     And el usuario configura la entrega 'Inmediata' 'false'
     And configura el pago "Contado"
@@ -99,8 +99,8 @@ Scenario Outline: NC por anulacion / devolucion total - <caso>
     And selecciona el modo de venta "VENTA NORMAL"
     And configura IGV "N" y Detalle Unificado "N"
     And el usuario selecciona la familia 'Gaseosa'
-    And el usuario selecciona el concepto '7753234003320'
-    And el usuario ingresa la cantidad '1'
+    And usuario selecciona el concepto '7753234003320'
+    And usuario ingresa la cantidad '1'
     And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'
     And el usuario configura la entrega '<entregaVenta>' 'false'
     And el usuario configura los medios de pago '<tipoPagoVenta>' 'false' '<medioPagoVenta>' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '<montoInicialVenta>' 'NA'
@@ -141,8 +141,8 @@ Scenario Outline: NC por descuento global - <caso>
     And selecciona el modo de venta "VENTA NORMAL"
     And configura IGV "N" y Detalle Unificado "N"
     And el usuario selecciona la familia 'Gaseosa'
-    And el usuario selecciona el concepto '7753234003313'
-    And el usuario ingresa la cantidad '1'
+    And usuario selecciona el concepto '7753234003313'
+    And usuario ingresa la cantidad '1'
     And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'
     And el usuario configura la entrega 'Inmediata' 'false'
     And el usuario configura los medios de pago '<tipoPagoVenta>' 'false' '<medioPagoVenta>' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '<montoInicialVenta>' 'NA'
@@ -175,8 +175,8 @@ Scenario Outline: NC por descuento por item - <caso>
     And selecciona el modo de venta "VENTA NORMAL"
     And configura IGV "N" y Detalle Unificado "N"
     And el usuario selecciona la familia 'Gaseosa'
-    And el usuario selecciona el concepto '7753234003313'
-    And el usuario ingresa la cantidad '2'
+    And usuario selecciona el concepto '7753234003313'
+    And usuario ingresa la cantidad '2'
     And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'
     And el usuario configura la entrega 'Inmediata' 'false'
     And el usuario configura los medios de pago '<tipoPagoVenta>' 'false' '<medioPagoVenta>' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '<montoInicialVenta>' 'NA'
@@ -207,8 +207,8 @@ Scenario Outline: NC por devolucion por item - <caso>
     And selecciona el modo de venta "VENTA NORMAL"
     And configura IGV "N" y Detalle Unificado "N"
     And el usuario selecciona la familia 'Gaseosa'
-    And el usuario selecciona el concepto '7753234003313'
-    And el usuario ingresa la cantidad '50'
+    And usuario selecciona el concepto '7753234003313'
+    And usuario ingresa la cantidad '50'
     And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'
     And el usuario configura la entrega '<entregaVenta>' 'false'
     And el usuario configura los medios de pago '<tipoPagoVenta>' 'false' '<medioPagoVenta>' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '<montoInicialVenta>' 'NA'
@@ -264,8 +264,8 @@ Scenario Outline: Invalidar venta dentro de plazo - <caso>
     And selecciona el modo de venta "VENTA NORMAL"
     And configura IGV "N" y Detalle Unificado "N"
     And el usuario selecciona la familia 'Gaseosa'
-    And el usuario selecciona el concepto '7753234003313'
-    And el usuario ingresa la cantidad '1'
+    And usuario selecciona el concepto '7753234003313'
+    And usuario ingresa la cantidad '1'
     And configura la facturacion '<comprobante>' '<serie>' '<docCliente>'
     And el usuario configura la entrega '<entregaVenta>' 'false'
     And el usuario configura los medios de pago '<tipoPagoVenta>' 'false' '<medioPagoVenta>' 'NA' 'NA' 'NA' 'NA' 'NA' 'NA' '<montoInicialVenta>' 'NA'
@@ -296,3 +296,50 @@ Scenario: CP105 Invalidar venta fuera de plazo
     And hace clic en consultar ventas
     And abre el modal ajustes de comprobante
     Then el sistema no muestra la opcion "Invalidar" en el modal ajustes de comprobante
+
+# ============================================================================
+# CLONAR VENTA
+# ============================================================================
+
+@ClonarVenta
+Scenario: CP107 Clonar una venta existente
+    When el usuario accede al submodulo 'Nueva Venta'
+    And selecciona el modo de venta "VENTA NORMAL"
+    And configura IGV "N" y Detalle Unificado "N"
+    And el usuario selecciona la familia 'Gaseosa'
+    And usuario selecciona el concepto '7753234003313'
+    And usuario ingresa la cantidad '1'
+    And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'
+    And el usuario configura la entrega 'Inmediata' 'false'
+    And configura el pago "Contado"
+    And hace clic en Guardar
+    When el usuario accede al submodulo 'Ver Ventas'
+    And abre el modal ajustes de comprobante
+    And selecciona la opcion "Clonar" del modal ajustes de comprobante
+    Then el sistema muestra el modal Clonar venta
+    When hace clic en Clonar venta
+    Then el sistema registra la venta clonada correctamente
+
+# CP108 - No se automatiza por ahora porque el modulo de promociones aun no existe en este flujo.
+
+@ClonarVenta
+Scenario: CP109 Clonar una venta y modificar datos
+    When el usuario accede al submodulo 'Nueva Venta'
+    And selecciona el modo de venta "VENTA NORMAL"
+    And configura IGV "N" y Detalle Unificado "N"
+    And el usuario selecciona la familia 'Gaseosa'
+    And usuario selecciona el concepto '7753234003313'
+    And usuario ingresa la cantidad '1'
+    And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'
+    And el usuario configura la entrega 'Inmediata' 'false'
+    And configura el pago "Contado"
+    And hace clic en Guardar
+    When el usuario accede al submodulo 'Ver Ventas'
+    And abre el modal ajustes de comprobante
+    And selecciona la opcion "Clonar" del modal ajustes de comprobante
+    Then el sistema muestra el modal Clonar venta
+    And selecciona la pestaña "VENTA NORMAL" en el modal Clonar venta
+    And modifica la cantidad a "2" en el modal Clonar venta
+    And selecciona la entrega "Diferida" en el modal Clonar venta
+    When hace clic en Clonar venta
+    Then el sistema registra la venta clonada correctamente

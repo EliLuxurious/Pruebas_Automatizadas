@@ -44,6 +44,44 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             SeleccionaLaOpcionDelModalAjustesDeComprobante(tab);
         }
 
+        [Then("el sistema muestra el modal Clonar venta")]
+        public void ThenElSistemaMuestraElModalClonarVenta()
+        {
+            LogResultadoEsperado("muestra el modal Clonar venta");
+            _ajustePage.VerificarModalClonarVisible();
+        }
+
+        [StepDefinition("selecciona la pestaña {string} en el modal Clonar venta")]
+        public void SeleccionaLaPestanaEnElModalClonarVenta(string modo)
+        {
+            _ajustePage.SeleccionarPestanaModoClonar(modo);
+        }
+
+        [StepDefinition("modifica la cantidad a {string} en el modal Clonar venta")]
+        public void ModificaLaCantidadEnElModalClonarVenta(string cantidad)
+        {
+            _ajustePage.ModificarCantidadPrimerItemClonar(cantidad);
+        }
+
+        [StepDefinition("selecciona la entrega {string} en el modal Clonar venta")]
+        public void SeleccionaLaEntregaEnElModalClonarVenta(string entrega)
+        {
+            _ajustePage.SeleccionarEntregaClonar(entrega);
+        }
+
+        [When("hace clic en Clonar venta")]
+        public void WhenHaceClicEnClonarVenta()
+        {
+            _ajustePage.ClickClonarVenta();
+        }
+
+        [Then("el sistema registra la venta clonada correctamente")]
+        public void ThenElSistemaRegistraLaVentaClonadaCorrectamente()
+        {
+            LogResultadoEsperado("registra la venta clonada correctamente");
+            _ajustePage.VerificarClonacionExitosa();
+        }
+
         [StepDefinition("selecciona tipo de nota de debito {string}")]
         public void SeleccionaTipoDeNotaDeDebito(string tipo)
         {

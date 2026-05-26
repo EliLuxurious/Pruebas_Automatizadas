@@ -156,10 +156,10 @@ await this.FeatureBackgroundAsync();
  await testRunner.WhenAsync(string.Format("el usuario selecciona la familia \'{0}\'", familia), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 21
- await testRunner.AndAsync(string.Format("el usuario selecciona el concepto \'{0}\'", concepto), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("usuario selecciona el concepto \'{0}\'", concepto), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 22
- await testRunner.AndAsync(string.Format("el usuario ingresa la cantidad \'{0}\'", cantidad), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("usuario ingresa la cantidad \'{0}\'", cantidad), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 23
  await testRunner.AndAsync(string.Format("el usuario activa IGV \'{0}\'", igv), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

@@ -13,19 +13,43 @@ Feature: Nueva Venta
     #   - Importe Total > 700 (Cantidad 150 × ~S/7 ≈ S/1 050)
     #   - Tipo de entrega: Inmediata / Diferida
     #   - Pago: Contado completo / Incompleto
-    #
-    # Acciones verificadas (columna ResultadoEsperado):
-    #   "guarda exitosamente"                      → Guardar habilitado y ejecutado
-    #   "inconsistencia: ruc requerido"             → Guardar deshabilitado (Factura + DNI)
-    #   "inconsistencia: identificar cliente"       → Guardar deshabilitado (Boleta + VARIOS + total > 700)
-    #   "pago no completado"                        → Guardar deshabilitado (pago insuficiente)
-    #   "inconsistencia: contingencia fuera plazo"  → Guardar deshabilitado (contingencia expirada)
 
     Background:
         Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'
         When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña 'calidad'
-        And el usuario accede al módulo 'Ventas'
-        And el usuario accede al submodulo 'Nueva Venta'
+
+        Given Navego al módulo de 'Adquisición'
+    And Entro al submódulo específico de 'Nueva Adquisición'
+
+    When Se configuran los datos de 'Facturación':
+      | Campo                 | Valor               |
+      | Documento             | FACTURA ELECTRONICA |
+      | Serie                 | F001                |
+      | Correlativo           | 00009991            |
+      | Fecha de emisión      | 04/03/2026          |
+      | Proveedor             | 10759012017         |
+      | Información Adicional | Precondición Inka Kola |
+
+    And Se selecciona el tipo de entrega 'Inmediata'
+    And Se configuran los datos de 'Entrega':
+      | Campo           | Valor                    |
+      | Rol             | Item Comercial           |
+      | Establecimiento | RECSA - CENTRAL          |
+      | Almacén         | CENTRO COMERCIAL CENTRAL |
+
+    And Se selecciona y configura el producto a adquirir:
+      | Producto                                        | Cantidad | V. U |
+      | 7753234003313\|Inca Kola Gaseosa Botella 1.5L   | 15      | 6.9  |
+
+    Then Se procede a guardar la adquisición mediante la acción 'SavePurchase'
+    And Se confirma el registro exitoso con el mensaje 'Se registró correctamente.'
+
+    When el usuario accede al módulo 'Ventas'
+    And el usuario accede al submodulo 'Nueva Venta'
+
+
+        #And el usuario accede al módulo 'Ventas'
+        #And el usuario accede al submodulo 'Nueva Venta'
 
     @NuevaVenta 
     @VentaNormalCaja
@@ -33,8 +57,8 @@ Feature: Nueva Venta
         When selecciona el modo de venta "<ModoVenta>"
         And configura IGV "<IGV>" y Detalle Unificado "<DetUnificado>"
         And el usuario selecciona la familia 'Gaseosa'
-        And el usuario selecciona el concepto '7753234003313'
-        And el usuario ingresa la cantidad '<Cantidad>'
+        And usuario selecciona el concepto '7753234003313'
+        And usuario ingresa la cantidad '<Cantidad>'
         And configura la facturacion '<Comprobante>' '<Serie>' '<Cliente>'
         And selecciona el punto de venta '<PuntoVenta>'
         And selecciona el vendedor '<Vendedor>'
@@ -58,8 +82,8 @@ Feature: Nueva Venta
         When selecciona el modo de venta "<ModoVenta>"
         And configura IGV "<IGV>" y Detalle Unificado "<DetUnificado>"
         And el usuario selecciona la familia 'Gaseosa'
-        And el usuario selecciona el concepto '7753234003313'
-        And el usuario ingresa la cantidad '<Cantidad>'
+        And usuario selecciona el concepto '7753234003313'
+        And usuario ingresa la cantidad '<Cantidad>'
         And selecciona el punto de venta '<PuntoVenta>'
         And selecciona el vendedor '<Vendedor>'
         And configura la facturacion '<Comprobante>' '<Serie>' '<Cliente>'
@@ -71,13 +95,17 @@ Feature: Nueva Venta
         And el usuario ingresa RUC transportista '<TransportistaRuc>'
         And el usuario ingresa licencia '<NumeroLicencia>'
         And el usuario ingresa placa '<NumeroPlaca>'
+        And el usuario selecciona direccion de origen '<direccion_origen>'
+        And el usuario selecciona detalle de direccion de origen '<detalle_origen>'
+        And el usuario selecciona direccion de destino '<direccion_destino>'
+        And el usuario selecciona detalle de direccion de destino '<detalle_destino>'
         And configura el pago "<Pago>"
         And hace clic en Guardar
         Then el sistema valida el resultado de venta "<ResultadoEsperado>"
         Examples:
-            | Caso  | ModoVenta       | IGV | DetUnificado | Cantidad | PuntoVenta      | Vendedor                  | Comprobante         | Serie | Cliente     | Entrega   | GuiaRemision | FechaTraslado | PesoBruto | Bultos | TipoTransporte | TransportistaRuc | NumeroLicencia | NumeroPlaca | Pago    | ResultadoEsperado             |
-            | CP-V1 | VENTA NORMAL    | Y   | Y            | 1        | -               | -                         | FACTURA ELECTRONICA | F002  | 75893616    | Inmediata | true         | NA            | NA        | NA     | NA             | NA               | NA             | NA          | Contado | inconsistencia: ruc requerido |
-            | CP-V2 | VENTA MODO CAJA | Y   | Y            | 1        | ALMACEN CENTRAL | FRANKLIN MARTINEZ HURTADO | FACTURA ELECTRONICA | F002  | 20542245671 | Inmediata | true         | 01/03/2026    | 100       | 10     | Publico        | 20602945589      | NA             | NA          | Contado | guarda exitosamente           |
+            | Caso  | ModoVenta       | IGV | DetUnificado | Cantidad | PuntoVenta      | Vendedor                  | Comprobante         | Serie | Cliente     | Entrega   | GuiaRemision | FechaTraslado | PesoBruto | Bultos | TipoTransporte | TransportistaRuc | NumeroLicencia | NumeroPlaca | direccion_origen          | detalle_origen | direccion_destino | detalle_destino | Pago    | ResultadoEsperado             |
+            | CP-V1 | VENTA NORMAL    | Y   | Y            | 1        | -               | -                         | FACTURA ELECTRONICA | F002  | 75893616    | Inmediata | true         | NA            | NA        | NA     | NA             | NA               | NA             | NA          | NA                        | NA             | NA                | NA              | Contado | inconsistencia: ruc requerido |
+            | CP-V2 | VENTA MODO CAJA | Y   | Y            | 1        | ALMACEN CENTRAL | FRANKLIN MARTINEZ HURTADO | FACTURA ELECTRONICA | F002  | 20542245671 | Inmediata | true         | 01/03/2026    | 100       | 10     | Publico        | 20602945589      | NA             | NA          | Huanuco-Leoncio-Rupa Rupa | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | Contado | guarda exitosamente           |
 
     @NuevaVenta  
     @VentaContingencia
@@ -85,8 +113,8 @@ Feature: Nueva Venta
         When selecciona el modo de venta "VENTA POR CONTINGENCIA"
         And configura IGV "false" y Detalle Unificado "false"
         And el usuario selecciona la familia 'Gaseosa'
-        And el usuario selecciona el concepto '7753234003313'
-        And el usuario ingresa la cantidad '150'
+        And usuario selecciona el concepto '7753234003313'
+        And usuario ingresa la cantidad '150'
         And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'
         And ingresa la fecha de emision "<FechaEmision>"
         And el usuario configura la entrega '<Entrega>' '<GuiaRemision>'
@@ -104,8 +132,8 @@ Feature: Nueva Venta
         When selecciona el modo de venta "VENTA NORMAL"
         And configura IGV "N" y Detalle Unificado "N"
         And el usuario selecciona la familia 'Gaseosa'
-        And el usuario selecciona el concepto '7753234003313'
-        And el usuario ingresa la cantidad '20'
+        And usuario selecciona el concepto '7753234003313'
+        And usuario ingresa la cantidad '20'
         And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'
         And el usuario configura la entrega 'Inmediata' '<GuiaRemision>'
         And el usuario ingresa fecha de traslado '<FechaTraslado>'
@@ -115,18 +143,20 @@ Feature: Nueva Venta
         And el usuario ingresa RUC transportista '<TransportistaRuc>'
         And el usuario ingresa licencia '<NumeroLicencia>'
         And el usuario ingresa placa '<NumeroPlaca>'
-        And configura el pago "Contado"
-        And hace clic en Guardar
+        And el usuario selecciona direccion de origen '<direccion_origen>'
+        And el usuario selecciona detalle de direccion de origen '<detalle_origen>'
+        And el usuario selecciona direccion de destino '<direccion_destino>'
+        And el usuario selecciona detalle de direccion de destino '<detalle_destino>'
         Then el sistema valida el resultado de venta "<ResultadoEsperado>"
         Examples:
-            | Caso  | Descripcion                           | GuiaRemision | FechaTraslado | PesoBruto | Bultos | TipoTransporte | TransportistaRuc | NumeroLicencia | NumeroPlaca | ResultadoEsperado                    |
-            | CP031 | Transporte Publico completo           | true         | Hoy           | 100       | 10     | Publico        | 20602945589      | NA             | NA          | guarda exitosamente                  |
-            | CP032 | Transporte Publico sin transportista  | true         | Hoy           | 100       | 10     | Publico        | NA               | NA             | NA          | identifique al transportista con ruc |
-            | CP034 | Transporte Publico sin peso ni bultos | true         | Hoy           | NA        | NA     | Publico        | 20602945589      | NA             | NA          | Falta peso y numero de bultos        |
-            | CP035 | Transporte Privado completo           | true         | Hoy           | 100       | 10     | Privado        | 75971759         | M-71310154     | 2770XS      | guarda exitosamente                  |
-            | CP036 | Transporte Privado sin conductor      | true         | Hoy           | 100       | 10     | Privado        | NA               | NA             | 2770XS      | identifique al conductor con dni     |
-            | CP037 | Transporte Privado sin licencia       | true         | Hoy           | 100       | 10     | Privado        | 75971759         | NA             | 2770XS      | ingrese numero de licencia           |
-            | CP038 | Transporte Privado sin placa          | true         | Hoy           | 100       | 10     | Privado        | 75971759         | M-71310154     | NA          | ingrese numero de placa              |
+            | Caso  | Descripcion                           | GuiaRemision | FechaTraslado | PesoBruto | Bultos | TipoTransporte | TransportistaRuc | NumeroLicencia | NumeroPlaca | direccion_origen           | detalle_origen | direccion_destino | detalle_destino | ResultadoEsperado                    |
+            | CP031 | Transporte Publico completo           | true         | Hoy           | 100       | 10     | Publico        | 20602945589      | NA             | NA          | Huanuco-Leoncio-Rupa Rupa  | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | Guia emitida correctamente           |
+            | CP032 | Transporte Publico sin transportista  | true         | Hoy           | 100       | 10     | Publico        | NA               | NA             | NA          | Huanuco-Leoncio-Rupa Rupa  | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | identifique al transportista con ruc |
+            | CP034 | Transporte Publico sin peso ni bultos | true         | Hoy           | NA        | NA     | Publico        | 20602945589      | NA             | NA          | Huanuco-Leoncio-Rupa Rupa  | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | Falta peso y numero de bultos        |
+            | CP035 | Transporte Privado completo           | true         | Hoy           | 100       | 10     | Privado        | 75971759         | M-71310154     | 2770XS      | Arequipa-Arequipa-Arequipa | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | guarda exitosamente                  |
+            | CP036 | Transporte Privado sin conductor      | true         | Hoy           | 100       | 10     | Privado        | NA               | NA             | 2770XS      | Arequipa-Arequipa-Arequipa | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | identifique al conductor con dni     |
+            | CP037 | Transporte Privado sin licencia       | true         | Hoy           | 100       | 10     | Privado        | 75971759         | NA             | 2770XS      | Arequipa-Arequipa-Arequipa | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | El transportista es obligatorio      |
+            | CP038 | Transporte Privado sin placa          | true         | Hoy           | 100       | 10     | Privado        | 75971759         | M-71310154     | NA          | Arequipa-Arequipa-Arequipa | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | El transportista es obligatorio      |
 
     
 
@@ -153,8 +183,8 @@ Scenario Outline: Validar descuentos en nueva venta
 	When selecciona el modo de venta "VENTA NORMAL"
 	# 🔹 REUTILIZADO (Pedidos)
 	And el usuario selecciona la familia '<familia>'
-	And el usuario selecciona el concepto '<concepto>'
-	And el usuario ingresa la cantidad '<cantidad>'
+	And usuario selecciona el concepto '<concepto>'
+	And usuario ingresa la cantidad '<cantidad>'
 	# 🔹 CONFIGURACIÓN
 	And el usuario activa IGV '<igv>'
 	# 🔹 REUTILIZADO (Cotización)
@@ -176,8 +206,8 @@ Examples:
         When selecciona el modo de venta "VENTA NORMAL"
         And configura IGV "N" y Detalle Unificado "N"
         And el usuario selecciona la familia 'Gaseosa'
-        And el usuario selecciona el concepto '7753234003313'
-        And el usuario ingresa la cantidad '<cantidad>'
+        And usuario selecciona el concepto '7753234003313'
+        And usuario ingresa la cantidad '<cantidad>'
         And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '<cliente>'
         And el usuario configura la entrega 'Inmediata' 'false'
         And el usuario configura los medios de pago '<tipo_pago>' '<multipago>' '<medio_pago>' '<banco>' '<tarjeta>' '<cuenta_bancaria>' '<nro_operacion>' '<monto_por_medio>' '<nro_cuotas>' '<monto_inicial_credito>' 

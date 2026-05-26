@@ -24,7 +24,7 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
         [When(@"el usuario accede al submodulo '(.*)'")]
         public void WhenElUsuarioAccedeAlSubmodulo(string submodulo) => verPedidosPage.SeleccionarOpcion(submodulo);
 
-        [When(@"el usuario selecciona la opci[oó]n '(.*)'")]
+        [When(@"el usuario selecciona la opciOn '(.*)'")]
         public void WhenElUsuarioSeleccionaLaOpcion(string opcion)
         {
             string opt = opcion.Trim().ToLower();
@@ -37,10 +37,10 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
         [When(@"el usuario selecciona la familia '(.*)'")]
         public void WhenElUsuarioSeleccionaLaFamilia(string familia) => verPedidosPage.SeleccionarFamilia(familia);
 
-        [When(@"el usuario selecciona el concepto '(.*)'")]
+        [When(@"usuario selecciona el concepto '(.*)'")]
         public void WhenElUsuarioSeleccionaElConcepto(string concepto) => verPedidosPage.SeleccionarConcepto(concepto);
 
-        [When(@"el usuario ingresa la cantidad '(.*)'")]
+        [When(@"usuario ingresa la cantidad '(.*)'")]
         public void WhenElUsuarioIngresaLaCantidad(string cantidad) => verPedidosPage.IngresarCantidad(cantidad);
 
         [When(@"el usuario activa IGV '(.*)'")]

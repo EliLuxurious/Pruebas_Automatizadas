@@ -19,8 +19,63 @@ namespace SIGES3_0.Pages.Helpers
 
         public void ClickButton(By _path)
         {
-            driver.FindElement(_path).Click();
-            Thread.Sleep(5000);
+            Exception? ultimaExcepcion = null;
+
+            for (int intento = 0; intento < 4; intento++)
+            {
+                try
+                {
+                    var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                    {
+                        PollingInterval = TimeSpan.FromMilliseconds(200)
+                    };
+
+                    wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
+
+                    var element = wait.Until(d =>
+                        d.FindElements(_path).FirstOrDefault(e =>
+                        {
+                            try
+                            {
+                                return e.Displayed && e.Enabled;
+                            }
+                            catch (StaleElementReferenceException)
+                            {
+                                return false;
+                            }
+                        }));
+
+                    if (element == null)
+                        throw new NoSuchElementException($"No se encontró un elemento clickeable para {_path}.");
+
+                    ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", element);
+                    Thread.Sleep(150);
+
+                    try
+                    {
+                        element.Click();
+                    }
+                    catch (ElementClickInterceptedException)
+                    {
+                        ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", element);
+                    }
+
+                    Thread.Sleep(500);
+                    return;
+                }
+                catch (StaleElementReferenceException ex)
+                {
+                    ultimaExcepcion = ex;
+                    Thread.Sleep(300);
+                }
+                catch (WebDriverException ex) when (ex.Message.Contains("stale element reference", StringComparison.OrdinalIgnoreCase))
+                {
+                    ultimaExcepcion = ex;
+                    Thread.Sleep(300);
+                }
+            }
+
+            throw new Exception($"No se pudo hacer clic en el locator {_path} por refrescos del DOM.", ultimaExcepcion);
         }
 
         public void EnterText(By _path, string _field)
