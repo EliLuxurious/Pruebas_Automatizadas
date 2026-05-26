@@ -60,7 +60,14 @@ namespace SIGES3_0.Hooks
         [BeforeScenario(Order = 1)]
         public void FirstBeforeScenario(ScenarioContext scenarioContext)
         {
-            IWebDriver driver = new ChromeDriver();
+            var options = new ChromeOptions();
+            options.AddUserProfilePreference("credentials_enable_service", false);
+            options.AddUserProfilePreference("profile.password_manager_enabled", false);
+            options.AddUserProfilePreference("profile.password_manager_leak_detection", false);
+            options.AddArgument("--disable-save-password-bubble");
+            options.AddArgument("--disable-features=PasswordLeakDetection,PasswordManagerOnboarding");
+
+            IWebDriver driver = new ChromeDriver(options);
             driver.Manage().Window.Maximize();
 
             _container.RegisterInstanceAs<IWebDriver>(driver);

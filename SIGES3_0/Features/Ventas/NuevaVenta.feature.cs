@@ -86,17 +86,19 @@ namespace SIGES3_0.Features.Ventas
 #line 17
     #line hidden
 #line 18
-        await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                    "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+        await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://alpha2.newfrontdev-qa.sigesonline.com/sal" +
+                    "es/new-sales\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 19
-        await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                    "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+        await testRunner.WhenAsync("el usuario inicia sesión con usuario \'admin.ti@tsol.com\' y contraseña \'calidad\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 21
-        await testRunner.GivenAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line 20
+        await testRunner.AndAsync("se descarta aviso de contrasena de Chrome si aparece", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 22
+        await testRunner.GivenAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 23
     await testRunner.AndAsync("Entro al submódulo específico de \'Nueva Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             global::Reqnroll.Table table138 = new global::Reqnroll.Table(new string[] {
@@ -120,10 +122,10 @@ namespace SIGES3_0.Features.Ventas
             table138.AddRow(new string[] {
                         "Información Adicional",
                         "Precondición Inka Kola"});
-#line 24
+#line 25
     await testRunner.WhenAsync("Se configuran los datos de \'Facturación\':", ((string)(null)), table138, "When ");
 #line hidden
-#line 33
+#line 34
     await testRunner.AndAsync("Se selecciona el tipo de entrega \'Inmediata\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             global::Reqnroll.Table table139 = new global::Reqnroll.Table(new string[] {
@@ -138,7 +140,7 @@ namespace SIGES3_0.Features.Ventas
             table139.AddRow(new string[] {
                         "Almacén",
                         "CENTRO COMERCIAL CENTRAL"});
-#line 34
+#line 35
     await testRunner.AndAsync("Se configuran los datos de \'Entrega\':", ((string)(null)), table139, "And ");
 #line hidden
             global::Reqnroll.Table table140 = new global::Reqnroll.Table(new string[] {
@@ -149,19 +151,19 @@ namespace SIGES3_0.Features.Ventas
                         "7753234003313|Inca Kola Gaseosa Botella 1.5L",
                         "15",
                         "6.9"});
-#line 40
+#line 41
     await testRunner.AndAsync("Se selecciona y configura el producto a adquirir:", ((string)(null)), table140, "And ");
 #line hidden
-#line 44
+#line 45
     await testRunner.ThenAsync("Se procede a guardar la adquisición mediante la acción \'SavePurchase\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 45
+#line 46
     await testRunner.AndAsync("Se confirma el registro exitoso con el mensaje \'Se registró correctamente.\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 47
+#line 48
     await testRunner.WhenAsync("el usuario accede al módulo \'Ventas\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 48
+#line 49
     await testRunner.AndAsync("el usuario accede al submodulo \'Nueva Venta\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
         }
@@ -203,7 +205,7 @@ namespace SIGES3_0.Features.Ventas
             argumentsOfScenario.Add("Pago", pago);
             argumentsOfScenario.Add("ResultadoEsperado", resultadoEsperado);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro de venta Modo Normal o Modo Caja", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 56
+#line 57
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -216,40 +218,40 @@ namespace SIGES3_0.Features.Ventas
 #line 17
     await this.FeatureBackgroundAsync();
 #line hidden
-#line 57
+#line 58
         await testRunner.WhenAsync(string.Format("selecciona el modo de venta \"{0}\"", modoVenta), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 58
+#line 59
         await testRunner.AndAsync(string.Format("configura IGV \"{0}\" y Detalle Unificado \"{1}\"", iGV, detUnificado), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 59
+#line 60
         await testRunner.AndAsync("el usuario selecciona la familia \'Gaseosa\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 60
+#line 61
         await testRunner.AndAsync("usuario selecciona el concepto \'7753234003313\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 61
+#line 62
         await testRunner.AndAsync(string.Format("usuario ingresa la cantidad \'{0}\'", cantidad), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 62
+#line 63
         await testRunner.AndAsync(string.Format("configura la facturacion \'{0}\' \'{1}\' \'{2}\'", comprobante, serie, cliente), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 63
+#line 64
         await testRunner.AndAsync(string.Format("selecciona el punto de venta \'{0}\'", puntoVenta), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 64
+#line 65
         await testRunner.AndAsync(string.Format("selecciona el vendedor \'{0}\'", vendedor), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 65
+#line 66
         await testRunner.AndAsync(string.Format("el usuario configura la entrega \'{0}\' \'{1}\'", entrega, guiaRemision), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 66
+#line 67
         await testRunner.AndAsync(string.Format("configura el pago \"{0}\"", pago), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 67
+#line 68
         await testRunner.AndAsync("hace clic en Guardar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 68
+#line 69
         await testRunner.ThenAsync(string.Format("el sistema valida el resultado de venta \"{0}\"", resultadoEsperado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -325,7 +327,7 @@ namespace SIGES3_0.Features.Ventas
             argumentsOfScenario.Add("Pago", pago);
             argumentsOfScenario.Add("ResultadoEsperado", resultadoEsperado);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("<Caso> Registro de venta con Guia de Remision activa — Modo Normal/Caja", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 81
+#line 82
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -338,73 +340,73 @@ namespace SIGES3_0.Features.Ventas
 #line 17
     await this.FeatureBackgroundAsync();
 #line hidden
-#line 82
+#line 83
         await testRunner.WhenAsync(string.Format("selecciona el modo de venta \"{0}\"", modoVenta), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 83
+#line 84
         await testRunner.AndAsync(string.Format("configura IGV \"{0}\" y Detalle Unificado \"{1}\"", iGV, detUnificado), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 84
+#line 85
         await testRunner.AndAsync("el usuario selecciona la familia \'Gaseosa\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 85
+#line 86
         await testRunner.AndAsync("usuario selecciona el concepto \'7753234003313\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 86
+#line 87
         await testRunner.AndAsync(string.Format("usuario ingresa la cantidad \'{0}\'", cantidad), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 87
+#line 88
         await testRunner.AndAsync(string.Format("selecciona el punto de venta \'{0}\'", puntoVenta), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 88
+#line 89
         await testRunner.AndAsync(string.Format("selecciona el vendedor \'{0}\'", vendedor), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 89
+#line 90
         await testRunner.AndAsync(string.Format("configura la facturacion \'{0}\' \'{1}\' \'{2}\'", comprobante, serie, cliente), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 90
+#line 91
         await testRunner.AndAsync(string.Format("el usuario configura la entrega \'{0}\' \'{1}\'", entrega, guiaRemision), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 91
+#line 92
         await testRunner.AndAsync(string.Format("el usuario ingresa fecha de traslado \'{0}\'", fechaTraslado), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 92
+#line 93
         await testRunner.AndAsync(string.Format("el usuario ingresa peso bruto \'{0}\'", pesoBruto), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 93
+#line 94
         await testRunner.AndAsync(string.Format("el usuario ingresa numero de bultos \'{0}\'", bultos), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 94
+#line 95
         await testRunner.AndAsync(string.Format("el usuario selecciona transporte \'{0}\'", tipoTransporte), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 95
+#line 96
         await testRunner.AndAsync(string.Format("el usuario ingresa RUC transportista \'{0}\'", transportistaRuc), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 96
+#line 97
         await testRunner.AndAsync(string.Format("el usuario ingresa licencia \'{0}\'", numeroLicencia), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 97
+#line 98
         await testRunner.AndAsync(string.Format("el usuario ingresa placa \'{0}\'", numeroPlaca), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 98
+#line 99
         await testRunner.AndAsync(string.Format("el usuario selecciona direccion de origen \'{0}\'", direccion_Origen), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 99
+#line 100
         await testRunner.AndAsync(string.Format("el usuario selecciona detalle de direccion de origen \'{0}\'", detalle_Origen), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 100
+#line 101
         await testRunner.AndAsync(string.Format("el usuario selecciona direccion de destino \'{0}\'", direccion_Destino), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 101
+#line 102
         await testRunner.AndAsync(string.Format("el usuario selecciona detalle de direccion de destino \'{0}\'", detalle_Destino), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 102
+#line 103
         await testRunner.AndAsync(string.Format("configura el pago \"{0}\"", pago), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 103
+#line 104
         await testRunner.AndAsync("hace clic en Guardar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 104
+#line 105
         await testRunner.ThenAsync(string.Format("el sistema valida el resultado de venta \"{0}\"", resultadoEsperado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -434,7 +436,7 @@ namespace SIGES3_0.Features.Ventas
             argumentsOfScenario.Add("GuiaRemision", guiaRemision);
             argumentsOfScenario.Add("ResultadoEsperado", resultadoEsperado);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("<Caso> Registro de venta por Contingencia", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 112
+#line 113
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -447,37 +449,37 @@ namespace SIGES3_0.Features.Ventas
 #line 17
     await this.FeatureBackgroundAsync();
 #line hidden
-#line 113
+#line 114
         await testRunner.WhenAsync("selecciona el modo de venta \"VENTA POR CONTINGENCIA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 114
+#line 115
         await testRunner.AndAsync("configura IGV \"false\" y Detalle Unificado \"false\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 115
+#line 116
         await testRunner.AndAsync("el usuario selecciona la familia \'Gaseosa\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 116
+#line 117
         await testRunner.AndAsync("usuario selecciona el concepto \'7753234003313\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 117
+#line 118
         await testRunner.AndAsync("usuario ingresa la cantidad \'150\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 118
+#line 119
         await testRunner.AndAsync("configura la facturacion \'BOLETA DE VENTA ELECTRONICA\' \'B002\' \'75893616\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 119
+#line 120
         await testRunner.AndAsync(string.Format("ingresa la fecha de emision \"{0}\"", fechaEmision), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 120
+#line 121
         await testRunner.AndAsync(string.Format("el usuario configura la entrega \'{0}\' \'{1}\'", entrega, guiaRemision), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 121
+#line 122
         await testRunner.AndAsync("configura el pago \"Contado\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 122
+#line 123
         await testRunner.AndAsync("hace clic en Guardar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 123
+#line 124
         await testRunner.ThenAsync(string.Format("el sistema valida el resultado de venta \"{0}\"", resultadoEsperado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -538,7 +540,7 @@ namespace SIGES3_0.Features.Ventas
             argumentsOfScenario.Add("detalle_destino", detalle_Destino);
             argumentsOfScenario.Add("ResultadoEsperado", resultadoEsperado);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Guia de Remision desde Nueva Venta — <Descripcion>", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 131
+#line 132
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -551,61 +553,61 @@ namespace SIGES3_0.Features.Ventas
 #line 17
     await this.FeatureBackgroundAsync();
 #line hidden
-#line 132
+#line 133
         await testRunner.WhenAsync("selecciona el modo de venta \"VENTA NORMAL\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 133
+#line 134
         await testRunner.AndAsync("configura IGV \"N\" y Detalle Unificado \"N\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 134
+#line 135
         await testRunner.AndAsync("el usuario selecciona la familia \'Gaseosa\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 135
+#line 136
         await testRunner.AndAsync("usuario selecciona el concepto \'7753234003313\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 136
+#line 137
         await testRunner.AndAsync("usuario ingresa la cantidad \'20\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 137
+#line 138
         await testRunner.AndAsync("configura la facturacion \'BOLETA DE VENTA ELECTRONICA\' \'B002\' \'75893616\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 138
+#line 139
         await testRunner.AndAsync(string.Format("el usuario configura la entrega \'Inmediata\' \'{0}\'", guiaRemision), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 139
+#line 140
         await testRunner.AndAsync(string.Format("el usuario ingresa fecha de traslado \'{0}\'", fechaTraslado), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 140
+#line 141
         await testRunner.AndAsync(string.Format("el usuario ingresa peso bruto \'{0}\'", pesoBruto), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 141
+#line 142
         await testRunner.AndAsync(string.Format("el usuario ingresa numero de bultos \'{0}\'", bultos), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 142
+#line 143
         await testRunner.AndAsync(string.Format("el usuario selecciona transporte \'{0}\'", tipoTransporte), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 143
+#line 144
         await testRunner.AndAsync(string.Format("el usuario ingresa RUC transportista \'{0}\'", transportistaRuc), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 144
+#line 145
         await testRunner.AndAsync(string.Format("el usuario ingresa licencia \'{0}\'", numeroLicencia), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 145
+#line 146
         await testRunner.AndAsync(string.Format("el usuario ingresa placa \'{0}\'", numeroPlaca), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 146
+#line 147
         await testRunner.AndAsync(string.Format("el usuario selecciona direccion de origen \'{0}\'", direccion_Origen), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 147
+#line 148
         await testRunner.AndAsync(string.Format("el usuario selecciona detalle de direccion de origen \'{0}\'", detalle_Origen), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 148
+#line 149
         await testRunner.AndAsync(string.Format("el usuario selecciona direccion de destino \'{0}\'", direccion_Destino), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 149
+#line 150
         await testRunner.AndAsync(string.Format("el usuario selecciona detalle de direccion de destino \'{0}\'", detalle_Destino), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 150
+#line 151
         await testRunner.ThenAsync(string.Format("el sistema valida el resultado de venta \"{0}\"", resultadoEsperado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -642,7 +644,7 @@ namespace SIGES3_0.Features.Ventas
             argumentsOfScenario.Add("valor_descuento", valor_Descuento);
             argumentsOfScenario.Add("resultado", resultado);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Validar descuentos en nueva venta", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 182
+#line 183
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -655,25 +657,25 @@ this.ScenarioInitialize(scenarioInfo);
 #line 17
     await this.FeatureBackgroundAsync();
 #line hidden
-#line 183
+#line 184
  await testRunner.WhenAsync("selecciona el modo de venta \"VENTA NORMAL\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 185
+#line 186
  await testRunner.AndAsync(string.Format("el usuario selecciona la familia \'{0}\'", familia), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 186
+#line 187
  await testRunner.AndAsync(string.Format("usuario selecciona el concepto \'{0}\'", concepto), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 187
+#line 188
  await testRunner.AndAsync(string.Format("usuario ingresa la cantidad \'{0}\'", cantidad), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 189
+#line 190
  await testRunner.AndAsync(string.Format("el usuario activa IGV \'{0}\'", igv), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 191
+#line 192
  await testRunner.AndAsync(string.Format("el usuario configura descuento \'{0}\' \'{1}\' \'{2}\' \'{3}\'", descuento, tipo_Descuento, modo_Descuento, valor_Descuento), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 194
+#line 195
  await testRunner.ThenAsync(string.Format("el sistema valida el resultado del descuento en venta \'{0}\'", resultado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -743,7 +745,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("resultado_pago", resultado_Pago);
             argumentsOfScenario.Add("resultado_venta", resultado_Venta);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar venta en nueva venta con medios de pago", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 205
+#line 206
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -756,41 +758,41 @@ this.ScenarioInitialize(scenarioInfo);
 #line 17
     await this.FeatureBackgroundAsync();
 #line hidden
-#line 206
+#line 207
         await testRunner.WhenAsync("selecciona el modo de venta \"VENTA NORMAL\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 207
+#line 208
         await testRunner.AndAsync("configura IGV \"N\" y Detalle Unificado \"N\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 208
+#line 209
         await testRunner.AndAsync("el usuario selecciona la familia \'Gaseosa\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 209
+#line 210
         await testRunner.AndAsync("usuario selecciona el concepto \'7753234003313\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 210
+#line 211
         await testRunner.AndAsync(string.Format("usuario ingresa la cantidad \'{0}\'", cantidad), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 211
+#line 212
         await testRunner.AndAsync(string.Format("configura la facturacion \'BOLETA DE VENTA ELECTRONICA\' \'B002\' \'{0}\'", cliente), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 212
+#line 213
         await testRunner.AndAsync("el usuario configura la entrega \'Inmediata\' \'false\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 213
+#line 214
         await testRunner.AndAsync(string.Format("el usuario configura los medios de pago \'{0}\' \'{1}\' \'{2}\' \'{3}\' \'{4}\' \'{5}\' \'{6}\'" +
                             " \'{7}\' \'{8}\' \'{9}\'", tipo_Pago, multipago, medio_Pago, banco, tarjeta, cuenta_Bancaria, nro_Operacion, monto_Por_Medio, nro_Cuotas, monto_Inicial_Credito), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 214
+#line 215
         await testRunner.AndAsync(string.Format("el usuario ingresa la observacion del pago \'{0}\'", observacion_Pago), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 215
+#line 216
         await testRunner.ThenAsync(string.Format("el sistema valida el resultado del pago en nueva venta \'{0}\'", resultado_Pago), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 216
+#line 217
         await testRunner.WhenAsync("hace clic en Guardar", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 217
+#line 218
         await testRunner.ThenAsync(string.Format("el sistema valida el resultado de venta \'{0}\'", resultado_Venta), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

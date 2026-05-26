@@ -3,8 +3,9 @@ Feature: VerVentas
 Cobertura base para acciones disponibles en ver ventas.
 
 Background:
-    Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'
-    When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña 'calidad'
+    Given el usuario ingresa al ambiente 'https://alpha2.newfrontdev-qa.sigesonline.com/sales/new-sales'
+    When el usuario inicia sesión con usuario 'admin.ti@tsol.com' y contraseña 'calidad'
+    And se descarta aviso de contrasena de Chrome si aparece
     And el usuario accede al módulo 'Ventas'
     And el usuario accede al submodulo 'Ver Ventas'
 
