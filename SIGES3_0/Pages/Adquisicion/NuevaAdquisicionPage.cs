@@ -903,5 +903,6 @@ namespace SIGES3_0.Pages.Adquisicion
                 return "SIN_ALERTA";
             }
         }
+
     }
 }

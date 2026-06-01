@@ -64,12 +64,30 @@ namespace SIGES3_0.Pages.VentasPage
         // ── Tab: Conceptos ───────────────────────────────────────────────────────
         public void SeleccionarPuntoVenta(string puntoVenta)
         {
-            // Si ya está como chip seleccionado, omitir (evita deseleccionar por comportamiento toggle)
+            // Check 1: ya está como chip seleccionado (dropdown multi-select de Reportes)
             var chips = _driver.FindElements(VentasLocators.Reportes.PuntoVentaChip(puntoVenta));
             if (chips.Any(e => { try { return e.Displayed; } catch { return false; } }))
             {
                 Thread.Sleep(500);
                 return;
+            }
+
+            // Check 2: ya está como valor seleccionado en el trigger (dropdown de NuevaVenta Modo Caja,
+            // donde el punto de venta viene pre-cargado según el ambiente/usuario)
+            var triggers = _driver.FindElements(VentasLocators.NuevaVenta.PuntoVentaChevron);
+            foreach (var trigger in triggers)
+            {
+                try
+                {
+                    if (!trigger.Displayed) continue;
+                    var container = trigger.FindElement(By.XPath("./ancestor::app-dropdown-search[1]"));
+                    if (container.Text.IndexOf(puntoVenta, StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        Thread.Sleep(500);
+                        return;
+                    }
+                }
+                catch { /* continuar con siguiente */ }
             }
 
             SeleccionarEnDropdownBuscable(
@@ -126,13 +144,23 @@ namespace SIGES3_0.Pages.VentasPage
 
         public void SeleccionarFiltroEnTarjeta(string valor, string filtro, string tarjeta)
         {
+            // Si ya está como chip seleccionado dentro de la tarjeta, omitir
+            // (evita el comportamiento toggle que deselecciona al hacer clic de nuevo)
+            var chipLocator = ChipFiltroEnTarjeta(tarjeta, filtro, valor);
+            var chips = _driver.FindElements(chipLocator);
+            if (chips.Any(e => { try { return e.Displayed; } catch { return false; } }))
+            {
+                Thread.Sleep(300);
+                return;
+            }
+
             SeleccionarEnDropdownBuscable(
                 VentasLocators.Reportes.FiltroEnTarjeta(tarjeta, filtro),
                 VentasLocators.Reportes.FiltroSearch(tarjeta, filtro),
                 VentasLocators.Reportes.FiltroOpcion(valor),
                 valor,
                 $"el valor '{valor}' del filtro '{filtro}' en la tarjeta '{tarjeta}'",
-                () => TriggerContieneTexto(VentasLocators.Reportes.FiltroEnTarjeta(tarjeta, filtro), valor));
+                () => EstaOpcionSeleccionada(chipLocator, VentasLocators.Reportes.FiltroEnTarjeta(tarjeta, filtro), valor));
             _driver.FindElement(By.TagName("body")).SendKeys(Keys.Escape);
             Thread.Sleep(500);
         }
@@ -192,7 +220,8 @@ namespace SIGES3_0.Pages.VentasPage
 
             try
             {
-                EsperarHasta(() => HayErrorReporteVisible() || ReporteFueRenderizado(), 25);
+                // 45s: reportes grandes (ej. 50+ boletas, 3 páginas) tardan más en navegar al /view
+                EsperarHasta(() => HayErrorReporteVisible() || ReporteFueRenderizado(), 45);
             }
             catch
             {
@@ -433,21 +462,40 @@ namespace SIGES3_0.Pages.VentasPage
 
         private void ClickOpcionDropdown(By opcionLocator, string textoBusqueda, string descripcion)
         {
-            var opcionFlexible = BuscarOpcionVisibleDropdown(textoBusqueda);
-            if (opcionFlexible != null)
+            // Angular puede re-renderizar las opciones del dropdown (stale element) tras
+            // una actualización reactiva (ej: cambio de punto de venta). Por eso se re-busca
+            // el elemento en cada reintento en lugar de reusar la misma referencia DOM.
+            for (int intento = 0; intento < 3; intento++)
             {
-                ClickElementoRobusto(opcionFlexible, descripcion);
-                return;
-            }
+                try
+                {
+                    var opcionFlexible = BuscarOpcionVisibleDropdown(textoBusqueda);
+                    if (opcionFlexible != null)
+                    {
+                        ClickElementoRobusto(opcionFlexible, descripcion);
+                        return;
+                    }
 
-            var opcionConScroll = BuscarOpcionDropdownConScroll(textoBusqueda);
-            if (opcionConScroll != null)
-            {
-                ClickElementoRobusto(opcionConScroll, descripcion);
-                return;
-            }
+                    var opcionConScroll = BuscarOpcionDropdownConScroll(textoBusqueda);
+                    if (opcionConScroll != null)
+                    {
+                        ClickElementoRobusto(opcionConScroll, descripcion);
+                        return;
+                    }
 
-            ClickRobusto(opcionLocator, descripcion);
+                    ClickRobusto(opcionLocator, descripcion);
+                    return;
+                }
+                catch (StaleElementReferenceException) when (intento < 2)
+                {
+                    Thread.Sleep(400); // esperar re-render de Angular antes de re-buscar
+                }
+                catch (WebDriverException ex) when (
+                    ex.Message.Contains("stale element", StringComparison.OrdinalIgnoreCase) && intento < 2)
+                {
+                    Thread.Sleep(400);
+                }
+            }
         }
 
         private void AbrirDropdownBuscable(By triggerLocator, By buscadorLocator, string descripcion)
@@ -882,6 +930,11 @@ namespace SIGES3_0.Pages.VentasPage
             if (HayErrorReporteVisible() || TextoPaginaIndicaReporteVacio())
                 return false;
 
+            // Si la URL ya es la vista del reporte (/sales/sales-report/view),
+            // el contenido es un PDF embebido en iframe — aceptar eso como contenido real
+            if (UrlEsVistaReporte())
+                return true;
+
             return HayTablaReporteConFilas() ||
                    TextoPaginaIndicaReporteConDatos();
         }
@@ -1150,8 +1203,11 @@ namespace SIGES3_0.Pages.VentasPage
             try
             {
                 var url = _driver.Url ?? string.Empty;
+                // alpha2 usa /sales/sales-report/view, otros ambientes usan /sales/report/view
                 return url.Contains("/sales/report/view", StringComparison.OrdinalIgnoreCase) ||
+                       url.Contains("/sales/sales-report/view", StringComparison.OrdinalIgnoreCase) ||
                        url.Contains("/sales/report/document", StringComparison.OrdinalIgnoreCase) ||
+                       url.Contains("/sales/sales-report/document", StringComparison.OrdinalIgnoreCase) ||
                        url.StartsWith("blob:", StringComparison.OrdinalIgnoreCase);
             }
             catch
@@ -1449,5 +1505,11 @@ namespace SIGES3_0.Pages.VentasPage
 
         private static By ChipFamilia(string familia) =>
             By.XPath($"//label[contains(.,'Familia')]/following-sibling::app-dropdown-search//*[not(contains(@class,'placeholder')) and contains(normalize-space(),'{familia}')]");
+
+        private static By ChipFiltroEnTarjeta(string cardTitle, string labelText, string valor) =>
+            By.XPath($"{VentasLocators.Reportes.CardRootXPath(cardTitle)}//label[contains(normalize-space(),'{labelText}')]" +
+                     $"/following-sibling::app-dropdown-search//*[not(contains(@class,'placeholder')) and contains(normalize-space(),'{valor}')] | " +
+                     $"{VentasLocators.Reportes.CardRootXPath(cardTitle)}//label[contains(normalize-space(),'{labelText}')]" +
+                     $"/..//app-dropdown-search//*[not(contains(@class,'placeholder')) and contains(normalize-space(),'{valor}')]");
     }
 }

@@ -145,7 +145,7 @@ namespace SIGES3_0.StepDefinitions.PedidoStep
             guiaRemisionPage.GuardarGuia();
         }
 
-        [When(@"el usuario configura los medios de pago '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)'")]
+        [When(@"el usuario configura los medios de pago '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)'")]
         public void WhenElUsuarioConfiguraLosMediosDePago(string tipoPago, string multipago, string medioPago, string banco, string tarjeta, string cuentaBancaria, string nroOperacion, string montoPorMedio, string nroCuotas, string montoInicialCredito)
         {
             if (!verPedidosPage.HayErrorCapturado())

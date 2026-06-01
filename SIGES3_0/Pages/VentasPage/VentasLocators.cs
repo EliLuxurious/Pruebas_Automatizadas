@@ -77,14 +77,27 @@ namespace SIGES3_0.Pages.VentasPage
             public static readonly By CreditNoteMethod = By.XPath("//*[contains(@class,'custom-tab')][.//span[normalize-space()='NOTA DE CREDITO' or normalize-space()='NOTA DE CRÉDITO'] or contains(normalize-space(),'NOTA DE CREDITO') or contains(normalize-space(),'NOTA DE CRÉDITO')]");
 
             // Select cubre control nativo; Trigger cubre dropdown custom del mismo campo.
-            public static readonly By BankSelect = By.XPath("//select[@id='bankEntityId']");
-            public static readonly By CardSelect = By.XPath("//select[@id='bankingCard']");
+            // En multipago los tabs inactivos permanecen en el DOM, por eso se acota primero
+            // al tab-pane activo (clase 'active') y como fallback se busca en toda la pagina.
+            public static readonly By BankSelect = By.XPath(
+                "//div[contains(@class,'tab-pane') and contains(@class,'active')]//select[@id='bankEntityId'] | " +
+                "//select[@id='bankEntityId']");
+            public static readonly By CardSelect = By.XPath(
+                "//div[contains(@class,'tab-pane') and contains(@class,'active')]//select[@id='bankingCard'] | " +
+                "//select[@id='bankingCard']");
             public static readonly By BankAccountSelect = By.XPath(
+                "//div[contains(@class,'tab-pane') and contains(@class,'active')]//select[@id='bankAccountId'] | " +
                 "//select[@id='bankAccountId'] | " +
                 "//label[contains(normalize-space(),'Cuenta bancaria') or contains(normalize-space(),'Cuenta Bancaria')]/following::select[1]");
-            public static readonly By BankTrigger = By.XPath("//label[contains(normalize-space(),'Entidad bancaria') or contains(normalize-space(),'Banco')]/following::*[contains(@class,'select-trigger')][1]");
-            public static readonly By CardTrigger = By.XPath("//label[contains(normalize-space(),'Tarjeta')]/following::*[contains(@class,'select-trigger')][1]");
-            public static readonly By BankAccountTrigger = By.XPath("//label[contains(normalize-space(),'Cuenta bancaria') or contains(normalize-space(),'Cuenta Bancaria')]/following::*[contains(@class,'select-trigger')][1]");
+            public static readonly By BankTrigger = By.XPath(
+                "//div[contains(@class,'tab-pane') and contains(@class,'active')]//label[contains(normalize-space(),'Entidad bancaria') or contains(normalize-space(),'Banco')]/following::*[contains(@class,'select-trigger')][1] | " +
+                "//label[contains(normalize-space(),'Entidad bancaria') or contains(normalize-space(),'Banco')]/following::*[contains(@class,'select-trigger')][1]");
+            public static readonly By CardTrigger = By.XPath(
+                "//div[contains(@class,'tab-pane') and contains(@class,'active')]//label[contains(normalize-space(),'Tarjeta')]/following::*[contains(@class,'select-trigger')][1] | " +
+                "//label[contains(normalize-space(),'Tarjeta')]/following::*[contains(@class,'select-trigger')][1]");
+            public static readonly By BankAccountTrigger = By.XPath(
+                "//div[contains(@class,'tab-pane') and contains(@class,'active')]//label[contains(normalize-space(),'Cuenta bancaria') or contains(normalize-space(),'Cuenta Bancaria')]/following::*[contains(@class,'select-trigger')][1] | " +
+                "//label[contains(normalize-space(),'Cuenta bancaria') or contains(normalize-space(),'Cuenta Bancaria')]/following::*[contains(@class,'select-trigger')][1]");
             public static readonly By DropdownSearchInput = By.XPath("//app-dropdown-search//input[contains(@class,'search') or contains(@class,'input') or contains(@placeholder,'Buscar') or @type='text']");
 
             // Datos de pago y puntos.
@@ -105,9 +118,12 @@ namespace SIGES3_0.Pages.VentasPage
                 By.XPath("(//*[normalize-space()='Monto inicial']/following::input[not(@type='date') and not(@type='hidden')])[1]");
             public static readonly By CreditInstallmentsInput =
                 By.XPath("(//label[contains(normalize-space(),'Numero de cuotas') or contains(normalize-space(),'Número de cuotas') or contains(normalize-space(),'Nro. de cuotas')]/following::input[@type='number'][1]) | //input[@type='number'][@min='1'][@max='60']");
+            // Campo de fecha para ventas a crédito.
+            // En alpha2 el label es "Fecha de inicio" (columna de la tabla de cuotas).
+            // En otros ambientes puede aparecer como "Fecha de crédito", "Vencimiento" o "primera cuota".
             public static readonly By CreditDueDateInput =
                 By.XPath(
-                    "(//*[contains(normalize-space(),'Fecha de crédito') or contains(normalize-space(),'Fecha de credito') or contains(normalize-space(),'Vencimiento') or contains(normalize-space(),'primera cuota')]/following::input[not(@type='hidden')][1]) | " +
+                    "(//*[contains(normalize-space(),'Fecha de crédito') or contains(normalize-space(),'Fecha de credito') or contains(normalize-space(),'Vencimiento') or contains(normalize-space(),'primera cuota') or normalize-space()='Fecha de inicio']/following::input[not(@type='hidden')][1]) | " +
                     "(//input[(contains(@id,'fecha') or contains(@placeholder,'Fecha')) and (contains(@id,'credit') or contains(@id,'cuota') or contains(@formcontrolname,'credit') or contains(@formcontrolname,'cuota'))][1])");
             public static readonly By Change = By.CssSelector("#change");
             public static readonly By PaymentObservation = By.XPath(
@@ -129,13 +145,23 @@ namespace SIGES3_0.Pages.VentasPage
             // Filtros y consulta.
             public static readonly By InitialDate = By.Id("fechaInicio");
             public static readonly By FinalDate = By.Id("fechaFin");
+            // Filtro de la columna Tipo Doc en la tabla de Ver Ventas.
+            // Segun SelectorHub el input esta en el 3er th de la fila de filtros (th[3]//input[1]).
+            // Se acota a la tabla de ventas para no confundir con otros th de la pagina.
+            public static readonly By FiltroTipoDoc = By.XPath(
+                "//table//thead//th[3]//input[1] | " +
+                "(//thead//tr)[last()]//th[3]//input[1]");
             public static readonly By QueryButton = By.XPath("//button[contains(normalize-space(),'CONSULTAR') or contains(normalize-space(),'Consultar') or contains(normalize-space(),'BUSCAR') or contains(normalize-space(),'Buscar')]");
 
             // Canje e invalidacion desde Ver Ventas.
             public static readonly By ActivateRedeem = By.XPath("//label[@for='activarCanje'] | //input[@id='activarCanje']");
             public static readonly By RedeemButton = By.XPath("//button[normalize-space()='Canjear']");
             public static readonly By AcceptRedeemButton = By.XPath("//div[contains(@class,'modal')]//button[contains(.,'Aceptar')]");
-            public static readonly By AcceptInvalidation = By.XPath("//a[contains(.,'SI')] | //button[contains(.,'SI')]");
+            public static readonly By AcceptInvalidation =
+                By.XPath("//button[contains(@class,'swal2-confirm')] | " +
+                         "//a[contains(translate(normalize-space(),'síSI','siSI'),'SI')] | " +
+                         "//button[contains(translate(normalize-space(),'síSI','siSI'),'SI')] | " +
+                         "//button[contains(normalize-space(),'Aceptar') or contains(normalize-space(),'Confirmar')]");
 
             // Date picker for VerVentas
             public static readonly By FechaHoraInicial = By.XPath(
@@ -147,11 +173,19 @@ namespace SIGES3_0.Pages.VentasPage
             public static By NvRowCheckboxBySerie(string serie) =>
                 By.XPath($"//td[normalize-space()='{serie}']/ancestor::tr//td[1]");
 
-            // Canje modal
+            // Canje modal - el modal fue rediseñado (Bug 21099) y ahora tiene dos dropdowns:
+            // 1) "Emitir comprobante a nombre de" (cliente) y 2) "Selecciona un comprobante".
+            // Se acota por la etiqueta del campo para no tomar el dropdown de cliente por error.
             public static readonly By ModalComprobanteDropdown =
-                By.XPath("//div[contains(@class,'modal')]//div[contains(@class,'select-trigger')]");
+                By.XPath(
+                    "//div[contains(@class,'modal')]//*[contains(normalize-space(),'Selecciona un comprobante') or contains(normalize-space(),'Comprobante destino') or contains(normalize-space(),'Seleccione un comprobante')]/following::div[contains(@class,'select-trigger')][1] | " +
+                    "//div[contains(@class,'modal')]//div[contains(@class,'select-trigger')][2]");
             public static By ModalComprobanteOpcion(string tipo) =>
-                By.XPath($"//div[contains(@class,'options-container')]//span[normalize-space()='{tipo}']");
+                By.XPath(
+                    $"//div[contains(@class,'options-container')]//span[normalize-space()='{tipo}'] | " +
+                    $"//div[contains(@class,'options-container')]//*[normalize-space()='{tipo}'] | " +
+                    $"//*[contains(@class,'dropdown') or contains(@class,'option') or contains(@class,'item')][normalize-space()='{tipo}'] | " +
+                    $"//*[normalize-space()='{tipo}'][not(ancestor::thead)][not(ancestor::*[contains(@class,'trigger')])]");
             public static readonly By ModalInconsistencia = By.XPath(
                 "//div[contains(@class,'modal')]//*[contains(normalize-space(),'inconsisten') or " +
                 "contains(normalize-space(),'INCONSISTEN') or contains(@class,'inconsisten') or " +
@@ -241,7 +275,7 @@ namespace SIGES3_0.Pages.VentasPage
             private static string NormTextXPath() =>
                 $"translate(normalize-space(),'{NormalizeFrom}','{NormalizeTo}')";
 
-            private static string CardRootXPath(string cardTitle) =>
+            internal static string CardRootXPath(string cardTitle) =>
                 $"(//*[{NormTextXPath()}='{NormTitle(cardTitle)}']" +
                 $"/ancestor::*[self::div or self::section or self::article]" +
                 $"[.//*[self::button or self::a][contains({NormTextXPath()},'ver reporte')]][1])";
@@ -389,6 +423,10 @@ namespace SIGES3_0.Pages.VentasPage
                 By.XPath($"{ClonarModalRootXPath}//label[contains(normalize-space(),'Diferida')]/preceding-sibling::input | {ClonarModalRootXPath}//label[contains(normalize-space(),'Diferida')]");
             public static readonly By BotonClonarVenta =
                 By.XPath($"{ClonarModalRootXPath}//button[contains(normalize-space(),'Clonar venta') or contains(normalize-space(),'CloneSale')] | {ClonarModalRootXPath}//button[.//*[contains(normalize-space(),'Clonar venta') or contains(normalize-space(),'CloneSale')]]");
+            public static readonly By ClienteInputClonar =
+                By.XPath($"{ClonarModalRootXPath}//input[@id='DocumentoIdentidad' or contains(@id,'documento') or contains(@placeholder,'DNI') or contains(@placeholder,'RUC') or contains(@placeholder,'documento')]");
+            public static readonly By ClienteLupaClonar =
+                By.XPath($"{ClonarModalRootXPath}//button[contains(@class,'search') or contains(@class,'lupa') or .//*[contains(@class,'search') or name()='mat-icon']][1] | {ClonarModalRootXPath}//button[@type='button'][.//span[contains(normalize-space(),'search')]][1]");
 
             // ── Datos generales — Nota de débito ────────────────────────────────
             public static readonly By TipoNotaDebitoSelect =
@@ -422,7 +460,9 @@ namespace SIGES3_0.Pages.VentasPage
 
             // ── Nota de débito: Aumento en el valor (grilla detalle) ────────────
             public static readonly By DetalleAumentoInput =
-                By.XPath("//tbody/tr[1]/td[4]/input[1]");
+                By.XPath(
+                    $"({AjusteModalRootXPath}//tbody/tr[1]/td[4]//input[not(@type='hidden') and not(@disabled)] | " +
+                    $"{AjusteModalRootXPath}//label[contains(normalize-space(),'Total aumento') or contains(normalize-space(),'Aumento')]/following::input[not(@type='hidden') and not(@disabled)][1])[1]");
             public static readonly By DetalleNotaDebitoHeader =
                 By.XPath("//span[contains(@class,'span-title') and contains(normalize-space(),'Detalle')]");
 
@@ -479,7 +519,7 @@ namespace SIGES3_0.Pages.VentasPage
 
             // ── Mensajes / Validaciones ─────────────────────────────────────────
             public static readonly By MensajeCamposRequeridos =
-                By.XPath("//*[contains(normalize-space(),'Complete los campos requeridos') or contains(normalize-space(),'campos requeridos')]");
+                By.XPath("//*[contains(normalize-space(),'Complete los campos requeridos') or contains(normalize-space(),'campos requeridos') or contains(normalize-space(),'complete todos los campos requeridos') or contains(normalize-space(),'seccion de pago sea valida') or contains(normalize-space(),'sección de pago sea válida')]");
             public static readonly By MensajeExito =
                 By.XPath("//*[contains(@class,'toast-success') or contains(@class,'swal2-success')] | //*[contains(@class,'swal2-popup') and (contains(normalize-space(),'Correcto') or contains(normalize-space(),'Se registró correctamente') or contains(normalize-space(),'Se registro correctamente') or contains(normalize-space(),'registrado correctamente') or contains(normalize-space(),'generado correctamente'))] | //*[contains(normalize-space(),'Se registró correctamente') or contains(normalize-space(),'Se registro correctamente') or contains(normalize-space(),'registrado correctamente') or contains(normalize-space(),'generado correctamente')]");
             public static readonly By MensajeError =
@@ -498,6 +538,14 @@ namespace SIGES3_0.Pages.VentasPage
 
             public static readonly By SeccionEntregaAccordion =
                 By.XPath("//div[contains(@class,'modal') and .//*[contains(normalize-space(),'Invalidar venta') or contains(normalize-space(),'Invalidar Venta')]]//button[contains(@class,'accordion-button')][.//*[contains(normalize-space(),'Entrega')] or contains(normalize-space(),'Entrega')]");
+
+            public static readonly By EntregaInmediata =
+                By.XPath("//div[contains(@class,'modal') and .//*[contains(normalize-space(),'Invalidar venta') or contains(normalize-space(),'Invalidar Venta')]]//label[contains(normalize-space(),'Inmediata')]/preceding-sibling::input | " +
+                         "//div[contains(@class,'modal') and .//*[contains(normalize-space(),'Invalidar venta') or contains(normalize-space(),'Invalidar Venta')]]//label[contains(normalize-space(),'Inmediata')]");
+
+            public static readonly By EntregaDiferida =
+                By.XPath("//div[contains(@class,'modal') and .//*[contains(normalize-space(),'Invalidar venta') or contains(normalize-space(),'Invalidar Venta')]]//label[contains(normalize-space(),'Diferida')]/preceding-sibling::input | " +
+                         "//div[contains(@class,'modal') and .//*[contains(normalize-space(),'Invalidar venta') or contains(normalize-space(),'Invalidar Venta')]]//label[contains(normalize-space(),'Diferida')]");
 
             // ── Observación obligatoria ─────────────────────────────────────────
             public static readonly By ObservacionInvalidar =

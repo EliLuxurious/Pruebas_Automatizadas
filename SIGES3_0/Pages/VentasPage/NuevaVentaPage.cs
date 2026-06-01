@@ -40,7 +40,7 @@ namespace SIGES3_0.Pages.VentasPage
         {
             this.driver = driver;
             utilities = new Utilities(driver);
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(40));
         }
 
         // ─── MODO DE VENTA ────────────────────────────────────────────────────────────
@@ -66,6 +66,14 @@ namespace SIGES3_0.Pages.VentasPage
                 return;
 
             Log($"Seleccionando modo de venta: {modo}");
+            if (modo.Trim().Equals("VENTA NORMAL", StringComparison.OrdinalIgnoreCase) &&
+                !ExisteElementoVisible(VentasLocators.NuevaVenta.ModoVenta(modo)) &&
+                IsNewSaleFormReady())
+            {
+                Log("Modo VENTA NORMAL no visible; el formulario de Nueva Venta ya esta listo, se continua.");
+                return;
+            }
+
             Click(VentasLocators.NuevaVenta.ModoVenta(modo));
             Thread.Sleep(1000);
         }
@@ -267,7 +275,7 @@ namespace SIGES3_0.Pages.VentasPage
 
             Log($"Ingresando fecha de credito: {fecha}");
             AbrirPagoNuevaVenta();
-            EstablecerFechaEnCampo(VentasLocators.Payment.CreditDueDateInput, fecha);
+            EstablecerFechaCreditoComoUsuario(VentasLocators.Payment.CreditDueDateInput, fecha);
         }
 
         // ─── DETALLE ─────────────────────────────────────────────────────────────────
@@ -324,14 +332,15 @@ namespace SIGES3_0.Pages.VentasPage
             string valorVisual = ResolverFechaSoloDia(fechaTexto);
             var input = Find(locator);
             string tipoInput = (input.GetAttribute("type") ?? string.Empty).Trim();
-            string valor = tipoInput.Equals("date", StringComparison.OrdinalIgnoreCase) &&
-                           TryResolverFechaSoloDia(fechaTexto, out DateTime fecha)
+            bool esCampoDate = tipoInput.Equals("date", StringComparison.OrdinalIgnoreCase);
+            bool tieneFecha = TryResolverFechaSoloDia(fechaTexto, out DateTime fecha);
+            string valor = esCampoDate && tieneFecha
                 ? fecha.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)
                 : valorVisual;
 
             ScrollToCenter(input);
 
-            try
+            if (esCampoDate && tieneFecha)
             {
                 ((IJavaScriptExecutor)driver).ExecuteScript(
                     "var el = arguments[0]; var val = arguments[1];" +
@@ -342,25 +351,124 @@ namespace SIGES3_0.Pages.VentasPage
                     "el.dispatchEvent(new Event('input', { bubbles: true }));" +
                     "el.dispatchEvent(new Event('change', { bubbles: true }));" +
                     "el.dispatchEvent(new Event('blur', { bubbles: true }));",
-                    input,
-                    valor);
+                    input, valor);
+                Thread.Sleep(200);
             }
-            catch
+            else
             {
-                input.Click();
-                input.SendKeys(Keys.Control + "a");
-                input.SendKeys(Keys.Delete);
-                input.SendKeys(valor);
+                // Fallback JS para inputs que no son type="date" o sin fecha resuelta
+                ((IJavaScriptExecutor)driver).ExecuteScript(
+                    "var el = arguments[0]; var val = arguments[1];" +
+                    "el.removeAttribute('readonly');" +
+                    "el.removeAttribute('disabled');" +
+                    "var setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;" +
+                    "setter.call(el, val);" +
+                    "el.dispatchEvent(new Event('input', { bubbles: true }));" +
+                    "el.dispatchEvent(new Event('change', { bubbles: true }));" +
+                    "el.dispatchEvent(new Event('blur', { bubbles: true }));",
+                    input, valor);
+                Thread.Sleep(300);
             }
 
-            input.SendKeys(Keys.Tab);
-            Thread.Sleep(500);
+            // Clic en body para forzar el ciclo de change detection de Angular
+            // y propagar el estado del FormControl al formulario padre (habilita/deshabilita Guardar)
+            try { driver.FindElement(By.TagName("body")).Click(); } catch { /* no crítico */ }
+            Thread.Sleep(300);
 
             string valorActual = input.GetAttribute("value") ?? string.Empty;
-            Assert.That(
-                string.IsNullOrWhiteSpace(valorActual),
-                Is.False,
-                $"No se pudo establecer la fecha '{fechaTexto}' en el campo {locator}. Valor enviado: '{valor}'.");
+            if (esCampoDate && tieneFecha)
+            {
+                Assert.That(
+                    valorActual,
+                    Is.EqualTo(valor),
+                    $"La fecha '{fechaTexto}' no quedo aplicada en el campo {locator}. Valor esperado: '{valor}'. Valor actual: '{valorActual}'.");
+            }
+            else
+            {
+                Assert.That(
+                    valorActual,
+                    Is.EqualTo(valor),
+                    $"La fecha '{fechaTexto}' no quedo aplicada en el campo {locator}. Valor esperado: '{valor}'. Valor actual: '{valorActual}'.");
+            }
+            Log($"Fecha aplicada en campo {locator}: '{valorActual}'");
+        }
+
+        private void EstablecerFechaCreditoComoUsuario(By locator, string fechaTexto)
+        {
+            string valorVisual = ResolverFechaSoloDia(fechaTexto);
+            bool tieneFecha = TryResolverFechaSoloDia(fechaTexto, out DateTime fecha);
+            var input = Find(locator);
+            string valorAEscribir = tieneFecha
+                ? fecha.ToString("ddMMyyyy", CultureInfo.InvariantCulture)
+                : SoloDigitos(valorVisual);
+            if (string.IsNullOrWhiteSpace(valorAEscribir))
+                valorAEscribir = valorVisual;
+
+            ScrollToCenter(input);
+
+            // Solo para fecha de credito: se escribe con teclado para que la mascara/date-picker
+            // dispare la misma validacion que aparece cuando el usuario ingresa la fecha manualmente.
+            try { input.Click(); } catch { ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", input); }
+            input.SendKeys(Keys.Control + "a");
+            input.SendKeys(Keys.Backspace);
+            input.SendKeys(Keys.Control + "a");
+            input.SendKeys(Keys.Delete);
+            input.SendKeys(Keys.Home);
+            input.SendKeys(Keys.Delete);
+            input.SendKeys(Keys.End);
+            input.SendKeys(Keys.Backspace);
+            Thread.Sleep(150);
+            input.SendKeys(valorAEscribir);
+            input.SendKeys(Keys.Tab);
+            Thread.Sleep(700);
+
+            string valorActual = input.GetAttribute("value") ?? string.Empty;
+            var validaciones = string.Join(" | ", CapturarValidacionesVisibles());
+            if (!string.IsNullOrWhiteSpace(validaciones))
+                Log($"Validacion visible despues de ingresar fecha de credito: '{validaciones}'");
+
+            if (!FechaCreditoAplicadaCorrectamente(valorActual, fechaTexto, fecha, tieneFecha, valorVisual) &&
+                string.IsNullOrWhiteSpace(validaciones))
+            {
+                Assert.Fail(
+                    $"La fecha de credito '{fechaTexto}' no quedo aplicada como entrada de usuario. " +
+                    $"Valor esperado: '{valorVisual}'. Valor escrito: '{valorAEscribir}'. Valor actual: '{valorActual}'.");
+            }
+
+            Log($"Fecha de credito aplicada con teclado en campo {locator}: '{valorActual}'");
+        }
+
+        private static string SoloDigitos(string valor) =>
+            Regex.Replace(valor ?? string.Empty, "\\D", string.Empty);
+
+        private static bool FechaCreditoAplicadaCorrectamente(
+            string valorActual,
+            string fechaTexto,
+            DateTime fechaEsperada,
+            bool tieneFecha,
+            string valorVisual)
+        {
+            if (string.IsNullOrWhiteSpace(valorActual))
+                return false;
+
+            if (tieneFecha &&
+                DateTime.TryParseExact(
+                    valorActual.Trim(),
+                    new[] { "dd/MM/yyyy", "d/M/yyyy", "yyyy-MM-dd" },
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.None,
+                    out DateTime fechaActual))
+            {
+                return fechaActual.Date == fechaEsperada.Date;
+            }
+
+            var esperado = tieneFecha
+                ? fechaEsperada.ToString("ddMMyyyy", CultureInfo.InvariantCulture)
+                : SoloDigitos(valorVisual);
+            var actual = SoloDigitos(valorActual);
+
+            return !string.IsNullOrWhiteSpace(actual) &&
+                   (actual == esperado || actual == SoloDigitos(fechaTexto));
         }
 
         private void AsegurarFamiliaEnConceptos(string familia)
@@ -1199,7 +1307,8 @@ namespace SIGES3_0.Pages.VentasPage
             BuscarClienteNuevaVenta(cliente);
             SeleccionarComprobanteNuevaVenta(comprobante);
 
-            Thread.Sleep(500);
+            // Pausa breve para que Angular renderice un posible popup de error post-seleccion.
+            Thread.Sleep(200);
             var popup = CaptureVisibleMessage(2);
             if (!string.IsNullOrWhiteSpace(popup) && IsBlockingMessage(popup) && string.IsNullOrWhiteSpace(_lastObservedMessage))
             {
@@ -1406,11 +1515,9 @@ namespace SIGES3_0.Pages.VentasPage
                 Assert.That(_wasSaveExecuted, Is.True,
                     "El guardado deberia haberse ejecutado.");
 
-                if (string.IsNullOrWhiteSpace(_lastObservedMessage) && IsNewSaleFormReset())
-                    _lastObservedMessage = "Se registro correctamente";
-
-                Assert.That(NormalizeText(_lastObservedMessage), Does.Contain("registr").Or.Contain("correct"),
-                    $"Mensaje de exito no encontrado. Actual: '{_lastObservedMessage}'");
+                Assert.That(EsMensajeExitoVenta(_lastObservedMessage), Is.True,
+                    $"Mensaje de exito no encontrado. Actual: '{_lastObservedMessage}'. " +
+                    $"Textos visibles de resultado: '{CapturarDiagnosticoMensajesResultado()}'.");
             }
             else
             {
@@ -1646,6 +1753,16 @@ namespace SIGES3_0.Pages.VentasPage
                 return;
             }
 
+            if (resultadoEsperadoNormalizado.Contains("ruc requerido") ||
+                resultadoEsperadoNormalizado.Contains("identificar cliente"))
+            {
+                AssertValidacionClienteConDocumento(
+                    mensajeNormalizado,
+                    mensajeCapturado,
+                    resultadoEsperadoNormalizado);
+                return;
+            }
+
             if (resultadoEsperadoNormalizado.Contains("identifique al conductor con dni"))
             {
                 AssertValidacionIdentidadTransporte(mensajeNormalizado, mensajeCapturado, resumenGuia);
@@ -1741,6 +1858,29 @@ namespace SIGES3_0.Pages.VentasPage
             Assert.Fail(
                 $"La validacion de datos de transporte no coincide con el resultado esperado. " +
                 $"Mensaje actual: '{mensajeCapturado}'. {resumenGuia}");
+        }
+
+        private static void AssertValidacionClienteConDocumento(
+            string mensajeNormalizado,
+            string? mensajeCapturado,
+            string resultadoEsperadoNormalizado)
+        {
+            bool esperaRuc = resultadoEsperadoNormalizado.Contains("ruc requerido");
+            bool mencionaCliente = mensajeNormalizado.Contains("cliente") ||
+                                  mensajeNormalizado.Contains("documento") ||
+                                  mensajeNormalizado.Contains("identificar") ||
+                                  mensajeNormalizado.Contains("identifique");
+            bool mencionaRuc = mensajeNormalizado.Contains("ruc");
+
+            if (esperaRuc && mencionaRuc && mencionaCliente)
+                return;
+
+            if (!esperaRuc && mencionaCliente)
+                return;
+
+            Assert.Fail(
+                $"La validacion de cliente no coincide con el resultado esperado. " +
+                $"Esperado: '{resultadoEsperadoNormalizado}'. Mensaje actual: '{mensajeCapturado}'.");
         }
 
         private static bool EsValidacionIdentidadTransporte(string mensajeNormalizado)
@@ -1849,6 +1989,8 @@ namespace SIGES3_0.Pages.VentasPage
         private static bool RequiereValidacionExplicitaDeMensaje(string resultadoEsperadoNormalizado) =>
             resultadoEsperadoNormalizado.Contains("ingrese numero de licencia") ||
             resultadoEsperadoNormalizado.Contains("ingrese numero de placa") ||
+            resultadoEsperadoNormalizado.Contains("ruc requerido") ||
+            resultadoEsperadoNormalizado.Contains("identificar cliente") ||
             resultadoEsperadoNormalizado.Contains("identifique al conductor con dni") ||
             resultadoEsperadoNormalizado.Contains("identifique al transportista con ruc") ||
             resultadoEsperadoNormalizado.Contains("falta peso y numero de bultos") ||
@@ -2523,8 +2665,11 @@ namespace SIGES3_0.Pages.VentasPage
                     }
                 }
 
-                AssertGuardarHabilitadoEnPago(
-                    "El boton Guardar deberia habilitarse cuando el pago en efectivo cubre el total.");
+                if (!esperado.Contains("sin validar guardar"))
+                {
+                    AssertGuardarHabilitadoEnPago(
+                        "El boton Guardar deberia habilitarse cuando el pago en efectivo cubre el total.");
+                }
             }
             else if (esperado.Contains("puntos"))
             {
@@ -2556,6 +2701,19 @@ namespace SIGES3_0.Pages.VentasPage
                     "La opcion Multipago deberia quedar marcada.");
                 AssertGuardarHabilitadoEnPago(
                     "El boton Guardar deberia habilitarse cuando la suma de los medios de pago cubre el total.");
+            }
+            else if (esperado.Contains("fecha no debe ser pasada"))
+            {
+                // La validacion aparece en la seccion Pago al ingresar una fecha de credito anterior a hoy.
+                // El sistema debe mostrar el mensaje y dejar el boton Guardar deshabilitado.
+                AssertAlgunMensajeValidacionPago(
+                    "El sistema deberia mostrar el mensaje 'La fecha no debe ser pasada.' al ingresar una fecha de credito pasada.",
+                    "la fecha no debe ser pasada",
+                    "fecha no debe ser pasada",
+                    "fecha invalida",
+                    "fecha incorrecta");
+                AssertGuardarDeshabilitadoEnPago(
+                    "El boton Guardar deberia permanecer deshabilitado cuando la fecha de credito es anterior a hoy.");
             }
             else
             {
@@ -2606,6 +2764,16 @@ namespace SIGES3_0.Pages.VentasPage
 
             _wasSaveEnabled = IsSaveEnabled();
             Log($"Boton Guardar habilitado: {_wasSaveEnabled}");
+
+            var validacionBloqueanteAntesDeGuardar = CapturarValidacionesVisibles()
+                .FirstOrDefault(EsValidacionBloqueanteFormulario);
+            if (!string.IsNullOrWhiteSpace(validacionBloqueanteAntesDeGuardar))
+            {
+                _wasSaveEnabled = false;
+                _lastObservedMessage = validacionBloqueanteAntesDeGuardar;
+                Log($"Guardar bloqueado por validacion activa: '{_lastObservedMessage}'");
+                return;
+            }
 
             if (!_wasSaveEnabled)
             {
@@ -2678,7 +2846,7 @@ namespace SIGES3_0.Pages.VentasPage
 
             try
             {
-                new WebDriverWait(driver, TimeSpan.FromSeconds(6))
+                new WebDriverWait(driver, TimeSpan.FromSeconds(12))
                 {
                     PollingInterval = TimeSpan.FromMilliseconds(200)
                 }.Until(_ => IsNewSaleFormReset() || !string.IsNullOrWhiteSpace(CaptureVisibleMessage(1)));
@@ -2688,13 +2856,15 @@ namespace SIGES3_0.Pages.VentasPage
             }
 
             // Resultado del guardado: form reiniciado = exito, mensaje visible = error post-guardado
-            var msg = CaptureVisibleMessage(3);
-            if (IsNewSaleFormReset())
-                _lastObservedMessage = "Se registro correctamente";
-            else if (!string.IsNullOrWhiteSpace(msg))
+            var msg = CaptureVisibleMessage(5);
+            if (!string.IsNullOrWhiteSpace(msg))
                 _lastObservedMessage = msg;
-            else if (string.IsNullOrWhiteSpace(CapturarValidaciones()))
-                _lastObservedMessage = "Se registro correctamente";
+            else
+            {
+                var validacionPostGuardado = CapturarValidaciones();
+                if (!string.IsNullOrWhiteSpace(validacionPostGuardado))
+                    _lastObservedMessage = validacionPostGuardado;
+            }
 
             Log($"Resultado: Habilitado={_wasSaveEnabled}, Ejecutado={_wasSaveExecuted}, Mensaje='{_lastObservedMessage}'");
         }
@@ -2794,10 +2964,19 @@ namespace SIGES3_0.Pages.VentasPage
             ScrollToCenter(input);
             input.Clear();
             input.SendKeys(cliente);
-            Thread.Sleep(300);
+            Thread.Sleep(150); // pequeña pausa para que el campo registre el valor antes del clic
             try { Click(VentasLocators.NuevaVenta.ClienteLupa); }
             catch { input.SendKeys(Keys.Enter); }
-            Thread.Sleep(2000);
+            // Espera a que el comprobante este disponible en lugar de un sleep fijo de 2000ms.
+            // El comprobante se habilita cuando la API de busqueda de cliente responde.
+            try
+            {
+                new WebDriverWait(driver, TimeSpan.FromSeconds(10)) { PollingInterval = TimeSpan.FromMilliseconds(200) }
+                    .Until(_ =>
+                        driver.FindElements(VentasLocators.NuevaVenta.ComprobanteChevron).Any(e => { try { return e.Displayed; } catch { return false; } })
+                        || driver.FindElements(VentasLocators.NuevaVenta.ComprobanteChevronFallback).Any(e => { try { return e.Displayed; } catch { return false; } }));
+            }
+            catch (WebDriverTimeoutException) { Thread.Sleep(500); /* fallback si el comprobante tarda mas de lo esperado */ }
         }
 
         private void AbrirSeccionFacturacionSiNecesario()
@@ -2814,7 +2993,15 @@ namespace SIGES3_0.Pages.VentasPage
                 By.XPath("//div[contains(@id,'heading-collapse-factur')]//button"),
                 By.XPath("//button[contains(@class,'accordion-button')][contains(normalize-space(),'Facturaci')]")
             );
-            Thread.Sleep(800);
+            // Espera a que el campo de cliente sea visible en lugar de un sleep fijo.
+            try
+            {
+                new WebDriverWait(driver, TimeSpan.FromSeconds(5)) { PollingInterval = TimeSpan.FromMilliseconds(150) }
+                    .Until(_ =>
+                        driver.FindElements(By.Id("DocumentoIdentidad")).Any(e => { try { return e.Displayed; } catch { return false; } })
+                        || driver.FindElements(VentasLocators.NuevaVenta.ClienteBuscar).Any(e => { try { return e.Displayed; } catch { return false; } }));
+            }
+            catch (WebDriverTimeoutException) { /* si no aparece, el flujo siguiente fallara con mensaje claro */ }
         }
 
         private void SeleccionarComprobanteNuevaVenta(string comprobante)
@@ -2822,18 +3009,46 @@ namespace SIGES3_0.Pages.VentasPage
             if (string.IsNullOrWhiteSpace(comprobante)) return;
             string textoOpcion = NormalizarTextComprobante(comprobante);
             Log($"Seleccionando comprobante: {textoOpcion}");
+            if (ComprobanteYaSeleccionadoNuevaVenta(textoOpcion))
+            {
+                Log($"Comprobante ya seleccionado: {textoOpcion}");
+                return;
+            }
+
             // Paso 1: abrir el dropdown con el chevron
             Click(
                 VentasLocators.NuevaVenta.ComprobanteChevron,
                 VentasLocators.NuevaVenta.ComprobanteChevronFallback
             );
-            Thread.Sleep(800);
+            // Espera a que las opciones del dropdown sean visibles antes de intentar hacer clic.
+            try
+            {
+                new WebDriverWait(driver, TimeSpan.FromSeconds(5)) { PollingInterval = TimeSpan.FromMilliseconds(150) }
+                    .Until(_ => driver.FindElements(VentasLocators.NuevaVenta.ComprobanteOpcion(textoOpcion))
+                        .Any(e => { try { return e.Displayed; } catch { return false; } }));
+            }
+            catch (WebDriverTimeoutException) { Thread.Sleep(400); }
+
             // Paso 2: seleccionar la opcion
             Click(
                 VentasLocators.NuevaVenta.ComprobanteOpcion(textoOpcion),
                 VentasLocators.NuevaVenta.ComprobanteOpcionFallback(textoOpcion)
             );
-            Thread.Sleep(800);
+            // Espera a que el comprobante quede seleccionado (Angular actualiza el FormControl).
+            try
+            {
+                new WebDriverWait(driver, TimeSpan.FromSeconds(5)) { PollingInterval = TimeSpan.FromMilliseconds(150) }
+                    .Until(_ => ComprobanteYaSeleccionadoNuevaVenta(textoOpcion));
+            }
+            catch (WebDriverTimeoutException) { Thread.Sleep(400); }
+        }
+
+        private bool ComprobanteYaSeleccionadoNuevaVenta(string comprobante)
+        {
+            return driver.FindElements(By.XPath(
+                    $"//label[@for='businessDocumentTypeId']/following::app-dropdown-search[1]//*[contains(normalize-space(),'{comprobante}')] | " +
+                    $"//label[contains(normalize-space(),'COMPROBANTE') or contains(normalize-space(),'Comprobante')]/following::app-dropdown-search[1]//*[contains(normalize-space(),'{comprobante}')]"))
+                .Any(e => { try { return e.Displayed; } catch { return false; } });
         }
 
         private static string NormalizarTextComprobante(string comprobante)
@@ -2864,7 +3079,8 @@ namespace SIGES3_0.Pages.VentasPage
                 VentasLocators.NuevaVenta.SeriePorTexto(serie),
                 VentasLocators.Voucher.SeriesByText(serie)
             );
-            Thread.Sleep(500);
+            // Pausa minima para que Angular procese la seleccion del radio de serie.
+            Thread.Sleep(200);
         }
 
         private void UpdatePayment(string pago)
@@ -2942,14 +3158,8 @@ namespace SIGES3_0.Pages.VentasPage
             var until = DateTime.UtcNow.AddSeconds(Math.Max(1, timeoutSeconds));
             while (DateTime.UtcNow <= until)
             {
-                var message = driver.FindElements(By.XPath("//*[contains(@class,'swal2-html-container') or contains(@class,'swal2-content') or contains(@class,'custom-error-message') or contains(@class,'toast') or contains(@class,'alert')][normalize-space()]"))
-                    .Where(e =>
-                    {
-                        try { return e.Displayed; }
-                        catch { return false; }
-                    })
-                    .Select(e => e.Text?.Trim())
-                    .FirstOrDefault(t => !string.IsNullOrWhiteSpace(t));
+                var message = CapturarMensajesResultadoVisibles()
+                    .FirstOrDefault(EsMensajeResultadoVisible);
 
                 if (!string.IsNullOrWhiteSpace(message))
                     return message;
@@ -2958,6 +3168,251 @@ namespace SIGES3_0.Pages.VentasPage
             }
 
             return string.Empty;
+        }
+
+        private IReadOnlyList<string> CapturarMensajesResultadoVisibles()
+        {
+            var mensajes = new List<string>();
+
+            mensajes.AddRange(CapturarTextoSweetAlert());
+
+            mensajes.AddRange(CapturarTextoAgrupadoPorContenedor(
+                "[role='alertdialog']:not(.swal2-popup), .modal.show .modal-content, ngb-modal-window .modal-content, .modal-overlay .modal-content",
+                ".modal-title, .modal-body, h1, h2, h3, h4, h5, h6, p"));
+
+            var selectors = new[]
+            {
+                ".swal2-title",
+                ".swal2-html-container",
+                ".swal2-content",
+                ".custom-error-message",
+                ".toast",
+                ".alert",
+                "[role='alert']",
+                "[role='alertdialog']",
+                ".modal.show .modal-title",
+                ".modal.show .modal-body",
+                ".modal.show .modal-content h1",
+                ".modal.show .modal-content h2",
+                ".modal.show .modal-content h3",
+                ".modal.show .modal-content h4",
+                ".modal.show .modal-content h5",
+                ".modal.show .modal-content h6",
+                ".modal.show .modal-content p",
+                "ngb-modal-window .modal-title",
+                "ngb-modal-window .modal-body",
+                "ngb-modal-window .modal-content h1",
+                "ngb-modal-window .modal-content h2",
+                "ngb-modal-window .modal-content h3",
+                "ngb-modal-window .modal-content h4",
+                "ngb-modal-window .modal-content h5",
+                "ngb-modal-window .modal-content h6",
+                "ngb-modal-window .modal-content p",
+                ".modal-overlay .modal-content h1",
+                ".modal-overlay .modal-content h2",
+                ".modal-overlay .modal-content h3",
+                ".modal-overlay .modal-content h4",
+                ".modal-overlay .modal-content h5",
+                ".modal-overlay .modal-content h6",
+                ".modal-overlay .modal-content p"
+            };
+
+            mensajes.AddRange(driver.FindElements(By.CssSelector(string.Join(", ", selectors)))
+                .Where(e =>
+                {
+                    try { return e.Displayed; }
+                    catch { return false; }
+                })
+                .Select(e => LimpiarTextoVisible(e.Text))
+                .Where(t => !string.IsNullOrWhiteSpace(t) && !EsTextoAccionModal(t))
+                .ToList());
+
+            return mensajes
+                .Where(t => !string.IsNullOrWhiteSpace(t))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+        }
+
+        private IReadOnlyList<string> CapturarTextoSweetAlert()
+        {
+            var textos = new List<string>();
+
+            foreach (var popup in driver.FindElements(By.CssSelector(".swal2-popup")))
+            {
+                try
+                {
+                    if (!popup.Displayed)
+                        continue;
+                }
+                catch
+                {
+                    continue;
+                }
+
+                var partes = new List<string>();
+                partes.AddRange(CapturarTextosDentroDe(popup, ".swal2-title"));
+                partes.AddRange(CapturarTextosDentroDe(popup, ".swal2-html-container"));
+                partes.AddRange(CapturarTextosDentroDe(popup, ".swal2-validation-message"));
+
+                if (!partes.Any())
+                    partes.AddRange(CapturarTextosDentroDe(popup, ".swal2-content"));
+
+                var texto = string.Join(" | ", QuitarPartesCompuestasDuplicadas(partes
+                    .Select(RemoverAccionesModal)
+                    .Where(t => !string.IsNullOrWhiteSpace(t) && !EsTextoAccionModal(t))
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToList()));
+
+                if (!string.IsNullOrWhiteSpace(texto))
+                    textos.Add(texto);
+            }
+
+            return textos;
+        }
+
+        private IReadOnlyList<string> CapturarTextoAgrupadoPorContenedor(string contenedorSelector, string contenidoSelector)
+        {
+            return driver.FindElements(By.CssSelector(contenedorSelector))
+                .Where(e =>
+                {
+                    try { return e.Displayed; }
+                    catch { return false; }
+                })
+                .Select(contenedor =>
+                {
+                    var partes = contenedor.FindElements(By.CssSelector(contenidoSelector))
+                        .Where(e =>
+                        {
+                            try { return e.Displayed; }
+                            catch { return false; }
+                        })
+                        .Select(e => RemoverAccionesModal(LimpiarTextoVisible(e.Text)))
+                        .Where(t => !string.IsNullOrWhiteSpace(t) && !EsTextoAccionModal(t))
+                        .Distinct(StringComparer.OrdinalIgnoreCase)
+                        .ToList();
+
+                    return partes.Any()
+                        ? string.Join(" | ", QuitarPartesCompuestasDuplicadas(partes))
+                        : LimpiarTextoVisible(contenedor.Text);
+                })
+                .Where(t => !string.IsNullOrWhiteSpace(t))
+                .ToList();
+        }
+
+        private static IReadOnlyList<string> CapturarTextosDentroDe(IWebElement contenedor, string selector)
+        {
+            return contenedor.FindElements(By.CssSelector(selector))
+                .Where(e =>
+                {
+                    try { return e.Displayed; }
+                    catch { return false; }
+                })
+                .Select(e => RemoverAccionesModal(LimpiarTextoVisible(e.Text)))
+                .Where(t => !string.IsNullOrWhiteSpace(t) && !EsTextoAccionModal(t))
+                .ToList();
+        }
+
+        private string CapturarDiagnosticoMensajesResultado()
+        {
+            var mensajes = CapturarMensajesResultadoVisibles()
+                .Take(5)
+                .ToList();
+
+            return mensajes.Any()
+                ? string.Join(" | ", mensajes)
+                : "sin textos visibles en modales/popup";
+        }
+
+        private static bool EsMensajeResultadoVisible(string? texto)
+        {
+            var normalizado = NormalizeText(texto ?? string.Empty);
+            if (string.IsNullOrWhiteSpace(normalizado))
+                return false;
+
+            if (EsMensajeTransitorioGuardado(normalizado))
+                return false;
+
+            return normalizado.Contains("registr") ||
+                   normalizado.Contains("correct") ||
+                   normalizado.Contains("exito") ||
+                   normalizado.Contains("exitos") ||
+                   normalizado.Contains("guard") ||
+                   normalizado.Contains("complet") ||
+                   normalizado.Contains("error") ||
+                   normalizado.Contains("inconsisten") ||
+                   normalizado.Contains("obligatorio") ||
+                   normalizado.Contains("requerido") ||
+                   normalizado.Contains("no se pudo") ||
+                   normalizado.Contains("no debe") ||
+                   normalizado.Contains("invalido");
+        }
+
+        private static bool EsMensajeExitoVenta(string? texto)
+        {
+            var normalizado = NormalizeText(texto ?? string.Empty);
+            if (string.IsNullOrWhiteSpace(normalizado) || EsMensajeTransitorioGuardado(normalizado))
+                return false;
+
+            return normalizado.Contains("correct") ||
+                   normalizado.Contains("exito") ||
+                   normalizado.Contains("exitos") ||
+                   normalizado.Contains("registro") ||
+                   normalizado.Contains("registrado") ||
+                   normalizado.Contains("registrada");
+        }
+
+        private static bool EsMensajeTransitorioGuardado(string textoNormalizado)
+        {
+            return textoNormalizado.Contains("por favor espere") ||
+                   textoNormalizado.Contains("registrando") ||
+                   textoNormalizado.Contains("procesando") ||
+                   textoNormalizado.Contains("cargando");
+        }
+
+        private static string LimpiarTextoVisible(string? texto)
+        {
+            if (string.IsNullOrWhiteSpace(texto))
+                return string.Empty;
+
+            return Regex.Replace(texto.Trim(), @"\s+", " ");
+        }
+
+        private static string RemoverAccionesModal(string texto)
+        {
+            if (string.IsNullOrWhiteSpace(texto))
+                return string.Empty;
+
+            return LimpiarTextoVisible(Regex.Replace(texto, @"\b(OK|Aceptar|Cancelar|Cerrar)\b", string.Empty, RegexOptions.IgnoreCase));
+        }
+
+        private static IReadOnlyList<string> QuitarPartesCompuestasDuplicadas(IReadOnlyList<string> partes)
+        {
+            var limpias = partes
+                .Select(LimpiarTextoVisible)
+                .Where(t => !string.IsNullOrWhiteSpace(t))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+
+            return limpias
+                .Where(parte =>
+                {
+                    var normalizada = NormalizeText(parte);
+                    var partesContenidas = limpias
+                        .Where(otra => !otra.Equals(parte, StringComparison.OrdinalIgnoreCase))
+                        .Count(otra => normalizada.Contains(NormalizeText(otra)));
+
+                    return partesContenidas < 2;
+                })
+                .ToList();
+        }
+
+        private static bool EsTextoAccionModal(string texto)
+        {
+            var normalizado = NormalizeText(texto);
+            return normalizado == "ok" ||
+                   normalizado == "aceptar" ||
+                   normalizado == "cancelar" ||
+                   normalizado == "cerrar";
         }
 
         private void TryCloseSuccessDialog()
@@ -5934,7 +6389,11 @@ namespace SIGES3_0.Pages.VentasPage
 
             mensajes.AddRange(driver.FindElements(By.XPath(
                     "//*[contains(@class,'invalid-feedback') or contains(@class,'text-danger') or " +
-                    "contains(@class,'custom-error-message')][normalize-space()]"))
+                    "contains(@class,'custom-error-message') or contains(@class,'mat-error') or " +
+                    "contains(@class,'error-message') or contains(@class,'validation-error') or " +
+                    "contains(@class,'field-error')][normalize-space()] | " +
+                    "//*[@role='alert'][normalize-space()] | " +
+                    "//small[contains(@class,'error') or contains(@class,'danger')][normalize-space()]"))
                 .Where(e => { try { return e.Displayed; } catch { return false; } })
                 .Select(e => e.Text?.Trim())
                 .Where(t => !string.IsNullOrWhiteSpace(t))!
@@ -5955,7 +6414,11 @@ namespace SIGES3_0.Pages.VentasPage
 
             var validaciones = driver.FindElements(By.XPath(
                     "//*[contains(@class,'invalid-feedback') or contains(@class,'text-danger') or " +
-                    "contains(@class,'custom-error-message')][normalize-space()]"))
+                    "contains(@class,'custom-error-message') or contains(@class,'mat-error') or " +
+                    "contains(@class,'error-message') or contains(@class,'validation-error') or " +
+                    "contains(@class,'field-error')][normalize-space()] | " +
+                    "//*[@role='alert'][normalize-space()] | " +
+                    "//small[contains(@class,'error') or contains(@class,'danger')][normalize-space()]"))
                 .Where(e => { try { return e.Displayed; } catch { return false; } })
                 .ToList();
 
@@ -6080,6 +6543,27 @@ namespace SIGES3_0.Pages.VentasPage
         private void AssertAlgunMensajeValidacionPago(string mensajeError, params string[] fragmentosEsperados)
         {
             var visibles = CapturarValidacionesVisibles();
+
+            // Busqueda adicional: texto visible en toda la seccion de pago que coincida con los fragmentos.
+            // Cubre casos donde el mensaje usa clases CSS no contempladas (ej: inline bajo campo de fecha).
+            if (!visibles.Any())
+            {
+                var todoElTextoSeccionPago = driver.FindElements(By.XPath(
+                    "//div[contains(@class,'accordion-body') or contains(@class,'pago') or contains(@id,'pago')]" +
+                    "//*[normalize-space() and not(self::script) and not(self::style)]"))
+                    .Where(e => { try { return e.Displayed; } catch { return false; } })
+                    .Select(e => e.Text?.Trim())
+                    .Where(t => !string.IsNullOrWhiteSpace(t) && t!.Length < 200)
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToList();
+
+                var esperadosNorm = fragmentosEsperados.Select(NormalizeText).ToList();
+                var encontrado = todoElTextoSeccionPago
+                    .FirstOrDefault(t => esperadosNorm.Any(e => NormalizeText(t!).Contains(e)));
+                if (encontrado != null)
+                    visibles = new List<string> { encontrado };
+            }
+
             var resumenMensajes = string.Join(" | ", visibles);
             var resumen = ConstruirResumenPagoNuevaVenta(mensajeVisible: resumenMensajes);
             var esperados = fragmentosEsperados
@@ -6120,6 +6604,23 @@ namespace SIGES3_0.Pages.VentasPage
                 n.Contains("campos requeridos correctamente"))
                 return false;
             return true;
+        }
+
+        private static bool EsValidacionBloqueanteFormulario(string msg)
+        {
+            if (string.IsNullOrWhiteSpace(msg)) return false;
+            var n = NormalizeText(msg);
+
+            if (n.Contains("se completo los datos correctamente") ||
+                n.Contains("se completo los campos correctamente"))
+                return false;
+
+            return n.Contains("no debe") ||
+                   n.Contains("obligatorio") ||
+                   n.Contains("requerido") ||
+                   n.Contains("completar los campos") ||
+                   n.Contains("invalido") ||
+                   n.Contains("error");
         }
 
         private static string NormalizeText(string value)

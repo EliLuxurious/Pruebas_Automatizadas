@@ -69,6 +69,12 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             _ajustePage.SeleccionarEntregaClonar(entrega);
         }
 
+        [StepDefinition("modifica el cliente a {string} en el modal Clonar venta")]
+        public void ModificaElClienteEnElModalClonarVenta(string documento)
+        {
+            _ajustePage.ModificarClienteClonar(documento);
+        }
+
         [When("hace clic en Clonar venta")]
         public void WhenHaceClicEnClonarVenta()
         {
@@ -282,7 +288,7 @@ namespace SIGES3_0.StepDefinitions.VentasStep
         public void SeleccionaDevolucionEnElModalDeInvalidacion(string tipo)
         {
             if (EsOpcionalVacio(tipo)) return;
-            _ajustePage.SeleccionarEntrega(tipo);
+            _ajustePage.SeleccionarEntregaInvalidacion(tipo);
         }
 
         [StepDefinition("ingresa observacion de invalidacion {string}")]

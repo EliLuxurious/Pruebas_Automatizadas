@@ -112,7 +112,7 @@ namespace SIGES3_0.StepDefinitions.VentasStep
 
         // Reutiliza el contrato declarativo de medios de pago sin tocar Pedido.
         [Scope(Tag = "NuevaVenta")]
-        [When(@"el usuario configura los medios de pago '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)'")]
+        [When(@"el usuario configura los medios de pago '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)'")]
         public void WhenElUsuarioConfiguraLosMediosDePagoNuevaVenta(
             string tipoPago,
             string multipago,
@@ -138,7 +138,7 @@ namespace SIGES3_0.StepDefinitions.VentasStep
                 string.Empty);
 
         [Scope(Tag = "NuevaVenta")]
-        [When(@"el usuario configura los medios de pago '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)'")]
+        [When(@"el usuario configura los medios de pago '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)'")]
         public void WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(
             string tipoPago,
             string multipago,

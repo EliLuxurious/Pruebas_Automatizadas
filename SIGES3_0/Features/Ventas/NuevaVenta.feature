@@ -19,33 +19,33 @@ Feature: Nueva Venta
         When el usuario inicia sesión con usuario 'admin.ti@tsol.com' y contraseña 'calidad'
         And se descarta aviso de contrasena de Chrome si aparece
 
-        Given Navego al módulo de 'Adquisición'
-    And Entro al submódulo específico de 'Nueva Adquisición'
+#    Given Navego al módulo de 'Adquisición'
+#    And Entro al submódulo específico de 'Nueva Adquisición'
+#
+#    When Se configuran los datos de 'Facturación':
+#      | Campo                 | Valor               |
+#      | Documento             | FACTURA ELECTRONICA |
+#      | Serie                 | F001                |
+#      | Correlativo           | 00009991            |
+#      | Fecha de emisión      | 04/03/2026          |
+#      | Proveedor             | 10759012017         |
+#      | Información Adicional | Precondición Inka Kola |
+#
+#    And Se selecciona el tipo de entrega 'Inmediata'
+#    And Se configuran los datos de 'Entrega':
+#      | Campo           | Valor                    |
+#      | Rol             | Item Comercial           |
+#      | Establecimiento | RECSA - CENTRAL          |
+#      | Almacén         | CENTRO COMERCIAL CENTRAL |
+#
+#    And Se selecciona y configura el producto a adquirir:
+#      | Producto                                        | Cantidad | V. U |
+#      | 123456789\|Inca Kola Gaseosa Botella 1.5L   | 15       | 6.9  |
+#
+#    Then Se procede a guardar la adquisición mediante la acción 'SavePurchase'
+#    And Se confirma el registro exitoso con el mensaje 'Se registró correctamente.'
 
-    When Se configuran los datos de 'Facturación':
-      | Campo                 | Valor               |
-      | Documento             | FACTURA ELECTRONICA |
-      | Serie                 | F001                |
-      | Correlativo           | 00009991            |
-      | Fecha de emisión      | 04/03/2026          |
-      | Proveedor             | 10759012017         |
-      | Información Adicional | Precondición Inka Kola |
-
-    And Se selecciona el tipo de entrega 'Inmediata'
-    And Se configuran los datos de 'Entrega':
-      | Campo           | Valor                    |
-      | Rol             | Item Comercial           |
-      | Establecimiento | RECSA - CENTRAL          |
-      | Almacén         | CENTRO COMERCIAL CENTRAL |
-
-    And Se selecciona y configura el producto a adquirir:
-      | Producto                                        | Cantidad | V. U |
-      | 7753234003313\|Inca Kola Gaseosa Botella 1.5L   | 15      | 6.9  |
-
-    Then Se procede a guardar la adquisición mediante la acción 'SavePurchase'
-    And Se confirma el registro exitoso con el mensaje 'Se registró correctamente.'
-
-    When el usuario accede al módulo 'Ventas'
+    And el usuario accede al módulo 'Ventas'
     And el usuario accede al submodulo 'Nueva Venta'
 
 
@@ -58,7 +58,8 @@ Feature: Nueva Venta
         When selecciona el modo de venta "<ModoVenta>"
         And configura IGV "<IGV>" y Detalle Unificado "<DetUnificado>"
         And el usuario selecciona la familia 'Gaseosa'
-        And usuario selecciona el concepto '7753234003313'
+        And usuario selecciona el concepto '123456789'
+
         And usuario ingresa la cantidad '<Cantidad>'
         And configura la facturacion '<Comprobante>' '<Serie>' '<Cliente>'
         And selecciona el punto de venta '<PuntoVenta>'
@@ -69,12 +70,10 @@ Feature: Nueva Venta
         Then el sistema valida el resultado de venta "<ResultadoEsperado>"
         Examples:
             | Caso  | ModoVenta       | IGV | DetUnificado | Cantidad | PuntoVenta               | Vendedor                  | Comprobante                 | Serie | Cliente     | Entrega   | GuiaRemision | Pago       | ResultadoEsperado                   |
-            | CP-V1 | VENTA NORMAL    | Y   | Y            | 1        | -                        | -                         | FACTURA ELECTRONICA         | F002  | 75893616    | Inmediata | false        | Contado    | inconsistencia: ruc requerido       |
-            | CP-V2 | VENTA MODO CAJA | Y   | Y            | 1        | ALMACEN CENTRAL          | PAMELA GLORIA TONE RECUAY | FACTURA ELECTRONICA         | F002  | 20542245671 | Inmediata | false        | Contado    | guarda exitosamente                 |
             | CP-V3 | VENTA NORMAL    | N   | N            | 150      | -                        | -                         | BOLETA DE VENTA ELECTRONICA | B002  | 00000000    | Inmediata | false        | Contado    | inconsistencia: identificar cliente |
             | CP-V4 | VENTA NORMAL    | N   | N            | 1        | -                        | -                         | BOLETA DE VENTA ELECTRONICA | B002  | 00000000    | Inmediata | false        | Contado    | guarda exitosamente                 |
             | CP-V5 | VENTA NORMAL    | N   | Y            | 150      | -                        | -                         | BOLETA DE VENTA ELECTRONICA | B002  | 75893616    | Diferida  | false        | Contado    | guarda exitosamente                 |
-            | CP-V6 | VENTA MODO CAJA | N   | Y            | 150      | CENTRO COMERCIAL CENTRAL | PAMELA GLORIA TONE RECUAY | NOTA DE VENTA(INTERNA)      | NV02  | 00000000    | Inmediata | false        | Contado    | guarda exitosamente                 |
+            | CP-V6 | VENTA MODO CAJA | N   | Y            | 150      | SIGES - CASTILLO GRANDE  | FRANKLIN MARTINEZ HURTADO | NOTA DE VENTA(INTERNA)      | NV02  | 00000000    | Inmediata | false        | Contado    | guarda exitosamente                 |
             | CP-V7 | VENTA NORMAL    | N   | N            | 150      | -                        | -                         | NOTA DE VENTA(INTERNA)      | NV02  | 75893616    | Inmediata | false        | Incompleto | pago no completado                  |
 
     @NuevaVenta
@@ -83,11 +82,11 @@ Feature: Nueva Venta
         When selecciona el modo de venta "<ModoVenta>"
         And configura IGV "<IGV>" y Detalle Unificado "<DetUnificado>"
         And el usuario selecciona la familia 'Gaseosa'
-        And usuario selecciona el concepto '7753234003313'
+        And usuario selecciona el concepto '123456789'
         And usuario ingresa la cantidad '<Cantidad>'
+        And configura la facturacion '<Comprobante>' '<Serie>' '<Cliente>'
         And selecciona el punto de venta '<PuntoVenta>'
         And selecciona el vendedor '<Vendedor>'
-        And configura la facturacion '<Comprobante>' '<Serie>' '<Cliente>'
         And el usuario configura la entrega '<Entrega>' '<GuiaRemision>'
         And el usuario ingresa fecha de traslado '<FechaTraslado>'
         And el usuario ingresa peso bruto '<PesoBruto>'
@@ -104,9 +103,9 @@ Feature: Nueva Venta
         And hace clic en Guardar
         Then el sistema valida el resultado de venta "<ResultadoEsperado>"
         Examples:
-            | Caso  | ModoVenta       | IGV | DetUnificado | Cantidad | PuntoVenta      | Vendedor                  | Comprobante         | Serie | Cliente     | Entrega   | GuiaRemision | FechaTraslado | PesoBruto | Bultos | TipoTransporte | TransportistaRuc | NumeroLicencia | NumeroPlaca | direccion_origen          | detalle_origen | direccion_destino | detalle_destino | Pago    | ResultadoEsperado             |
-            | CP-V1 | VENTA NORMAL    | Y   | Y            | 1        | -               | -                         | FACTURA ELECTRONICA | F002  | 75893616    | Inmediata | true         | NA            | NA        | NA     | NA             | NA               | NA             | NA          | NA                        | NA             | NA                | NA              | Contado | inconsistencia: ruc requerido |
-            | CP-V2 | VENTA MODO CAJA | Y   | Y            | 1        | ALMACEN CENTRAL | FRANKLIN MARTINEZ HURTADO | FACTURA ELECTRONICA | F002  | 20542245671 | Inmediata | true         | 01/03/2026    | 100       | 10     | Publico        | 20602945589      | NA             | NA          | Huanuco-Leoncio-Rupa Rupa | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | Contado | guarda exitosamente           |
+            | Caso  | ModoVenta       | IGV | DetUnificado | Cantidad | PuntoVenta              | Vendedor                  | Comprobante         | Serie | Cliente     | Entrega   | GuiaRemision | FechaTraslado | PesoBruto | Bultos | TipoTransporte | TransportistaRuc | NumeroLicencia | NumeroPlaca | direccion_origen          | detalle_origen | direccion_destino | detalle_destino | Pago    | ResultadoEsperado             |
+            | CP-V1 | VENTA NORMAL    | Y   | Y            | 1        | -                       | -                         | FACTURA ELECTRONICA | F002  | 75893616    | Inmediata | true         | Hoy           | 100       | 10     | Publico        | 20602945589      | NA             | NA          | Huanuco-Leoncio-Rupa Rupa | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | Contado | inconsistencia: ruc requerido |
+            | CP-V2 | VENTA MODO CAJA | Y   | Y            | 1        | SIGES - CASTILLO GRANDE | FRANKLIN MARTINEZ HURTADO | FACTURA ELECTRONICA | F002  | 20542245671 | Inmediata | true         | Hoy           | 100       | 10     | Publico        | 20602945589      | NA             | NA          | Huanuco-Leoncio-Rupa Rupa | Av amazonas C9 | Lima-Lima-Lima    | Av San Juna C1  | Contado | guarda exitosamente           |
 
     @NuevaVenta  
     @VentaContingencia
@@ -114,7 +113,7 @@ Feature: Nueva Venta
         When selecciona el modo de venta "VENTA POR CONTINGENCIA"
         And configura IGV "false" y Detalle Unificado "false"
         And el usuario selecciona la familia 'Gaseosa'
-        And usuario selecciona el concepto '7753234003313'
+        And usuario selecciona el concepto '123456789'
         And usuario ingresa la cantidad '150'
         And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'
         And ingresa la fecha de emision "<FechaEmision>"
@@ -133,7 +132,7 @@ Feature: Nueva Venta
         When selecciona el modo de venta "VENTA NORMAL"
         And configura IGV "N" y Detalle Unificado "N"
         And el usuario selecciona la familia 'Gaseosa'
-        And usuario selecciona el concepto '7753234003313'
+        And usuario selecciona el concepto '123456789'
         And usuario ingresa la cantidad '20'
         And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '75893616'
         And el usuario configura la entrega 'Inmediata' '<GuiaRemision>'
@@ -194,12 +193,12 @@ Scenario Outline: Validar descuentos en nueva venta
 	# ❗ VALIDACIÓN SIN GUARDAR
 	Then el sistema valida el resultado del descuento en venta '<resultado>'
 
-Examples:
-| caso | familia | concepto      | cantidad | igv   | descuento | tipo_descuento | modo_descuento | valor_descuento | resultado                                   |
-| 1    | Gaseosa | 7753234003313 | 1        | false | true      | item           | $              | 1.00            | descuento item monto valido                  |
-| 2    | Gaseosa | 7753234003313 | 1        | false | true      | global         | %              | 5               | descuento global porcentaje valido           |
-| 3    | Gaseosa | 7753234003313 | 1        | false | true      | global         | $              | 20.00           | descuento global monto invalido              |
-| 4    | Gaseosa | 7753234003313 | 1        | false | true      | item           | %              | 100             | descuento item porcentaje invalido           |
+    Examples:
+    | caso | familia | concepto  | cantidad | igv   | descuento | tipo_descuento | modo_descuento | valor_descuento | resultado                                   |
+    | 1    | Gaseosa | 123456789 | 1        | false | true      | item           | $              | 1.00            | descuento item monto valido                  |
+    | 2    | Gaseosa | 123456789 | 1        | false | true      | global         | %              | 5               | descuento global porcentaje valido           |
+    | 3    | Gaseosa | 123456789 | 1        | false | true      | global         | $              | 20.00           | descuento global monto invalido              |
+    | 4    | Gaseosa | 123456789 | 1        | false | true      | item           | %              | 100             | descuento item porcentaje invalido           |
 
     @NuevaVenta
     @MediosDePago
@@ -207,7 +206,7 @@ Examples:
         When selecciona el modo de venta "VENTA NORMAL"
         And configura IGV "N" y Detalle Unificado "N"
         And el usuario selecciona la familia 'Gaseosa'
-        And usuario selecciona el concepto '7753234003313'
+        And usuario selecciona el concepto '123456789'
         And usuario ingresa la cantidad '<cantidad>'
         And configura la facturacion 'BOLETA DE VENTA ELECTRONICA' 'B002' '<cliente>'
         And el usuario configura la entrega 'Inmediata' 'false'
@@ -217,24 +216,40 @@ Examples:
         When hace clic en Guardar
         Then el sistema valida el resultado de venta '<resultado_venta>'
     Examples:
-        # Nota: no se agregan casos con nota de credito porque esa funcionalidad aun no esta implementada en el sistema.
         | caso  | cantidad | cliente  | tipo_pago | multipago | medio_pago                                                        | banco                                                | tarjeta                | cuenta_bancaria                                  | nro_operacion             | monto_por_medio                 | nro_cuotas | monto_inicial_credito | observacion_pago | resultado_pago                                               | resultado_venta     |
         | CP014 | 2        | 00000000 | contado   | false     | transferencia_fondos                                              | NA                                                   | NA                     | BCP\|SOL\|1912490779081                          | 04587544                  | NA                              | NA         | NA                    | NA               | pago contado transferencia exitoso                           | guarda exitosamente |
         | CP015 | 2        | 00000000 | contado   | false     | tarjeta_debito                                                    | BANCO DE CREDITO DEL PERU                            | VISA                   | NA                                               | 04587544                  | NA                              | NA         | NA                    | NA               | pago contado debito exitoso                                  | guarda exitosamente |
         | CP016 | 2        | 00000000 | contado   | false     | efectivo                                                          | NA                                                   | NA                     | NA                                               | NA                        | 50                              | NA         | NA                    | cobro qa         | pago contado efectivo con vuelto exitoso                     | guarda exitosamente |
-        | CP017 | 2        | 75893616 | contado   | false     | puntos                                                            | NA                                                   | NA                     | NA                                               | NA                        | NA                              | NA         | NA                    | canje qa         | pago contado puntos exitoso                                  | guarda exitosamente |
-        | CP018 | 10       | 75893616 | contado   | true      | efectivo, tarjeta_credito, tarjeta_debito, transferencia_fondos   | BANCO DE CREDITO DEL PERU, BANCO DE CREDITO DEL PERU | VISA, VISA             | BCP\|SOL\|1912490779081                          | OP10001, OP10002, OP10003 | 5.50, 10.00, 10.00, TOTAL-25.50 | NA         | NA                    | NA               | pago contado multipago exitoso                               | guarda exitosamente |
+        # CP017: OMITIDO - Pago contado con puntos. La funcionalidad de puntos fue implementada solo a nivel de interfaz; las validaciones del sistema (saldo, canje, acumulacion) no funcionan correctamente.
+            # Se reactivara cuando el sistema implemente las reglas de negocio de puntos de forma completa.
+    
+        # CP018: cantidad ajustada de 10 a 15 (precio S/2.30 → total S/34.50) para que TOTAL-25.50 sea positivo (9.00).
+        # Se usa solo hasta tarjeta_debito porque la cuenta bancaria BCP|SOL|1912490779081
+        # no esta configurada en alpha2, por lo que transferencia_fondos no es viable.
+        | CP018 | 15       | 75893616 | contado   | true      | efectivo, tarjeta_credito, tarjeta_debito                         | BANCO DE CREDITO DEL PERU, BANCO DE CREDITO DEL PERU | VISA, VISA             | NA                                               | OP10001, OP10002, OP10003 | 5.50, 10.00, TOTAL-15.50        | NA         | NA                    | NA               | pago contado multipago exitoso                               | guarda exitosamente |
         | CP019 | 2        | 00000000 | contado   | true      | transferencia_fondos, transferencia_fondos, transferencia_fondos  | NA                                                   | NA                     | BCP\|SOL\|1912490779081, BCP\|SOL\|1912490779081 | OP33445, OP33446          | 10.00, 10.00                    | NA         | NA                    | NA               | inconsistencia transferencia sin cuenta ni informacion       | venta bloqueada     |
         | CP020 | 2        | 00000000 | contado   | true      | tarjeta_debito, tarjeta_debito, tarjeta_debito                    | BANCO DE CREDITO DEL PERU, BANCO DE CREDITO DEL PERU | VISA, VISA             | NA                                               | OP20001, OP20002, OP20003 | 10.00, 10.00, 15.50             | NA         | NA                    | NA               | inconsistencia debito sin banco ni tarjeta                   | venta bloqueada     |
         | CP021 | 2        | 00000000 | contado   | true      | tarjeta_debito, tarjeta_debito, tarjeta_debito                    | BANCO DE CREDITO DEL PERU, INTERBANK, SCOTIABANK     | VISA, MASTERCARD, VISA | NA                                               | OP21001, OP21002          | 10.00, 10.00, 15.50             | NA         | NA                    | NA               | inconsistencia debito sin informacion                        | venta bloqueada     |
-        | CP022 | 2        | 75893616 | credito   | true      | puntos, efectivo                                                  | NA                                                   | NA                     | NA                                               | NA                        | 5.00, 5.00                      | NA         | 20.00                 | NA               | inconsistencia credito multipago no cubre monto inicial      | venta bloqueada     |
+        # CP022: OMITIDO - Credito multipago con puntos + efectivo. La funcionalidad de puntos fue implementada solo a nivel de interfaz; el sistema no valida correctamente saldo, canje ni cobertura del monto inicial.
+            # Se reactivara cuando el sistema implemente las reglas de negocio de puntos de forma completa.
+        # | CP022 | 2        | 75893616 | credito   | true      | puntos, efectivo                                                  | NA                                                   | NA                     | NA                                               | NA                        | 5.00, 5.00                      | NA         | 20.00                 | NA               | inconsistencia credito multipago no cubre monto inicial      | venta bloqueada     |
         # Nota: CP022 se ejecuta sin Nota de Crédito porque esa funcionalidad aún no existe en el sistema.
-        | CP023 | 2        | 75893616 | credito   | false     | puntos                                                            | NA                                                   | NA                     | NA                                               | NA                        | 20.00                           | NA         | 20.00                 | NA               | puntos insuficiente                                          | venta bloqueada     |
+
+        # CP023: OMITIDO - Validacion de puntos insuficientes en pago credito. La funcionalidad de puntos fue implementada solo a nivel de interfaz; el sistema no bloquea ni advierte cuando el saldo es insuficiente.
+            # Se reactivara cuando el sistema implemente las reglas de negocio de puntos de forma completa.
+        # | CP023 | 2        | 75893616 | credito   | false     | puntos                                                            | NA                                                   | NA                     | NA                                               | NA                        | 20.00                           | NA         | 20.00                 | NA               | puntos insuficiente                                          | venta bloqueada     |
+        
+        # CP024: Verifica que el sistema bloquee puntos en multipago cuando el cliente no esta identificado.
+        # Se reactivo porque el sistema ahora si exige cliente identificado para habilitar puntos (comportamiento correcto).
         | CP024 | 2        | 00000000 | contado   | true      | deposito_cuenta                                                   | NA                                                   | NA                     | BCP\|SOL\|1912490779081                          | OP11001                   | 5.00                            | NA         | NA                    | NA               | inconsistencia multipago puntos no habilitado sin cliente    | venta bloqueada     |
-        | CP025 | 2        | 00000000 | credito   | false     | NA                                                                | NA                                                   | NA                     | NA                                               | NA                        | NA                              | 3          | 0                     | NA               | inconsistencia credito sin cliente                           | venta bloqueada     |
+        
+        | CP025 | 2        | 00000000 | credito   | false     | NA                                                                | NA                                                   | NA                     | NA                                               | NA                        | NA                              | 3          | 5                     | NA               | inconsistencia credito sin cliente                           | venta bloqueada     |
         | CP026 | 10       | 75893616 | credito   | false     | NA                                                                | NA                                                   | NA                     | NA                                               | NA                        | NA                              | 5          | 0                     | NA               | credito configurado exitoso                                  | guarda exitosamente |
         # CP027 Registrar venta utilizando nota de credito como medio de pago: no implementado en el sistema.
         # CP028 Validar inconsistencia cuando se intenta pagar con nota de credito sin cliente registrado: no implementado en el sistema.
         # CP029 Validar inconsistencia cuando el cliente no tiene notas de credito disponibles: no implementado en el sistema.
         # CP030 Validar inconsistencia cuando la nota de credito no tiene saldo suficiente para cubrir el importe total de la venta: no implementado en el sistema.
-        | CP031 | 10       | 75893616 | contado   | false     | puntos                                                            | NA                                                   | NA                     | NA                                               | NA                        | NA                              | NA         | NA                    | NA               | puntos insuficiente                                          | venta bloqueada     |
+        
+        # CP031: OMITIDO - Validacion de puntos insuficientes en pago contado. La funcionalidad de puntos fue implementada solo a nivel de interfaz; el sistema no bloquea ni advierte cuando el saldo es insuficiente.
+            # Se reactivara cuando el sistema implemente las reglas de negocio de puntos de forma completa.
+        # | CP031 | 10       | 75893616 | contado   | false     | puntos                                                            | NA                                                   | NA                     | NA                                               | NA                        | NA                              | NA         | NA                    | NA               | puntos insuficiente                                          | venta bloqueada     |

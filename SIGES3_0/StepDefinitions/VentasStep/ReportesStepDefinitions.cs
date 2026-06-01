@@ -50,8 +50,8 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             _reportesPage.SeleccionarComprobanteSerie(valor);
         }
 
-        [When("selecciona el punto de venta {string}")]
-        public void WhenSeleccionaElPuntoDeVenta(string puntoVenta)
+        [When("selecciona el punto de venta en reporte {string}")]
+        public void WhenSeleccionaElPuntoDeVentaEnReporte(string puntoVenta)
         {
             _reportesPage.SeleccionarPuntoVenta(puntoVenta);
         }
@@ -69,8 +69,8 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             _reportesPage.SeleccionarCaracteristica(caracteristica, tarjeta);
         }
 
-        [When("selecciona el vendedor {string}")]
-        public void WhenSeleccionaElVendedor(string vendedor)
+        [When("selecciona el vendedor en reporte {string}")]
+        public void WhenSeleccionaElVendedorEnReporte(string vendedor)
         {
             _reportesPage.SeleccionarVendedor(vendedor);
         }

@@ -68,9 +68,48 @@ namespace SIGES3_0.Pages.VentasPage
 
         public void SeleccionarComprobanteEnModal(string tipo)
         {
-            utilities.ClickButton(VentasLocators.ViewSales.ModalComprobanteDropdown);
-            Thread.Sleep(600);
-            utilities.ClickButton(VentasLocators.ViewSales.ModalComprobanteOpcion(tipo));
+            // El modal fue rediseÃ±ado (Bug 21099) y puede tener native <select> o custom dropdown.
+            // Se intenta primero con native select; si no existe se usa custom dropdown con trigger.
+            var nativeSelect = driver.FindElements(
+                By.XPath("//div[contains(@class,'modal')]//select"))
+                .FirstOrDefault(e => { try { return e.Displayed && e.Enabled; } catch { return false; } });
+
+            if (nativeSelect != null)
+            {
+                new OpenQA.Selenium.Support.UI.SelectElement(nativeSelect).SelectByText(tipo);
+                Thread.Sleep(600);
+                return;
+            }
+
+            // Custom dropdown: busca el trigger asociado a la etiqueta "comprobante"
+            var trigger = driver.FindElements(By.XPath(
+                "//div[contains(@class,'modal')]//*[contains(normalize-space(),'Selecciona un comprobante') or contains(normalize-space(),'Comprobante')]/following::*[contains(@class,'select-trigger') or contains(@class,'dropdown-toggle')][1]"))
+                .FirstOrDefault(e => { try { return e.Displayed; } catch { return false; } });
+
+            // Fallback: segundo select-trigger del modal (el primero es "Emitir a nombre de")
+            trigger ??= driver.FindElements(By.XPath(
+                "//div[contains(@class,'modal')]//*[contains(@class,'select-trigger')]"))
+                .Where(e => { try { return e.Displayed; } catch { return false; } })
+                .Skip(1).FirstOrDefault();
+
+            Assert.IsNotNull(trigger, $"No se encontro el dropdown de comprobante en el modal de canje.");
+            trigger!.Click();
+            Thread.Sleep(800);
+
+            // Espera a que la opcion sea visible despues de abrir el dropdown
+            IWebElement? opcion = null;
+            try
+            {
+                opcion = new OpenQA.Selenium.Support.UI.WebDriverWait(driver, TimeSpan.FromSeconds(5))
+                {
+                    PollingInterval = TimeSpan.FromMilliseconds(200)
+                }.Until(d => d.FindElements(VentasLocators.ViewSales.ModalComprobanteOpcion(tipo))
+                    .FirstOrDefault(e => { try { return e.Displayed; } catch { return false; } }));
+            }
+            catch { /* fallback abajo */ }
+
+            Assert.IsNotNull(opcion, $"No se encontro la opcion '{tipo}' en el dropdown de comprobante del modal de canje.");
+            opcion!.Click();
             Thread.Sleep(600);
         }
 
@@ -105,7 +144,7 @@ namespace SIGES3_0.Pages.VentasPage
                     By.XPath("//div[contains(@class,'modal') and contains(@class,'show')]"))
                     .Any(e => { try { return e.Displayed; } catch { return false; } });
 
-                Assert.IsTrue(modalCerrado, "El modal de canje no se cerró tras aceptar.");
+                Assert.IsTrue(modalCerrado, "El modal de canje no se cerrï¿½ tras aceptar.");
             }
         }
 
@@ -117,7 +156,7 @@ namespace SIGES3_0.Pages.VentasPage
 
             Assert.IsTrue(
                 btn == null || !btn.Enabled || btn.GetAttribute("disabled") != null,
-                "Se esperaba que el botón Canjear estuviera deshabilitado.");
+                "Se esperaba que el botï¿½n Canjear estuviera deshabilitado.");
         }
 
         public void SeleccionarNVsPorSerie(string nvListCsv)
@@ -136,6 +175,44 @@ namespace SIGES3_0.Pages.VentasPage
                 .Any(e => { try { return e.Displayed; } catch { return false; } });
 
             Assert.IsTrue(hayMensaje, "Se esperaba una advertencia de inconsistencia en el modal.");
+        }
+
+        // Filtra la tabla de Ver Ventas por el tipo de documento (ej: "BV", "FAC").
+        // Aunque la idea original era tomar el ultimo comprobante emitido buscando por fecha,
+        // la cantidad de registros en Ver Ventas y el orden variable de la tabla hacen que
+        // filtrar por tipo de documento sea mas confiable para ubicar el comprobante correcto.
+        public void FiltrarPorTipoDoc(string tipoDoc)
+        {
+            // Los inputs de filtro de columna solo aparecen despues de que la tabla tiene datos.
+            // Si aun no hay resultados se consulta primero para forzar la carga de la tabla.
+            bool tablaVacia = !driver.FindElements(By.CssSelector("table tbody tr")).Any(e =>
+            {
+                try { return e.Displayed; } catch { return false; }
+            });
+
+            if (tablaVacia)
+            {
+                Console.WriteLine("[VerVentas] Tabla vacia - consultando ventas antes de filtrar.");
+                QuerySales();
+                Thread.Sleep(1000);
+            }
+
+            var input = new OpenQA.Selenium.Support.UI.WebDriverWait(driver, TimeSpan.FromSeconds(10))
+            {
+                PollingInterval = TimeSpan.FromMilliseconds(200)
+            }.Until(d => d.FindElements(VentasLocators.ViewSales.FiltroTipoDoc)
+                .FirstOrDefault(e => { try { return e.Displayed && e.Enabled; } catch { return false; } }));
+
+            if (input == null)
+            {
+                Console.WriteLine("[VerVentas] No se encontro el filtro de Tipo Doc - se omite el filtrado.");
+                return;
+            }
+
+            input.Clear();
+            input.SendKeys(tipoDoc.Trim());
+            Thread.Sleep(800);
+            Console.WriteLine($"[VerVentas] Filtrado por tipo doc: '{tipoDoc}'");
         }
 
         public void FiltrarVentasDiaDeHoy()
@@ -174,7 +251,7 @@ namespace SIGES3_0.Pages.VentasPage
 
         // Establece el valor del campo fecha/hora.
         // Usa el setter nativo de HTMLInputElement para que Angular detecte el cambio
-        // (equivalente a interacción real del usuario en componentes controlados).
+        // (equivalente a interacciï¿½n real del usuario en componentes controlados).
         private void IngresarFechaHora(By locator, string valor)
         {
             var el = driver.FindElement(locator);
@@ -197,7 +274,7 @@ namespace SIGES3_0.Pages.VentasPage
 
             Assert.IsTrue(
                 btn == null || !btn.Enabled || btn.GetAttribute("disabled") != null,
-                "Se esperaba que el botón Aceptar estuviera deshabilitado.");
+                "Se esperaba que el botï¿½n Aceptar estuviera deshabilitado.");
         }
     }
 }
