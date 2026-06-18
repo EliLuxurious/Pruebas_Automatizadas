@@ -15,10 +15,10 @@ Background:
 Scenario Outline: Validar filtro de fechas en reporte de pedidos
 	When el usuario selecciona el establecimiento "<establecimiento>"
 	And el usuario selecciona el punto de venta "<puntoVenta>"
-	And el usuario ingresa la fecha y hora inicial "<fechaHoraInicial>"
-	And el usuario ingresa la fecha y hora final "<fechaHoraFinal>"
+	And usuario ingresa la fecha y hora inicial "<fechaHoraInicial>"
+	And usuario ingresa la fecha y hora final "<fechaHoraFinal>"
 	And el usuario hace clic en ver reporte "<tipoReporte>"
-	Then el sistema muestra el resultado esperado del reporte "<resultadoEsperado>"
+	Then sistema muestra el resultado esperado del reporte "<resultadoEsperado>"
 
 Examples:
 	| caso | establecimiento | puntoVenta | fechaHoraInicial    | fechaHoraFinal      | tipoReporte | resultadoEsperado                         |

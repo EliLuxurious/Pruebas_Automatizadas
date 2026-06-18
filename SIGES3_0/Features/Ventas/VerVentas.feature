@@ -61,7 +61,7 @@ Scenario Outline: <Caso> Canjear NV con comprobante cliente sin restriccion de m
 
 @CanjearNV
 @Inconsistencia
-Scenario Outline: <Caso> Canjear <CantidadNV> NV con comprobante <Comprobante> genera inconsistencia
+Scenario Outline: Canjear NV con comprobante genera inconsistencia
     When el usuario ingresa la fecha y hora inicial "<fechaHoraInicial>"
     And el usuario ingresa la fecha y hora final "<fechaHoraFinal>"
     And hace clic en consultar ventas

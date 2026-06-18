@@ -98,6 +98,12 @@ namespace SIGES3_0.Pages.VentasPage
             Thread.Sleep(2000);
         }
 
+        public void AbrirModalAjustesDeComprobante()
+        {
+            ClickAccionPrimerComprobante();
+            EsperarMenuAccionesVisible();
+        }
+
         // ── Seleccionar tab del modal ───────────────────────────────────────
         public void SeleccionarTabAjuste(string tab)
         {
@@ -110,7 +116,16 @@ namespace SIGES3_0.Pages.VentasPage
                 _ => throw new Exception($"Tab de ajuste no reconocido: {tab}")
             };
 
-            var el = _wait.Until(ExpectedConditions.ElementToBeClickable(locator));
+            var el = _driver.FindElements(locator).FirstOrDefault(Visible);
+            if (el == null)
+            {
+                ClickAccionPrimerComprobante();
+                el = _wait.Until(d => d.FindElements(locator).FirstOrDefault(Visible));
+            }
+
+            if (el == null)
+                Assert.Fail($"No se encontró la pestaña '{tab}' en el modal de ajuste.");
+
             ScrollTo(el);
             ClickSeguro(el);
             Thread.Sleep(1500);
@@ -225,8 +240,12 @@ namespace SIGES3_0.Pages.VentasPage
         // ── Importe NC (NC - Descuento global) ─────────────────────────────
         public void IngresarImporteNC(string importe)
         {
+            ExpandirSeccion("Detalle");
+            Thread.Sleep(500);
+
             var input = _wait.Until(ExpectedConditions.ElementToBeClickable(
                 VentasLocators.AjusteComprobante.ImporteNCInput));
+            ScrollTo(input);
             input.Clear();
             input.SendKeys(importe);
             input.SendKeys(Keys.Tab);
@@ -236,8 +255,12 @@ namespace SIGES3_0.Pages.VentasPage
         // ── Importe detalle por ítem (NC - Descuento por ítem) ──────────────
         public void IngresarImporteDetalle(string importe)
         {
+            ExpandirSeccion("Detalle");
+            Thread.Sleep(500);
+
             var input = _wait.Until(ExpectedConditions.ElementToBeClickable(
                 VentasLocators.AjusteComprobante.ImporteDetalleInput));
+            ScrollTo(input);
             input.Clear();
             input.SendKeys(importe);
             input.SendKeys(Keys.Tab);
@@ -321,8 +344,10 @@ namespace SIGES3_0.Pages.VentasPage
                 return;
             }
 
-            var clases = seccion.GetAttribute("class") ?? "";
-            if (clases.Contains("collapsed"))
+            ScrollTo(seccion);
+            Thread.Sleep(200);
+
+            if (!SeccionEstaExpandida(seccion))
             {
                 ClickSeguro(seccion);
                 Thread.Sleep(800);
@@ -332,7 +357,7 @@ namespace SIGES3_0.Pages.VentasPage
         // ── Pago — Tipo (Contado / Crédito) ────────────────────────────────
         public void SeleccionarTipoPagoAjuste(string tipo)
         {
-            ExpandirSeccion("Pago");
+            AsegurarSeccionPagoDisponible();
             Thread.Sleep(500);
 
             By locator = tipo.Trim().ToLower() switch
@@ -431,7 +456,7 @@ namespace SIGES3_0.Pages.VentasPage
                 return;
             }
 
-            ExpandirSeccion("Pago");
+            AsegurarSeccionPagoDisponible();
             Thread.Sleep(500);
 
             By locator = tipo.Trim().ToLower() switch
@@ -477,12 +502,19 @@ namespace SIGES3_0.Pages.VentasPage
             }
             catch (WebDriverTimeoutException) { }
 
-            bool hayExito = _driver.FindElements(VentasLocators.AjusteComprobante.MensajeExito)
-                .Any(Visible);
+            var mensajeExito = _driver.FindElements(VentasLocators.AjusteComprobante.MensajeExito)
+                .FirstOrDefault(Visible);
+            bool hayExito = mensajeExito != null;
+            string textoExito = ResumirTextoResultado(mensajeExito?.Text);
 
             bool modalCerrado = !_driver.FindElements(
                 By.XPath("//div[contains(normalize-space(),'Ajuste de Comprobante')]"))
                 .Any(Visible);
+
+            Console.WriteLine(
+                $"[Ajuste][Exito] hayExito={hayExito}, modalCerrado={modalCerrado}, mensaje='{textoExito}'.");
+            if (hayExito || modalCerrado)
+                Console.WriteLine("[Ajuste][ResultadoFinal] Ajuste con evidencia de éxito detectada.");
 
             Assert.IsTrue(hayExito || modalCerrado,
                 "No se detectó confirmación de éxito ni cierre del modal de ajuste.");
@@ -494,26 +526,45 @@ namespace SIGES3_0.Pages.VentasPage
         {
             Thread.Sleep(1000);
 
-            bool hayMensajeCampos = _driver.FindElements(VentasLocators.AjusteComprobante.MensajeCamposRequeridos)
-                .Any(Visible);
-            bool hayMensajeError = _driver.FindElements(VentasLocators.AjusteComprobante.MensajeError)
-                .Any(Visible);
+            var mensajeCampos = _driver.FindElements(VentasLocators.AjusteComprobante.MensajeCamposRequeridos)
+                .FirstOrDefault(Visible);
+            var mensajeError = _driver.FindElements(VentasLocators.AjusteComprobante.MensajeError)
+                .FirstOrDefault(Visible);
+
+            bool hayMensajeCampos = mensajeCampos != null;
+            bool hayMensajeError = mensajeError != null;
+            string textoMensajeCampos = mensajeCampos?.Text?.Trim() ?? string.Empty;
+            string textoMensajeError = mensajeError?.Text?.Trim() ?? string.Empty;
 
             IWebElement? btn = _driver.FindElements(VentasLocators.AjusteComprobante.GuardarAjuste)
                 .FirstOrDefault(Visible);
             btn ??= _driver.FindElements(VentasLocators.AjusteComprobante.GuardarAjusteFallback)
                 .FirstOrDefault(Visible);
 
-            bool botonDeshabilitado = btn == null || !btn.Enabled
-                || (btn.GetAttribute("disabled") != null)
-                || (btn.GetAttribute("class") ?? "").Contains("disabled");
+            bool botonVisible = btn != null;
+            bool botonEnabled = btn?.Enabled ?? false;
+            bool botonDeshabilitado = btn == null || !botonEnabled
+                || (btn?.GetAttribute("disabled") != null)
+                || ((btn?.GetAttribute("class")) ?? string.Empty).Contains("disabled");
 
             bool modalSigueAbierto = _driver.FindElements(
                 By.XPath("//div[contains(normalize-space(),'Ajuste de Comprobante')]"))
                 .Any(Visible);
 
-            Assert.IsTrue(hayMensajeCampos || hayMensajeError || botonDeshabilitado || modalSigueAbierto,
-                "Se esperaba que el sistema bloqueara el guardado, pero no se detectó bloqueo.");
+            Console.WriteLine(
+                $"[Ajuste][BloqueoGuardar] mensajeCampos={hayMensajeCampos}('{textoMensajeCampos}'), " +
+                $"mensajeError={hayMensajeError}('{textoMensajeError}'), " +
+                $"botonVisible={botonVisible}, botonEnabled={botonEnabled}, " +
+                $"botonDeshabilitado={botonDeshabilitado}, modalSigueAbierto={modalSigueAbierto}");
+
+            bool hayEvidenciaDeBloqueo = hayMensajeCampos || hayMensajeError || botonDeshabilitado;
+            if (hayEvidenciaDeBloqueo)
+                Console.WriteLine("[Ajuste][ResultadoFinal] El sistema bloqueó el guardado con evidencia visible.");
+
+            Assert.IsTrue(
+                hayEvidenciaDeBloqueo,
+                "Se esperaba que el sistema bloqueara el guardado con evidencia visible " +
+                "(mensaje de validación/error o botón Guardar deshabilitado), pero no se detectó ninguna.");
         }
 
         public void VerificarMensajeMontoMayor()
@@ -539,45 +590,164 @@ namespace SIGES3_0.Pages.VentasPage
         {
             var input = _wait.Until(ExpectedConditions.ElementToBeClickable(
                 VentasLocators.InvalidarVenta.ObservacionInvalidar));
+            input.Click();
             input.Clear();
             input.SendKeys(observacion);
-            Thread.Sleep(300);
+
+            // La UI habilita el submit al confirmar el cambio y perder foco.
+            ((IJavaScriptExecutor)_driver).ExecuteScript(
+                "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));" +
+                "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));" +
+                "arguments[0].dispatchEvent(new Event('blur', { bubbles: true }));",
+                input);
+            Thread.Sleep(500);
         }
 
         // ── Click Invalidar en el modal ────────────────────────────────────
         public void ClickInvalidarEnModal()
         {
+            _wait.Until(d => d.FindElements(VentasLocators.InvalidarVenta.ModalInvalidar).Any(Visible));
+
             var btn = _wait.Until(d =>
                 d.FindElements(VentasLocators.InvalidarVenta.BotonInvalidar)
-                 .FirstOrDefault(e => { try { return e.Displayed && e.Enabled; } catch { return false; } }));
+                 .FirstOrDefault(BotonAccionActivo));
 
             if (btn == null)
                 Assert.Fail("No se encontró el botón Invalidar habilitado en el modal.");
 
             ScrollTo(btn!);
+            _wait.Until(_ => BotonAccionActivo(btn!));
             ClickSeguro(btn!);
+
+            var btnConfirmar = _driver.FindElements(VentasLocators.ViewSales.AcceptInvalidation)
+                .FirstOrDefault(BotonAccionActivo);
+            if (btnConfirmar != null)
+            {
+                ScrollTo(btnConfirmar);
+                ClickSeguro(btnConfirmar);
+            }
+
             Thread.Sleep(3000);
         }
 
         // ── Verificar invalidación exitosa ──────────────────────────────────
+        public void IntentarInvalidarEnModal()
+        {
+            _wait.Until(d => d.FindElements(VentasLocators.InvalidarVenta.ModalInvalidar).Any(Visible));
+
+            var btn = _driver.FindElements(VentasLocators.InvalidarVenta.BotonInvalidar)
+                .FirstOrDefault(Visible);
+
+            if (btn == null)
+                Assert.Fail("No se encontró el botón Invalidar en el modal.");
+
+            if (!BotonAccionActivo(btn))
+            {
+                Console.WriteLine("Botón Invalidar no activo; se omite el click final.");
+                return;
+            }
+
+            ScrollTo(btn);
+            ClickSeguro(btn);
+
+            var btnConfirmar = _driver.FindElements(VentasLocators.ViewSales.AcceptInvalidation)
+                .FirstOrDefault(BotonAccionActivo);
+            if (btnConfirmar != null)
+            {
+                ScrollTo(btnConfirmar);
+                ClickSeguro(btnConfirmar);
+            }
+
+            Thread.Sleep(3000);
+        }
+
         public void VerificarInvalidacionExitosa()
         {
             var waitCorto = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
             bool hayExito = false;
             try
             {
-                waitCorto.Until(d => d.FindElements(VentasLocators.InvalidarVenta.MensajeExitoInvalidar).Any(Visible));
+                waitCorto.Until(d =>
+                    d.FindElements(VentasLocators.InvalidarVenta.MensajeExitoInvalidar).Any(Visible) ||
+                    d.FindElements(VentasLocators.AjusteComprobante.MensajeExito).Any(Visible));
                 hayExito = true;
             }
             catch (WebDriverTimeoutException) { }
 
+            var mensajeExito = _driver.FindElements(VentasLocators.InvalidarVenta.MensajeExitoInvalidar)
+                .Concat(_driver.FindElements(VentasLocators.AjusteComprobante.MensajeExito))
+                .FirstOrDefault(Visible);
+            var mensajeError = _driver.FindElements(VentasLocators.AjusteComprobante.MensajeError)
+                .FirstOrDefault(Visible)?.Text?.Trim();
+            string textoExito = ResumirTextoResultado(mensajeExito?.Text);
+
+            Console.WriteLine(
+                $"[Invalidar][Resultado] hayExito={hayExito}, mensajeExito='{textoExito}', " +
+                $"mensajeError='{mensajeError ?? string.Empty}'.");
+
+            if (!hayExito && !string.IsNullOrWhiteSpace(mensajeError))
+                Assert.Fail($"No se detectÃ³ mensaje de confirmaciÃ³n de invalidaciÃ³n exitosa. Error visible: '{mensajeError}'.");
+
             Assert.IsTrue(hayExito,
                 "No se detectó mensaje de confirmación de invalidación exitosa (toast-success o swal2-success).");
 
+            Console.WriteLine("[Invalidar][ResultadoFinal] La invalidación se procesó correctamente.");
             CerrarPopupSiExiste();
         }
 
+        public void VerificarSeccionEntregaNoVisibleEnInvalidacion()
+        {
+            Thread.Sleep(500);
+
+            bool visible = _driver.FindElements(VentasLocators.InvalidarVenta.SeccionEntregaAccordion)
+                .Any(Visible);
+
+            Console.WriteLine($"[Invalidar][FueraDePlazo] seccionEntregaVisible={visible}.");
+
+            Assert.IsFalse(visible,
+                "Se esperaba que la sección Entrega no se muestre en la invalidación fuera de plazo.");
+        }
+
+        public void VerificarMensajeFueraDePlazoInvalidacion()
+        {
+            var waitCorto = new WebDriverWait(_driver, TimeSpan.FromSeconds(8));
+            bool hayMensaje = false;
+            try
+            {
+                waitCorto.Until(d => d.FindElements(VentasLocators.InvalidarVenta.MensajeFueraDePlazoInvalidar).Any(Visible));
+                hayMensaje = true;
+            }
+            catch (WebDriverTimeoutException) { }
+
+            var textoMensaje = _driver.FindElements(VentasLocators.InvalidarVenta.MensajeFueraDePlazoInvalidar)
+                .FirstOrDefault(Visible)?.Text;
+            textoMensaje = ResumirTextoResultado(textoMensaje);
+
+            Console.WriteLine(
+                $"[Invalidar][FueraDePlazo] mensajeDetectado={hayMensaje}, texto='{textoMensaje}'.");
+            if (hayMensaje)
+                Console.WriteLine("[Invalidar][ResultadoFinal] El sistema mostró el mensaje de fuera de plazo.");
+
+            Assert.IsTrue(hayMensaje,
+                "Se esperaba el mensaje 'Fuera de plazo (usar Nota de Crédito)'.");
+        }
+
         // ── Verificar botón Invalidar no activo (CP067) ────────────────────
+        public void VerificarBotonInvalidarNoVisible()
+        {
+            Thread.Sleep(500);
+
+            bool visible = _driver.FindElements(VentasLocators.InvalidarVenta.BotonInvalidar)
+                .Any(Visible);
+
+            Console.WriteLine($"[Invalidar][FueraDePlazo] botonInvalidarVisible={visible}.");
+            if (!visible)
+                Console.WriteLine("[Invalidar][ResultadoFinal] El botón final Invalidar no se mostró por fuera de plazo.");
+
+            Assert.IsFalse(visible,
+                "No se esperaba ver el botÃ³n final Invalidar en la invalidaciÃ³n fuera de plazo.");
+        }
+
         public void VerificarBotonInvalidarNoActivo()
         {
             Thread.Sleep(1000);
@@ -585,9 +755,7 @@ namespace SIGES3_0.Pages.VentasPage
             var btn = _driver.FindElements(VentasLocators.InvalidarVenta.BotonInvalidar)
                 .FirstOrDefault(Visible);
 
-            bool botonDeshabilitado = btn == null || !btn.Enabled
-                || btn.GetAttribute("disabled") != null
-                || (btn.GetAttribute("class") ?? "").Contains("disabled");
+            bool botonDeshabilitado = btn == null || !BotonAccionActivo(btn);
 
             bool hayMensajeCampos = _driver.FindElements(VentasLocators.AjusteComprobante.MensajeCamposRequeridos)
                 .Any(Visible);
@@ -597,6 +765,224 @@ namespace SIGES3_0.Pages.VentasPage
         }
 
         // ── Helpers privados ───────────────────────────────────────────────
+        public void VerificarOpcionDelModalAjustesNoVisible(string opcion)
+        {
+            Thread.Sleep(500);
+
+            var locator = LocatorOpcionAccion(opcion);
+            bool visible = _driver.FindElements(locator).Any(Visible);
+
+            Console.WriteLine($"[Ajuste][Opciones] opcion='{opcion}', visible={visible}.");
+
+            Assert.IsFalse(visible,
+                $"No se esperaba ver la opción '{opcion}' en el modal ajustes de comprobante.");
+        }
+
+        private static string ResumirTextoResultado(string? texto)
+        {
+            if (string.IsNullOrWhiteSpace(texto))
+                return string.Empty;
+
+            var lineas = texto
+                .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(l => l.Trim())
+                .Where(l => !string.IsNullOrWhiteSpace(l))
+                .ToList();
+
+            var relevantes = lineas
+                .Where(l =>
+                    l.Contains("Correcto", StringComparison.OrdinalIgnoreCase) ||
+                    l.Contains("Se registró correctamente", StringComparison.OrdinalIgnoreCase) ||
+                    l.Contains("Se registro correctamente", StringComparison.OrdinalIgnoreCase) ||
+                    l.Contains("Fuera de plazo", StringComparison.OrdinalIgnoreCase) ||
+                    l.Contains("Error", StringComparison.OrdinalIgnoreCase) ||
+                    l.Contains("Es necesario", StringComparison.OrdinalIgnoreCase))
+                .Distinct()
+                .ToList();
+
+            if (relevantes.Count > 0)
+                return string.Join(" | ", relevantes);
+
+            var compacto = string.Join(" ", lineas);
+            return compacto.Length <= 180
+                ? compacto
+                : $"{compacto[..177]}...";
+        }
+
+        public void SeleccionarOpcionDesdeAcciones(string opcion)
+        {
+            if (VistaResultadoDeAccionAbierta(opcion))
+                return;
+
+            var locator = LocatorOpcionAccion(opcion);
+            IWebElement? item = null;
+
+            try
+            {
+                item = _wait.Until(d => d.FindElements(locator).FirstOrDefault(Visible));
+            }
+            catch (WebDriverTimeoutException)
+            {
+                item = null;
+            }
+
+            if (item == null)
+            {
+                AbrirModalAjustesDeComprobante();
+                try
+                {
+                    item = _wait.Until(d => d.FindElements(locator).FirstOrDefault(Visible));
+                }
+                catch (WebDriverTimeoutException)
+                {
+                    item = null;
+                }
+            }
+
+            if (item == null)
+            {
+                Assert.Fail(
+                    $"No se encontró la opción '{opcion}' en las acciones del comprobante. " +
+                    $"Opciones visibles: {ObtenerOpcionesAccionVisibles()}");
+            }
+
+            ScrollTo(item);
+            ClickSeguro(item);
+            EsperarResultadoDeOpcion(opcion);
+            Thread.Sleep(1500);
+        }
+
+        private bool VistaResultadoDeAccionAbierta(string opcion)
+        {
+            string normalizado = opcion.Trim().ToLowerInvariant();
+
+            return normalizado switch
+            {
+                "invalidar" => _driver.FindElements(VentasLocators.InvalidarVenta.ModalInvalidar).Any(Visible),
+                "nota de débito" or "nota de debito" =>
+                    _driver.FindElements(VentasLocators.AjusteComprobante.TipoNotaDebitoSelect).Any(Visible),
+                "nota de crédito" or "nota de credito" =>
+                    _driver.FindElements(By.XPath(
+                        "//label[contains(normalize-space(),'Tipo de nota de cr')] | " +
+                        "//select[@id='tipoNotaDeCredito'] | " +
+                        "//*[contains(@class,'select-trigger')][contains(normalize-space(),'Selecciona un tipo de nota')]"))
+                    .Any(Visible),
+                _ => false
+            };
+        }
+
+        private By LocatorOpcionAccion(string opcion)
+        {
+            string texto = opcion.Trim();
+            string normalizado = texto.ToLowerInvariant();
+            string mayuscula = texto.ToUpperInvariant();
+
+            if (normalizado is "nota de débito" or "nota de debito")
+                return VentasLocators.AjusteComprobante.TabNotaDebito;
+
+            if (normalizado is "nota de crédito" or "nota de credito")
+                return VentasLocators.AjusteComprobante.TabNotaCredito;
+
+            if (normalizado == "ver documento")
+                return VentasLocators.AjusteComprobante.TabVerDocumento;
+
+            if (normalizado == "invalidar")
+                return VentasLocators.AjusteComprobante.TabInvalidar;
+
+            return VentasLocators.AjusteComprobante.OpcionAccionEnModal(texto);
+        }
+
+        private void EsperarMenuAccionesVisible()
+        {
+            _wait.Until(d =>
+                d.FindElements(VentasLocators.AjusteComprobante.TabNotaDebito).Any(Visible) ||
+                d.FindElements(VentasLocators.AjusteComprobante.TabNotaCredito).Any(Visible) ||
+                d.FindElements(VentasLocators.AjusteComprobante.TabVerDocumento).Any(Visible) ||
+                d.FindElements(VentasLocators.AjusteComprobante.TabInvalidar).Any(Visible));
+        }
+
+        private void AsegurarSeccionPagoDisponible()
+        {
+            for (int intento = 0; intento < 3; intento++)
+            {
+                ExpandirSeccion("Pago");
+                Thread.Sleep(500);
+
+                bool hayOpciones = _driver.FindElements(VentasLocators.AjusteComprobante.DevolucionContado).Any(Visible)
+                    || _driver.FindElements(VentasLocators.AjusteComprobante.DevolucionCredito).Any(Visible)
+                    || _driver.FindElements(VentasLocators.AjusteComprobante.PagoContadoRadio).Any(Visible)
+                    || _driver.FindElements(VentasLocators.AjusteComprobante.PagoCreditoRadio).Any(Visible)
+                    || _driver.FindElements(VentasLocators.AjusteComprobante.MontoInicialInput).Any(Visible);
+
+                if (hayOpciones)
+                    return;
+
+                var seccionPago = _driver.FindElements(VentasLocators.AjusteComprobante.SeccionAccordion("Pago"))
+                    .FirstOrDefault(Visible);
+                if (seccionPago != null)
+                {
+                    ScrollTo(seccionPago);
+                    ClickSeguro(seccionPago);
+                    Thread.Sleep(800);
+                }
+            }
+
+            Console.WriteLine("[Ajuste] La seccion Pago no mostro opciones visibles tras varios intentos.");
+        }
+
+        private static bool SeccionEstaExpandida(IWebElement seccion)
+        {
+            string ariaExpanded = seccion.GetAttribute("aria-expanded") ?? string.Empty;
+            if (ariaExpanded.Equals("true", StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            if (ariaExpanded.Equals("false", StringComparison.OrdinalIgnoreCase))
+                return false;
+
+            string clases = seccion.GetAttribute("class") ?? string.Empty;
+            return !clases.Contains("collapsed", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private void EsperarResultadoDeOpcion(string opcion)
+        {
+            string normalizado = opcion.Trim().ToLowerInvariant();
+
+            switch (normalizado)
+            {
+                case "invalidar":
+                    _wait.Until(d => d.FindElements(VentasLocators.InvalidarVenta.ModalInvalidar).Any(Visible));
+                    break;
+                case "nota de débito":
+                case "nota de debito":
+                    _wait.Until(d => d.FindElements(VentasLocators.AjusteComprobante.TipoNotaDebitoSelect).Any(Visible));
+                    break;
+                case "nota de crédito":
+                case "nota de credito":
+                    _wait.Until(d =>
+                        d.FindElements(By.XPath(
+                            "//label[contains(normalize-space(),'Tipo de nota de cr')] | " +
+                            "//select[@id='tipoNotaDeCredito'] | " +
+                            "//*[contains(@class,'select-trigger')][contains(normalize-space(),'Selecciona un tipo de nota')]"))
+                        .Any(Visible));
+                    break;
+            }
+        }
+
+        private string ObtenerOpcionesAccionVisibles()
+        {
+            var opciones = _driver.FindElements(
+                    By.XPath("//div[contains(@class,'modal') and .//*[contains(normalize-space(),'Ajuste de Comprobante')]]//button[normalize-space()] | " +
+                             "//div[contains(@class,'modal') and .//*[contains(normalize-space(),'Ajuste de Comprobante')]]//a[normalize-space()] | " +
+                             "//div[contains(@class,'modal') and .//*[contains(normalize-space(),'Ajuste de Comprobante')]]//span[normalize-space()]"))
+                .Where(Visible)
+                .Select(e => (e.Text ?? string.Empty).Trim())
+                .Where(t => !string.IsNullOrWhiteSpace(t))
+                .Distinct()
+                .ToList();
+
+            return opciones.Any() ? string.Join(" | ", opciones) : "(sin opciones visibles)";
+        }
+
         private void CerrarPopupSiExiste()
         {
             try
@@ -662,6 +1048,25 @@ namespace SIGES3_0.Pages.VentasPage
         {
             try { element.Click(); }
             catch { ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", element); }
+        }
+
+        private static bool BotonAccionActivo(IWebElement element)
+        {
+            try
+            {
+                var classes = element.GetAttribute("class") ?? string.Empty;
+                var ariaDisabled = element.GetAttribute("aria-disabled") ?? string.Empty;
+
+                return element.Displayed
+                    && element.Enabled
+                    && element.GetAttribute("disabled") == null
+                    && !ariaDisabled.Equals("true", StringComparison.OrdinalIgnoreCase)
+                    && !classes.Contains("disabled", StringComparison.OrdinalIgnoreCase);
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private static bool Visible(IWebElement e)

@@ -129,6 +129,14 @@ namespace SIGES3_0.Pages.CotizacionPage
             ClickSeguro(btnEditarCotizacion);
         }
 
+        public void SeleccionarPregenerarVenta()
+        {
+            FiltrarCotizacionesConvertidoNo();
+            By btnPregenerarVenta = By.XPath("//button[@title='Pregenerar venta'] | //button[.//i[contains(@class, 'bi-cart4')]]");
+            ClickSeguro(btnPregenerarVenta);
+            Thread.Sleep(1000);
+        }
+
         public void ActualizarCotizacion()
         {
             var boton = wait.Until(ExpectedConditions.ElementExists(btnActualizarCotizacion));
@@ -212,5 +220,8 @@ namespace SIGES3_0.Pages.CotizacionPage
 
             return "";
         }
+
+
+
     }
 }

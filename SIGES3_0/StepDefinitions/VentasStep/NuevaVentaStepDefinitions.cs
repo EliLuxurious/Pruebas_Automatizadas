@@ -68,15 +68,58 @@ namespace SIGES3_0.StepDefinitions.VentasStep
         public void WhenConfiguraPago(string pago) =>
             nuevaVentaPage.ConfigurePaymentFlow(pago);
 
+        // Reutiliza el contrato declarativo de medios de pago sin tocar Pedido.
+        [Scope(Tag = "NuevaVenta")]
+        [When(@"el usuario configura los medios de pago '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)' '(.*)'")]
+        public void WhenElUsuarioConfiguraLosMediosDePagoNuevaVentaConObservacion(
+            string tipoPago,
+            string multipago,
+            string medioPago,
+            string banco,
+            string tarjeta,
+            string cuentaBancaria,
+            string nroOperacion,
+            string montoPorMedio,
+            string nroCuotas,
+            string montoInicialCredito,
+            string observacionPago) =>
+            nuevaVentaPage.ConfigurarMediosDePagoNuevaVenta(
+                tipoPago,
+                multipago,
+                medioPago,
+                banco,
+                tarjeta,
+                cuentaBancaria,
+                nroOperacion,
+                montoPorMedio,
+                nroCuotas,
+                montoInicialCredito,
+                observacionPago);
+
+        // Observacion es un paso extra propio de NuevaVenta.
+        [When("el usuario ingresa la observacion del pago {string}")]
+        public void WhenElUsuarioIngresaLaObservacionDelPagoNuevaVenta(string observacion) =>
+            nuevaVentaPage.IngresarObservacionDelPagoNuevaVenta(observacion);
+
         // ─── GUARDAR Y VALIDAR ────────────────────────────────────────────────────────
 
         [StepDefinition("hace clic en Guardar")]
         public void WhenHaceClicEnGuardar() =>
             nuevaVentaPage.GuardarVentaFlow();
 
+        [Scope(Tag = "NuevaVenta")]
         [Then("el sistema valida el resultado de venta {string}")]
         public void ThenElSistemaValidaElResultadoDeVenta(string resultado) =>
             nuevaVentaPage.ValidarResultadoVenta(resultado);
+
+        [Then("el sistema valida el resultado del descuento en venta {string}")]
+        public void ThenElSistemaValidaElResultadoDelDescuentoEnVenta(string resultado) =>
+            nuevaVentaPage.ValidarResultadoDescuentoEnVenta(resultado);
+
+        [Scope(Tag = "NuevaVenta")]
+        [Then("el sistema valida el resultado del pago en nueva venta {string}")]
+        public void ThenElSistemaValidaElResultadoDelPagoEnNuevaVenta(string resultado) =>
+            nuevaVentaPage.ValidarResultadoPagoEnNuevaVenta(resultado);
     }
 }
 

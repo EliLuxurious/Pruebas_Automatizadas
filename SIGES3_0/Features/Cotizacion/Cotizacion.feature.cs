@@ -109,6 +109,7 @@ namespace SIGES3_0.Features.Cotizacion
         [NUnit.Framework.TestCaseAttribute("3", "Gaseosa", "7753234003320", "999999990", "true", "true", "global", "%", "10", "75971755", "19/05/2026 02:00:am", "Cantidad debe ser menor al stock", null)]
         [NUnit.Framework.TestCaseAttribute("4", "Azúcar", "7751234001115", "20", "false", "true", "item", "$", "1", "00000000", "20/03/2026 12:30:am", "Boton de fechas  deshabilitado", null)]
         [NUnit.Framework.TestCaseAttribute("5", "Gaseosa", "7753234003320", "10", "false", "true", "global", "%", "5", "75971755", "15/05/2026 12:10:am", "la cotizacion se guardo correctamente", null)]
+        [NUnit.Framework.TestCaseAttribute("6", "Azúcar", "7751234001115", "10", "true", "true", "item", "%", "5", "00000000", "20/05/2026 12:00:am", "la cotizacion se guardo correctamente", null)]
         public async System.Threading.Tasks.Task RegistroDeNuevaCotizacion_CasosVariados(string caso, string familia, string concepto, string cantidad, string igv, string descuento, string tipo_Descuento, string modo_Descuento, string valor_Descuento, string cliente, string fecha_Final, string resultado_Esperado, string[] exampleTags)
         {
             string[] @__tags = new string[] {
@@ -148,31 +149,26 @@ await this.FeatureBackgroundAsync();
 #line 16
  await testRunner.WhenAsync("el usuario selecciona la opción \'Nueva Cotización\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 17
- await testRunner.AndAsync(string.Format("el usuario selecciona la familia \'{0}\'", familia), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 18
- await testRunner.AndAsync(string.Format("el usuario selecciona el concepto \'{0}\'", concepto), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 19
- await testRunner.AndAsync(string.Format("el usuario ingresa la cantidad \'{0}\'", cantidad), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
 #line 20
- await testRunner.AndAsync(string.Format("el usuario activa IGV \'{0}\'", igv), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario prepara producto para cotizacion con familia \'{0}\' concepto \'{1}\' cant" +
+                            "idad \'{2}\' resultado \'{3}\'", familia, concepto, cantidad, resultado_Esperado), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 21
- await testRunner.AndAsync(string.Format("el usuario configura descuento \'{0}\' \'{1}\' \'{2}\' \'{3}\'", descuento, tipo_Descuento, modo_Descuento, valor_Descuento), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario activa IGV \'{0}\'", igv), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 22
- await testRunner.AndAsync(string.Format("el usuario busca el cliente \'{0}\'", cliente), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario configura descuento \'{0}\' \'{1}\' \'{2}\' \'{3}\'", descuento, tipo_Descuento, modo_Descuento, valor_Descuento), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 23
- await testRunner.AndAsync(string.Format("el usuario ingresa la fecha final \'{0}\'", fecha_Final), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario busca el cliente \'{0}\'", cliente), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 24
- await testRunner.AndAsync("el usuario registra la cotizacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario ingresa la fecha final \'{0}\'", fecha_Final), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 25
+ await testRunner.AndAsync("el usuario registra la cotizacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 26
  await testRunner.ThenAsync(string.Format("el sistema valida el resultado de la cotizacion \'{0}\'", resultado_Esperado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -207,7 +203,7 @@ await this.FeatureBackgroundAsync();
             argumentsOfScenario.Add("fecha_final", fecha_Final);
             argumentsOfScenario.Add("resultado_esperado", resultado_Esperado);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar cotización - Casos variados", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 36
+#line 39
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -220,39 +216,103 @@ this.ScenarioInitialize(scenarioInfo);
 #line 8
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 38
- await testRunner.GivenAsync("existe una cotizacion editable con familia \'Gaseosa\' concepto \'7753234003320\' can" +
-                        "tidad \'10\' cliente \'00000000\' fecha \'29/05/2026 12:00:am\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 39
- await testRunner.WhenAsync("el usuario selecciona editar la cotizacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 40
- await testRunner.AndAsync(string.Format("el usuario selecciona la familia \'{0}\'", familia), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
 #line 41
- await testRunner.AndAsync(string.Format("el usuario selecciona el concepto \'{0}\'", concepto), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.GivenAsync("existe una cotizacion editable con familia \'Azúcar\' concepto \'7751234001115\' cant" +
+                        "idad \'10\' cliente \'00000000\' fecha \'29/05/2026 12:00:am\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 42
- await testRunner.AndAsync(string.Format("el usuario ingresa la cantidad \'{0}\'", cantidad), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.WhenAsync("el usuario selecciona editar la cotizacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 43
- await testRunner.AndAsync(string.Format("el usuario activa IGV \'{0}\'", igv), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario selecciona la familia \'{0}\'", familia), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 44
- await testRunner.AndAsync(string.Format("el usuario configura descuento \'{0}\' \'{1}\' \'{2}\' \'{3}\'", descuento, tipo_Descuento, modo_Descuento, valor_Descuento), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario selecciona el concepto \'{0}\'", concepto), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 45
- await testRunner.AndAsync(string.Format("el usuario busca el cliente \'{0}\'", cliente), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario ingresa la cantidad \'{0}\'", cantidad), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 46
- await testRunner.AndAsync(string.Format("el usuario ingresa la fecha final \'{0}\'", fecha_Final), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario activa IGV \'{0}\'", igv), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 47
- await testRunner.AndAsync("el usuario actualiza la cotizacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario configura descuento \'{0}\' \'{1}\' \'{2}\' \'{3}\'", descuento, tipo_Descuento, modo_Descuento, valor_Descuento), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 48
+ await testRunner.AndAsync(string.Format("el usuario busca el cliente \'{0}\'", cliente), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 49
+ await testRunner.AndAsync(string.Format("el usuario ingresa la fecha final \'{0}\'", fecha_Final), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 50
+ await testRunner.AndAsync("el usuario actualiza la cotizacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 51
  await testRunner.ThenAsync(string.Format("el sistema valida el resultado de la cotizacion \'{0}\'", resultado_Esperado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Pregenerar venta desde cotizacion - Casos variados")]
+        [NUnit.Framework.CategoryAttribute("PregenerarVenta")]
+        [NUnit.Framework.TestCaseAttribute("1", "VENTA MODO CAJA", "ALMACEN CENTRAL", "PAMELA GLORIA TONE RECUAY", "NA", "guarda exitosamente", null)]
+        [NUnit.Framework.TestCaseAttribute("4", "VENTA POR CONTINGENCIA", "NA", "NA", "05/05/2026", "guarda exitosamente", null)]
+        public async System.Threading.Tasks.Task PregenerarVentaDesdeCotizacion_CasosVariados(string caso, string modoVenta, string puntoVenta, string vendedor, string fechaEmision, string resultadoEsperado, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "PregenerarVenta"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("caso", caso);
+            argumentsOfScenario.Add("ModoVenta", modoVenta);
+            argumentsOfScenario.Add("PuntoVenta", puntoVenta);
+            argumentsOfScenario.Add("Vendedor", vendedor);
+            argumentsOfScenario.Add("FechaEmision", fechaEmision);
+            argumentsOfScenario.Add("ResultadoEsperado", resultadoEsperado);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Pregenerar venta desde cotizacion - Casos variados", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 59
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 8
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 62
+ await testRunner.GivenAsync("existe una cotizacion editable con familia \'Azúcar\' concepto \'7751234001115\' cant" +
+                        "idad \'10\' cliente \'00000000\' fecha \'29/05/2026 12:00:am\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 65
+ await testRunner.WhenAsync("el usuario hace clic en el icono pregenerar venta", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 68
+ await testRunner.AndAsync(string.Format("selecciona el modo de venta \'{0}\'", modoVenta), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 69
+ await testRunner.AndAsync(string.Format("selecciona el punto de venta \'{0}\'", puntoVenta), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 70
+ await testRunner.AndAsync(string.Format("selecciona el vendedor \'{0}\'", vendedor), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 71
+ await testRunner.AndAsync(string.Format("ingresa la fecha de emision \'{0}\'", fechaEmision), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 72
+ await testRunner.AndAsync("hace clic en Guardar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 75
+ await testRunner.ThenAsync(string.Format("el sistema valida el resultado de venta \"{0}\"", resultadoEsperado), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

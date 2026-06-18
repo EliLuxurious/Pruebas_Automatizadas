@@ -85,6 +85,86 @@ namespace SIGES3_0.Pages.Items.ViewItems
             utilities.ClickButton(BotonLimpiar);
         }
 
+        public void MostrarTodosLosConceptos()
+        {
+            try
+            {
+                By desplegablePaginacion = By.XPath("//app-table-row-filter//select[@class='form-select custom-input']");
+                By opcionCien = By.XPath("//app-table-row-filter//select[@class='form-select custom-input']/option[@value='100']");
+
+                utilities.ClickButton(desplegablePaginacion);
+                Thread.Sleep(300);
+                utilities.ClickButton(opcionCien);
+                Thread.Sleep(500);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("No se encontró o no fue necesario ajustar el paginador de conceptos: " + ex.Message);
+            }
+        }
+
+        public void EditarConcepto(string nombreConcepto)
+        {
+            try
+            {
+                // 1. Mostrar todos los registros
+                MostrarTodosLosConceptos();
+
+                // 2. Botón editar dinámico
+                By botonEditar = By.XPath($"//tbody//tr[td[contains(normalize-space(),'{nombreConcepto}')]]//app-button-actions//button[1]");
+
+                var elementos = driver.FindElements(botonEditar);
+
+                if (elementos.Count > 0)
+                {
+                    utilities.ClickButton(botonEditar);
+                    Thread.Sleep(500);
+                }
+                else
+                {
+                    throw new Exception($"No se encontró el concepto '{nombreConcepto}' en la tabla.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al intentar editar el concepto: " + ex.Message);
+                throw;
+            }
+        }
+
+        public void EliminarConcepto(string nombreConcepto)
+        {
+            try
+            {
+                // 1. Mostrar todos los registros
+                MostrarTodosLosConceptos();
+
+                // 2. Botón eliminar dinámico
+                By botonEliminar = By.XPath($"//tbody//tr[td[contains(normalize-space(),'{nombreConcepto}')]]//app-button-actions//button[2]");
+
+                var elementos = driver.FindElements(botonEliminar);
+
+                if (elementos.Count > 0)
+                {
+                    utilities.ClickButton(botonEliminar);
+                    Thread.Sleep(500);
+
+                    // 3. Confirmar eliminación
+                    By botonConfirmar = By.XPath("//button[normalize-space()='Sí, ¡elimínalo!']");
+                    utilities.ClickButton(botonConfirmar);
+                }
+                else
+                {
+                    throw new Exception($"No se encontró el concepto '{nombreConcepto}' para eliminar.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al eliminar el concepto: " + ex.Message);
+                throw;
+            }
+        }
+
         public bool HayResultados()
         {
             return driver.FindElements(FilasTabla).Count > 0;

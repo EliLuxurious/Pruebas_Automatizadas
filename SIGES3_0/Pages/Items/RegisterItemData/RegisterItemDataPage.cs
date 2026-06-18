@@ -690,8 +690,8 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
         {
             try
             {
-                By desplegable = By.XPath("(//select[contains(@class,'form-select')])[1]");
-                By opcionCien = By.XPath("(//select[contains(@class,'form-select')])[1]/option[@value='100']");
+                By desplegable = By.XPath("//app-view-common-attribute//app-table-row-filter//select");
+                By opcionCien = By.XPath("//app-view-common-attribute//app-table-row-filter//select/option[@value='100']");
 
                 utilities.ClickButton(desplegable);
                 Thread.Sleep(300);
@@ -700,13 +700,13 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
             }
             catch (Exception ex)
             {
-                Console.WriteLine("No se pudo ajustar el paginador de características: " + ex.Message);
+                Console.WriteLine("No se pudo ajustar el paginador de características comunes: " + ex.Message);
             }
         }
 
         public void EditarCaracteristicaComun(string nombreCaracteristica)
         {
-            MostrarTodasLasCaracteristicas();
+            MostrarTodasLasCaracteristicasComunes();
 
             By botonEditar = By.XPath($"//tbody/tr[td[normalize-space()='{nombreCaracteristica}']]//app-button-actions//button[1]");
 
@@ -745,8 +745,8 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
         {
             try
             {
-                By desplegable = By.XPath("(//select[contains(@class,'form-select')])[1]");
-                By opcionCien = By.XPath("(//select[contains(@class,'form-select')])[1]/option[@value='100']");
+                By desplegable = By.XPath("//app-view-specific-attribute//app-table-row-filter//select");
+                By opcionCien = By.XPath("//app-view-specific-attribute//app-table-row-filter//select/option[@value='100']");
 
                 utilities.ClickButton(desplegable);
                 Thread.Sleep(300);
@@ -809,8 +809,28 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
             utilities.ClickButton(botonagregar);
         }
 
+        public void MostrarTodosLosValoresDeCaracteristica()
+        {
+            try
+            {
+                By desplegable = By.XPath("//app-view-value-of-common-attribute//app-table-row-filter//select");
+                By opcionCien = By.XPath("//app-view-value-of-common-attribute//app-table-row-filter//select/option[@value='100']");
+
+                utilities.ClickButton(desplegable);
+                Thread.Sleep(300);
+                utilities.ClickButton(opcionCien);
+                Thread.Sleep(500);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("No se pudo ajustar el paginador de valores de característica: " + ex.Message);
+            }
+        }
+
         public void EditarValorCaracteristicaComun(string valor)
         {
+            MostrarTodosLosValoresDeCaracteristica();
+
             By botonEditar = By.XPath($"//tbody/tr[td[normalize-space()='{valor}']]//app-button-actions//button[1]");
 
             var elementos = driver.FindElements(botonEditar);
@@ -825,7 +845,7 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
             }
         }
 
-        public void actualizarValorCaracteristicaComun()
+        public void SiValorCaracteristicaComun()
         {
             By botonSI = By.XPath("//button[normalize-space()='SI']");
             utilities.ClickButton(botonSI);
@@ -834,6 +854,8 @@ namespace SIGES3_0.Pages.Items.RegisterItemData
         
         public void EliminarValorCaracteristicaComun(string valor)
         {
+            MostrarTodosLosValoresDeCaracteristica();
+
             By botonEliminar = By.XPath($"//tbody/tr[td[normalize-space()='{valor}']]//app-button-actions//button[2]");
 
             var elementos = driver.FindElements(botonEliminar);

@@ -6,6 +6,7 @@ using SIGES3_0.Pages.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace SIGES3_0.Pages.PedidoPage
@@ -91,6 +92,112 @@ namespace SIGES3_0.Pages.PedidoPage
 
         // --- MÉTODOS DE NEGOCIO ---
 
+        public bool IntentarSeleccionarProductoYCantidad(
+    string familia,
+    string concepto,
+    string cantidad,
+    bool permitirStockInsuficiente = false)
+        {
+            SeleccionarFamilia(familia);
+
+            bool productoSeleccionado = IntentarSeleccionarConceptoLeyendoStock(
+                concepto,
+                cantidad,
+                permitirStockInsuficiente
+            );
+
+            if (!productoSeleccionado)
+            {
+                return false;
+            }
+
+            IngresarCantidad(cantidad);
+            return true;
+        }
+
+        private bool IntentarSeleccionarConceptoLeyendoStock(
+    string concepto,
+    string cantidad,
+    bool permitirStockInsuficiente)
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+
+            try
+            {
+                AbrirComboConcepto();
+
+                IWebElement inputBuscar = wait.Until(ExpectedConditions.ElementIsVisible(
+                    By.XPath("//input[@placeholder='Buscar...' or @placeholder='Buscar']")
+                ));
+
+                inputBuscar.Clear();
+                inputBuscar.SendKeys(concepto);
+
+                Thread.Sleep(1000);
+
+                By opcionProducto = By.XPath(
+                    $"//span[contains(normalize-space(), '{concepto}') and contains(normalize-space(), 'Stock:')]"
+                );
+
+                IWebElement opcion = wait.Until(ExpectedConditions.ElementIsVisible(opcionProducto));
+                string texto = opcion.Text.Trim();
+
+                int stock = ExtraerStockDesdeTexto(texto);
+
+                if (!permitirStockInsuficiente &&
+                    int.TryParse(cantidad, out int cantidadSolicitada) &&
+                    stock < cantidadSolicitada)
+                {
+                    Console.WriteLine($"Stock insuficiente para {concepto}. Stock: {stock}, cantidad: {cantidadSolicitada}.");
+                    return false;
+                }
+
+                js.ExecuteScript("arguments[0].click();", opcion);
+                Thread.Sleep(800);
+
+                return true;
+            }
+            catch (WebDriverTimeoutException)
+            {
+                Console.WriteLine($"No se encontró el producto {concepto} en el combo Concepto.");
+                return false;
+            }
+        }
+
+        private int ExtraerStockDesdeTexto(string texto)
+        {
+            Match match = Regex.Match(texto, @"Stock:\s*(\d+)", RegexOptions.IgnoreCase);
+
+            if (!match.Success)
+            {
+                Console.WriteLine($"No se pudo leer stock desde el texto: {texto}");
+                return 0;
+            }
+
+            return int.Parse(match.Groups[1].Value);
+        }
+
+        private void AbrirComboConcepto()
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+
+            By comboConcepto = By.XPath(
+                "(//label[contains(normalize-space(),'Concepto')]/following::div[contains(@class,'select-trigger')])[1]"
+            );
+
+            IWebElement combo = wait.Until(ExpectedConditions.ElementExists(comboConcepto));
+            js.ExecuteScript("arguments[0].scrollIntoView({block: 'center'});", combo);
+            Thread.Sleep(500);
+            js.ExecuteScript("arguments[0].click();", combo);
+            Thread.Sleep(500);
+        }
+
+
+
+
+
         public void SeleccionarOpcion(string opcion) => ClickSeguro(By.XPath($"//*[contains(text(),'{opcion}')]"));
 
         public void SeleccionarFamilia(string familia)
@@ -138,9 +245,14 @@ namespace SIGES3_0.Pages.PedidoPage
 
         public void BuscarCliente(string cliente)
         {
-            if (EsValorIgnorado(cliente) || cliente == "00000000" || cliente.ToLower() == "varios") return;
+            if (EsValorIgnorado(cliente)) return;
 
-            LimpiarEIngresarTexto(txtCliente, cliente);
+            // Si es "varios" o "00000000", escribimos el código genérico. 
+            // Si es un RUC/DNI, escribimos el RUC/DNI.
+            string valorAEscribir = (cliente.ToLower() == "varios") ? "00000000" : cliente;
+
+            // Tu método LimpiarEIngresarTexto se encarga de borrar fantasmas si los hay
+            LimpiarEIngresarTexto(txtCliente, valorAEscribir);
             driver.FindElement(txtCliente).SendKeys(Keys.Enter);
 
             wait.Until(d => !string.IsNullOrEmpty(d.FindElement(txtCliente).GetAttribute("value")));
@@ -315,10 +427,13 @@ namespace SIGES3_0.Pages.PedidoPage
 
             AbrirFacturacionConfirmacion();
 
-            if (!EsValorIgnorado(cliente) && cliente != "00000000" && cliente.ToLower() != "varios")
+            if (!EsValorIgnorado(cliente))
             {
-                LimpiarEIngresarTexto(txtClienteConfirmacion, cliente);
+                string valorAEscribir = (cliente.ToLower() == "varios") ? "00000000" : cliente;
+
+                LimpiarEIngresarTexto(txtClienteConfirmacion, valorAEscribir);
                 driver.FindElement(txtClienteConfirmacion).SendKeys(Keys.Enter);
+                Thread.Sleep(500); // Pequeña pausa para que Angular traiga la razón social
             }
 
             ClickSeguro(cmbTipoComprobanteConfirmacion);
@@ -354,9 +469,9 @@ namespace SIGES3_0.Pages.PedidoPage
             if (!yaVisible) ClickSeguro(seccionFacturacionConfirmacion);
         }
 
-        // AQUÍ ESTÁ LA CORRECCIÓN CLAVE
         public void ConfigurarEntregaConfirmacion(string tipoEntrega, string guiaRemision)
         {
+            // Escudo para no borrar errores previos
             if (!string.IsNullOrEmpty(mensajeErrorCapturado)) return;
 
             bool yaVisible = driver.FindElements(By.XPath("//label[normalize-space()='Inmediata' or normalize-space()='Diferida']")).Any(e => e.Displayed);
@@ -370,6 +485,9 @@ namespace SIGES3_0.Pages.PedidoPage
 
             if (guiaRemision.Trim().Equals("true", StringComparison.OrdinalIgnoreCase))
             {
+                // Espera vital de 1.5s para que Angular procese si el cliente ingresado tiene RUC o no
+                Thread.Sleep(1500);
+
                 var btnGuia = wait.Until(d => d.FindElements(btnGuiaRemisionConfirmacion).FirstOrDefault(e => e.Displayed));
 
                 if (btnGuia == null)
@@ -378,54 +496,36 @@ namespace SIGES3_0.Pages.PedidoPage
                     return;
                 }
 
-                ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", btnGuia);
-                Thread.Sleep(300);
+                // 1. FILTRO VISUAL Y HTML: Leemos las clases CSS del botón (como se ve en tu imagen 1)
+                string clases = btnGuia.GetAttribute("class") ?? "";
+                string attrDisabled = btnGuia.GetAttribute("disabled");
+                bool bloqueadoHTML = !btnGuia.Enabled || clases.Contains("disabled") || (attrDisabled != null && attrDisabled != "false");
 
-                // ¡PROHIBIDO FORZAR! Verificamos los atributos HTML para ver si Angular lo bloqueó visualmente
-                bool estaDeshabilitadoHTML = !btnGuia.Enabled ||
-                                             btnGuia.GetAttribute("disabled") != null ||
-                                             (btnGuia.GetAttribute("class") ?? "").Contains("disabled");
-
-                if (estaDeshabilitadoHTML)
+                if (bloqueadoHTML)
                 {
+                    // Si el botón está opaco/bloqueado, atrapamos el error inmediatamente y cortamos
                     mensajeErrorCapturado = "Boton de guia de remision inhabilitado Para guia de remision Necesita identificar al cliente con RUC o DNI";
                     return;
                 }
 
-                // Usamos Click NATIVO (.Click()). Si Angular bloqueó el botón pero no le puso "disabled",
-                // el click rebotará y el catch atrapará el error. ¡Nada de JavaScript aquí!
-                try
-                {
-                    btnGuia.Click();
-                }
-                catch
-                {
-                    mensajeErrorCapturado = "Boton de guia de remision inhabilitado Para guia de remision Necesita identificar al cliente con RUC o DNI";
-                    return;
-                }
-
+                // 2. Intentamos el clic si supuestamente superó la validación
+                ClickSeguro(btnGuia);
                 Thread.Sleep(1000);
 
-                // Validamos la alerta INMEDIATAMENTE
-                var alertaInmediata = driver.FindElements(By.XPath("//*[contains(text(),'Necesita identificar al cliente con RUC o DNI')]")).FirstOrDefault(e => e.Displayed);
-                if (alertaInmediata != null)
-                {
-                    mensajeErrorCapturado = "Boton de guia de remision inhabilitado Para guia de remision Necesita identificar al cliente con RUC o DNI";
-                    return;
-                }
-
-                // Confirmamos si el modal de verdad se abrió
-                bool modalAbierto = false;
+                // 3. EL FILTRO INFALIBLE: Validar si el modal VERDADERAMENTE se abrió.
+                // NO BUSCAMOS "Aceptar", buscamos "Peso Bruto" o "Número de Bultos" que son únicos del modal.
+                bool modalRealmenteAbierto = false;
                 try
                 {
                     new WebDriverWait(driver, TimeSpan.FromSeconds(3)).Until(d =>
                         d.FindElements(By.XPath("//*[contains(text(),'Peso Bruto') or contains(text(),'Número de Bultos')]")).Any(e => e.Displayed));
-                    modalAbierto = true;
+                    modalRealmenteAbierto = true;
                 }
                 catch { }
 
-                if (!modalAbierto)
+                if (!modalRealmenteAbierto)
                 {
+                    // Si le dimos clic pero el modal con "Peso Bruto" nunca apareció, Angular lo bloqueó silenciosamente
                     mensajeErrorCapturado = "Boton de guia de remision inhabilitado Para guia de remision Necesita identificar al cliente con RUC o DNI";
                     return;
                 }
