@@ -1,56 +1,36 @@
 Feature: Nueva Venta 
 
-    # Casos CP-V1 a CP-V9 derivados de la tabla de decisión de Venta.
-    # Técnicas: Tabla de Decisión + Partición de Equivalencia + Valores Límite.
-    #
-    # Condiciones evaluadas:
-    #   - Modo venta: Normal, Modo Caja, Por Contingencia
-    #   - Fecha de emisión (aplica a Modo Caja y Contingencia)
-    #   - Vendedor (aplica a Modo Caja)
-    #   - IGV / Detalle Unificado
-    #   - Tipo de comprobante: Factura / Boleta / Nota de Venta
-    #   - Cliente: DNI / RUC / VARIOS
-    #   - Importe Total > 700 (Cantidad 150 × ~S/7 ≈ S/1 050)
-    #   - Tipo de entrega: Inmediata / Diferida
-    #   - Pago: Contado completo / Incompleto
-
     Background:
         Given el usuario ingresa al ambiente 'https://alpha2.newfrontdev-qa.sigesonline.com/sales/new-sales'
         When el usuario inicia sesión con usuario 'admin.ti@tsol.com' y contraseña 'calidad'
         And se descarta aviso de contrasena de Chrome si aparece
-
+#    Given existe el concepto item comercial para ventas:
+#      | Familia | TipoFamilia | TratamientoIGVFamilia | CodigoFamilia | CategoriaFamilia | Codigo    | Sufijo            | UMComercial | UMedida | Rol            | Modulo  | Marca | Presentacion | Cantidad | UnidadMedida | Tarifa     | Precio |
+#      | Gaseosa | Bien        | Exoneracion IGV       | QA-GASEOSA    | SIN CATEGORÍA    | 123456789 | Gaseosa Inca kola | UN          | UN      | Item Comercial | MOD0001 |       | BOTELLAS     | 1        | UN           | POR UNIDAD | 2.30   |
+#
 #    Given Navego al módulo de 'Adquisición'
 #    And Entro al submódulo específico de 'Nueva Adquisición'
-#
 #    When Se configuran los datos de 'Facturación':
-#      | Campo                 | Valor               |
-#      | Documento             | FACTURA ELECTRONICA |
-#      | Serie                 | F001                |
-#      | Correlativo           | 00009991            |
-#      | Fecha de emisión      | 04/03/2026          |
-#      | Proveedor             | 10759012017         |
-#      | Información Adicional | Precondición Inka Kola |
-#
+#      | Campo                 | Valor                    |
+#      | Documento             | FACTURA ELECTRONICA      |
+#      | Serie                 | F001                     |
+#      | Correlativo           | 00009991                 |
+#      | Fecha de emisión      | 04/03/2026               |
+#      | Proveedor             | 10759012017              |
+#      | Información Adicional | Precondición Inka Kola   |
 #    And Se selecciona el tipo de entrega 'Inmediata'
-#    And Se configuran los datos de 'Entrega':
+#    And Se configuran los datos de Entrega de Ventas:
 #      | Campo           | Valor                    |
 #      | Rol             | Item Comercial           |
-#      | Establecimiento | RECSA - CENTRAL          |
-#      | Almacén         | CENTRO COMERCIAL CENTRAL |
-#
-#    And Se selecciona y configura el producto a adquirir:
-#      | Producto                                        | Cantidad | V. U |
-#      | 123456789\|Inca Kola Gaseosa Botella 1.5L   | 15       | 6.9  |
-#
+#      | Establecimiento | SIGES - CENTRAL          |
+#      | Almacén         | SIGES - CASTILLO GRANDE  |
+#    And Se selecciona y configura el producto de ventas a adquirir:
+#      | Producto                     | Cantidad | V. U |
+#      | 123456789\|Gaseosa Inca kola | 15       | 2.00 |
 #    Then Se procede a guardar la adquisición mediante la acción 'SavePurchase'
 #    And Se confirma el registro exitoso con el mensaje 'Se registró correctamente.'
-
     And el usuario accede al módulo 'Ventas'
     And el usuario accede al submodulo 'Nueva Venta'
-
-
-        #And el usuario accede al módulo 'Ventas'
-        #And el usuario accede al submodulo 'Nueva Venta'
 
     @NuevaVenta 
     @VentaNormalCaja

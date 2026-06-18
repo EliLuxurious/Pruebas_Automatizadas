@@ -9,38 +9,41 @@ Background:
     When el usuario inicia sesión con usuario 'admin.ti@tsol.com' y contraseña 'calidad'
     And se descarta aviso de contrasena de Chrome si aparece
     And el usuario accede al módulo 'Ventas'
+
     # ITEMS Y ADQUISICION COMENTADOS: el concepto 123456789 (Gaseosa Inca kola) fue creado directamente
     # por base de datos debido a que Cotizacion no logra guardar, por lo que el flujo de creacion
     # de items y carga de stock via adquisicion ya no es necesario como precondicion.
-    #Given existe el concepto item comercial para ventas:
-    #  | Familia | TipoFamilia | TratamientoIGVFamilia | CodigoFamilia | CategoriaFamilia | Codigo    | Sufijo            | UMComercial | UMedida | Rol            | Modulo  | Marca | Presentacion | Cantidad | UnidadMedida | Tarifa     | Precio |
-    #  | Gaseosa | Bien        | Exoneracion IGV       | QA-GASEOSA    | SIN CATEGORÍA    | 123456789 | Gaseosa Inca kola | UN          | UN      | Item Comercial | MOD0001 |       | BOTELLAS     | 1        | UN           | POR UNIDAD | 2.30   |
 
-    #Given Navego al módulo de 'Adquisición'
-    #And Entro al submódulo específico de 'Nueva Adquisición'
-    #When Se configuran los datos de 'Facturación':
-    #  | Campo                 | Valor                    |
-    #  | Documento             | FACTURA ELECTRONICA      |
-    #  | Serie                 | F001                     |
-    #  | Correlativo           | 00009991                 |
-    #  | Fecha de emisión      | 04/03/2026               |
-    #  | Proveedor             | 10759012017              |
-    #  | Información Adicional | Precondición Inka Kola   |
-    #And Se selecciona el tipo de entrega 'Inmediata'
-    #And Se configuran los datos de Entrega de Ventas:
-    #  | Campo           | Valor                    |
-    #  | Rol             | Item Comercial           |
-    #  | Establecimiento | SIGES - CENTRAL          |
-    #  | Almacén         | SIGES - CASTILLO GRANDE  |
-    #And Se selecciona y configura el producto de ventas a adquirir:
-    #  | Producto                     | Cantidad | V. U |
-    #  | 123456789\|Gaseosa Inca kola | 15       | 2.00 |
-    #Then Se procede a guardar la adquisición mediante la acción 'SavePurchase'
-    #And Se confirma el registro exitoso con el mensaje 'Se registró correctamente.'
+#    Given existe el concepto item comercial para ventas:
+#      | Familia | TipoFamilia | TratamientoIGVFamilia | CodigoFamilia | CategoriaFamilia | Codigo    | Sufijo            | UMComercial | UMedida | Rol            | Modulo  | Marca | Presentacion | Cantidad | UnidadMedida | Tarifa     | Precio |
+#      | Gaseosa | Bien        | Exoneracion IGV       | QA-GASEOSA    | SIN CATEGORÍA    | 123456789 | Gaseosa Inca kola | UN          | UN      | Item Comercial | MOD0001 |       | BOTELLAS     | 1        | UN           | POR UNIDAD | 2.30   |
+#
+#    Given Navego al módulo de 'Adquisición'
+#    And Entro al submódulo específico de 'Nueva Adquisición'
+#    When Se configuran los datos de 'Facturación':
+#      | Campo                 | Valor                    |
+#      | Documento             | FACTURA ELECTRONICA      |
+#      | Serie                 | F001                     |
+#      | Correlativo           | 00009991                 |
+#      | Fecha de emisión      | 04/03/2026               |
+#      | Proveedor             | 10759012017              |
+#      | Información Adicional | Precondición Inka Kola   |
+#    And Se selecciona el tipo de entrega 'Inmediata'
+#    And Se configuran los datos de Entrega de Ventas:
+#      | Campo           | Valor                    |
+#      | Rol             | Item Comercial           |
+#      | Establecimiento | SIGES - CENTRAL          |
+#      | Almacén         | SIGES - CASTILLO GRANDE  |
+#    And Se selecciona y configura el producto de ventas a adquirir:
+#      | Producto                     | Cantidad | V. U |
+#      | 123456789\|Gaseosa Inca kola | 15       | 2.00 |
+#    Then Se procede a guardar la adquisición mediante la acción 'SavePurchase'
+#    And Se confirma el registro exitoso con el mensaje 'Se registró correctamente.'
     And el usuario accede al submodulo 'Nueva Venta'
 @Reportes
 @FiltroFechas
 Scenario Outline: Validar filtro de fechas en reporte de ventas
+#precondicion
     When el usuario accede al submodulo 'Nueva Venta'
     And selecciona el modo de venta "VENTA NORMAL"
     And configura IGV "N" y Detalle Unificado "N"
@@ -51,6 +54,7 @@ Scenario Outline: Validar filtro de fechas en reporte de ventas
     And el usuario configura la entrega 'Inmediata' 'false'
     And configura el pago "Contado"
     And hace clic en Guardar
+#validar
     Then el sistema valida el resultado de venta "guarda exitosamente"
     When el usuario accede al submodulo 'Reportes'
     When selecciona la vista "Comprobantes"
@@ -66,6 +70,8 @@ Scenario Outline: Validar filtro de fechas en reporte de ventas
 
 @Reportes
 @PorComprobante
+#precondicion
+
 Scenario Outline: <Caso> Generar reporte por comprobante
     When el usuario accede al submodulo 'Nueva Venta'
     And selecciona el modo de venta "VENTA NORMAL"
@@ -86,12 +92,13 @@ Scenario Outline: <Caso> Generar reporte por comprobante
     And selecciona la serie "<Serie>"
     And hace clic en "VER REPORTE" en la tarjeta "Por Comprobante"
     Then el sistema genera el reporte exitosamente
+#validar
 
     Examples:
-      | Caso  | TipoComprobante             | Serie | ClienteVenta | ResultadoVenta       | fechaHoraInicial      | fechaHoraFinal       |
-      | CP068 | BOLETA DE VENTA ELECTRONICA | B002  | 75893616     | guarda exitosamente  | ayer 01:15 am | hoy 10:45 pm |
-      | CP082 | FACTURA ELECTRONICA         | F002  | 20542245671  | guarda exitosamente  | ayer 01:15 am | hoy 10:45 pm |
-      | CP084 | NOTA DE VENTA(INTERNA)      | NV02  | 00000000     | guarda exitosamente  | ayer 01:15 am | hoy 10:45 pm |
+      | Caso  | TipoComprobante             | Serie | ClienteVenta | ResultadoVenta       | fechaHoraInicial    | fechaHoraFinal    |
+      | CP068 | BOLETA DE VENTA ELECTRONICA | B002  | 75893616     | guarda exitosamente  | ayer 01:15 am       | hoy 10:45 pm      |
+      | CP082 | FACTURA ELECTRONICA         | F002  | 20542245671  | guarda exitosamente  | ayer 01:15 am       | hoy 10:45 pm      |
+      | CP084 | NOTA DE VENTA(INTERNA)      | NV02  | 00000000     | guarda exitosamente  | ayer 01:15 am       | hoy 10:45 pm      |
 
   @Reportes
   @PorComprobante

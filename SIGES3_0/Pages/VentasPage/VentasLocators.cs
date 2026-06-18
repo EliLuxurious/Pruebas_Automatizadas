@@ -176,10 +176,6 @@ namespace SIGES3_0.Pages.VentasPage
             // Canje modal - el modal fue rediseñado (Bug 21099) y ahora tiene dos dropdowns:
             // 1) "Emitir comprobante a nombre de" (cliente) y 2) "Selecciona un comprobante".
             // Se acota por la etiqueta del campo para no tomar el dropdown de cliente por error.
-            public static readonly By ModalComprobanteDropdown =
-                By.XPath(
-                    "//div[contains(@class,'modal')]//*[contains(normalize-space(),'Selecciona un comprobante') or contains(normalize-space(),'Comprobante destino') or contains(normalize-space(),'Seleccione un comprobante')]/following::div[contains(@class,'select-trigger')][1] | " +
-                    "//div[contains(@class,'modal')]//div[contains(@class,'select-trigger')][2]");
             public static By ModalComprobanteOpcion(string tipo) =>
                 By.XPath(
                     $"//div[contains(@class,'options-container')]//span[normalize-space()='{tipo}'] | " +

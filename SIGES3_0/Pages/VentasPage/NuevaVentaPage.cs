@@ -1225,55 +1225,6 @@ namespace SIGES3_0.Pages.VentasPage
                 out fecha);
         }
 
-        public void ConfigurarDescuentoNuevaVenta(string descuento, string tipo, string modo, string valor)
-        {
-            var activar = DebeActivarOpcion(descuento);
-            var totalAntes = ObtenerTotalVentaActual();
-            var valorParseado = TryParseDecimalFlexible(valor, out var parsed) ? parsed : (decimal?)null;
-
-            _discountContext = new DiscountContext
-            {
-                Activo = activar,
-                Tipo = NormalizeText(tipo),
-                Modo = NormalizeText(modo),
-                Valor = valorParseado,
-                TotalAntes = totalAntes
-            };
-
-            Log($"[DescuentoNV] Antes={totalAntes?.ToString("0.00", CultureInfo.InvariantCulture) ?? "NA"} activar={activar} tipo='{tipo}' modo='{modo}' valor='{valor}'");
-
-            SetCheckbox(VentasLocators.Detail.DiscountCheckbox, activar);
-            Thread.Sleep(300);
-
-            if (!activar)
-                return;
-
-            var tipoNormalizado = NormalizeText(tipo);
-            if (tipoNormalizado.Contains("item"))
-                Click(VentasLocators.Discount.ItemScope);
-            else if (tipoNormalizado.Contains("global"))
-                Click(VentasLocators.Discount.GlobalScope);
-
-            var modoNormalizado = NormalizeText(modo);
-            if (modoNormalizado.Contains("$") || modoNormalizado.Contains("monto"))
-                Click(DiscountAmountModeLocator);
-            else if (modoNormalizado.Contains("%") || modoNormalizado.Contains("porcentaje"))
-                Click(DiscountPercentageModeLocator);
-
-            var input = Find(DiscountValueInputLocator);
-            ScrollToCenter(input);
-            input.Click();
-            input.SendKeys(Keys.Control + "a");
-            input.SendKeys(Keys.Delete);
-            input.SendKeys(valor);
-            input.SendKeys(Keys.Tab);
-
-            Thread.Sleep(700);
-
-            var totalDespues = ObtenerTotalVentaActual();
-            Log($"[DescuentoNV] Despues={totalDespues?.ToString("0.00", CultureInfo.InvariantCulture) ?? "NA"}");
-        }
-
         // ─── FACTURACIÓN ─────────────────────────────────────────────────────────────
 
         // Paso: selecciona el punto de venta (solo para Venta Modo Caja)

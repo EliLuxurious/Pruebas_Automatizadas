@@ -834,31 +834,6 @@ namespace SIGES3_0.Pages.VentasPage
             Thread.Sleep(3000);
         }
 
-        // ── Verificar invalidación exitosa ──────────────────────────────────
-        public void IntentarInvalidarEnModal()
-        {
-            _wait.Until(d => d.FindElements(VentasLocators.InvalidarVenta.ModalInvalidar).Any(Visible));
-
-            var btn = _driver.FindElements(VentasLocators.InvalidarVenta.BotonInvalidar)
-                .FirstOrDefault(Visible);
-
-            if (btn == null)
-                Assert.Fail("No se encontró el botón Invalidar en el modal. " + ObtenerDiagnosticoSistema());
-
-            if (!BotonAccionActivo(btn))
-            {
-                Console.WriteLine("Botón Invalidar no activo; se omite el click final.");
-                return;
-            }
-
-            ScrollTo(btn);
-            ClickSeguro(btn);
-
-            ConfirmarInvalidacionSiAparece();
-
-            Thread.Sleep(3000);
-        }
-
         private void ConfirmarInvalidacionSiAparece()
         {
             try

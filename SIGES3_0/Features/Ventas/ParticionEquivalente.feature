@@ -8,6 +8,31 @@ Background:
     Given el usuario ingresa al ambiente 'https://alpha2.newfrontdev-qa.sigesonline.com/sales/new-sales'
     When el usuario inicia sesión con usuario 'admin.ti@tsol.com' y contraseña 'calidad'
     And se descarta aviso de contrasena de Chrome si aparece
+    #    Given existe el concepto item comercial para ventas:
+#      | Familia | TipoFamilia | TratamientoIGVFamilia | CodigoFamilia | CategoriaFamilia | Codigo    | Sufijo            | UMComercial | UMedida | Rol            | Modulo  | Marca | Presentacion | Cantidad | UnidadMedida | Tarifa     | Precio |
+#      | Gaseosa | Bien        | Exoneracion IGV       | QA-GASEOSA    | SIN CATEGORÍA    | 123456789 | Gaseosa Inca kola | UN          | UN      | Item Comercial | MOD0001 |       | BOTELLAS     | 1        | UN           | POR UNIDAD | 2.30   |
+#
+#    Given Navego al módulo de 'Adquisición'
+#    And Entro al submódulo específico de 'Nueva Adquisición'
+#    When Se configuran los datos de 'Facturación':
+#      | Campo                 | Valor                    |
+#      | Documento             | FACTURA ELECTRONICA      |
+#      | Serie                 | F001                     |
+#      | Correlativo           | 00009991                 |
+#      | Fecha de emisión      | 04/03/2026               |
+#      | Proveedor             | 10759012017              |
+#      | Información Adicional | Precondición Inka Kola   |
+#    And Se selecciona el tipo de entrega 'Inmediata'
+#    And Se configuran los datos de Entrega de Ventas:
+#      | Campo           | Valor                    |
+#      | Rol             | Item Comercial           |
+#      | Establecimiento | SIGES - CENTRAL          |
+#      | Almacén         | SIGES - CASTILLO GRANDE  |
+#    And Se selecciona y configura el producto de ventas a adquirir:
+#      | Producto                     | Cantidad | V. U |
+#      | 123456789\|Gaseosa Inca kola | 15       | 2.00 |
+#    Then Se procede a guardar la adquisición mediante la acción 'SavePurchase'
+#    And Se confirma el registro exitoso con el mensaje 'Se registró correctamente.'
 
 # ============================================================================
 # PARTICION EQUIVALENTE + VALORES LIMITE - CREDITO
@@ -15,6 +40,7 @@ Background:
 
 @ParticionEquivalente
 Scenario Outline: Validar fecha de credito en nueva venta - <caso>
+
     When el usuario accede al módulo 'Ventas'
     And el usuario accede al submodulo 'Nueva Venta'
     And selecciona el modo de venta "VENTA NORMAL"

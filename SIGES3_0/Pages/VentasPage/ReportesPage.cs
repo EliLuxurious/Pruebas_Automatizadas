@@ -324,7 +324,7 @@ namespace SIGES3_0.Pages.VentasPage
             _wait.Until(ExpectedConditions.ElementToBeClickable(locator)).Click();
         }
 
-        private void ClickRobusto(By locator, string descripcion)
+        private void ClickConReintentos(Func<IWebElement> obtenerElemento, string descripcion)
         {
             Exception? ultimaExcepcion = null;
 
@@ -332,7 +332,7 @@ namespace SIGES3_0.Pages.VentasPage
             {
                 try
                 {
-                    var element = EsperarInteractivo(locator);
+                    var element = obtenerElemento();
                     ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", element);
                     Thread.Sleep(200);
 
@@ -365,45 +365,11 @@ namespace SIGES3_0.Pages.VentasPage
                 ultimaExcepcion);
         }
 
+        private void ClickRobusto(By locator, string descripcion)
+            => ClickConReintentos(() => EsperarInteractivo(locator), descripcion);
+
         private void ClickElementoRobusto(IWebElement element, string descripcion)
-        {
-            Exception? ultimaExcepcion = null;
-
-            for (int intento = 0; intento < 4; intento++)
-            {
-                try
-                {
-                    ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", element);
-                    Thread.Sleep(200);
-
-                    try
-                    {
-                        element.Click();
-                    }
-                    catch (ElementClickInterceptedException)
-                    {
-                        ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", element);
-                    }
-
-                    Thread.Sleep(300);
-                    return;
-                }
-                catch (StaleElementReferenceException ex)
-                {
-                    ultimaExcepcion = ex;
-                    Thread.Sleep(300);
-                }
-                catch (WebDriverException ex) when (ex.Message.Contains("stale element reference", StringComparison.OrdinalIgnoreCase))
-                {
-                    ultimaExcepcion = ex;
-                    Thread.Sleep(300);
-                }
-            }
-
-            throw new Exception(
-                $"No se pudo hacer clic en {descripcion} porque la opcion visible cambio mientras Selenium intentaba seleccionarla.",
-                ultimaExcepcion);
-        }
+            => ClickConReintentos(() => element, descripcion);
 
         private void SeleccionarEnDropdownBuscable(
             By triggerLocator,
@@ -930,13 +896,9 @@ namespace SIGES3_0.Pages.VentasPage
             if (HayErrorReporteVisible() || TextoPaginaIndicaReporteVacio())
                 return false;
 
-            // Si la URL ya es la vista del reporte (/sales/sales-report/view),
-            // el contenido es un PDF embebido en iframe — aceptar eso como contenido real
-            if (UrlEsVistaReporte())
-                return true;
-
             return HayTablaReporteConFilas() ||
-                   TextoPaginaIndicaReporteConDatos();
+                   TextoPaginaIndicaReporteConDatos() ||
+                   (UrlEsVistaReporte() && HayPdfRenderizado());
         }
 
         private bool HayTablaReporteConFilas()
