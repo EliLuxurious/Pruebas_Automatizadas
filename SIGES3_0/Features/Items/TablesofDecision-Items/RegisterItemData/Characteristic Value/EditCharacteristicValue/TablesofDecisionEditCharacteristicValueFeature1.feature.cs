@@ -183,26 +183,12 @@ await testRunner.AndAsync("el usuario ingresa el valor de caracteristica comun \
 #line 26
 await testRunner.AndAsync("el usuario guarda los cambios al editar valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-<<<<<<< HEAD
-#line 27
-await testRunner.ThenAsync("el sistema muestra un mensaje de confirmacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-                global::Reqnroll.Table table134 = new global::Reqnroll.Table(new string[] {
-                            "NombreConcepto"});
-                table134.AddRow(new string[] {
-                            "Cuaderno upipi AZULES Bolsa de plástico 1 UN"});
-                table134.AddRow(new string[] {
-                            "Cuaderno doble doble AZULES Bolsa de plástico 1 UN"});
-#line 28
-await testRunner.WhenAsync("el usuario elimina los siguientes conceptos:", ((string)(null)), table134, "When ");
-=======
                 global::Reqnroll.Table table135 = new global::Reqnroll.Table(new string[] {
                             "NombreConcepto"});
                 table135.AddRow(new string[] {
                             "Shampoo ANTICASPA TIO NACHO n CAJA 1 L"});
 #line 27
 await testRunner.AndAsync("el usuario elimina los siguientes conceptos:", ((string)(null)), table135, "And ");
->>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line hidden
 #line 30
 await testRunner.AndAsync("el usuario acepta actualizar el concepto con el valor de caracteristica comun", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

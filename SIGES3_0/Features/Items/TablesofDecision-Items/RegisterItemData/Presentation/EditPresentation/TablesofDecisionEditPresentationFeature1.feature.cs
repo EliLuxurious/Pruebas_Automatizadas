@@ -138,23 +138,12 @@ await testRunner.AndAsync("el usuario ingresa el codigo de presentación \" 1\""
 #line 18
 await testRunner.AndAsync("el usuario guarda los cambios al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-<<<<<<< HEAD
-                global::Reqnroll.Table table136 = new global::Reqnroll.Table(new string[] {
-                            "NombreConcepto"});
-                table136.AddRow(new string[] {
-                            "Gaseosa INKA KOLA CLEVER CAJA 1 L"});
-                table136.AddRow(new string[] {
-                            "Gaseosa KR CLEVER CAJA 1 L"});
-#line 16
-await testRunner.AndAsync("el usuario elimina los siguientes conceptos:", ((string)(null)), table136, "And ");
-=======
                 global::Reqnroll.Table table137 = new global::Reqnroll.Table(new string[] {
                             "NombreConcepto"});
                 table137.AddRow(new string[] {
                             "Gaseosa de Naranja INKA COLA Frasco 3 L"});
 #line 19
 await testRunner.AndAsync("el usuario elimina los siguientes conceptos:", ((string)(null)), table137, "And ");
->>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line hidden
 #line 22
 await testRunner.AndAsync("el usuario aplica los cambios al editar presentacion", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

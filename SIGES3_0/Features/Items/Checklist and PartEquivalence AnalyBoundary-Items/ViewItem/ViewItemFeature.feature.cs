@@ -118,33 +118,8 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-<<<<<<< HEAD
-#line 6
-await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 7
-await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 8
-await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 9
-await testRunner.AndAsync("el usuario selecciona Ver Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 10
-await testRunner.AndAsync("el usuario selecciona el filtro Familia \"BALANZA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 11
-await testRunner.AndAsync("el usuario selecciona el filtro Categoria \"SIN CATEGORÍA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 12
-await testRunner.AndAsync("el usuario presiona el botón Buscar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-=======
 #line 5
 await this.FeatureBackgroundAsync();
->>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line hidden
 #line 13
 await testRunner.WhenAsync("el usuario selecciona el filtro Familia \"BALANZA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
@@ -179,21 +154,8 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-<<<<<<< HEAD
-#line 17
-await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 18
-await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 19
-await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-=======
 #line 5
 await this.FeatureBackgroundAsync();
->>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line hidden
 #line 20
 await testRunner.WhenAsync("el usuario ingresa la palabra clave \"cuaaderno\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
@@ -229,26 +191,6 @@ await this.FeatureBackgroundAsync();
 await testRunner.WhenAsync("el usuario selecciona el filtro Familia \"INDIVIDUAL\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 26
-<<<<<<< HEAD
-await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 27
-await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 28
-await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 29
-await testRunner.AndAsync("el usuario selecciona Ver Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 30
-await testRunner.AndAsync("el usuario selecciona el filtro Familia \"INDIVIDUAL\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 31
-=======
->>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 await testRunner.AndAsync("el usuario selecciona el filtro Categoria \"HERRAMIENTA DE COCINA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 27
@@ -300,23 +242,12 @@ await testRunner.ThenAsync("el sistema muestra conceptos asociados", ((string)(n
         }
         
         [NUnit.Framework.TestAttribute()]
-<<<<<<< HEAD
-        [NUnit.Framework.DescriptionAttribute("Filtrar conceptos con la partición positiva con respecto al campo nombre de conce" +
-            "pto")]
-        public async System.Threading.Tasks.Task FiltrarConceptosConLaParticionPositivaConRespectoAlCampoNombreDeConcepto()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Filtrar conceptos con la partición positiva con respecto al campo nombre de conce" +
-                    "pto", null, tagsOfScenario, argumentsOfScenario, featureTags);
-=======
         [NUnit.Framework.DescriptionAttribute("Editar el concepto Instalación NodeJs")]
         public async System.Threading.Tasks.Task EditarElConceptoInstalacionNodeJs()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar el concepto Instalación NodeJs", null, tagsOfScenario, argumentsOfScenario, featureTags);
->>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line 38
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -331,19 +262,10 @@ this.ScenarioInitialize(scenarioInfo);
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 39
-<<<<<<< HEAD
-await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 40
-await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-=======
 await testRunner.WhenAsync("el usuario cierra el sidebar", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 40
 await testRunner.AndAsync("el usuario edita el concepto \"Instalación NodeJs\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
->>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line hidden
 #line 41
 await testRunner.AndAsync("el usuario ingresa el Precio \"6\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

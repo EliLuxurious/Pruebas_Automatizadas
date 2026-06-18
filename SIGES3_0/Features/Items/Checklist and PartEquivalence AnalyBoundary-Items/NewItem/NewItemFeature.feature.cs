@@ -118,33 +118,8 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-<<<<<<< HEAD
-#line 6
-await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 7
-await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 8
-await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 9
-await testRunner.AndAsync("el usuario selecciona Nuevo Concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 10
-await testRunner.AndAsync("el usuario selecciona la Familia \"Shampoo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 11
-await testRunner.AndAsync("el usuario selecciona Auto al Código", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 12
-await testRunner.AndAsync("el usuario ingresa el Sufijo \"Carbón Ultractivado\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-=======
 #line 5
 await this.FeatureBackgroundAsync();
->>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line hidden
 #line 13
 await testRunner.WhenAsync("el usuario selecciona la Familia \"Shampoo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
@@ -209,21 +184,8 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-<<<<<<< HEAD
-#line 27
-await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 28
-await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 29
-await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-=======
 #line 5
 await this.FeatureBackgroundAsync();
->>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line hidden
 #line 30
 await testRunner.WhenAsync("el usuario selecciona la Familia \"Harina\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
@@ -274,11 +236,7 @@ await testRunner.ThenAsync("Guardar concepto", ((string)(null)), ((global::Reqnr
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro inválido del concepto por tipo rol ITEM COMERCIAL - Sufijo faltante, Mod" +
                     "ulo a mostrar faltante", null, tagsOfScenario, argumentsOfScenario, featureTags);
-<<<<<<< HEAD
-#line 45
-=======
 #line 44
->>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -295,26 +253,6 @@ await this.FeatureBackgroundAsync();
 await testRunner.WhenAsync("el usuario selecciona la Familia \"CEREALES\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 46
-<<<<<<< HEAD
-await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 47
-await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 48
-await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 49
-await testRunner.AndAsync("el usuario selecciona Nuevo Concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 50
-await testRunner.AndAsync("el usuario selecciona la Familia \"CEREALES\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 51
-=======
->>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 await testRunner.AndAsync("el usuario selecciona Auto al Código", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 47
@@ -351,11 +289,7 @@ await testRunner.ThenAsync("No se guarda concepto", ((string)(null)), ((global::
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro inválido del concepto por tipo rol ITEM COMERCIAL - Familia faltante, Pr" +
                     "ecio faltante", null, tagsOfScenario, argumentsOfScenario, featureTags);
-<<<<<<< HEAD
-#line 61
-=======
 #line 56
->>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -365,21 +299,11 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-<<<<<<< HEAD
-#line 62
-await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 63
-await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-=======
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 57
 await testRunner.WhenAsync("el usuario ingresa el Código \"9630\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
->>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line hidden
 #line 58
 await testRunner.AndAsync("el usuario ingresa el Sufijo \"Hola\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -426,21 +350,11 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-<<<<<<< HEAD
-#line 79
-await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 80
-await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-=======
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 70
 await testRunner.WhenAsync("el usuario selecciona la Familia \"Gaseosa\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
->>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line hidden
 #line 71
 await testRunner.AndAsync("el usuario selecciona Auto al Código", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -502,21 +416,11 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-<<<<<<< HEAD
-#line 101
-await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 102
-await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-=======
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 88
 await testRunner.WhenAsync("el usuario selecciona la Familia \"Harina\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
->>>>>>> ad793d0aec34bd963ddf6893cf5e443ea8271ec7
 #line hidden
 #line 89
 await testRunner.AndAsync("el usuario selecciona Auto al Código", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

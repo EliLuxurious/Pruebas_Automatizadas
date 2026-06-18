@@ -8,42 +8,9 @@ Para gestionar pedidos de clientes
 Background:
 	Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'
 	When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña 'calidad'
-	#And el usuario accede al módulo 'Pedidos'
-	#And el usuario accede al submodulo 'Ver Pedidos'
-	
-
 
 @RegistrarPedido
 Scenario Outline: Registro de nuevo pedido - Casos variados
-
-#	Given Navego al módulo de 'Adquisición'
-#	And Entro al submódulo específico de 'Nueva Adquisición'
-#	
-#	When Se configuran los datos de 'Facturación':
-#	| Campo                 | Valor               |
-#	| Documento             | FACTURA ELECTRONICA |
-#	| Serie                 | F001                |
-#	| Correlativo           | 00000010            |
-#	| Fecha de emisión      | 04/03/2026          |
-#	| Proveedor             | 10759012017         |
-#	| Información Adicional | Factura Exitosa     |
-#
-#	And Se selecciona el tipo de entrega 'Inmediata'
-#	And Se configuran los datos de 'Entrega':
-#	| Campo           | Valor                    |
-#	| Rol             | Item Comercial           |
-#	| Establecimiento | RECSA - CENTRAL          |
-#	| Almacén         | CENTRO COMERCIAL CENTRAL |
-#
-#	And Se selecciona y configura el producto a adquirir:
-#	| Producto										| Cantidad  | V. U |
-#	| 7753234003320\|Coca-Cola Gaseosa Botella 1.5L |  130      | 6.9  |
-#	| 7753234003313\|Inca Kola Gaseosa Botella 1.5L |  130      | 7.1  |
-#	| 7751234001115\|Azúcar Rubia				    |  30       | 3.2  |
-#
-#	
-#	Then Se procede a guardar la adquisición mediante la acción 'SavePurchase'
-#	And Se confirma el registro exitoso con el mensaje 'Se registró correctamente.'
 
 	When el usuario accede al módulo 'Pedidos'
 	And el usuario accede al submodulo 'Ver Pedidos'
