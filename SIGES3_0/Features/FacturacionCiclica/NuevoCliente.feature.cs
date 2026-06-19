@@ -21,14 +21,12 @@ namespace SIGES3_0.Features.FacturacionCiclica
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("Gestión de Clientes en Facturación Cíclica")]
-    [NUnit.Framework.CategoryAttribute("RegistroClientes")]
     public partial class GestionDeClientesEnFacturacionCiclicaFeature
     {
         
         private global::Reqnroll.ITestRunner testRunner;
         
-        private static string[] featureTags = new string[] {
-                "RegistroClientes"};
+        private static string[] featureTags = ((string[])(null));
         
         private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/FacturacionCiclica", "Gestión de Clientes en Facturación Cíclica", null, global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
@@ -83,16 +81,311 @@ namespace SIGES3_0.Features.FacturacionCiclica
             await testRunner.CollectScenarioErrorsAsync();
         }
         
+        public virtual async System.Threading.Tasks.Task FeatureBackgroundAsync()
+        {
+#line 3
+  #line hidden
+#line 4
+    await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                    "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 5
+    await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                    "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 6
+    await testRunner.AndAsync("navega al módulo \'Facturación Cíclica\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 7
+    await testRunner.AndAsync("se crea un plan de servicio válido", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 8
+    await testRunner.AndAsync("selecciona la opción \'Nuevo Cliente\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+        }
+        
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Registrar nuevo cliente con tipo de documento RUC (10) con Factura")]
-        [NUnit.Framework.CategoryAttribute("RegistroRuc10")]
-        public async System.Threading.Tasks.Task RegistrarNuevoClienteConTipoDeDocumentoRUC10ConFactura()
+        [NUnit.Framework.DescriptionAttribute("Registrar nuevo cliente con RUC 10 y Factura")]
+        [NUnit.Framework.CategoryAttribute("RegistroRuc10Factura")]
+        public async System.Threading.Tasks.Task RegistrarNuevoClienteConRUC10YFactura()
         {
             string[] tagsOfScenario = new string[] {
-                    "RegistroRuc10"};
+                    "RegistroRuc10Factura"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo cliente con tipo de documento RUC (10) con Factura", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 5
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo cliente con RUC 10 y Factura", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 11
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+  await this.FeatureBackgroundAsync();
+#line hidden
+#line 12
+    await testRunner.WhenAsync("completa la sección \'Datos Generales\' con el RUC \'10004259411\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 13
+    await testRunner.AndAsync("selecciona el Ubigeo \'HUANUCO - LEONCIO PRADO\' y dirección \'Jr. Rio de Janeiro Nr" +
+                        "o. 382\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table1 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table1.AddRow(new string[] {
+                            "Comprobante",
+                            "FACTURA ELECTRONICA"});
+                table1.AddRow(new string[] {
+                            "Ciclo",
+                            "MENSUAL"});
+                table1.AddRow(new string[] {
+                            "Forma Pago",
+                            "VENCIDO"});
+                table1.AddRow(new string[] {
+                            "Inicio",
+                            "2026-03-28"});
+                table1.AddRow(new string[] {
+                            "Plan",
+                            "AUTO"});
+#line 14
+    await testRunner.AndAsync("configura la \'Facturación\' con los siguientes datos:", ((string)(null)), table1, "And ");
+#line hidden
+#line 21
+    await testRunner.ThenAsync("procede a \'GUARDAR\' el registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 22
+    await testRunner.AndAsync("debe visualizar el mensaje de éxito \'Registro correctamente\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar nuevo cliente con RUC 10 y Boleta")]
+        [NUnit.Framework.CategoryAttribute("RegistroRuc10Boleta")]
+        public async System.Threading.Tasks.Task RegistrarNuevoClienteConRUC10YBoleta()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroRuc10Boleta"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo cliente con RUC 10 y Boleta", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 25
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+  await this.FeatureBackgroundAsync();
+#line hidden
+#line 26
+    await testRunner.WhenAsync("completa la sección \'Datos Generales\' con el RUC \'10402753710\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 27
+    await testRunner.AndAsync("selecciona el Ubigeo \'HUANUCO - LEONCIO PRADO\' y dirección \'Av. Peru 123\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 28
+    await testRunner.AndAsync("Se expande la sección de \'Facturación\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 29
+    await testRunner.AndAsync("selecciona el Tipo de comprobante \'BOLETA DE VENTA ELECTRONICA\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 30
+    await testRunner.AndAsync("configura el ciclo \'MENSUAL\', forma de pago \'VENCIDO\' y plan \'AUTO\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 31
+    await testRunner.ThenAsync("procede a \'GUARDAR\' el registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar nuevo cliente con RUC 20 y Factura")]
+        [NUnit.Framework.CategoryAttribute("RegistroRuc20Factura")]
+        public async System.Threading.Tasks.Task RegistrarNuevoClienteConRUC20YFactura()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroRuc20Factura"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo cliente con RUC 20 y Factura", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 34
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+  await this.FeatureBackgroundAsync();
+#line hidden
+#line 35
+    await testRunner.WhenAsync("completa la sección \'Datos Generales\' con el RUC \'20293910767\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 36
+    await testRunner.AndAsync("selecciona el Ubigeo \'LIMA - LIMA - MIRAFLORES\' y dirección \'Jr. Rio de Janeiro N" +
+                        "ro. 382\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table2 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table2.AddRow(new string[] {
+                            "Comprobante",
+                            "FACTURA ELECTRONICA"});
+                table2.AddRow(new string[] {
+                            "Ciclo",
+                            "MENSUAL"});
+                table2.AddRow(new string[] {
+                            "Inicio",
+                            "2026-02-01"});
+                table2.AddRow(new string[] {
+                            "Plan",
+                            "AUTO"});
+#line 37
+    await testRunner.AndAsync("configura la \'Facturación\' con los siguientes datos:", ((string)(null)), table2, "And ");
+#line hidden
+#line 43
+    await testRunner.ThenAsync("procede a \'GUARDAR\' el registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar nuevo cliente con RUC 20 y Boleta")]
+        [NUnit.Framework.CategoryAttribute("RegistroRuc20Boleta")]
+        public async System.Threading.Tasks.Task RegistrarNuevoClienteConRUC20YBoleta()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroRuc20Boleta"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo cliente con RUC 20 y Boleta", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 46
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+  await this.FeatureBackgroundAsync();
+#line hidden
+#line 47
+    await testRunner.WhenAsync("completa la sección \'Datos Generales\' con el RUC \'20518809271\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 48
+    await testRunner.AndAsync("selecciona el Ubigeo \'LIMA - LIMA - MIRAFLORES\' y dirección \'Jr. Rio de Janeiro N" +
+                        "ro. 382\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table3 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table3.AddRow(new string[] {
+                            "Comprobante",
+                            "BOLETA DE VENTA ELECTRONICA"});
+                table3.AddRow(new string[] {
+                            "Ciclo",
+                            "MENSUAL"});
+                table3.AddRow(new string[] {
+                            "Inicio",
+                            "2026-02-01"});
+                table3.AddRow(new string[] {
+                            "Plan",
+                            "AUTO"});
+#line 49
+    await testRunner.AndAsync("configura la \'Facturación\' con los siguientes datos:", ((string)(null)), table3, "And ");
+#line hidden
+#line 55
+    await testRunner.ThenAsync("procede a \'GUARDAR\' el registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar nuevo cliente con DNI y Boleta")]
+        [NUnit.Framework.CategoryAttribute("RegistroDniBoleta")]
+        public async System.Threading.Tasks.Task RegistrarNuevoClienteConDNIYBoleta()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroDniBoleta"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo cliente con DNI y Boleta", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 58
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+  await this.FeatureBackgroundAsync();
+#line hidden
+#line 59
+    await testRunner.WhenAsync("completa la sección \'Datos Generales\' con el DNI \'75971755\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 60
+    await testRunner.AndAsync("selecciona el Ubigeo \'LIMA - LIMA - MIRAFLORES\' y dirección \'Jr. Rio de Janeiro N" +
+                        "ro. 382\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 61
+    await testRunner.AndAsync("ingresa correo \'agricola@gmail.com\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 62
+    await testRunner.AndAsync("ingresa telefono \'937584269\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table4 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table4.AddRow(new string[] {
+                            "Comprobante",
+                            "BOLETA DE VENTA ELECTRONICA"});
+                table4.AddRow(new string[] {
+                            "Ciclo",
+                            "MENSUAL"});
+                table4.AddRow(new string[] {
+                            "Inicio",
+                            "2026-02-01"});
+                table4.AddRow(new string[] {
+                            "Plan",
+                            "AUTO"});
+#line 63
+    await testRunner.AndAsync("configura la \'Facturación\' con los siguientes datos:", ((string)(null)), table4, "And ");
+#line hidden
+#line 69
+    await testRunner.ThenAsync("procede a \'GUARDAR\' el registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Intentar registrar nuevo cliente con DNI y Factura muestra advertencia")]
+        [NUnit.Framework.CategoryAttribute("RegistroDniFacturaAdvertencia")]
+        public async System.Threading.Tasks.Task IntentarRegistrarNuevoClienteConDNIYFacturaMuestraAdvertencia()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroDniFacturaAdvertencia"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Intentar registrar nuevo cliente con DNI y Factura muestra advertencia", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 72
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -102,81 +395,682 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
-    await testRunner.GivenAsync("Inicio de sesión con usuario \'administrador\' y contraseña \'calidad\' en \'https://s" +
-                        "igesdev.newfront-dev-qa.sigesonline.com/\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line 3
+  await this.FeatureBackgroundAsync();
 #line hidden
-#line 7
-    await testRunner.AndAsync("Se ingresa al módulo \'Facturación Cíclica\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 73
+  await testRunner.WhenAsync("completa la sección \'Datos Generales\' con el DNI \'75423526\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 8
-    await testRunner.AndAsync("Se selecciona la opción \'Nuevo Cliente\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 74
+  await testRunner.AndAsync("selecciona el Ubigeo \'LIMA - LIMA - MIRAFLORES\' y dirección \'Jr. Rio de Janeiro N" +
+                        "ro. 382\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 9
-    await testRunner.AndAsync("Se expande la sección \'Datos Generales\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 75
+  await testRunner.AndAsync("Se expande la sección de \'Facturación\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 10
-    await testRunner.AndAsync("Se selecciona el tipo de documento \'REGISTRO NACIONAL DE CONTRIBUYENTES\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 76
+  await testRunner.AndAsync("selecciona el Tipo de comprobante \'FACTURA ELECTRONICA\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table1 = new global::Reqnroll.Table(new string[] {
+#line 77
+  await testRunner.ThenAsync("debe visualizar la advertencia \'Para emitir Factura Electrónica, el cliente debe " +
+                        "tener RUC.\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 78
+  await testRunner.AndAsync("cierra la advertencia con \'OK\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar nuevo cliente con PASAPORTE")]
+        [NUnit.Framework.CategoryAttribute("RegistroPasaporteBoleta")]
+        public async System.Threading.Tasks.Task RegistrarNuevoClienteConPASAPORTE()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroPasaporteBoleta"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo cliente con PASAPORTE", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 82
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+  await this.FeatureBackgroundAsync();
+#line hidden
+#line 83
+    await testRunner.WhenAsync("completa la sección \'Datos Generales\' con el Pasaporte \'198765432\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 84
+    await testRunner.AndAsync("ingresa nombres \'Maria\', apellido paterno \'Gomez\', apellido materno \'Rojas\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 85
+    await testRunner.AndAsync("selecciona el Ubigeo \'LIMA - LIMA - MIRAFLORES\' y dirección \'Av. Arequipa Nro. 45" +
+                        "6\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table5 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table1.AddRow(new string[] {
-                            "Numero documento",
-                            "10123456789"});
-                table1.AddRow(new string[] {
-                            "Nombres",
-                            "Luis"});
-                table1.AddRow(new string[] {
-                            "Apellido Paterno",
-                            "Nakamura"});
-                table1.AddRow(new string[] {
-                            "Apellido Materno",
-                            "Pontorielo"});
-                table1.AddRow(new string[] {
-                            "Nombre Comercial",
-                            "AGRINOVATE DEL PERU"});
-#line 11
-    await testRunner.WhenAsync("Se ingresan los datos de identidad:", ((string)(null)), table1, "When ");
-#line hidden
-#line 19
-    await testRunner.AndAsync("Se selecciona el Ubigeo \'LIMA - LIMA - MIRAFLORES\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 20
-    await testRunner.AndAsync("Se ingresa la dirección \'Jr. Rio de Janeiro Nro. 382\' con detalle \'-\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 21
-    await testRunner.AndAsync("Se ingresa el correo electrónico \'agricola@gmail.com\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 22
-    await testRunner.AndAsync("Se expande la sección de \'Facturación\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 23
-    await testRunner.AndAsync("Se ingresa el número de teléfono \'937584269\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-                global::Reqnroll.Table table2 = new global::Reqnroll.Table(new string[] {
-                            "Campo",
-                            "Valor"});
-                table2.AddRow(new string[] {
-                            "Tipo comprobante",
-                            "FACTURA ELECTRONICA"});
-                table2.AddRow(new string[] {
-                            "Ciclo facturacion",
+                table5.AddRow(new string[] {
+                            "Comprobante",
+                            "BOLETA DE VENTA ELECTRONICA"});
+                table5.AddRow(new string[] {
+                            "Ciclo",
                             "MENSUAL"});
-                table2.AddRow(new string[] {
-                            "Forma de pago",
-                            "VENCIDO"});
-                table2.AddRow(new string[] {
-                            "Fecha inicio",
-                            "02/28/2026"});
-                table2.AddRow(new string[] {
+                table5.AddRow(new string[] {
+                            "Inicio",
+                            "2026-02-01"});
+                table5.AddRow(new string[] {
                             "Plan",
-                            "PLAN BASICO"});
-#line 24
-    await testRunner.AndAsync("Se completan los datos de facturación:", ((string)(null)), table2, "And ");
+                            "AUTO"});
+#line 86
+    await testRunner.AndAsync("configura la \'Facturación\' con los siguientes datos:", ((string)(null)), table5, "And ");
 #line hidden
-#line 32
-    await testRunner.ThenAsync("Se procede a \'GUARDAR\' el registro del cliente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line 92
+    await testRunner.ThenAsync("procede a \'GUARDAR\' el registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar nuevo cliente con CARNET DE EXTRANJERIA")]
+        [NUnit.Framework.CategoryAttribute("RegistroCarnetExtranjeriaBoleta")]
+        public async System.Threading.Tasks.Task RegistrarNuevoClienteConCARNETDEEXTRANJERIA()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroCarnetExtranjeriaBoleta"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo cliente con CARNET DE EXTRANJERIA", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 96
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+  await this.FeatureBackgroundAsync();
+#line hidden
+#line 97
+    await testRunner.WhenAsync("completa la sección \'Datos Generales\' con el Carnet \'159123456\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 98
+    await testRunner.AndAsync("ingresa nombres \'Luis\', apellido paterno \'Torres\', apellido materno \'Diaz\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 99
+    await testRunner.AndAsync("selecciona el Ubigeo \'LIMA - LIMA - MIRAFLORES\' y dirección \'Jr. Puno Nro. 789\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table6 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table6.AddRow(new string[] {
+                            "Comprobante",
+                            "BOLETA DE VENTA ELECTRONICA"});
+                table6.AddRow(new string[] {
+                            "Ciclo",
+                            "MENSUAL"});
+                table6.AddRow(new string[] {
+                            "Inicio",
+                            "2026-02-01"});
+                table6.AddRow(new string[] {
+                            "Plan",
+                            "AUTO"});
+#line 100
+    await testRunner.AndAsync("configura la \'Facturación\' con los siguientes datos:", ((string)(null)), table6, "And ");
+#line hidden
+#line 106
+    await testRunner.ThenAsync("procede a \'GUARDAR\' el registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar nuevo cliente con CED. DIPLOMATICA DE IDENTIDAD")]
+        [NUnit.Framework.CategoryAttribute("RegistroCedulaDiplomaticaBoleta")]
+        public async System.Threading.Tasks.Task RegistrarNuevoClienteConCED_DIPLOMATICADEIDENTIDAD()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroCedulaDiplomaticaBoleta"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo cliente con CED. DIPLOMATICA DE IDENTIDAD", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 110
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+  await this.FeatureBackgroundAsync();
+#line hidden
+#line 111
+    await testRunner.WhenAsync("completa la sección \'Datos Generales\' con la Cédula \'63776655\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 112
+    await testRunner.AndAsync("ingresa nombres \'Ana\', apellido paterno \'Martinez\', apellido materno \'Suarez\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 113
+    await testRunner.AndAsync("selecciona el Ubigeo \'LIMA - LIMA - SAN ISIDRO\' y dirección \'Av. Javier Prado 123" +
+                        "\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table7 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table7.AddRow(new string[] {
+                            "Comprobante",
+                            "BOLETA DE VENTA ELECTRONICA"});
+                table7.AddRow(new string[] {
+                            "Ciclo",
+                            "MENSUAL"});
+                table7.AddRow(new string[] {
+                            "Inicio",
+                            "2026-02-01"});
+                table7.AddRow(new string[] {
+                            "Plan",
+                            "AUTO"});
+#line 114
+    await testRunner.AndAsync("configura la \'Facturación\' con los siguientes datos:", ((string)(null)), table7, "And ");
+#line hidden
+#line 120
+    await testRunner.ThenAsync("procede a \'GUARDAR\' el registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar nuevo cliente con DOC.IDENT.PAIS.RESIDENCIA-NO.D")]
+        [NUnit.Framework.CategoryAttribute("RegistroResidenciaBoleta")]
+        public async System.Threading.Tasks.Task RegistrarNuevoClienteConDOC_IDENT_PAIS_RESIDENCIA_NO_D()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroResidenciaBoleta"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo cliente con DOC.IDENT.PAIS.RESIDENCIA-NO.D", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 124
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+  await this.FeatureBackgroundAsync();
+#line hidden
+#line 125
+    await testRunner.WhenAsync("completa la sección \'Datos Generales\' con el Doc de Residencia \'7854751316\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 126
+    await testRunner.AndAsync("ingresa nombres \'Hans\', apellido paterno \'Muller\', apellido materno \'Becker\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 127
+    await testRunner.AndAsync("selecciona el Ubigeo \'LIMA - LIMA - MIRAFLORES\' y dirección \'Calle Los Pinos 101\'" +
+                        "", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table8 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table8.AddRow(new string[] {
+                            "Comprobante",
+                            "BOLETA DE VENTA ELECTRONICA"});
+                table8.AddRow(new string[] {
+                            "Ciclo",
+                            "MENSUAL"});
+                table8.AddRow(new string[] {
+                            "Inicio",
+                            "2026-02-01"});
+                table8.AddRow(new string[] {
+                            "Plan",
+                            "AUTO"});
+#line 128
+    await testRunner.AndAsync("configura la \'Facturación\' con los siguientes datos:", ((string)(null)), table8, "And ");
+#line hidden
+#line 134
+    await testRunner.ThenAsync("procede a \'GUARDAR\' el registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar nuevo cliente con DOC.TRIB.NO.DOM.SIN.RUC")]
+        [NUnit.Framework.CategoryAttribute("RegistroSinRucBoleta")]
+        public async System.Threading.Tasks.Task RegistrarNuevoClienteConDOC_TRIB_NO_DOM_SIN_RUC()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroSinRucBoleta"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo cliente con DOC.TRIB.NO.DOM.SIN.RUC", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 138
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+  await this.FeatureBackgroundAsync();
+#line hidden
+#line 139
+    await testRunner.WhenAsync("completa la sección \'Datos Generales\' con el documento \'4587269315\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 140
+    await testRunner.AndAsync("ingresa nombres \'Pedro\', apellido paterno \'Castillo\', apellido materno \'Vargas\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 141
+    await testRunner.AndAsync("selecciona el Ubigeo \'LIMA - LIMA - MIRAFLORES\' y dirección \'Jr. Lima Nro. 321\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table9 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table9.AddRow(new string[] {
+                            "Comprobante",
+                            "BOLETA DE VENTA ELECTRONICA"});
+                table9.AddRow(new string[] {
+                            "Ciclo",
+                            "MENSUAL"});
+                table9.AddRow(new string[] {
+                            "Inicio",
+                            "2026-02-01"});
+                table9.AddRow(new string[] {
+                            "Plan",
+                            "AUTO"});
+#line 142
+    await testRunner.AndAsync("configura la \'Facturación\' con los siguientes datos:", ((string)(null)), table9, "And ");
+#line hidden
+#line 148
+    await testRunner.ThenAsync("procede a \'GUARDAR\' el registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar nuevo cliente con IDENTIFICATION NUMBER - IN – DOC TRIB PP. JJ")]
+        [NUnit.Framework.CategoryAttribute("RegistroPPJJBoleta")]
+        public async System.Threading.Tasks.Task RegistrarNuevoClienteConIDENTIFICATIONNUMBER_INDOCTRIBPP_JJ()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroPPJJBoleta"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo cliente con IDENTIFICATION NUMBER - IN – DOC TRIB PP. JJ", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 152
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+  await this.FeatureBackgroundAsync();
+#line hidden
+#line 153
+    await testRunner.WhenAsync("completa la sección \'Datos Generales\' con el ID PPJJ \'4599887766\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 154
+    await testRunner.AndAsync("ingresa nombres \'GLOBAL TECH SOLUTIONS\', apellido paterno \'CORP\', apellido matern" +
+                        "o \'SAC\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 155
+    await testRunner.AndAsync("selecciona el Ubigeo \'LIMA - LIMA - SAN BORJA\' y dirección \'Av. Aviación 4567\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table10 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table10.AddRow(new string[] {
+                            "Comprobante",
+                            "BOLETA DE VENTA ELECTRONICA"});
+                table10.AddRow(new string[] {
+                            "Ciclo",
+                            "MENSUAL"});
+                table10.AddRow(new string[] {
+                            "Inicio",
+                            "2026-02-01"});
+                table10.AddRow(new string[] {
+                            "Plan",
+                            "AUTO"});
+#line 156
+    await testRunner.AndAsync("configura la \'Facturación\' con los siguientes datos:", ((string)(null)), table10, "And ");
+#line hidden
+#line 162
+    await testRunner.ThenAsync("procede a \'GUARDAR\' el registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar nuevo cliente con PERMISO TEMPORAL DE PERMANENCIA - PTP")]
+        [NUnit.Framework.CategoryAttribute("RegistroPTPBoleta")]
+        public async System.Threading.Tasks.Task RegistrarNuevoClienteConPERMISOTEMPORALDEPERMANENCIA_PTP()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroPTPBoleta"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo cliente con PERMISO TEMPORAL DE PERMANENCIA - PTP", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 166
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+  await this.FeatureBackgroundAsync();
+#line hidden
+#line 167
+    await testRunner.WhenAsync("completa la sección \'Datos Generales\' con el PTP \'478009876\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 168
+    await testRunner.AndAsync("ingresa nombres \'Carlos\', apellido paterno \'Mendoza\', apellido materno \'Rivas\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 169
+    await testRunner.AndAsync("selecciona el Ubigeo \'LIMA - LIMA - SURCO\' y dirección \'Calle El Polo 123\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table11 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table11.AddRow(new string[] {
+                            "Comprobante",
+                            "BOLETA DE VENTA ELECTRONICA"});
+                table11.AddRow(new string[] {
+                            "Ciclo",
+                            "MENSUAL"});
+                table11.AddRow(new string[] {
+                            "Inicio",
+                            "2026-02-01"});
+                table11.AddRow(new string[] {
+                            "Plan",
+                            "AUTO"});
+#line 170
+    await testRunner.AndAsync("configura la \'Facturación\' con los siguientes datos:", ((string)(null)), table11, "And ");
+#line hidden
+#line 176
+    await testRunner.ThenAsync("procede a \'GUARDAR\' el registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar nuevo cliente con SALVOCONDUCTO")]
+        [NUnit.Framework.CategoryAttribute("RegistroSalvoconductoBoleta")]
+        public async System.Threading.Tasks.Task RegistrarNuevoClienteConSALVOCONDUCTO()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroSalvoconductoBoleta"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo cliente con SALVOCONDUCTO", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 180
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+  await this.FeatureBackgroundAsync();
+#line hidden
+#line 181
+    await testRunner.WhenAsync("completa la sección \'Datos Generales\' con el Salvoconducto \'78112233\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 182
+    await testRunner.AndAsync("ingresa nombres \'Elena\', apellido paterno \'Guerra\', apellido materno \'Paz\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 183
+    await testRunner.AndAsync("selecciona el Ubigeo \'LIMA - LIMA - MIRAFLORES\' y dirección \'Av. Larco 900\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table12 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table12.AddRow(new string[] {
+                            "Comprobante",
+                            "BOLETA DE VENTA ELECTRONICA"});
+                table12.AddRow(new string[] {
+                            "Ciclo",
+                            "MENSUAL"});
+                table12.AddRow(new string[] {
+                            "Inicio",
+                            "2026-02-01"});
+                table12.AddRow(new string[] {
+                            "Plan",
+                            "AUTO"});
+#line 184
+    await testRunner.AndAsync("configura la \'Facturación\' con los siguientes datos:", ((string)(null)), table12, "And ");
+#line hidden
+#line 190
+    await testRunner.ThenAsync("procede a \'GUARDAR\' el registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar nuevo cliente con TAM - TARJETA ANDINA DE MIGRACIÓN")]
+        [NUnit.Framework.CategoryAttribute("RegistroTAMBoleta")]
+        public async System.Threading.Tasks.Task RegistrarNuevoClienteConTAM_TARJETAANDINADEMIGRACION()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroTAMBoleta"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo cliente con TAM - TARJETA ANDINA DE MIGRACIÓN", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 194
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+  await this.FeatureBackgroundAsync();
+#line hidden
+#line 195
+    await testRunner.WhenAsync("completa la sección \'Datos Generales\' con la TAM \'785554433\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 196
+    await testRunner.AndAsync("ingresa nombres \'Ricardo\', apellido paterno \'Quispe\', apellido materno \'Mamani\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 197
+    await testRunner.AndAsync("selecciona el Ubigeo \'LIMA - LIMA - MIRAFLORES\' y dirección \'Av. Tacna 450\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table13 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table13.AddRow(new string[] {
+                            "Comprobante",
+                            "BOLETA DE VENTA ELECTRONICA"});
+                table13.AddRow(new string[] {
+                            "Ciclo",
+                            "MENSUAL"});
+                table13.AddRow(new string[] {
+                            "Inicio",
+                            "2026-02-01"});
+                table13.AddRow(new string[] {
+                            "Plan",
+                            "AUTO"});
+#line 198
+    await testRunner.AndAsync("configura la \'Facturación\' con los siguientes datos:", ((string)(null)), table13, "And ");
+#line hidden
+#line 204
+    await testRunner.ThenAsync("procede a \'GUARDAR\' el registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar nuevo cliente con TAX IDENTIFICATION NUMBER - TIN – DOC TRIB PP.NN")]
+        [NUnit.Framework.CategoryAttribute("RegistroPPNNBoleta")]
+        public async System.Threading.Tasks.Task RegistrarNuevoClienteConTAXIDENTIFICATIONNUMBER_TINDOCTRIBPP_NN()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroPPNNBoleta"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo cliente con TAX IDENTIFICATION NUMBER - TIN – DOC TRIB PP.NN", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 208
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+  await this.FeatureBackgroundAsync();
+#line hidden
+#line 209
+    await testRunner.WhenAsync("completa la sección \'Datos Generales\' con el TIN PPNN \'789112233\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 210
+    await testRunner.AndAsync("ingresa nombres \'Sofia\', apellido paterno \'Villalba\', apellido materno \'Lara\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 211
+    await testRunner.AndAsync("selecciona el Ubigeo \'LIMA - LIMA - MIRAFLORES\' y dirección \'Calle Alcanfores 567" +
+                        "\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table14 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table14.AddRow(new string[] {
+                            "Comprobante",
+                            "BOLETA DE VENTA ELECTRONICA"});
+                table14.AddRow(new string[] {
+                            "Ciclo",
+                            "MENSUAL"});
+                table14.AddRow(new string[] {
+                            "Inicio",
+                            "2026-02-01"});
+                table14.AddRow(new string[] {
+                            "Plan",
+                            "AUTO"});
+#line 212
+    await testRunner.AndAsync("configura la \'Facturación\' con los siguientes datos:", ((string)(null)), table14, "And ");
+#line hidden
+#line 218
+    await testRunner.ThenAsync("procede a \'GUARDAR\' el registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar nuevo cliente con RUC 10 y Factura con datos obligatorios y no obligato" +
+            "rios")]
+        [NUnit.Framework.CategoryAttribute("RegistroRuc10FacturaCompleto")]
+        public async System.Threading.Tasks.Task RegistrarNuevoClienteConRUC10YFacturaConDatosObligatoriosYNoObligatorios()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "RegistroRuc10FacturaCompleto"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo cliente con RUC 10 y Factura con datos obligatorios y no obligato" +
+                    "rios", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 222
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+  await this.FeatureBackgroundAsync();
+#line hidden
+#line 223
+  await testRunner.WhenAsync("completa la sección \'Datos Generales\' con el RUC \'10004259411\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 224
+  await testRunner.AndAsync("selecciona el Ubigeo \'HUANUCO - LEONCIO PRADO\' y dirección \'Jr. Rio de Janeiro Nr" +
+                        "o. 382\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table15 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table15.AddRow(new string[] {
+                            "Comprobante",
+                            "FACTURA ELECTRONICA"});
+                table15.AddRow(new string[] {
+                            "Ciclo",
+                            "MENSUAL"});
+                table15.AddRow(new string[] {
+                            "Forma Pago",
+                            "VENCIDO"});
+                table15.AddRow(new string[] {
+                            "Inicio",
+                            "2026-03-28"});
+                table15.AddRow(new string[] {
+                            "Plan",
+                            "AUTO"});
+#line 225
+  await testRunner.AndAsync("configura la \'Facturación\' con los siguientes datos:", ((string)(null)), table15, "And ");
+#line hidden
+#line 233
+  await testRunner.AndAsync("el usuario da click en la sección \"Credenciales SOL\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 234
+  await testRunner.AndAsync("ingresa el Usuario SOL Primario \"MODDATOS\" y Contraseña \"MODDATOS\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 235
+  await testRunner.AndAsync("ingresa el Usuario SOL Secundario \"FACTURA_TEST\" y Contraseña \"Prueba2024*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 237
+  await testRunner.AndAsync("el usuario da click en la sección \"Guías de remisión y OSE\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 238
+  await testRunner.AndAsync("ingresa el Usuario de Guías de Remisión \"GRE_PROYECTO_9\" y Clave \"GuiaPass123!\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 239
+  await testRunner.AndAsync("ingresa el Usuario OSE \"20123456789USERTEST\" y Clave \"OSE_Secret_Key_99\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 241
+  await testRunner.AndAsync("el usuario da click en la sección \"Configuración Adicional\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 242
+  await testRunner.AndAsync("ingresa el Usuario AnyDesk \"987 654 321\" y Clave \"Support_UNAS_2026\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 243
+  await testRunner.AndAsync("ingresa el Tenant ID \"dev-client-alpha-001\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 245
+  await testRunner.ThenAsync("procede a \'GUARDAR\' el registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 246
+  await testRunner.AndAsync("debe visualizar el mensaje de éxito \'Registro correctamente\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

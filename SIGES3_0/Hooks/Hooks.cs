@@ -60,7 +60,23 @@ namespace SIGES3_0.Hooks
         [BeforeScenario(Order = 1)]
         public void FirstBeforeScenario(ScenarioContext scenarioContext)
         {
-            IWebDriver driver = new ChromeDriver();
+            // 1. Definir la ruta de descargas de tu laptop
+            string rutaDescargas = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads";
+
+            ChromeOptions options = new ChromeOptions();
+
+            // 2. Configuración para DESCARGAS
+            options.AddUserProfilePreference("download.default_directory", rutaDescargas);
+            options.AddUserProfilePreference("download.prompt_for_download", false); // No preguntar dónde guardar
+            options.AddUserProfilePreference("plugins.always_open_pdf_externally", true); // Descargar en lugar de abrir PDF
+
+            // 3. Configuración para IMPRESIÓN (Modo silencioso a PDF)
+            options.AddArgument("--kiosk-printing");
+            options.AddUserProfilePreference("printing.print_preview_sticky_settings.appState",
+                "{\"recentDestinations\":[{\"id\":\"Save as PDF\",\"origin\":\"local\",\"account\":\"\"}],\"selectedDestinationId\":\"Save as PDF\",\"version\":2}");
+
+            // 4. Iniciar el driver con las opciones
+            IWebDriver driver = new ChromeDriver(options);
             driver.Manage().Window.Maximize();
 
             _container.RegisterInstanceAs<IWebDriver>(driver);
