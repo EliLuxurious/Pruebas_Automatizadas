@@ -56,22 +56,20 @@ namespace SIGES3_0.Hooks
         [BeforeScenario(Order = 1)]
         public void FirstBeforeScenario(ScenarioContext scenarioContext)
         {
-
-            var options = new ChromeOptions();
-            options.AddArgument("--start-maximized");
-            IWebDriver driver = new ChromeDriver(options);
-
-            //IWebDriver driver = CreateChromeDriver();
-            //driver.Manage().Window.Maximize();
-            _ = CreateChromeDriver();
+            // Crear una sola instancia del navegador con toda la configuración.
+            IWebDriver driver = CreateChromeDriver();
             driver.Manage().Window.Maximize();
-
 
             _container.RegisterInstanceAs<IWebDriver>(driver);
 
-            var feature = _feature ?? throw new InvalidOperationException("El feature actual no fue inicializado.");
-            _scenario = feature.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
+            var feature = _feature
+                ?? throw new InvalidOperationException(
+                    "El feature actual no fue inicializado.");
+
+            _scenario = feature.CreateNode<Scenario>(
+                scenarioContext.ScenarioInfo.Title);
         }
+
 
         [AfterScenario]
         public void AfterScenario(ScenarioContext scenarioContext)
@@ -159,20 +157,57 @@ namespace SIGES3_0.Hooks
         private static IWebDriver CreateChromeDriver()
         {
             var chromeOptions = new ChromeOptions();
+
+            // Resolver la instalación de Chrome.
             var chromeBinary = ResolveChromeBinary();
+
             if (!string.IsNullOrEmpty(chromeBinary))
             {
                 chromeOptions.BinaryLocation = chromeBinary;
             }
 
+            // Configuración general.
+            chromeOptions.AddArgument("--start-maximized");
             chromeOptions.AddArgument("--disable-search-engine-choice-screen");
             chromeOptions.AddArgument("--no-first-run");
             chromeOptions.AddArgument("--disable-dev-shm-usage");
 
+            // Configuración de descargas.
+            string downloadDirectory = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                "Downloads");
+
+            Directory.CreateDirectory(downloadDirectory);
+
+            chromeOptions.AddUserProfilePreference(
+                "download.default_directory",
+                downloadDirectory);
+
+            chromeOptions.AddUserProfilePreference(
+                "download.prompt_for_download",
+                false);
+
+            chromeOptions.AddUserProfilePreference(
+                "plugins.always_open_pdf_externally",
+                true);
+
+            // Configuración para impresión silenciosa en PDF.
+            chromeOptions.AddArgument("--kiosk-printing");
+
+            chromeOptions.AddUserProfilePreference(
+                "printing.print_preview_sticky_settings.appState",
+                "{\"recentDestinations\":[{\"id\":\"Save as PDF\"," +
+                "\"origin\":\"local\",\"account\":\"\"}]," +
+                "\"selectedDestinationId\":\"Save as PDF\",\"version\":2}");
+
+            // Resolver la carpeta del ChromeDriver según el sistema operativo.
             var driverDirectory = ResolveChromeDriverDirectory();
+
             if (!string.IsNullOrEmpty(driverDirectory))
             {
-                var service = ChromeDriverService.CreateDefaultService(driverDirectory);
+                var service =
+                    ChromeDriverService.CreateDefaultService(driverDirectory);
+
                 return new ChromeDriver(service, chromeOptions);
             }
 

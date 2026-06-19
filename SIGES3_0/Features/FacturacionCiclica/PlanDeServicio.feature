@@ -1,10 +1,10 @@
-﻿@ignore
-@GestionPlanes
+﻿@GestionPlanes
 Feature: Gestión de Planes de Servicio
 
 @GeneracionPlanActivo
 Scenario: Generación inicial del Plan (Inicio -> Activo)
-	Given Inicio de sesión con usuario 'pamela.tone@recsa.com' y contraseña 'calidad' en 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'
+	Given el usuario ingresa al ambiente 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'
+	When el usuario inicia sesión con usuario 'pamela.tone@recsa.com' y contraseña 'calidad'
 	And Se ingresa al módulo 'Facturación Cíclica'
 	And Se ingresa al submódulo 'Plan de Servicio'
 	And Se selecciona 'Detalles del Plan'

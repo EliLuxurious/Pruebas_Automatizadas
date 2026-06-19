@@ -21,7 +21,6 @@ namespace SIGES3_0.Features.FacturacionCiclica
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("Gestión de Planes de Servicio")]
-    [NUnit.Framework.IgnoreAttribute("Ignored feature")]
     [NUnit.Framework.CategoryAttribute("GestionPlanes")]
     public partial class GestionDePlanesDeServicioFeature
     {
@@ -29,7 +28,6 @@ namespace SIGES3_0.Features.FacturacionCiclica
         private global::Reqnroll.ITestRunner testRunner;
         
         private static string[] featureTags = new string[] {
-                "ignore",
                 "GestionPlanes"};
         
         private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/FacturacionCiclica", "Gestión de Planes de Servicio", null, global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
@@ -94,7 +92,7 @@ namespace SIGES3_0.Features.FacturacionCiclica
                     "GeneracionPlanActivo"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Generación inicial del Plan (Inicio -> Activo)", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 6
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -104,9 +102,13 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
+#line 6
+ await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
 #line 7
- await testRunner.GivenAsync("Inicio de sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calidad\' en \'h" +
-                        "ttps://sigesdev.newfrontdev-qa.sigesonline.com/auth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 8
  await testRunner.AndAsync("Se ingresa al módulo \'Facturación Cíclica\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -117,47 +119,47 @@ this.ScenarioInitialize(scenarioInfo);
 #line 10
  await testRunner.AndAsync("Se selecciona \'Detalles del Plan\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table131 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table144 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table131.AddRow(new string[] {
+                table144.AddRow(new string[] {
                             "Valor mínimo",
                             "50"});
-                table131.AddRow(new string[] {
+                table144.AddRow(new string[] {
                             "Valor máximo",
                             "500"});
 #line 11
- await testRunner.WhenAsync("Se configuran los límites de los comprobantes:", ((string)(null)), table131, "When ");
+ await testRunner.WhenAsync("Se configuran los límites de los comprobantes:", ((string)(null)), table144, "When ");
 #line hidden
-                global::Reqnroll.Table table132 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table145 = new global::Reqnroll.Table(new string[] {
                             "Entidad",
                             "Mínimo",
                             "Máximo"});
-                table132.AddRow(new string[] {
+                table145.AddRow(new string[] {
                             "Locales",
                             "1",
                             "5"});
-                table132.AddRow(new string[] {
+                table145.AddRow(new string[] {
                             "Usuarios",
                             "2",
                             "15"});
 #line 16
- await testRunner.AndAsync("Se configuran los límites de locales y usuarios:", ((string)(null)), table132, "And ");
+ await testRunner.AndAsync("Se configuran los límites de locales y usuarios:", ((string)(null)), table145, "And ");
 #line hidden
 #line 21
  await testRunner.AndAsync("Se selecciona la pestaña \'Datos Generales\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table133 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table146 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table133.AddRow(new string[] {
+                table146.AddRow(new string[] {
                             "Nombre del plan",
                             "Plan Agro"});
-                table133.AddRow(new string[] {
+                table146.AddRow(new string[] {
                             "Descripción",
                             "Plan orientadas a empresas agroindustriales."});
 #line 22
- await testRunner.AndAsync("Se ingresa la información básica del plan:", ((string)(null)), table133, "And ");
+ await testRunner.AndAsync("Se ingresa la información básica del plan:", ((string)(null)), table146, "And ");
 #line hidden
 #line 27
  await testRunner.AndAsync("Se selecciona el ciclo de facturación \'MENSUAL\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
