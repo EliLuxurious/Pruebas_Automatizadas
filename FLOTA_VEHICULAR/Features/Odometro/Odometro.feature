@@ -1,22 +1,18 @@
 ﻿@Odometro
 Feature: Gestión de Odómetro
 
-    # El Background se ejecuta ANTES de cada escenario (soluciona el error de la pantalla en blanco)
     Background: Iniciar sesión en el sistema
         Given el usuario ingresa al ambiente "https://sigesoas.mimp-qa.sigesonline.com/#/public"
         When el usuario inicia sesión con usuario "ADMIN-GLOBAL" y contraseña "Admin2023Global*"
 
     @FlujoCompletoOdometro
     Scenario: Registrar vehículo nuevo y luego registrar su lectura de odómetro
-        # ==========================================
-        # FASE 1: CREACIÓN DEL VEHÍCULO
-        # ==========================================
         And Se ingresa al módulo "Vehículo"
         And Se selecciona "+Nuevo"
 
         When Se ingresan los datos del vehículo:
         | Campo            | Valor             |
-        | PLACA            | ANT111            |
+        | PLACA            | PPP010            |
         | AREA ASIGNADA    | DPAM              |
         | PROPIETARIO      | MIMP              |
         | MARCA            | DAEWOO            | 
@@ -32,20 +28,13 @@ Feature: Gestión de Odómetro
         | NUMERO SERIE     | ABCD123456789012A |
 
         Then Se procede a "GUARDAR" el vehículo
-
-        # ==========================================
-        # FASE 2: REGISTRO DEL ODÓMETRO
-        # ==========================================
         When Se ingresa al módulo Odómetro
         And Se selecciona Nuevo Odómetro
-        And Se ingresa la placa "ANT111" y se cargan los datos
+        And Se ingresa la placa "PPP010" y se cargan los datos
         And Se ingresa la lectura del odómetro "15500"
         And Se selecciona la fecha de lectura día "15"
         Then Se procede a Guardar el odómetro
 
-    # ==========================================
-    # CASOS DE PRUEBA: FILTROS DE BÚSQUEDA
-    # ==========================================
 
     @FiltrosOdometro @CP-ODO-01 @CP-ODO-02
     Scenario Outline: Validación de Búsquedas por Área (Específica y Múltiple)
@@ -53,10 +42,6 @@ Feature: Gestión de Odómetro
         And Se seleccionan las áreas en el filtro "<Areas>"
         And Se mantiene la opción TODAS en "Origen"
         And Se hace clic en Buscar filtros
-        
-        # TODO: BUG DEL SISTEMA EN QA. Los filtros están rotos y no traen la data.
-        # Por ahora validamos el mensaje de lista vacía para que la prueba pase. 
-        # Cuando Desarrollo lo arregle, cambiar esta línea por: Then Se verifica que la grilla muestra resultados
         Then Se verifica el resultado de la busqueda "Búsqueda sin coincidencias"
 
         Examples:
@@ -71,15 +56,13 @@ Feature: Gestión de Odómetro
         And Se mantiene la opción TODAS en "Origen"
         And Se hace clic en Buscar filtros
         Then Se verifica el resultado de la busqueda "Búsqueda sin coincidencias"
-        ## ojo acá hay un bug del sistema que aún no arregla, y para que la prueba pase se puso el de búsqueda sin coincidencias.
-        ##  Then Se verifica que la grilla muestra resultados  ## esto es para cuando arreglen ese bug
+
 
     @FiltrosOdometro @CP-ODO-04 @CP-ODO-05
     Scenario Outline: Búsqueda Combinada y Sin Coincidencias
         When Se ingresa al módulo Odómetro
         And Se seleccionan las áreas en el filtro "<Area>"
         And Se mantiene la opción TODAS en "Origen"
-        # OMITIMOS el clic en "Buscar filtros" porque el botón azul recarga la tabla y borra la placa
         And Se busca el odómetro por placa "<Placa>"
         Then Se verifica el resultado de la busqueda "<Notas>"
 
@@ -88,9 +71,7 @@ Feature: Gestión de Odómetro
             | CP-ODO-04 | UPE LIMA | ZZZ999  | Búsqueda sin coincidencias    |
             | CP-ODO-05 | UPE LIMA | 6287MW  | Búsqueda combinada con datos  |
 
-    # ==========================================
-    # CASOS DE PRUEBA: REGISTRO DE ODÓMETRO
-    # ==========================================
+    #CASOS DE PRUEBA: REGISTRO DE ODÓMETRO
 
     @RegistroOdometro @RegistroExitoso
     Scenario Outline: <Caso> - <Descripcion> (Exitoso)
@@ -131,7 +112,6 @@ Feature: Gestión de Odómetro
         And Se ingresa la placa "<Placa>" y se cargan los datos
         And Se ingresa la lectura del odómetro "<Lectura>"
         And Se selecciona la fecha de lectura día "<Dia>"
-        # ¡Aquí estaba el error! Debe decir "Then" para que conecte con C#
         Then Se procede a Guardar el odómetro
         And Se verifica el mensaje de error "<MensajeError>"
 
@@ -148,10 +128,8 @@ Feature: Gestión de Odómetro
         And Se selecciona la fecha de lectura día "16"
         Then Se verifica que el boton Guardar esta deshabilitado
 
-    # ==========================================
-    # CASOS DE PRUEBA: EDICIÓN Y BAJA
-    # ==========================================
 
+    #CASOS DE PRUEBA: EDICIÓN Y BAJA
     @EditarOdometro @CP-ODO-14
     Scenario: Edición Correcta de Odómetro Vigente
         When Se ingresa al módulo Odómetro

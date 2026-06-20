@@ -5,104 +5,76 @@ Feature: Gestión de SOAT
         Given el usuario ingresa al ambiente "https://sigesoas.mimp-qa.sigesonline.com/#/public"
         When el usuario inicia sesión con usuario "ADMIN-GLOBAL" y contraseña "Admin2023Global*"
 
-    # ==========================================
-    # CASOS DE PRUEBA: CREAR VEHÍCULO + REGISTRO SOAT (EXITOSO)
-    # ==========================================
+    #CASOS DE PRUEBA: CREAR VEHÍCULO + REGISTRO SOAT (EXITOSO)
     @RegistroSoat @RegistroExitoso
     Scenario Outline: <Caso> - <Descripcion>
-        # ------------------------------------------
-        # FASE 1: CREACIÓN DEL VEHÍCULO
-        # ------------------------------------------
         When Se ingresa al módulo "Vehículo"
         And Se selecciona "+Nuevo"
-
-        When Se ingresan los datos del vehículo:
-        | Campo            | Valor             |
-        | PLACA            | <Placa>           |
-        | AREA ASIGNADA    | DPAM              |
-        | PROPIETARIO      | MIMP              |
-        | MARCA            | DAEWOO            | 
-        | MODELO           | TICO SL           |
-        | AÑO              | 2026              |
-        | TIPO DE VEHICULO | AUTOMOVIL         |
-        | CLASIFICADOR     | ALTA              |
-        | COLOR            | NEGRO             |
-        | NUMERO MOTOR     | ENG554433         |
-        | TIPO COMBUSTIBLE | G-90              |
-        | TIPO MOTOR       | COMBUSTIBLE       |
-        | RANGO CONSUMO    | 45                |
-        | NUMERO SERIE     | XYZ9876543210987A |
-
+        And Se ingresan los datos del vehículo:
+            | Campo            | Valor             |
+            | PLACA            | <Placa>           |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | <Motor>           |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | <Serie>           |
         Then Se procede a "GUARDAR" el vehículo
 
-        # ------------------------------------------
-        # FASE 2: REGISTRO DEL SOAT
-        # ------------------------------------------
         When Se ingresa al módulo SOAT
         And Se selecciona Nuevo SOAT
-        
-        # 1. Datos del Vehículo
         And Se ingresa la placa "<Placa>" y se busca en SOAT
-        
-        # 2. Datos de la Póliza
         And Se selecciona el proveedor "<Proveedor>"
         And Se ingresa la póliza "<Poliza>"
-        And Se selecciona la fecha DESDE el día "<DiaDesde>" y HASTA el día "<DiaHasta>" del próximo año
-        
-        # 3. Datos del Contratante
+        And Se configuran las fechas dinámicas sumando "<Dias>" dias para un SOAT "<EstadoEsperado>"
         And Se ingresa el RUC "<Ruc>" y se busca
-        And Se selecciona la fecha del contratante el día "<DiaContratante>"
         And Se ingresa la hora de emisión "<Hora>" y el importe "<Importe>"
-        
-        # 4. Documento Adjunto
         And Se adjunta el documento "<RutaArchivo>"
-        
         Then Se guarda el SOAT
 
         Examples:
-            | Caso       | Descripcion                 | Placa  | Proveedor | Poliza    | DiaDesde | DiaHasta | Ruc         | DiaContratante | Hora  | Importe | RutaArchivo                                |
-            | CP-SOAT-05 | Flujo Correcto              | 823PL1 | RIMAC     | 222-3421  | 14       | 14       | 20604915351 | 14             | 10:30 | 300     | C:\Users\MANUEL\Pictures\goleto adidas.jpg |
-            | CP-SOAT-13 | Registro con proveedor OTRO | 467UI1 | OTRO      | 4455-6671 | 25       | 24       | 20552103816 | 25             | 08:00 | 220     | C:\Users\MANUEL\Pictures\goleto adidas.jpg |
+            | Caso       | Descripcion                 | Placa  | Motor    | Serie              | Proveedor | Poliza    | Dias | EstadoEsperado   | Ruc         | Hora  | Importe | RutaArchivo                                  |
+            | CP-SOAT-05 | Flujo Correcto Vigente      | SAA005 | ENG0505A | SERIE0505A2026X1Z | RIMAC     | 2605-5001 | 25   | VIGENTE          | 20604915351 | 10:30 | 300     | C:\Users\MANUEL\Pictures\goleto adidas.jpg |
+            | CP-SOAT-13 | Registro con proveedor OTRO | SAA013 | ENG1313A | SERIE1313A2026X1Z | OTRO      | 2613-5001 | 15   | PROXIMO A VENCER | 20552103816 | 08:00 | 220     | C:\Users\MANUEL\Pictures\goleto adidas.jpg |
 
-
-
-
-            # ==========================================
-    # CASOS DE PRUEBA: INTENTOS DE REGISTRO FALLIDOS (BOTÓN DESHABILITADO)
-    # ==========================================
-    
+    #CASOS DE PRUEBA: INTENTOS DE REGISTRO FALLIDOS
     @RegistroSoat @RegistroFallido @CP-SOAT-02
     Scenario: CP-SOAT-02 - Registro de SOAT sin cargar el documento adjunto
         When Se ingresa al módulo "Vehículo"
         And Se selecciona "+Nuevo"
         And Se ingresan los datos del vehículo:
-        | Campo            | Valor             |
-        | PLACA            | 7845K1            |
-        | AREA ASIGNADA    | DPAM              |
-        | PROPIETARIO      | MIMP              |
-        | MARCA            | DAEWOO            | 
-        | MODELO           | TICO SL           |
-        | AÑO              | 2026              |
-        | TIPO DE VEHICULO | AUTOMOVIL         |
-        | CLASIFICADOR     | ALTA              |
-        | COLOR            | NEGRO             |
-        | NUMERO MOTOR     | ENG554433         |
-        | TIPO COMBUSTIBLE | G-90              |
-        | TIPO MOTOR       | COMBUSTIBLE       |
-        | RANGO CONSUMO    | 45                |
-        | NUMERO SERIE     | XYZ9876543210987A |
+            | Campo            | Valor             |
+            | PLACA            | SAA002            |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | ENG0202A          |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | SERIE0202A2026X1Z |
         Then Se procede a "GUARDAR" el vehículo
 
         When Se ingresa al módulo SOAT
         And Se selecciona Nuevo SOAT
-        And Se ingresa la placa "7845K1" y se busca en SOAT
+        And Se ingresa la placa "SAA002" y se busca en SOAT
         And Se selecciona el proveedor "LA POSITIVA"
-        And Se ingresa la póliza "1242-651"
-        And Se selecciona la fecha DESDE el día "10" y HASTA el día "10" del próximo año
+        And Se ingresa la póliza "2602-5001"
+        And Se configuran las fechas dinámicas sumando "25" dias para un SOAT "VIGENTE"
         And Se ingresa el RUC "20538856674" y se busca
-        And Se selecciona la fecha del contratante el día "10"
         And Se ingresa la hora de emisión "17:00" y el importe "200.00"
-        # OMITIMOS EL PASO DE ADJUNTAR DOCUMENTO
         Then Se verifica que el boton Guardar del SOAT esta deshabilitado
 
     @RegistroSoat @RegistroFallido @CP-SOAT-10
@@ -110,565 +82,662 @@ Feature: Gestión de SOAT
         When Se ingresa al módulo "Vehículo"
         And Se selecciona "+Nuevo"
         And Se ingresan los datos del vehículo:
-        | Campo            | Valor             |
-        | PLACA            | 718VB1            |
-        | AREA ASIGNADA    | DPAM              |
-        | PROPIETARIO      | MIMP              |
-        | MARCA            | DAEWOO            | 
-        | MODELO           | TICO SL           |
-        | AÑO              | 2026              |
-        | TIPO DE VEHICULO | AUTOMOVIL         |
-        | CLASIFICADOR     | ALTA              |
-        | COLOR            | NEGRO             |
-        | NUMERO MOTOR     | ENG554433         |
-        | TIPO COMBUSTIBLE | G-90              |
-        | TIPO MOTOR       | COMBUSTIBLE       |
-        | RANGO CONSUMO    | 45                |
-        | NUMERO SERIE     | XYZ9876543210987A |
+            | Campo            | Valor             |
+            | PLACA            | SAA010            |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | ENG1010A          |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | SERIE1010A2026X1Z |
         Then Se procede a "GUARDAR" el vehículo
 
         When Se ingresa al módulo SOAT
         And Se selecciona Nuevo SOAT
-        # PASO CLAVE: Ingresamos placa pero NO buscamos
-        And Se ingresa la placa "718VB1" sin buscar en SOAT
-        And Se selecciona el proveedor "MAPFRE"
-        And Se ingresa la póliza "5544-3321"
-        And Se selecciona la fecha DESDE el día "12" y HASTA el día "12" del próximo año
-        And Se ingresa el RUC "20604915351" y se busca
-        And Se selecciona la fecha del contratante el día "12"
-        And Se ingresa la hora de emisión "16:00" y el importe "250.00"
-        And Se adjunta el documento "C:\Users\MANUEL\Pictures\goleto adidas.jpg"
-        Then Se verifica que el boton Guardar del SOAT esta deshabilitado
+        And Se ingresa la placa "SAA010" sin buscar en SOAT
+        Then Se verifica que el SOAT no permite continuar sin buscar la placa
 
     @RegistroSoat @RegistroFallido @CP-SOAT-11
     Scenario: CP-SOAT-11 - Intento de registro sin buscar datos del contratante (sin lupa RUC)
         When Se ingresa al módulo "Vehículo"
         And Se selecciona "+Nuevo"
         And Se ingresan los datos del vehículo:
-        | Campo            | Valor             |
-        | PLACA            | 892RT1            |
-        | AREA ASIGNADA    | DPAM              |
-        | PROPIETARIO      | MIMP              |
-        | MARCA            | DAEWOO            | 
-        | MODELO           | TICO SL           |
-        | AÑO              | 2026              |
-        | TIPO DE VEHICULO | AUTOMOVIL         |
-        | CLASIFICADOR     | ALTA              |
-        | COLOR            | NEGRO             |
-        | NUMERO MOTOR     | ENG554433         |
-        | TIPO COMBUSTIBLE | G-90              |
-        | TIPO MOTOR       | COMBUSTIBLE       |
-        | RANGO CONSUMO    | 45                |
-        | NUMERO SERIE     | XYZ9876543210987A |
+            | Campo            | Valor             |
+            | PLACA            | SAA011            |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | ENG1111A          |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | SERIE1111A2026X1Z |
         Then Se procede a "GUARDAR" el vehículo
 
         When Se ingresa al módulo SOAT
         And Se selecciona Nuevo SOAT
-        And Se ingresa la placa "892RT1" y se busca en SOAT
+        And Se ingresa la placa "SAA011" y se busca en SOAT
         And Se selecciona el proveedor "PROTECTA"
-        And Se ingresa la póliza "7788-9901"
-        And Se selecciona la fecha DESDE el día "15" y HASTA el día "14" del próximo año
-        # PASO CLAVE: Ingresamos RUC pero NO buscamos
+        And Se ingresa la póliza "2611-5001"
+        And Se configuran las fechas dinámicas sumando "25" dias para un SOAT "VIGENTE"
         And Se ingresa el RUC "20553856451" sin buscar
-        And Se selecciona la fecha del contratante el día "15"
         And Se ingresa la hora de emisión "09:30" y el importe "175.00"
         And Se adjunta el documento "C:\Users\MANUEL\Pictures\goleto adidas.jpg"
         Then Se verifica que el boton Guardar del SOAT esta deshabilitado
 
-
-
-
-
-
-        # ==========================================
-    # CASOS DE PRUEBA: REGLAS DE NEGOCIO (FECHAS Y MONTOS INVÁLIDOS)
-    # ==========================================
-
+    #CASOS DE PRUEBA: REGLAS DE NEGOCIO Y VALIDACIONES DE FECHA
     @RegistroSoat @RegistroFallido @CP-SOAT-03
     Scenario: CP-SOAT-03 - Validación de Integridad Financiera (Prima con letras E110)
         When Se ingresa al módulo "Vehículo"
         And Se selecciona "+Nuevo"
         And Se ingresan los datos del vehículo:
-        | Campo            | Valor             |
-        | PLACA            | 912MN1            |
-        | AREA ASIGNADA    | DPAM              |
-        | PROPIETARIO      | MIMP              |
-        | MARCA            | DAEWOO            | 
-        | MODELO           | TICO SL           |
-        | AÑO              | 2026              |
-        | TIPO DE VEHICULO | AUTOMOVIL         |
-        | CLASIFICADOR     | ALTA              |
-        | COLOR            | NEGRO             |
-        | NUMERO MOTOR     | ENG554433         |
-        | TIPO COMBUSTIBLE | G-90              |
-        | TIPO MOTOR       | COMBUSTIBLE       |
-        | RANGO CONSUMO    | 45                |
-        | NUMERO SERIE     | XYZ9876543210987A |
+            | Campo            | Valor             |
+            | PLACA            | SAA003            |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | ENG0303A          |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | SERIE0303A2026X1Z |
         Then Se procede a "GUARDAR" el vehículo
 
         When Se ingresa al módulo SOAT
         And Se selecciona Nuevo SOAT
-        And Se ingresa la placa "912MN1" y se busca en SOAT
+        And Se ingresa la placa "SAA003" y se busca en SOAT
         And Se selecciona el proveedor "LA POSITIVA"
-        And Se ingresa la póliza "353-451"
-        And Se selecciona la fecha DESDE el día "10" y HASTA el día "10" del próximo año
+        And Se ingresa la póliza "2603-5001"
+        And Se configuran las fechas dinámicas sumando "25" dias para un SOAT "VIGENTE"
         And Se ingresa el RUC "20605100016" y se busca
-        And Se selecciona la fecha del contratante el día "10"
         And Se ingresa la hora de emisión "18:00" y el importe "E110"
         And Se adjunta el documento "C:\Users\MANUEL\Pictures\goleto adidas.jpg"
-        # El sistema debería bloquear el botón por el formato inválido "E110"
         Then Se verifica que el boton Guardar del SOAT esta deshabilitado
-
 
     @RegistroSoat @RegistroFallido @CP-SOAT-07
     Scenario: CP-SOAT-07 - Vigencia de póliza con fecha HASTA anterior a fecha DESDE
         When Se ingresa al módulo "Vehículo"
         And Se selecciona "+Nuevo"
         And Se ingresan los datos del vehículo:
-        | Campo            | Valor             |
-        | PLACA            | 289HJ1            |
-        | AREA ASIGNADA    | DPAM              |
-        | PROPIETARIO      | MIMP              |
-        | MARCA            | DAEWOO            | 
-        | MODELO           | TICO SL           |
-        | AÑO              | 2026              |
-        | TIPO DE VEHICULO | AUTOMOVIL         |
-        | CLASIFICADOR     | ALTA              |
-        | COLOR            | NEGRO             |
-        | NUMERO MOTOR     | ENG554433         |
-        | TIPO COMBUSTIBLE | G-90              |
-        | TIPO MOTOR       | COMBUSTIBLE       |
-        | RANGO CONSUMO    | 45                |
-        | NUMERO SERIE     | XYZ9876543210987A |
+            | Campo            | Valor             |
+            | PLACA            | SAA007            |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | ENG0707A          |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | SERIE0707A2026X1Z |
         Then Se procede a "GUARDAR" el vehículo
 
         When Se ingresa al módulo SOAT
         And Se selecciona Nuevo SOAT
-        And Se ingresa la placa "289HJ1" y se busca en SOAT
+        And Se ingresa la placa "SAA007" y se busca en SOAT
         And Se selecciona el proveedor "RIMAC"
-        And Se ingresa la póliza "3344-551"
-        # PASO CLAVE: Seleccionamos el 15 en DESDE para verificar el bloqueo
-        And Se selecciona solo la fecha DESDE el día "15"
-        Then Se verifica que el día "14" está deshabilitado en el calendario HASTA
-
-
-    @RegistroSoat @RegistroConMensajeError @CP-SOAT-09
-    Scenario: CP-SOAT-09 - Registro de SOAT con importe de prima = 0
-        When Se ingresa al módulo "Vehículo"
-        And Se selecciona "+Nuevo"
-        And Se ingresan los datos del vehículo:
-        | Campo            | Valor             |
-        | PLACA            | 365ZX1            |
-        | AREA ASIGNADA    | DPAM              |
-        | PROPIETARIO      | MIMP              |
-        | MARCA            | DAEWOO            | 
-        | MODELO           | TICO SL           |
-        | AÑO              | 2026              |
-        | TIPO DE VEHICULO | AUTOMOVIL         |
-        | CLASIFICADOR     | ALTA              |
-        | COLOR            | NEGRO             |
-        | NUMERO MOTOR     | ENG554433         |
-        | TIPO COMBUSTIBLE | G-90              |
-        | TIPO MOTOR       | COMBUSTIBLE       |
-        | RANGO CONSUMO    | 45                |
-        | NUMERO SERIE     | XYZ9876543210987A |
-        Then Se procede a "GUARDAR" el vehículo
-
-        When Se ingresa al módulo SOAT
-        And Se selecciona Nuevo SOAT
-        And Se ingresa la placa "365ZX1" y se busca en SOAT
-        And Se selecciona el proveedor "INTERSEGURO"
-        And Se ingresa la póliza "1122-3341"
-        And Se selecciona la fecha DESDE el día "10" y HASTA el día "9" del próximo año
-        And Se ingresa el RUC "20552103816" y se busca
-        And Se selecciona la fecha del contratante el día "10"
-        And Se ingresa la hora de emisión "11:00" y el importe "0"
-        And Se adjunta el documento "C:\Users\MANUEL\Pictures\goleto adidas.jpg"
-        Then Se guarda el SOAT
-        # AQUÍ ESTÁ EL CAMBIO CON EL MENSAJE REAL DEL SISTEMA
-        And Se verifica el mensaje de error del SOAT "Los datos ingresados no son correctos!"
-
-
-
-
-
-
-
-
-
-
-        # ==========================================
-    # CASOS DE PRUEBA: EDICIÓN DE SOAT
-    # ==========================================
-
-    @EditarSoat @CP-SOAT-14
-    Scenario: CP-SOAT-14 - Edición de SOAT cambiando proveedor
-        When Se ingresa al módulo SOAT
-        # PON AQUÍ UNA PLACA QUE SÍ EXISTA EN TU TABLA (Ejemplo: ONO123)
-        And Se busca el SOAT por placa "MAN111"
-        And Se hace clic en ver SOAT
-        And Se hace clic en editar SOAT
-        And Se selecciona el proveedor "RIMAC"
-        Then Se guarda el SOAT
-
-    @EditarSoat @CP-SOAT-22
-    Scenario: CP-SOAT-22 - Edición de SOAT cambiando solo el documento adjunto
-        When Se ingresa al módulo SOAT
-        # PON OTRA PLACA QUE EXISTA AQUÍ
-        And Se busca el SOAT por placa "823PLW"
-        And Se hace clic en ver SOAT
-        And Se hace clic en editar SOAT
-        And Se elimina el documento adjunto
-        And Se adjunta el documento "C:\Users\MANUEL\Pictures\adidas 2.png"
-        Then Se guarda el SOAT
-
-    @EditarSoat @CP-SOAT-23
-    Scenario: CP-SOAT-23 - Intento de edición sin modificar ningún campo (Validando comportamiento actual)
-        When Se ingresa al módulo SOAT
-        # ASEGÚRATE DE USAR TU PLACA VÁLIDA
-        And Se busca el SOAT por placa "467UIO" 
-        And Se hace clic en ver SOAT
-        And Se hace clic en editar SOAT
-        # Como sabemos que el botón no se bloquea, le damos a Guardar
-        Then Se guarda el SOAT
-        # Validamos el mensaje verde que arroja el sistema actualmente
-        And Se verifica el mensaje de error del SOAT "Se actualizo el SOAT Correctamente"
-
-
-
-        # ==========================================
-    # CASOS DE PRUEBA: EDICIÓN AVANZADA Y BÚSQUEDA BÁSICA
-    # ==========================================
-
-    @RegistroSoat @RegistroFallido @CP-SOAT-15
-    Scenario: CP-SOAT-15 - Eliminación de documento adjunto sin agregar uno nuevo antes de guardar
-        # 1. Creamos el vehículo
-        When Se ingresa al módulo "Vehículo"
-        And Se selecciona "+Nuevo"
-        And Se ingresan los datos del vehículo:
-        | Campo            | Valor             |
-        | PLACA            | 649LK2            |
-        | AREA ASIGNADA    | DPAM              |
-        | PROPIETARIO      | MIMP              |
-        | MARCA            | DAEWOO            | 
-        | MODELO           | TICO SL           |
-        | AÑO              | 2026              |
-        | TIPO DE VEHICULO | AUTOMOVIL         |
-        | CLASIFICADOR     | ALTA              |
-        | COLOR            | NEGRO             |
-        | NUMERO MOTOR     | ENG554433         |
-        | TIPO COMBUSTIBLE | G-90              |
-        | TIPO MOTOR       | COMBUSTIBLE       |
-        | RANGO CONSUMO    | 45                |
-        | NUMERO SERIE     | XYZ9876543210987A |
-        Then Se procede a "GUARDAR" el vehículo
-
-        # 2. Registramos el SOAT (Aquí aplicamos tu caso de prueba exacto)
-        When Se ingresa al módulo SOAT
-        And Se selecciona Nuevo SOAT
-        And Se ingresa la placa "649LK2" y se busca en SOAT
-        And Se selecciona el proveedor "PACIFICO"
-        And Se ingresa la póliza "3344-1120"
-        And Se selecciona la fecha DESDE el día "5" y HASTA el día "4" del próximo año
-        And Se ingresa el RUC "20538856674" y se busca
-        And Se selecciona la fecha del contratante el día "5"
-        And Se ingresa la hora de emisión "17:00" y el importe "165"
-        
-        # Subimos el PDF
-        And Se adjunta el documento "C:\Users\MANUEL\Pictures\goleto adidas.jpg"
-        
-        # LO ELIMINAMOS EN EL MISMO FORMULARIO DE REGISTRO
-        And Se elimina el documento adjunto
-        
-        # Verificamos que el sistema detecte que falta el archivo y bloquee el botón
-        Then Se verifica que el boton Guardar del SOAT esta deshabilitado
-
-    @FiltrosSoat @CP-SOAT-24
-    Scenario: CP-SOAT-24 - Búsqueda de SOATs sin aplicar ningún filtro
-        When Se ingresa al módulo SOAT
-        # Reutilizamos el paso de hacer clic en buscar que hicimos para Odómetro
-        And Se hace clic en el boton Buscar Filtros
-        # Verificamos que la tabla devuelva resultados
-        Then Se verifica que la grilla de SOAT muestra resultados
-
-
-        @FiltrosSoat @CP-SOAT-17
-    Scenario: CP-SOAT-17 - Busqueda de SOAT por multiples aseguradoras simultaneamente
-        When Se ingresa al módulo SOAT
-        And Se abre el filtro de "Aseguradoras"
-        And Se desmarca la opcion TODAS
-        And Se seleccionan las siguientes aseguradoras:
-          | Aseguradora |
-          | LA POSITIVA |
-          | RIMAC       |
-          | PACIFICO    |
-        # Asumiendo que las fechas se ingresan en campos de texto (Desde - Hasta)
-        And Se ingresa la fecha de vencimiento DESDE "01/01/2026" y HASTA "31/12/2026" en los filtros
-        And Se hace clic en el boton Buscar Filtros
-        Then Se verifica que la grilla de SOAT muestra resultados
-
-
-
-
-
-
-        @FiltrosSoat @CP-SOAT-16
-    Scenario: CP-SOAT-16 - Búsqueda de SOATs proximos a vencer
-        When Se ingresa al módulo SOAT
-        And Se abre el filtro de "Estado"
-        And Se desmarca la opcion TODAS
-        And Se seleccionan las siguientes opciones en el filtro:
-          | Opcion           |
-          | PRÓXIMO A VENCER |
-        # Usamos la caja de texto de Días para Vencer
-        And Se ingresa "30" en dias para vencer
-        And Se ingresa la fecha de vencimiento DESDE "05/02/2026" y HASTA "05/03/2026" en los filtros
-        Then Se verifica que la grilla de SOAT muestra resultados
-
-    @FiltrosSoat @CP-SOAT-18
-    Scenario: CP-SOAT-18 - Búsqueda de SOATs caducados por area especifica
-        When Se ingresa al módulo SOAT
-        And Se abre el filtro de "Estado"
-        And Se desmarca la opcion TODAS
-        And Se seleccionan las siguientes opciones en el filtro:
-          | Opcion   |
-          | CADUCADO |
-        And Se abre el filtro de "Áreas"
-        And Se desmarca la opcion TODAS
-        And Se seleccionan las siguientes opciones en el filtro:
-          | Opcion                  |
-          | UPE LIMA NORTE - CALLAO |
-        And Se ingresa la fecha de vencimiento DESDE "04/02/2026" y HASTA "04/02/2026" en los filtros
-        And Se hace clic en el boton Buscar Filtros
-        Then Se verifica que la grilla de SOAT muestra resultados
-
-    @HistorialSoat @CP-SOAT-19
-    Scenario: CP-SOAT-19 - Consulta de historial de SOAT
-        When Se ingresa al módulo SOAT
-        And Se hace clic en el boton Historial
-        # Reutilizamos el paso que ya tienes creado para ingresar la placa y darle a la lupa
-        And Se ingresa la placa "MAN111" y se busca en SOAT
-        Then Se verifica que la grilla de SOAT muestra resultados
-        And Se cierra el historial del SOAT
-
-
-
-
-        # ==========================================
-    # BLOQUE 2: REGLAS DE NEGOCIO Y VALIDACIONES DE FECHA
-    # ==========================================
+        And Se ingresa la póliza "2607-5001"
+        And Se selecciona la fecha DESDE del SOAT sumando "15" dias
+        Then Se verifica que la fecha anterior al DESDE está deshabilitada en el calendario HASTA
 
     @RegistroSoat @RegistroFallido @CP-SOAT-04
     Scenario: CP-SOAT-04 - Fecha de contratante posterior a la vigencia
         When Se ingresa al módulo "Vehículo"
         And Se selecciona "+Nuevo"
         And Se ingresan los datos del vehículo:
-        | Campo            | Valor             |
-        | PLACA            | 111AAA            |
-        | AREA ASIGNADA    | DPAM              |
-        | PROPIETARIO      | MIMP              |
-        | MARCA            | DAEWOO            | 
-        | MODELO           | TICO SL           |
-        | AÑO              | 2026              |
-        | TIPO DE VEHICULO | AUTOMOVIL         |
-        | CLASIFICADOR     | ALTA              |
-        | COLOR            | NEGRO             |
-        | NUMERO MOTOR     | ENG554433         |
-        | TIPO COMBUSTIBLE | G-90              |
-        | TIPO MOTOR       | COMBUSTIBLE       |
-        | RANGO CONSUMO    | 45                |
-        | NUMERO SERIE     | XYZ9876543210987A |
+            | Campo            | Valor             |
+            | PLACA            | SAA004            |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | ENG0404A          |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | SERIE0404A2026X1Z |
         Then Se procede a "GUARDAR" el vehículo
-        
+
         When Se ingresa al módulo SOAT
         And Se selecciona Nuevo SOAT
-        And Se ingresa la placa "111AAA" y se busca en SOAT
+        And Se ingresa la placa "SAA004" y se busca en SOAT
         And Se selecciona el proveedor "PACIFICO"
-        And Se ingresa la póliza "0404-0000"
-        # Inicio el día 10
-        And Se selecciona la fecha DESDE el día "10" y HASTA el día "9" del próximo año
+        And Se ingresa la póliza "2604-5001"
+        And Se configuran las fechas de vigencia del SOAT iniciando en "30" dias y con duracion de "365" dias
         And Se ingresa el RUC "20538856674" y se busca
-        # Contratante posterior al inicio (día 15)
-        And Se selecciona la fecha del contratante el día "15"
+        And Se selecciona la fecha de contratante "5" dias despues del HASTA del SOAT
         And Se ingresa la hora de emisión "10:00" y el importe "100.00"
-        Then Se verifica que el boton Guardar del SOAT esta deshabilitado
-
-
-    @RegistroSoat @RegistroFallido @CP-SOAT-12
-    Scenario: CP-SOAT-12 - Fecha contratante exactamente igual al fin de vigencia
-        When Se ingresa al módulo SOAT
-        And Se selecciona Nuevo SOAT
-        # Reutilizamos la misma placa para los siguientes para hacer la prueba más rápida
-        And Se ingresa la placa "111AAA" y se busca en SOAT
-        And Se selecciona el proveedor "RIMAC"
-        And Se ingresa la póliza "1212-0000"
-        # Digamos que el fin de vigencia es el día 20 del próximo año
-        And Se selecciona la fecha DESDE el día "21" y HASTA el día "20" del próximo año
-        And Se ingresa el RUC "20604915351" y se busca
-        # Contratante en el futuro (día 20) -> Esto suele ser inválido en seguros
-        And Se selecciona la fecha del contratante el día "20"
-        And Se ingresa la hora de emisión "10:00" y el importe "120.00"
-        Then Se verifica que el boton Guardar del SOAT esta deshabilitado
-
-
-    @RegistroSoat @RegistroFallido @CP-SOAT-20
-    Scenario: CP-SOAT-20 - Fecha contratante anterior al inicio de vigencia
-        When Se ingresa al módulo SOAT
-        And Se selecciona Nuevo SOAT
-        And Se ingresa la placa "111AAA" y se busca en SOAT
-        And Se selecciona el proveedor "LA POSITIVA"
-        And Se ingresa la póliza "2020-0000"
-        # Inicio el día 25
-        And Se selecciona la fecha DESDE el día "25" y HASTA el día "24" del próximo año
-        And Se ingresa el RUC "20552103816" y se busca
-        # Contratante muy anterior (día 5)
-        And Se selecciona la fecha del contratante el día "5"
-        And Se ingresa la hora de emisión "10:00" y el importe "150.00"
-        Then Se verifica que el boton Guardar del SOAT esta deshabilitado
-
-
-    @RegistroSoat @RegistroExitoso @CP-SOAT-21
-    Scenario: CP-SOAT-21 - Registro de SOAT con vigencia de exactamente 365 días
-        When Se ingresa al módulo SOAT
-        And Se selecciona Nuevo SOAT
-        And Se ingresa la placa "111AAA" y se busca en SOAT
-        And Se selecciona el proveedor "MAPFRE"
-        And Se ingresa la póliza "2121-0000"
-        # Del 10 al 9 del próximo año = 365 días exactos
-        And Se selecciona la fecha DESDE el día "10" y HASTA el día "9" del próximo año
-        And Se ingresa el RUC "20538856674" y se busca
-        And Se selecciona la fecha del contratante el día "10"
-        And Se ingresa la hora de emisión "15:00" y el importe "200.00"
         And Se adjunta el documento "C:\Users\MANUEL\Pictures\goleto adidas.jpg"
-        Then Se guarda el SOAT
-
+        Then Se verifica que el boton Guardar del SOAT esta deshabilitado
 
     @RegistroSoat @RegistroFallido @CP-SOAT-25
     Scenario: CP-SOAT-25 - Registro de SOAT con vigencia menor a 30 dias
+        When Se ingresa al módulo "Vehículo"
+        And Se selecciona "+Nuevo"
+        And Se ingresan los datos del vehículo:
+            | Campo            | Valor             |
+            | PLACA            | SAA025            |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | ENG2525A          |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | SERIE2525A2026X1Z |
+        Then Se procede a "GUARDAR" el vehículo
+
         When Se ingresa al módulo SOAT
         And Se selecciona Nuevo SOAT
-        And Se ingresa la placa "111AAA" y se busca en SOAT
+        And Se ingresa la placa "SAA025" y se busca en SOAT
         And Se selecciona el proveedor "PROTECTA"
-        And Se ingresa la póliza "2525-0000"
-        # OJO AQUÍ: Usamos un paso nuevo para NO cambiar de año (Mismo mes)
-        And Se selecciona la fecha DESDE el día "10" y HASTA el día "25" del mismo mes
-        And Se ingresa el RUC "20538856674" y se busca
-        And Se selecciona la fecha del contratante el día "10"
-        And Se ingresa la hora de emisión "09:00" y el importe "50.00"
-        Then Se verifica que el boton Guardar del SOAT esta deshabilitado
+        And Se ingresa la póliza "2625-5001"
+        And Se selecciona solo la fecha DESDE de vigencia del SOAT iniciando en "30" dias
+        Then Se verifica que la fecha HASTA con duracion de "15" dias está deshabilitada
+        And Se verifica que el boton Guardar del SOAT esta deshabilitado
 
+    @RegistroSoat @RegistroConMensajeError @CP-SOAT-09
+    Scenario: CP-SOAT-09 - Registro de SOAT con importe de prima = 0
+        When Se ingresa al módulo "Vehículo"
+        And Se selecciona "+Nuevo"
+        And Se ingresan los datos del vehículo:
+            | Campo            | Valor             |
+            | PLACA            | SAA009            |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | ENG0909A          |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | SERIE0909A2026X1Z |
+        Then Se procede a "GUARDAR" el vehículo
 
-    @RegistroSoat @RegistroFallido @CP-SOAT-06
-    Scenario: CP-SOAT-06 - Registro de SOAT con vigencia vencida (Año pasado)
         When Se ingresa al módulo SOAT
         And Se selecciona Nuevo SOAT
-        And Se ingresa la placa "111AAA" y se busca en SOAT
+        And Se ingresa la placa "SAA009" y se busca en SOAT
         And Se selecciona el proveedor "INTERSEGURO"
-        And Se ingresa la póliza "0606-0000"
-        And Se selecciona la fecha DESDE el día "10" y HASTA el día "11" del año pasado
-        And Se ingresa el RUC "20538856674" y se busca
-        And Se selecciona la fecha del contratante el día "10"
-        And Se ingresa la hora de emisión "09:00" y el importe "100.00"
-        Then Se verifica que el boton Guardar del SOAT esta deshabilitado
-
-
-
-
-
-
-
-
-        # ==========================================
-    # BLOQUE 3: CASOS ESPECIALES Y CONFLICTOS
-    # ==========================================
+        And Se ingresa la póliza "2609-5001"
+        And Se configuran las fechas dinámicas sumando "25" dias para un SOAT "VIGENTE"
+        And Se ingresa el RUC "20552103816" y se busca
+        And Se ingresa la hora de emisión "11:00" y el importe "0"
+        And Se adjunta el documento "C:\Users\MANUEL\Pictures\goleto adidas.jpg"
+        Then Se guarda el SOAT
+        And Se verifica el mensaje de error del SOAT "Los datos ingresados no son correctos!"
 
     @RegistroSoat @RegistroFallido @CP-SOAT-01
-    Scenario: CP-SOAT-01 - Registro de SOAT sin cargar datos del contratante
+    Scenario: CP-SOAT-01 - Registro de SOAT sin cargar datos del contratante asegurado
         When Se ingresa al módulo "Vehículo"
         And Se selecciona "+Nuevo"
         And Se ingresan los datos del vehículo:
-        | Campo            | Valor             |
-        | PLACA            | 345XAB            |
-        | AREA ASIGNADA    | DPAM              |
-        | PROPIETARIO      | MIMP              |
-        | MARCA            | DAEWOO            | 
-        | MODELO           | TICO SL           |
-        | AÑO              | 2026              |
-        | TIPO DE VEHICULO | AUTOMOVIL         |
-        | CLASIFICADOR     | ALTA              |
-        | COLOR            | NEGRO             |
-        | NUMERO MOTOR     | ENG554433         |
-        | TIPO COMBUSTIBLE | G-90              |
-        | TIPO MOTOR       | COMBUSTIBLE       |
-        | RANGO CONSUMO    | 45                |
-        | NUMERO SERIE     | XYZ9876543210987A |
+            | Campo            | Valor             |
+            | PLACA            | SAA001            |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | ENG0101A          |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | SERIE0101A2026X1Z |
         Then Se procede a "GUARDAR" el vehículo
-        
+
         When Se ingresa al módulo SOAT
         And Se selecciona Nuevo SOAT
-        And Se ingresa la placa "345XAB" y se busca en SOAT
+        And Se ingresa la placa "SAA001" y se busca en SOAT
         And Se selecciona el proveedor "PACIFICO"
-        And Se ingresa la póliza "555-343"
-        And Se selecciona la fecha DESDE el día "27" y HASTA el día "27" del próximo año
-        
-        # 🔥 PASO CLAVE: Usamos tu método "sin buscar" para que el RUC quede inválido
-        And Se ingresa el RUC "20553856451" sin buscar
-        
-        And Se selecciona la fecha del contratante el día "27"
-        And Se ingresa la hora de emisión "4:00" y el importe "120.00"
-        # Omitimos el documento para ver si el botón se bloquea de todas formas
+        And Se ingresa la póliza "2601-5001"
+        And Se configuran las fechas dinámicas sumando "25" dias para un SOAT "VIGENTE"
+        And Se ingresa la hora de emisión "16:00" y el importe "120"
+        And Se adjunta el documento "C:\Users\MANUEL\Pictures\goleto adidas.jpg"
         Then Se verifica que el boton Guardar del SOAT esta deshabilitado
 
-
-   # 🐛 BUG DETECTADO: El sistema no valida superposición y permite guardar.
-    # Pendiente de corrección por el equipo de Desarrollo.
-    @RegistroSoat @Bug_Activo @CP-SOAT-08
-    Scenario: CP-SOAT-08 - Intento de registro de SOATs superpuestos (Vehículo ya tiene SOAT)
-        # 1. Creamos el vehículo
+    @RegistroSoat @RegistroFallido @CP-SOAT-06
+    Scenario: CP-SOAT-06 - Registro de SOAT con vigencia vencida
         When Se ingresa al módulo "Vehículo"
         And Se selecciona "+Nuevo"
         And Se ingresan los datos del vehículo:
-        | Campo            | Valor             |
-        | PLACA            | 948JKH            |
-        | AREA ASIGNADA    | DPAM              |
-        | PROPIETARIO      | MIMP              |
-        | MARCA            | DAEWOO            | 
-        | MODELO           | TICO SL           |
-        | AÑO              | 2026              |
-        | TIPO DE VEHICULO | AUTOMOVIL         |
-        | CLASIFICADOR     | ALTA              |
-        | COLOR            | NEGRO             |
-        | NUMERO MOTOR     | ENG554433         |
-        | TIPO COMBUSTIBLE | G-90              |
-        | TIPO MOTOR       | COMBUSTIBLE       |
-        | RANGO CONSUMO    | 45                |
-        | NUMERO SERIE     | XYZ9876543210987A |
+            | Campo            | Valor             |
+            | PLACA            | SAA006            |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | ENG0606A          |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | SERIE0606A2026X1Z |
         Then Se procede a "GUARDAR" el vehículo
 
-        # 2. Registramos el PRIMER SOAT (Válido y Exitoso)
         When Se ingresa al módulo SOAT
         And Se selecciona Nuevo SOAT
-        And Se ingresa la placa "948JKH" y se busca en SOAT
+        And Se ingresa la placa "SAA006" y se busca en SOAT
+        And Se selecciona el proveedor "LA POSITIVA"
+        And Se ingresa la póliza "2606-5001"
+        And Se configuran fechas vencidas del SOAT
+        And Se ingresa el RUC "20553856451" y se busca
+        And Se ingresa la hora de emisión "15:00" y el importe "150"
+        And Se adjunta el documento "C:\Users\MANUEL\Pictures\goleto adidas.jpg"
+        Then Se guarda el SOAT
+
+    @RegistroSoat @RegistroExitoso @CP-SOAT-12
+    Scenario: CP-SOAT-12 - Registro con fecha de contratante igual a fecha fin de vigencia
+        When Se ingresa al módulo "Vehículo"
+        And Se selecciona "+Nuevo"
+        And Se ingresan los datos del vehículo:
+            | Campo            | Valor             |
+            | PLACA            | SAA012            |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | ENG1212A          |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | SERIE1212A2026X1Z |
+        Then Se procede a "GUARDAR" el vehículo
+
+        When Se ingresa al módulo SOAT
+        And Se selecciona Nuevo SOAT
+        And Se ingresa la placa "SAA012" y se busca en SOAT
+        And Se selecciona el proveedor "CRECER"
+        And Se ingresa la póliza "2612-5001"
+        And Se configuran las fechas de vigencia del SOAT iniciando en "30" dias y con duracion de "365" dias
+        And Se ingresa el RUC "20605100016" y se busca
+        And Se selecciona la fecha de contratante igual al HASTA del SOAT
+        And Se ingresa la hora de emisión "13:00" y el importe "190"
+        And Se adjunta el documento "C:\Users\MANUEL\Pictures\goleto adidas.jpg"
+        Then Se guarda el SOAT
+
+    @RegistroSoat @RegistroExitoso @CP-SOAT-20
+    Scenario: CP-SOAT-20 - Registro de SOAT con fecha de contratante anterior a fecha inicio de vigencia
+        When Se ingresa al módulo "Vehículo"
+        And Se selecciona "+Nuevo"
+        And Se ingresan los datos del vehículo:
+            | Campo            | Valor             |
+            | PLACA            | SAA020            |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | ENG2020A          |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | SERIE2020A2026X1Z |
+        Then Se procede a "GUARDAR" el vehículo
+
+        When Se ingresa al módulo SOAT
+        And Se selecciona Nuevo SOAT
+        And Se ingresa la placa "SAA020" y se busca en SOAT
+        And Se selecciona el proveedor "INTERSEGURO"
+        And Se ingresa la póliza "2620-5001"
+        And Se configuran las fechas de vigencia del SOAT iniciando en "30" dias y con duracion de "365" dias
+        And Se ingresa el RUC "20604915351" y se busca
+        And Se selecciona la fecha de contratante "5" dias antes del DESDE del SOAT
+        And Se ingresa la hora de emisión "09:00" y el importe "180.00"
+        And Se adjunta el documento "C:\Users\MANUEL\Pictures\goleto adidas.jpg"
+        Then Se guarda el SOAT
+
+    @RegistroSoat @RegistroExitoso @CP-SOAT-21
+    Scenario: CP-SOAT-21 - Registro de SOAT con vigencia exactamente de 365 dias
+        When Se ingresa al módulo "Vehículo"
+        And Se selecciona "+Nuevo"
+        And Se ingresan los datos del vehículo:
+            | Campo            | Valor             |
+            | PLACA            | SAA021            |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | ENG2121A          |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | SERIE2121A2026X1Z |
+        Then Se procede a "GUARDAR" el vehículo
+
+        When Se ingresa al módulo SOAT
+        And Se selecciona Nuevo SOAT
+        And Se ingresa la placa "SAA021" y se busca en SOAT
         And Se selecciona el proveedor "MAPFRE"
-        And Se ingresa la póliza "4884-2331"
-        And Se selecciona la fecha DESDE el día "1" y HASTA el día "31" del próximo año
-        And Se ingresa el RUC "20600439368" y se busca
-        And Se selecciona la fecha del contratante el día "5"
-        And Se ingresa la hora de emisión "10:30" y el importe "120.00"
+        And Se ingresa la póliza "2621-5001"
+        And Se configuran las fechas de vigencia del SOAT iniciando en "30" dias y con duracion de "365" dias
+        And Se ingresa el RUC "20553856451" y se busca
+        And Se selecciona la fecha de contratante igual al DESDE del SOAT
+        And Se ingresa la hora de emisión "12:00" y el importe "185"
+        And Se adjunta el documento "C:\Users\MANUEL\Pictures\goleto adidas.jpg"
+        Then Se guarda el SOAT
+        And Se verifica que el SOAT de la placa "SAA021" se registró correctamente
+
+    # CASOS DE PRUEBA: FILTROS
+    @FiltrosSoat @CP-SOAT-24
+    Scenario: CP-SOAT-24 - Búsqueda de SOATs sin aplicar ningún filtro
+        When Se ingresa al módulo "Vehículo"
+        And Se selecciona "+Nuevo"
+        And Se ingresan los datos del vehículo:
+            | Campo            | Valor             |
+            | PLACA            | SAA024            |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | ENG2424A          |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | SERIE2424A2026X1Z |
+        Then Se procede a "GUARDAR" el vehículo
+
+        When Se ingresa al módulo SOAT
+        And Se selecciona Nuevo SOAT
+        And Se ingresa la placa "SAA024" y se busca en SOAT
+        And Se selecciona el proveedor "RIMAC"
+        And Se ingresa la póliza "2624-5001"
+        And Se configuran las fechas dinámicas sumando "25" dias para un SOAT "VIGENTE"
+        And Se ingresa el RUC "20604915351" y se busca
+        And Se ingresa la hora de emisión "10:45" y el importe "205"
         And Se adjunta el documento "C:\Users\MANUEL\Pictures\goleto adidas.jpg"
         Then Se guarda el SOAT
 
-        # 3. Intentamos registrar un SEGUNDO SOAT para la misma placa
-        When Se selecciona Nuevo SOAT
-        And Se ingresa la placa "948JKH" y se busca en SOAT
+        When Se ingresa al módulo SOAT
+        And Se hace clic en el boton Buscar Filtros
+        Then Se verifica que la grilla de SOAT muestra resultados
+
+    @FiltrosSoat @CP-SOAT-17
+    Scenario: CP-SOAT-17 - Busqueda de SOAT por multiples aseguradoras simultaneamente
+        When Se ingresa al módulo "Vehículo"
+        And Se selecciona "+Nuevo"
+        And Se ingresan los datos del vehículo:
+            | Campo            | Valor             |
+            | PLACA            | SAB171            |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | ENG1711A          |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | SERIE1711A2026X1Z |
+        Then Se procede a "GUARDAR" el vehículo
+
+        When Se ingresa al módulo SOAT
+        And Se selecciona Nuevo SOAT
+        And Se ingresa la placa "SAB171" y se busca en SOAT
+        And Se selecciona el proveedor "LA POSITIVA"
+        And Se ingresa la póliza "2717-5001"
+        And Se configuran las fechas dinámicas sumando "25" dias para un SOAT "VIGENTE"
+        And Se ingresa el RUC "20538856674" y se busca
+        And Se ingresa la hora de emisión "09:10" y el importe "210"
+        And Se adjunta el documento "C:\Users\MANUEL\Pictures\goleto adidas.jpg"
+        Then Se guarda el SOAT
+
+        When Se ingresa al módulo "Vehículo"
+        And Se selecciona "+Nuevo"
+        And Se ingresan los datos del vehículo:
+            | Campo            | Valor             |
+            | PLACA            | SAB172            |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | ENG1712A          |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | SERIE1712A2026X1Z |
+        Then Se procede a "GUARDAR" el vehículo
+
+        When Se ingresa al módulo SOAT
+        And Se selecciona Nuevo SOAT
+        And Se ingresa la placa "SAB172" y se busca en SOAT
+        And Se selecciona el proveedor "RIMAC"
+        And Se ingresa la póliza "2717-5002"
+        And Se configuran las fechas dinámicas sumando "25" dias para un SOAT "VIGENTE"
+        And Se ingresa el RUC "20604915351" y se busca
+        And Se ingresa la hora de emisión "09:20" y el importe "215"
+        And Se adjunta el documento "C:\Users\MANUEL\Pictures\goleto adidas.jpg"
+        Then Se guarda el SOAT
+
+        When Se ingresa al módulo "Vehículo"
+        And Se selecciona "+Nuevo"
+        And Se ingresan los datos del vehículo:
+            | Campo            | Valor             |
+            | PLACA            | SAB173            |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | ENG1713A          |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | SERIE1713A2026X1Z |
+        Then Se procede a "GUARDAR" el vehículo
+
+        When Se ingresa al módulo SOAT
+        And Se selecciona Nuevo SOAT
+        And Se ingresa la placa "SAB173" y se busca en SOAT
         And Se selecciona el proveedor "PACIFICO"
-        And Se ingresa la póliza "9988-7761"
-        And Se selecciona la fecha DESDE el día "1" y HASTA el día "31" del próximo año
-        And Se ingresa el RUC "20600439368" y se busca
-        And Se selecciona la fecha del contratante el día "15"
-        And Se ingresa la hora de emisión "14:30" y el importe "180.00"
+        And Se ingresa la póliza "2717-5003"
+        And Se configuran las fechas dinámicas sumando "25" dias para un SOAT "VIGENTE"
+        And Se ingresa el RUC "20552103816" y se busca
+        And Se ingresa la hora de emisión "09:30" y el importe "220"
         And Se adjunta el documento "C:\Users\MANUEL\Pictures\goleto adidas.jpg"
         Then Se guarda el SOAT
 
-        # BUG, DEBERÍA SALIR ASÍ EN EL SISTEMA POR VIGENCIAS SUPERPUESTAS:
-       # And Se verifica el mensaje de error del SOAT "El vehículo ya cuenta con poliza de SOAT en curso."
+        When Se ingresa al módulo SOAT
+        And Se abre el filtro de "Aseguradoras"
+        And Se desmarca la opcion TODAS
+        And Se seleccionan las siguientes aseguradoras:
+            | Aseguradora |
+            | LA POSITIVA |
+            | RIMAC       |
+            | PACIFICO    |
+        And Se hace clic en el boton Buscar Filtros
+        Then Se verifica que la grilla de SOAT muestra resultados
+
+    @FiltrosSoat @CP-SOAT-16
+    Scenario: CP-SOAT-16 - Búsqueda de SOATs proximos a vencer
+        When Se ingresa al módulo "Vehículo"
+        And Se selecciona "+Nuevo"
+        And Se ingresan los datos del vehículo:
+            | Campo            | Valor             |
+            | PLACA            | SAA016            |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | ENG1616A          |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | SERIE1616A2026X1Z |
+        Then Se procede a "GUARDAR" el vehículo
+
+        When Se ingresa al módulo SOAT
+        And Se selecciona Nuevo SOAT
+        And Se ingresa la placa "SAA016" y se busca en SOAT
+        And Se selecciona el proveedor "PROTECTA"
+        And Se ingresa la póliza "2616-5001"
+        And Se configuran las fechas dinámicas sumando "15" dias para un SOAT "PROXIMO A VENCER"
+        And Se ingresa el RUC "20553856451" y se busca
+        And Se ingresa la hora de emisión "10:15" y el importe "230"
+        And Se adjunta el documento "C:\Users\MANUEL\Pictures\goleto adidas.jpg"
+        Then Se guarda el SOAT
+
+        When Se ingresa al módulo SOAT
+        And Se abre el filtro de "Estado"
+        And Se desmarca la opcion TODAS
+        And Se seleccionan las siguientes opciones en el filtro:
+            | Opcion           |
+            | PRÓXIMO A VENCER |
+        And Se ingresa "30" en dias para vencer
+        And Se hace clic en el boton Buscar Filtros
+        Then Se verifica que la grilla de SOAT muestra resultados
+
+    @FiltrosSoat @CP-SOAT-18
+    Scenario: CP-SOAT-18 - Búsqueda de SOATs caducados por área específica
+        When Se ingresa al módulo "Vehículo"
+        And Se selecciona "+Nuevo"
+        And Se ingresan los datos del vehículo:
+            | Campo            | Valor                    |
+            | PLACA            | SAA018                   |
+            | AREA ASIGNADA    | UPE LIMA NORTE - CALLAO  |
+            | PROPIETARIO      | MIMP                     |
+            | MARCA            | DAEWOO                   |
+            | MODELO           | TICO SL                  |
+            | AÑO              | 2026                     |
+            | TIPO DE VEHICULO | AUTOMOVIL                |
+            | CLASIFICADOR     | ALTA                     |
+            | COLOR            | NEGRO                    |
+            | NUMERO MOTOR     | ENG1818A                 |
+            | TIPO COMBUSTIBLE | G-90                     |
+            | TIPO MOTOR       | COMBUSTIBLE              |
+            | RANGO CONSUMO    | 45                       |
+            | NUMERO SERIE     | SERIE1818A2026X1Z        |
+        Then Se procede a "GUARDAR" el vehículo
+
+        When Se ingresa al módulo SOAT
+        And Se selecciona Nuevo SOAT
+        And Se ingresa la placa "SAA018" y se busca en SOAT
+        And Se selecciona el proveedor "LA POSITIVA"
+        And Se ingresa la póliza "2618-5001"
+        And Se configuran fechas vencidas del SOAT
+        And Se ingresa el RUC "20538856674" y se busca
+        And Se ingresa la hora de emisión "14:30" y el importe "200"
+        And Se adjunta el documento "C:\Users\MANUEL\Pictures\goleto adidas.jpg"
+        Then Se guarda el SOAT
+
+        When Se ingresa al módulo SOAT
+        And Se abre el filtro de "Estado"
+        And Se desmarca la opcion TODAS
+        And Se seleccionan las siguientes opciones en el filtro:
+            | Opcion   |
+            | CADUCADO |
+        And Se abre el filtro de "Area"
+        And Se desmarca la opcion TODAS
+        And Se seleccionan las siguientes areas:
+            | Area                    |
+            | UPE LIMA NORTE - CALLAO |
+        And Se hace clic en el boton Buscar Filtros
+        Then Se verifica que la grilla de SOAT muestra resultados
+
+    @HistorialSoat @CP-SOAT-19
+    Scenario: CP-SOAT-19 - Consulta de historial de SOAT
+        When Se ingresa al módulo "Vehículo"
+        And Se selecciona "+Nuevo"
+        And Se ingresan los datos del vehículo:
+            | Campo            | Valor             |
+            | PLACA            | SAA019            |
+            | AREA ASIGNADA    | DPAM              |
+            | PROPIETARIO      | MIMP              |
+            | MARCA            | DAEWOO            |
+            | MODELO           | TICO SL           |
+            | AÑO              | 2026              |
+            | TIPO DE VEHICULO | AUTOMOVIL         |
+            | CLASIFICADOR     | ALTA              |
+            | COLOR            | NEGRO             |
+            | NUMERO MOTOR     | ENG1919A          |
+            | TIPO COMBUSTIBLE | G-90              |
+            | TIPO MOTOR       | COMBUSTIBLE       |
+            | RANGO CONSUMO    | 45                |
+            | NUMERO SERIE     | SERIE1919A2026X1Z |
+        Then Se procede a "GUARDAR" el vehículo
+
+        When Se ingresa al módulo SOAT
+        And Se selecciona Nuevo SOAT
+        And Se ingresa la placa "SAA019" y se busca en SOAT
+        And Se selecciona el proveedor "MAPFRE"
+        And Se ingresa la póliza "2619-5001"
+        And Se configuran las fechas de vigencia del SOAT iniciando en "30" dias y con duracion de "365" dias
+        And Se ingresa el RUC "20553856451" y se busca
+        And Se selecciona la fecha de contratante igual al DESDE del SOAT
+        And Se ingresa la hora de emisión "12:00" y el importe "185"
+        And Se adjunta el documento "C:\Users\MANUEL\Pictures\goleto adidas.jpg"
+        Then Se guarda el SOAT
+
+        When Se ingresa al módulo SOAT
+        And Se hace clic en el boton Historial
+        And Se ingresa la placa "SAA019" y se busca en SOAT
+        Then Se verifica que la grilla de SOAT muestra resultados
+        And Se cierra el historial del SOAT
