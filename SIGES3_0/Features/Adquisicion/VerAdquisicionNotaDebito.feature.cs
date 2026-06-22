@@ -101,9 +101,9 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 4
- await testRunner.GivenAsync(("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
+ await testRunner.GivenAsync("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
                         "y contraseña \'calidad\' en \'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/" +
-                        "login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+                        "login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 5
  await testRunner.AndAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -111,20 +111,20 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
  await testRunner.AndAsync("Entro al submódulo específico de \'Ver Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table124 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table129 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table124.AddRow(new string[] {
+                table129.AddRow(new string[] {
                             "Fecha Inicial",
                             "01/01/2026"});
-                table124.AddRow(new string[] {
+                table129.AddRow(new string[] {
                             "Fecha Final",
                             "25/03/2026"});
-                table124.AddRow(new string[] {
+                table129.AddRow(new string[] {
                             "Proveedor",
                             "KRISTELL VALERIA-FALCON-VILLEGAS"});
 #line 7
- await testRunner.WhenAsync("Se configuran los filtros de búsqueda:", ((string)(null)), table124, "When ");
+ await testRunner.WhenAsync("Se configuran los filtros de búsqueda:", ((string)(null)), table129, "When ");
 #line hidden
 #line 12
     await testRunner.AndAsync("Se hace clic en el botón de buscar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

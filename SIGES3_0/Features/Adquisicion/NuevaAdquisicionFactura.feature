@@ -31,7 +31,7 @@ Scenario: Registro exitoso con factura electrónica
 	And Se confirma el registro exitoso con el mensaje 'Se registró correctamente.'
 	
 @RegistroAdquisicionExitosa-FACTURA
-Scenario: Validar que el sistema exija RUC al elegir Factura Electrónica
+Scenario: Registro invalido exije RUC al elegir Factura Electrónica
 	Given Inicio de sesión en el módulo de Adquisición con usuario 'pamela.tone@recsa.com' y contraseña 'calidad' en 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'
 	And Navego al módulo de 'Adquisición'
 	And Entro al submódulo específico de 'Nueva Adquisición'

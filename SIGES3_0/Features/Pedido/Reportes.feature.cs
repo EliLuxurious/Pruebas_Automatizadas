@@ -30,9 +30,9 @@ namespace SIGES3_0.Features.Pedido
         private static string[] featureTags = new string[] {
                 "ReportePedidos"};
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Pedido", "Reporte de pedidos", ("Como usuario del módulo Pedidos\r\nQuiero consultar reportes de pedidos usando filt" +
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Pedido", "Reporte de pedidos", "Como usuario del módulo Pedidos\r\nQuiero consultar reportes de pedidos usando filt" +
                 "ros\r\nPara validar que el sistema permita o rechace combinaciones de fechas corre" +
-                "ctamente"), global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
+                "ctamente", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
 #line 1 "Reportes.feature"
 #line hidden
@@ -90,12 +90,12 @@ namespace SIGES3_0.Features.Pedido
 #line 8
 #line hidden
 #line 9
- await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                    "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                    "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 10
- await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                    "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                    "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 11
  await testRunner.AndAsync("el usuario accede al módulo \'Pedidos\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

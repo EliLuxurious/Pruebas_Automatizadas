@@ -86,12 +86,12 @@ namespace SIGES3_0.Features.Items.TablesofDecision_Items.NewItem
 #line 5
 #line hidden
 #line 6
-await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                    "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                    "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 7
-await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                    "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                    "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 8
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -100,12 +100,12 @@ await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(nu
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Registro exitoso de concepto")]
-        [NUnit.Framework.TestCaseAttribute("Insumo", "HISOPO", "INS0001", "Para uso médico", "", "", "MOD0001", "TextilPeru", "SP", "", "POR UNIDAD", "15", null)]
+        [NUnit.Framework.TestCaseAttribute("Insumo", "HISOPO", "INS0001", "Para uso médico", "", "", "MOD0006", "TextilPeru", "SP", "", "POR UNIDAD", "10", null)]
         [NUnit.Framework.TestCaseAttribute("Item Comercial", "SILLA", "IC0001", "Ergonómica", "", "", "MOD0001", "", "CAJA", "15", "PORMA", "60", null)]
         [NUnit.Framework.TestCaseAttribute("Insumo", "Harina", "HA0001", "Refinada", "KG", "KG", "MOD0001", "", "SP", "", "POR UNIDAD", "45", null)]
         [NUnit.Framework.TestCaseAttribute("Item Comercial", "Cuaderno", "CU0001", "Triple renglón", "", "", "MOD0001", "", "SP", "", "POR UNIDAD", "5", null)]
         [NUnit.Framework.TestCaseAttribute("Insumo", "ACEITE", "AC0001", "Vegetal Premium", "ML", "ML", "MOD0001", "", "BOTELLAS", "840", "POR UNIDAD", "15", null)]
-        public async System.Threading.Tasks.Task RegistroExitosoDeConcepto(string rol, string familia, string codigo, string sufijo, string umcomercial, string ummedida, string modulo, string marca, string presentacion, string cantidad, string tarifa, string precio, string[] exampleTags)
+        public async System.Threading.Tasks.Task RegistroExitosoDeConcepto(string rol, string familia, string codigo, string sufijo, string umcomercial, string ummedida, string modulo, string marca, string presentacion, string cantidad, string tarifa, string precioActual, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -120,7 +120,7 @@ await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(nu
             argumentsOfScenario.Add("presentacion", presentacion);
             argumentsOfScenario.Add("cantidad", cantidad);
             argumentsOfScenario.Add("tarifa", tarifa);
-            argumentsOfScenario.Add("precio", precio);
+            argumentsOfScenario.Add("precio actual", precioActual);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro exitoso de concepto", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 10
 this.ScenarioInitialize(scenarioInfo);
@@ -172,7 +172,7 @@ await testRunner.AndAsync(string.Format("el usuario ingresa la Cantidad \"{0}\""
 await testRunner.AndAsync(string.Format("el usuario selecciona la tarifa \"{0}\"", tarifa), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 23
-await testRunner.AndAsync(string.Format("el usuario ingresa el Precio \"{0}\"", precio), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario ingresa el Precio \"<precio>\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 24
 await testRunner.ThenAsync("Guardar concepto", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");

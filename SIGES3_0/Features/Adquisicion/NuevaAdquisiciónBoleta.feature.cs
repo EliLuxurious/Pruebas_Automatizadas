@@ -103,9 +103,9 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 6
- await testRunner.GivenAsync(("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
+ await testRunner.GivenAsync("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
                         "y contraseña \'calidad\' en \'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/" +
-                        "login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+                        "login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 7
  await testRunner.AndAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -113,73 +113,73 @@ this.ScenarioInitialize(scenarioInfo);
 #line 8
  await testRunner.AndAsync("Entro al submódulo específico de \'Nueva Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table108 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table113 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table108.AddRow(new string[] {
+                table113.AddRow(new string[] {
                             "Documento",
                             "BOLETA DE VENTA ELECTRONICA"});
-                table108.AddRow(new string[] {
+                table113.AddRow(new string[] {
                             "Serie",
                             "B001"});
-                table108.AddRow(new string[] {
+                table113.AddRow(new string[] {
                             "Correlativo",
                             "00000010"});
-                table108.AddRow(new string[] {
+                table113.AddRow(new string[] {
                             "Fecha de emisión",
                             "04/03/2026"});
-                table108.AddRow(new string[] {
+                table113.AddRow(new string[] {
                             "Proveedor",
                             "10759012017"});
-                table108.AddRow(new string[] {
+                table113.AddRow(new string[] {
                             "Información Adicional",
                             "Boleta Exitosa"});
 #line 10
- await testRunner.WhenAsync("Se configuran los datos de \'Facturación\':", ((string)(null)), table108, "When ");
+ await testRunner.WhenAsync("Se configuran los datos de \'Facturación\':", ((string)(null)), table113, "When ");
 #line hidden
 #line 19
  await testRunner.AndAsync("Se selecciona el tipo de entrega \'Inmediata\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table109 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table114 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table109.AddRow(new string[] {
+                table114.AddRow(new string[] {
                             "Rol",
                             "Item Comercial"});
-                table109.AddRow(new string[] {
+                table114.AddRow(new string[] {
                             "Establecimiento",
                             "RECSA - CENTRAL"});
-                table109.AddRow(new string[] {
+                table114.AddRow(new string[] {
                             "Almacén",
                             "CENTRO COMERCIAL CENTRAL"});
 #line 20
- await testRunner.AndAsync("Se configuran los datos de \'Entrega\':", ((string)(null)), table109, "And ");
+ await testRunner.AndAsync("Se configuran los datos de \'Entrega\':", ((string)(null)), table114, "And ");
 #line hidden
-                global::Reqnroll.Table table110 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table115 = new global::Reqnroll.Table(new string[] {
                             "Producto",
                             "Cantidad",
                             "V. U"});
-                table110.AddRow(new string[] {
+                table115.AddRow(new string[] {
                             "7751234001115|Azúcar Rubia",
                             "100",
                             "6.9"});
 #line 26
- await testRunner.AndAsync("Se selecciona y configura el producto a adquirir:", ((string)(null)), table110, "And ");
+ await testRunner.AndAsync("Se selecciona y configura el producto a adquirir:", ((string)(null)), table115, "And ");
 #line hidden
-                global::Reqnroll.Table table111 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table116 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table111.AddRow(new string[] {
+                table116.AddRow(new string[] {
                             "Tipo",
                             "Contado"});
-                table111.AddRow(new string[] {
+                table116.AddRow(new string[] {
                             "Método",
                             "Efectivo"});
-                table111.AddRow(new string[] {
+                table116.AddRow(new string[] {
                             "Observación",
                             "NINGUNO"});
 #line 30
- await testRunner.AndAsync("Se configuran los datos de \'Pago\':", ((string)(null)), table111, "And ");
+ await testRunner.AndAsync("Se configuran los datos de \'Pago\':", ((string)(null)), table116, "And ");
 #line hidden
 #line 36
  await testRunner.ThenAsync("Se procede a guardar la adquisición mediante la acción \'SavePurchase\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
@@ -211,9 +211,9 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 41
- await testRunner.GivenAsync(("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
+ await testRunner.GivenAsync("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
                         "y contraseña \'calidad\' en \'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/" +
-                        "login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+                        "login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 42
  await testRunner.AndAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -221,58 +221,58 @@ this.ScenarioInitialize(scenarioInfo);
 #line 43
  await testRunner.AndAsync("Entro al submódulo específico de \'Nueva Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table112 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table117 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table112.AddRow(new string[] {
+                table117.AddRow(new string[] {
                             "Documento",
                             "BOLETA DE VENTA ELECTRONICA"});
-                table112.AddRow(new string[] {
+                table117.AddRow(new string[] {
                             "Serie",
                             "B001"});
-                table112.AddRow(new string[] {
+                table117.AddRow(new string[] {
                             "Correlativo",
                             "00000111"});
-                table112.AddRow(new string[] {
+                table117.AddRow(new string[] {
                             "Fecha de emisión",
                             "04/03/2026"});
-                table112.AddRow(new string[] {
+                table117.AddRow(new string[] {
                             "Proveedor",
                             "10759012017"});
-                table112.AddRow(new string[] {
+                table117.AddRow(new string[] {
                             "Información Adicional",
                             "Boleta Exitosa"});
 #line 45
- await testRunner.WhenAsync("Se configuran los datos de \'Facturación\':", ((string)(null)), table112, "When ");
+ await testRunner.WhenAsync("Se configuran los datos de \'Facturación\':", ((string)(null)), table117, "When ");
 #line hidden
 #line 54
  await testRunner.AndAsync("Se selecciona el tipo de entrega \'Inmediata\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table113 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table118 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table113.AddRow(new string[] {
+                table118.AddRow(new string[] {
                             "Rol",
                             "Item Comercial"});
-                table113.AddRow(new string[] {
+                table118.AddRow(new string[] {
                             "Establecimiento",
                             "RECSA - CENTRAL"});
-                table113.AddRow(new string[] {
+                table118.AddRow(new string[] {
                             "Almacén",
                             "CENTRO COMERCIAL CENTRAL"});
 #line 55
- await testRunner.AndAsync("Se configuran los datos de \'Entrega\':", ((string)(null)), table113, "And ");
+ await testRunner.AndAsync("Se configuran los datos de \'Entrega\':", ((string)(null)), table118, "And ");
 #line hidden
-                global::Reqnroll.Table table114 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table119 = new global::Reqnroll.Table(new string[] {
                             "Producto",
                             "Cantidad",
                             "V. U"});
-                table114.AddRow(new string[] {
+                table119.AddRow(new string[] {
                             "7751234001115|Azúcar Rubia",
                             "1",
                             "0"});
 #line 61
- await testRunner.AndAsync("Se selecciona y configura el producto a adquirir:", ((string)(null)), table114, "And ");
+ await testRunner.AndAsync("Se selecciona y configura el producto a adquirir:", ((string)(null)), table119, "And ");
 #line hidden
 #line 65
  await testRunner.ThenAsync("Se procede a guardar la adquisición mediante la acción \'SavePurchase\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");

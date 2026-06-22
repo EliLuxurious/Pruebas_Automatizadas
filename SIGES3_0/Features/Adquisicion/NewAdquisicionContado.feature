@@ -8,9 +8,12 @@ Scenario: Registro exitoso con Pago Contado Efectivo
 	
 	When Se configuran los datos de 'Facturación':
 	| Campo                 | Valor                         |
-	| Documento             | NOTA DE COMPRA (INTERNA)      |
+	| Documento             | BOLETA DE VENTA ELECTRONICA   |
+	| Serie                 | B200                          |
+	| Correlativo           | 00000010                      |
+	| Fecha de emisión      | 04/03/2026                    |
 	| Proveedor             | 10759012017                   |
-	| Información Adicional | Nota Exitosa                  |
+	| Información Adicional | Boleta Exitosa                |
 
 	And Se selecciona el tipo de entrega 'Inmediata'
 	And Se configuran los datos de 'Entrega':
@@ -39,9 +42,12 @@ Scenario: Registro Adquisicion Pago Contado Billetera Digital
 	
 	When Se configuran los datos de 'Facturación':
 	| Campo                 | Valor                         |
-	| Documento             | NOTA DE COMPRA (INTERNA)      |
+	| Documento             | BOLETA DE VENTA ELECTRONICA   |
+	| Serie                 | B201                          |
+	| Correlativo           | 00000010                      |
+	| Fecha de emisión      | 04/03/2026                    |
 	| Proveedor             | 10759012017                   |
-	| Información Adicional | Nota Exitosa                  |
+	| Información Adicional | Boleta Exitosa                |
 
 	And Se selecciona el tipo de entrega 'Inmediata'
 	And Se configuran los datos de 'Entrega':
@@ -72,9 +78,12 @@ Scenario: Registro Adquisicion Pago Contado Tarjeta de Credito
 	
 	When Se configuran los datos de 'Facturación':
 	| Campo                 | Valor                         |
-	| Documento             | NOTA DE COMPRA (INTERNA)      |
+	| Documento             | BOLETA DE VENTA ELECTRONICA   |
+	| Serie                 | B202                          |
+	| Correlativo           | 00000010                      |
+	| Fecha de emisión      | 04/03/2026                    |
 	| Proveedor             | 10759012017                   |
-	| Información Adicional | Nota Exitosa                  |
+	| Información Adicional | Boleta Exitosa                |
 
 	And Se selecciona el tipo de entrega 'Inmediata'
 	And Se configuran los datos de 'Entrega':
@@ -104,9 +113,12 @@ Scenario: Registro Adquisicion Pago Contado Tarjeta de Debito
 	
 	When Se configuran los datos de 'Facturación':
 	| Campo                 | Valor                         |
-	| Documento             | NOTA DE COMPRA (INTERNA)      |
+	| Documento             | BOLETA DE VENTA ELECTRONICA   |
+	| Serie                 | B203                          |
+	| Correlativo           | 00000010                      |
+	| Fecha de emisión      | 04/03/2026                    |
 	| Proveedor             | 10759012017                   |
-	| Información Adicional | Nota Exitosa                  |
+	| Información Adicional | Boleta Exitosa                |
 
 	And Se selecciona el tipo de entrega 'Inmediata'
 	And Se configuran los datos de 'Entrega':
@@ -136,9 +148,12 @@ Scenario: Registro Adquisicion Pago Contado Transferencia en Cuenta
 	
 	When Se configuran los datos de 'Facturación':
 	| Campo                 | Valor                         |
-	| Documento             | NOTA DE COMPRA (INTERNA)      |
+	| Documento             | BOLETA DE VENTA ELECTRONICA   |
+	| Serie                 | B204                          |
+	| Correlativo           | 00000010                      |
+	| Fecha de emisión      | 04/03/2026                    |
 	| Proveedor             | 10759012017                   |
-	| Información Adicional | Nota Exitosa                  |
+	| Información Adicional | Boleta Exitosa                |
 
 	And Se selecciona el tipo de entrega 'Inmediata'
 	And Se configuran los datos de 'Entrega':
@@ -169,9 +184,12 @@ Scenario: Registro Adquisicion Pago Contado Deposito en Cuenta
 	
 	When Se configuran los datos de 'Facturación':
 	| Campo                 | Valor                         |
-	| Documento             | NOTA DE COMPRA (INTERNA)      |
+	| Documento             | BOLETA DE VENTA ELECTRONICA   |
+	| Serie                 | B205                          |
+	| Correlativo           | 00000010                      |
+	| Fecha de emisión      | 04/03/2026                    |
 	| Proveedor             | 10759012017                   |
-	| Información Adicional | Nota Exitosa                  |
+	| Información Adicional | Boleta Exitosa                |
 
 	And Se selecciona el tipo de entrega 'Inmediata'
 	And Se configuran los datos de 'Entrega':

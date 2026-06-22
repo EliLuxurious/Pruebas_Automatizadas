@@ -30,8 +30,8 @@ namespace SIGES3_0.Features.Cotizacion
         private static string[] featureTags = new string[] {
                 "Cotizacion"};
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Cotizacion", "Cotizacion", ("Como usuario del sistema\r\nQuiero registrar cotizaciones\r\nPara gestionar cotizacio" +
-                "nes de clientes"), global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Cotizacion", "Cotizacion", "Como usuario del sistema\r\nQuiero registrar cotizaciones\r\nPara gestionar cotizacio" +
+                "nes de clientes", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
 #line 1 "Cotizacion.feature"
 #line hidden
@@ -89,12 +89,12 @@ namespace SIGES3_0.Features.Cotizacion
 #line 8
 #line hidden
 #line 9
- await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                    "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                    "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 10
- await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                    "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                    "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 11
  await testRunner.AndAsync("el usuario accede al módulo \'Cotización\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

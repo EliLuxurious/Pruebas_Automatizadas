@@ -103,9 +103,9 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 5
- await testRunner.GivenAsync(("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
+ await testRunner.GivenAsync("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
                         "y contraseña \'calidad\' en \'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/" +
-                        "login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+                        "login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 6
  await testRunner.AndAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -118,17 +118,26 @@ this.ScenarioInitialize(scenarioInfo);
                             "Valor"});
                 table1.AddRow(new string[] {
                             "Documento",
-                            "NOTA DE COMPRA (INTERNA)"});
+                            "BOLETA DE VENTA ELECTRONICA"});
+                table1.AddRow(new string[] {
+                            "Serie",
+                            "B200"});
+                table1.AddRow(new string[] {
+                            "Correlativo",
+                            "00000010"});
+                table1.AddRow(new string[] {
+                            "Fecha de emisión",
+                            "04/03/2026"});
                 table1.AddRow(new string[] {
                             "Proveedor",
                             "10759012017"});
                 table1.AddRow(new string[] {
                             "Información Adicional",
-                            "Nota Exitosa"});
+                            "Boleta Exitosa"});
 #line 9
  await testRunner.WhenAsync("Se configuran los datos de \'Facturación\':", ((string)(null)), table1, "When ");
 #line hidden
-#line 15
+#line 18
  await testRunner.AndAsync("Se selecciona el tipo de entrega \'Inmediata\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
                 global::Reqnroll.Table table2 = new global::Reqnroll.Table(new string[] {
@@ -143,7 +152,7 @@ this.ScenarioInitialize(scenarioInfo);
                 table2.AddRow(new string[] {
                             "Almacén",
                             "CENTRO COMERCIAL CENTRAL"});
-#line 16
+#line 19
  await testRunner.AndAsync("Se configuran los datos de \'Entrega\':", ((string)(null)), table2, "And ");
 #line hidden
                 global::Reqnroll.Table table3 = new global::Reqnroll.Table(new string[] {
@@ -154,7 +163,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "7751234001115|Azúcar Rubia",
                             "150",
                             "6.9"});
-#line 22
+#line 25
  await testRunner.AndAsync("Se selecciona y configura el producto a adquirir:", ((string)(null)), table3, "And ");
 #line hidden
                 global::Reqnroll.Table table4 = new global::Reqnroll.Table(new string[] {
@@ -169,13 +178,13 @@ this.ScenarioInitialize(scenarioInfo);
                 table4.AddRow(new string[] {
                             "Observación",
                             "NINGUNO"});
-#line 26
+#line 29
  await testRunner.AndAsync("Se configuran los datos de \'Pago\':", ((string)(null)), table4, "And ");
 #line hidden
-#line 32
+#line 35
  await testRunner.ThenAsync("Se procede a guardar la adquisición mediante la acción \'SavePurchase\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 33
+#line 36
  await testRunner.AndAsync("Se confirma el registro exitoso con el mensaje \'Se registró correctamente.\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
@@ -189,7 +198,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro Adquisicion Pago Contado Billetera Digital", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 35
+#line 38
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -199,15 +208,15 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 36
- await testRunner.GivenAsync(("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
+#line 39
+ await testRunner.GivenAsync("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
                         "y contraseña \'calidad\' en \'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/" +
-                        "login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+                        "login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 37
+#line 40
  await testRunner.AndAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 38
+#line 41
  await testRunner.AndAsync("Entro al submódulo específico de \'Nueva Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
                 global::Reqnroll.Table table5 = new global::Reqnroll.Table(new string[] {
@@ -215,17 +224,26 @@ this.ScenarioInitialize(scenarioInfo);
                             "Valor"});
                 table5.AddRow(new string[] {
                             "Documento",
-                            "NOTA DE COMPRA (INTERNA)"});
+                            "BOLETA DE VENTA ELECTRONICA"});
+                table5.AddRow(new string[] {
+                            "Serie",
+                            "B201"});
+                table5.AddRow(new string[] {
+                            "Correlativo",
+                            "00000010"});
+                table5.AddRow(new string[] {
+                            "Fecha de emisión",
+                            "04/03/2026"});
                 table5.AddRow(new string[] {
                             "Proveedor",
                             "10759012017"});
                 table5.AddRow(new string[] {
                             "Información Adicional",
-                            "Nota Exitosa"});
-#line 40
+                            "Boleta Exitosa"});
+#line 43
  await testRunner.WhenAsync("Se configuran los datos de \'Facturación\':", ((string)(null)), table5, "When ");
 #line hidden
-#line 46
+#line 52
  await testRunner.AndAsync("Se selecciona el tipo de entrega \'Inmediata\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
                 global::Reqnroll.Table table6 = new global::Reqnroll.Table(new string[] {
@@ -240,7 +258,7 @@ this.ScenarioInitialize(scenarioInfo);
                 table6.AddRow(new string[] {
                             "Almacén",
                             "CENTRO COMERCIAL CENTRAL"});
-#line 47
+#line 53
  await testRunner.AndAsync("Se configuran los datos de \'Entrega\':", ((string)(null)), table6, "And ");
 #line hidden
                 global::Reqnroll.Table table7 = new global::Reqnroll.Table(new string[] {
@@ -251,7 +269,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "7751234001115|Azúcar Rubia",
                             "150",
                             "6.9"});
-#line 53
+#line 59
  await testRunner.AndAsync("Se selecciona y configura el producto a adquirir:", ((string)(null)), table7, "And ");
 #line hidden
                 global::Reqnroll.Table table8 = new global::Reqnroll.Table(new string[] {
@@ -272,13 +290,13 @@ this.ScenarioInitialize(scenarioInfo);
                 table8.AddRow(new string[] {
                             "Observación",
                             "NINGUNO"});
-#line 57
+#line 63
  await testRunner.AndAsync("Se configuran los datos de \'Pago\':", ((string)(null)), table8, "And ");
 #line hidden
-#line 65
+#line 71
  await testRunner.ThenAsync("Se procede a guardar la adquisición mediante la acción \'SavePurchase\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 66
+#line 72
  await testRunner.AndAsync("Se confirma el registro exitoso con el mensaje \'Se registró correctamente.\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
@@ -292,7 +310,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro Adquisicion Pago Contado Tarjeta de Credito", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 68
+#line 74
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -302,15 +320,15 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 69
- await testRunner.GivenAsync(("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
+#line 75
+ await testRunner.GivenAsync("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
                         "y contraseña \'calidad\' en \'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/" +
-                        "login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+                        "login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 70
+#line 76
  await testRunner.AndAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 71
+#line 77
  await testRunner.AndAsync("Entro al submódulo específico de \'Nueva Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
                 global::Reqnroll.Table table9 = new global::Reqnroll.Table(new string[] {
@@ -318,17 +336,26 @@ this.ScenarioInitialize(scenarioInfo);
                             "Valor"});
                 table9.AddRow(new string[] {
                             "Documento",
-                            "NOTA DE COMPRA (INTERNA)"});
+                            "BOLETA DE VENTA ELECTRONICA"});
+                table9.AddRow(new string[] {
+                            "Serie",
+                            "B202"});
+                table9.AddRow(new string[] {
+                            "Correlativo",
+                            "00000010"});
+                table9.AddRow(new string[] {
+                            "Fecha de emisión",
+                            "04/03/2026"});
                 table9.AddRow(new string[] {
                             "Proveedor",
                             "10759012017"});
                 table9.AddRow(new string[] {
                             "Información Adicional",
-                            "Nota Exitosa"});
-#line 73
+                            "Boleta Exitosa"});
+#line 79
  await testRunner.WhenAsync("Se configuran los datos de \'Facturación\':", ((string)(null)), table9, "When ");
 #line hidden
-#line 79
+#line 88
  await testRunner.AndAsync("Se selecciona el tipo de entrega \'Inmediata\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
                 global::Reqnroll.Table table10 = new global::Reqnroll.Table(new string[] {
@@ -343,7 +370,7 @@ this.ScenarioInitialize(scenarioInfo);
                 table10.AddRow(new string[] {
                             "Almacén",
                             "CENTRO COMERCIAL CENTRAL"});
-#line 80
+#line 89
  await testRunner.AndAsync("Se configuran los datos de \'Entrega\':", ((string)(null)), table10, "And ");
 #line hidden
                 global::Reqnroll.Table table11 = new global::Reqnroll.Table(new string[] {
@@ -354,7 +381,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "7751234001115|Azúcar Rubia",
                             "150",
                             "6.9"});
-#line 86
+#line 95
  await testRunner.AndAsync("Se selecciona y configura el producto a adquirir:", ((string)(null)), table11, "And ");
 #line hidden
                 global::Reqnroll.Table table12 = new global::Reqnroll.Table(new string[] {
@@ -372,13 +399,13 @@ this.ScenarioInitialize(scenarioInfo);
                 table12.AddRow(new string[] {
                             "Información",
                             "NINGUNO"});
-#line 90
+#line 99
  await testRunner.AndAsync("Se configuran los datos de \'Pago\':", ((string)(null)), table12, "And ");
 #line hidden
-#line 97
+#line 106
  await testRunner.ThenAsync("Se procede a guardar la adquisición mediante la acción \'SavePurchase\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 98
+#line 107
  await testRunner.AndAsync("Se confirma el registro exitoso con el mensaje \'Se registró correctamente.\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
@@ -392,7 +419,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro Adquisicion Pago Contado Tarjeta de Debito", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 100
+#line 109
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -402,15 +429,15 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 101
- await testRunner.GivenAsync(("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
+#line 110
+ await testRunner.GivenAsync("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
                         "y contraseña \'calidad\' en \'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/" +
-                        "login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+                        "login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 102
+#line 111
  await testRunner.AndAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 103
+#line 112
  await testRunner.AndAsync("Entro al submódulo específico de \'Nueva Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
                 global::Reqnroll.Table table13 = new global::Reqnroll.Table(new string[] {
@@ -418,17 +445,26 @@ this.ScenarioInitialize(scenarioInfo);
                             "Valor"});
                 table13.AddRow(new string[] {
                             "Documento",
-                            "NOTA DE COMPRA (INTERNA)"});
+                            "BOLETA DE VENTA ELECTRONICA"});
+                table13.AddRow(new string[] {
+                            "Serie",
+                            "B203"});
+                table13.AddRow(new string[] {
+                            "Correlativo",
+                            "00000010"});
+                table13.AddRow(new string[] {
+                            "Fecha de emisión",
+                            "04/03/2026"});
                 table13.AddRow(new string[] {
                             "Proveedor",
                             "10759012017"});
                 table13.AddRow(new string[] {
                             "Información Adicional",
-                            "Nota Exitosa"});
-#line 105
+                            "Boleta Exitosa"});
+#line 114
  await testRunner.WhenAsync("Se configuran los datos de \'Facturación\':", ((string)(null)), table13, "When ");
 #line hidden
-#line 111
+#line 123
  await testRunner.AndAsync("Se selecciona el tipo de entrega \'Inmediata\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
                 global::Reqnroll.Table table14 = new global::Reqnroll.Table(new string[] {
@@ -443,7 +479,7 @@ this.ScenarioInitialize(scenarioInfo);
                 table14.AddRow(new string[] {
                             "Almacén",
                             "CENTRO COMERCIAL CENTRAL"});
-#line 112
+#line 124
  await testRunner.AndAsync("Se configuran los datos de \'Entrega\':", ((string)(null)), table14, "And ");
 #line hidden
                 global::Reqnroll.Table table15 = new global::Reqnroll.Table(new string[] {
@@ -454,7 +490,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "7751234001115|Azúcar Rubia",
                             "150",
                             "6.9"});
-#line 118
+#line 130
  await testRunner.AndAsync("Se selecciona y configura el producto a adquirir:", ((string)(null)), table15, "And ");
 #line hidden
                 global::Reqnroll.Table table16 = new global::Reqnroll.Table(new string[] {
@@ -472,13 +508,13 @@ this.ScenarioInitialize(scenarioInfo);
                 table16.AddRow(new string[] {
                             "Información",
                             "NINGUNO"});
-#line 122
+#line 134
  await testRunner.AndAsync("Se configuran los datos de \'Pago\':", ((string)(null)), table16, "And ");
 #line hidden
-#line 129
+#line 141
  await testRunner.ThenAsync("Se procede a guardar la adquisición mediante la acción \'SavePurchase\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 130
+#line 142
  await testRunner.AndAsync("Se confirma el registro exitoso con el mensaje \'Se registró correctamente.\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
@@ -492,7 +528,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro Adquisicion Pago Contado Transferencia en Cuenta", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 132
+#line 144
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -502,15 +538,15 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 133
- await testRunner.GivenAsync(("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
+#line 145
+ await testRunner.GivenAsync("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
                         "y contraseña \'calidad\' en \'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/" +
-                        "login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+                        "login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 134
+#line 146
  await testRunner.AndAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 135
+#line 147
  await testRunner.AndAsync("Entro al submódulo específico de \'Nueva Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
                 global::Reqnroll.Table table17 = new global::Reqnroll.Table(new string[] {
@@ -518,17 +554,26 @@ this.ScenarioInitialize(scenarioInfo);
                             "Valor"});
                 table17.AddRow(new string[] {
                             "Documento",
-                            "NOTA DE COMPRA (INTERNA)"});
+                            "BOLETA DE VENTA ELECTRONICA"});
+                table17.AddRow(new string[] {
+                            "Serie",
+                            "B204"});
+                table17.AddRow(new string[] {
+                            "Correlativo",
+                            "00000010"});
+                table17.AddRow(new string[] {
+                            "Fecha de emisión",
+                            "04/03/2026"});
                 table17.AddRow(new string[] {
                             "Proveedor",
                             "10759012017"});
                 table17.AddRow(new string[] {
                             "Información Adicional",
-                            "Nota Exitosa"});
-#line 137
+                            "Boleta Exitosa"});
+#line 149
  await testRunner.WhenAsync("Se configuran los datos de \'Facturación\':", ((string)(null)), table17, "When ");
 #line hidden
-#line 143
+#line 158
  await testRunner.AndAsync("Se selecciona el tipo de entrega \'Inmediata\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
                 global::Reqnroll.Table table18 = new global::Reqnroll.Table(new string[] {
@@ -543,7 +588,7 @@ this.ScenarioInitialize(scenarioInfo);
                 table18.AddRow(new string[] {
                             "Almacén",
                             "CENTRO COMERCIAL CENTRAL"});
-#line 144
+#line 159
  await testRunner.AndAsync("Se configuran los datos de \'Entrega\':", ((string)(null)), table18, "And ");
 #line hidden
                 global::Reqnroll.Table table19 = new global::Reqnroll.Table(new string[] {
@@ -554,7 +599,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "7751234001115|Azúcar Rubia",
                             "150",
                             "6.9"});
-#line 150
+#line 165
  await testRunner.AndAsync("Se selecciona y configura el producto a adquirir:", ((string)(null)), table19, "And ");
 #line hidden
                 global::Reqnroll.Table table20 = new global::Reqnroll.Table(new string[] {
@@ -575,13 +620,13 @@ this.ScenarioInitialize(scenarioInfo);
                 table20.AddRow(new string[] {
                             "Información",
                             "NINGUNO"});
-#line 154
+#line 169
  await testRunner.AndAsync("Se configuran los datos de \'Pago\':", ((string)(null)), table20, "And ");
 #line hidden
-#line 162
+#line 177
  await testRunner.ThenAsync("Se procede a guardar la adquisición mediante la acción \'SavePurchase\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 163
+#line 178
  await testRunner.AndAsync("Se confirma el registro exitoso con el mensaje \'Se registró correctamente.\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
@@ -595,7 +640,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro Adquisicion Pago Contado Deposito en Cuenta", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 165
+#line 180
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -605,15 +650,15 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 166
- await testRunner.GivenAsync(("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
+#line 181
+ await testRunner.GivenAsync("Inicio de sesión en el módulo de Adquisición con usuario \'pamela.tone@recsa.com\' " +
                         "y contraseña \'calidad\' en \'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/" +
-                        "login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+                        "login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 167
+#line 182
  await testRunner.AndAsync("Navego al módulo de \'Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 168
+#line 183
  await testRunner.AndAsync("Entro al submódulo específico de \'Nueva Adquisición\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
                 global::Reqnroll.Table table21 = new global::Reqnroll.Table(new string[] {
@@ -621,17 +666,26 @@ this.ScenarioInitialize(scenarioInfo);
                             "Valor"});
                 table21.AddRow(new string[] {
                             "Documento",
-                            "NOTA DE COMPRA (INTERNA)"});
+                            "BOLETA DE VENTA ELECTRONICA"});
+                table21.AddRow(new string[] {
+                            "Serie",
+                            "B205"});
+                table21.AddRow(new string[] {
+                            "Correlativo",
+                            "00000010"});
+                table21.AddRow(new string[] {
+                            "Fecha de emisión",
+                            "04/03/2026"});
                 table21.AddRow(new string[] {
                             "Proveedor",
                             "10759012017"});
                 table21.AddRow(new string[] {
                             "Información Adicional",
-                            "Nota Exitosa"});
-#line 170
+                            "Boleta Exitosa"});
+#line 185
  await testRunner.WhenAsync("Se configuran los datos de \'Facturación\':", ((string)(null)), table21, "When ");
 #line hidden
-#line 176
+#line 194
  await testRunner.AndAsync("Se selecciona el tipo de entrega \'Inmediata\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
                 global::Reqnroll.Table table22 = new global::Reqnroll.Table(new string[] {
@@ -646,7 +700,7 @@ this.ScenarioInitialize(scenarioInfo);
                 table22.AddRow(new string[] {
                             "Almacén",
                             "CENTRO COMERCIAL CENTRAL"});
-#line 177
+#line 195
  await testRunner.AndAsync("Se configuran los datos de \'Entrega\':", ((string)(null)), table22, "And ");
 #line hidden
                 global::Reqnroll.Table table23 = new global::Reqnroll.Table(new string[] {
@@ -657,7 +711,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "7751234001115|Azúcar Rubia",
                             "150",
                             "6.9"});
-#line 183
+#line 201
  await testRunner.AndAsync("Se selecciona y configura el producto a adquirir:", ((string)(null)), table23, "And ");
 #line hidden
                 global::Reqnroll.Table table24 = new global::Reqnroll.Table(new string[] {
@@ -678,13 +732,13 @@ this.ScenarioInitialize(scenarioInfo);
                 table24.AddRow(new string[] {
                             "Información",
                             "NINGUNO"});
-#line 187
+#line 205
  await testRunner.AndAsync("Se configuran los datos de \'Pago\':", ((string)(null)), table24, "And ");
 #line hidden
-#line 195
+#line 213
  await testRunner.ThenAsync("Se procede a guardar la adquisición mediante la acción \'SavePurchase\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 196
+#line 214
  await testRunner.AndAsync("Se confirma el registro exitoso con el mensaje \'Se registró correctamente.\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }

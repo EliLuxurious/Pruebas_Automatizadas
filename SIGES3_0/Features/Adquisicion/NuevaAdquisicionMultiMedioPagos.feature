@@ -9,7 +9,7 @@ Scenario: Registro Adquisicion CONTADO Multipago Efectivo - Tarjeta de Crédito
 	When Se configuran los datos de 'Facturación':
 	| Campo                 | Valor                       |
 	| Documento             | BOLETA DE VENTA ELECTRONICA |
-	| Serie                 | B002                        |
+	| Serie                 | B300                        |
 	| Correlativo           | 00000020                    |
 	| Fecha de emisión      | 17/04/2026                  |
 	| Proveedor             | 10759012017                 |
@@ -48,7 +48,7 @@ Scenario: Registro Adquisicion CONTADO Multipago Tarjeta Debito - Crédito
 	When Se configuran los datos de 'Facturación':
 	| Campo                 | Valor                       |
 	| Documento             | BOLETA DE VENTA ELECTRONICA |
-	| Serie                 | B002                        |
+	| Serie                 | B301                        |
 	| Correlativo           | 00000020                    |
 	| Fecha de emisión      | 17/04/2026                  |
 	| Proveedor             | 10759012017                 |
@@ -80,6 +80,7 @@ Scenario: Registro Adquisicion CONTADO Multipago Tarjeta Debito - Crédito
 	Then Se procede a guardar la adquisición mediante la acción 'SavePurchase'
 	And Se confirma el registro exitoso con el mensaje 'Se registró correctamente.'
 
+
 @RegistroAdquisicionMultipagoCredito
 Scenario: Registro Adquisicion CREDITO Multipago Efectivo - Tarjeta de Crédito
 	Given Inicio de sesión en el módulo de Adquisición con usuario 'pamela.tone@recsa.com' y contraseña 'calidad' en 'https://sigesdev.newfrontdev-qa.sigesonline.com/auth/login'
@@ -89,7 +90,7 @@ Scenario: Registro Adquisicion CREDITO Multipago Efectivo - Tarjeta de Crédito
 	When Se configuran los datos de 'Facturación':
 	| Campo                 | Valor                       |
 	| Documento             | BOLETA DE VENTA ELECTRONICA |
-	| Serie                 | B002                        |
+	| Serie                 | B304                        |
 	| Correlativo           | 00000020                    |
 	| Fecha de emisión      | 17/04/2026                  |
 	| Proveedor             | 10759012017                 |
@@ -131,7 +132,7 @@ Scenario: Registro Adquisicion CREDITO Multipago Tarjeta Debito - Crédito
 	When Se configuran los datos de 'Facturación':
 	| Campo                 | Valor                       |
 	| Documento             | BOLETA DE VENTA ELECTRONICA |
-	| Serie                 | B002                        |
+	| Serie                 | B305                        |
 	| Correlativo           | 00000020                    |
 	| Fecha de emisión      | 17/04/2026                  |
 	| Proveedor             | 10759012017                 |

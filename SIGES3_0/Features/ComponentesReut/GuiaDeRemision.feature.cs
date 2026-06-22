@@ -30,8 +30,8 @@ namespace SIGES3_0.Features.ComponentesReut
         private static string[] featureTags = new string[] {
                 "GuiaRemision"};
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/ComponentesReut", "Guia de Remision Remitente", ("Como usuario del sistema\r\nQuiero emitir una guia de remision\r\nPara validar el tra" +
-                "slado de productos"), global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/ComponentesReut", "Guia de Remision Remitente", "Como usuario del sistema\r\nQuiero emitir una guia de remision\r\nPara validar el tra" +
+                "slado de productos", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
 #line 1 "GuiaDeRemision.feature"
 #line hidden
@@ -89,12 +89,12 @@ namespace SIGES3_0.Features.ComponentesReut
 #line 8
 #line hidden
 #line 9
- await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                    "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                    "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 10
- await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                    "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                    "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 11
  await testRunner.AndAsync("el usuario accede al módulo \'Pedidos\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -152,12 +152,12 @@ this.ScenarioInitialize(scenarioInfo);
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 16
- await testRunner.GivenAsync(("existe un pedido base para emitir guia con familia \'Azúcar\' concepto \'77512340011" +
-                        "15\' cantidad \'10\' cliente \'75971755\' entrega \'diferida\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("existe un pedido base para emitir guia con familia \'Azúcar\' concepto \'77512340011" +
+                        "15\' cantidad \'10\' cliente \'75971755\' entrega \'diferida\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 17
- await testRunner.WhenAsync(("el usuario abre el flujo de guia de remision con comprobante \'boleta de venta ele" +
-                        "ctronica\' serie \'B002\' cliente \'75971755\' entrega \'inmediata\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("el usuario abre el flujo de guia de remision con comprobante \'boleta de venta ele" +
+                        "ctronica\' serie \'B002\' cliente \'75971755\' entrega \'inmediata\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 18
  await testRunner.AndAsync("el usuario valida el destinatario autocompletado", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

@@ -60,6 +60,7 @@ namespace SIGES3_0.Pages.Adquisicion
         private By rbCompraGyNG = By.XPath("//label[normalize-space()='G Y NG']/preceding-sibling::input");
 
         // --- 3. Productos ---
+        private By btnAbreModalNuevoConcepto = By.XPath("//button[normalize-space()='Nuevo Concepto']");
         private By cmbBuscarConcepto = By.XPath("//label[@for='conceptSelect']/following-sibling::div//div[contains(@class, 'select-trigger')]");
         private By opcionProductoLista = By.XPath("//span[normalize-space()='7751234001115|Azúcar Rubia']");
         private By txtCantidad = By.XPath("//tbody/tr[@class='ng-star-inserted']/td[3]/div[1]/input[1]");
@@ -368,12 +369,22 @@ namespace SIGES3_0.Pages.Adquisicion
 
             Thread.Sleep(1500);
         }
+        public void AbrirModalNuevoConcepto()
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            IWebElement btnModal = wait.Until(ExpectedConditions.ElementToBeClickable(btnAbreModalNuevoConcepto));
 
+            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView({block: 'center'});", btnModal);
+            Thread.Sleep(500);
+
+            btnModal.Click();
+
+            Thread.Sleep(2000);
+        }
         public void AgregarProducto(string producto, string cantidad, string valorUnitario)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
 
-            // 1. Abrimos el buscador de conceptos
             IWebElement comboConcepto = wait.Until(ExpectedConditions.ElementExists(cmbBuscarConcepto));
             ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", comboConcepto);
             Thread.Sleep(1000);
@@ -390,7 +401,8 @@ namespace SIGES3_0.Pages.Adquisicion
             Thread.Sleep(1500);
 
             // 2. SELECCIÓN DINÁMICA: Creamos el localizador en el momento con el nombre exacto del producto
-            By selectorProductoDinamico = By.XPath($"//span[normalize-space()='{producto}']");
+            //By selectorProductoDinamico = By.XPath($"//span[normalize-space()='{producto}']");
+            By selectorProductoDinamico = By.XPath($"//span[contains(., '{producto}')]");
             IWebElement opcion = wait.Until(ExpectedConditions.ElementExists(selectorProductoDinamico));
             ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", opcion);
 

@@ -86,12 +86,12 @@ namespace SIGES3_0.Features.Items.TablesofDecision_Items.RegisterItemData.Family
 #line 5
 #line hidden
 #line 6
-await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                    "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                    "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 7
-await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                    "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                    "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 8
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -133,12 +133,12 @@ await testRunner.AndAsync("el usuario ingresa el código de familia \" 1\"", ((s
 #line 16
 await testRunner.AndAsync("el usuario guarda los cambios de familia", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table135 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table140 = new global::Reqnroll.Table(new string[] {
                             "NombreConcepto"});
-                table135.AddRow(new string[] {
+                table140.AddRow(new string[] {
                             "Harina Para Hornear B l a n c a F l o r SP UN"});
 #line 17
-await testRunner.AndAsync("el usuario elimina los siguientes conceptos:", ((string)(null)), table135, "And ");
+await testRunner.AndAsync("el usuario elimina los siguientes conceptos:", ((string)(null)), table140, "And ");
 #line hidden
 #line 20
 await testRunner.AndAsync("el usuario aplica los cambios de familia", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

@@ -8,10 +8,13 @@ Scenario: Registro Adquisicion Pago Crédito con Monto Inicial Cero
 	And Entro al submódulo específico de 'Nueva Adquisición'
 	
 	When Se configuran los datos de 'Facturación':
-	| Campo                | Valor                    |
-	| Documento            | NOTA DE COMPRA (INTERNA) |
-	| Proveedor            | 10759012017              |
-	| Información Adicional | Nota Crédito Exitosa     |
+	| Campo                 | Valor                         |
+	| Documento             | BOLETA DE VENTA ELECTRONICA   |
+	| Serie                 | B100                          |
+	| Correlativo           | 00000010                      |
+	| Fecha de emisión      | 04/03/2026                    |
+	| Proveedor             | 10759012017                   |
+	| Información Adicional | Boleta Exitosa                |
 
 	And Se selecciona el tipo de entrega 'Inmediata'
 	And Se configuran los datos de 'Entrega':
@@ -42,10 +45,13 @@ Scenario: Registro Adquisicion Pago Crédito Efectivo
 	And Entro al submódulo específico de 'Nueva Adquisición'
 	
 	When Se configuran los datos de 'Facturación':
-	| Campo                | Valor                    |
-	| Documento            | NOTA DE COMPRA (INTERNA) |
-	| Proveedor            | 10759012017              |
-	| Información Adicional | Nota Crédito Exitosa     |
+	| Campo                 | Valor                         |
+	| Documento             | BOLETA DE VENTA ELECTRONICA   |
+	| Serie                 | B101                          |
+	| Correlativo           | 00000010                      |
+	| Fecha de emisión      | 04/03/2026                    |
+	| Proveedor             | 10759012017                   |
+	| Información Adicional | Boleta Exitosa                |
 
 	And Se selecciona el tipo de entrega 'Inmediata'
 	And Se configuran los datos de 'Entrega':
@@ -76,10 +82,13 @@ Scenario: Registro Adquisicion Pago Crédito BilleteraDigital
 	And Entro al submódulo específico de 'Nueva Adquisición'
 	
 	When Se configuran los datos de 'Facturación':
-	| Campo                | Valor                    |
-	| Documento            | NOTA DE COMPRA (INTERNA) |
-	| Proveedor            | 10759012017              |
-	| Información Adicional | Nota Crédito Exitosa     |
+	| Campo                 | Valor                         |
+	| Documento             | BOLETA DE VENTA ELECTRONICA   |
+	| Serie                 | B102                          |
+	| Correlativo           | 00000010                      |
+	| Fecha de emisión      | 04/03/2026                    |
+	| Proveedor             | 10759012017                   |
+	| Información Adicional | Boleta Exitosa                |
 
 	And Se selecciona el tipo de entrega 'Inmediata'
 	And Se configuran los datos de 'Entrega':
@@ -113,10 +122,13 @@ Scenario: Registro Adquisicion Pago Crédito Tarjeta de Credito
 	And Entro al submódulo específico de 'Nueva Adquisición'
 	
 	When Se configuran los datos de 'Facturación':
-	| Campo                | Valor                    |
-	| Documento            | NOTA DE COMPRA (INTERNA) |
-	| Proveedor            | 10759012017              |
-	| Información Adicional | Nota Crédito Exitosa     |
+	| Campo                 | Valor                         |
+	| Documento             | BOLETA DE VENTA ELECTRONICA   |
+	| Serie                 | B103                          |
+	| Correlativo           | 00000010                      |
+	| Fecha de emisión      | 04/03/2026                    |
+	| Proveedor             | 10759012017                   |
+	| Información Adicional | Boleta Exitosa                |
 
 	And Se selecciona el tipo de entrega 'Inmediata'
 	And Se configuran los datos de 'Entrega':
@@ -149,10 +161,13 @@ Scenario: Registro Adquisicion Pago Crédito Tarjeta de Debito
 	And Entro al submódulo específico de 'Nueva Adquisición'
 	
 	When Se configuran los datos de 'Facturación':
-	| Campo                | Valor                    |
-	| Documento            | NOTA DE COMPRA (INTERNA) |
-	| Proveedor            | 10759012017              |
-	| Información Adicional | Nota Crédito Exitosa     |
+	| Campo                 | Valor                         |
+	| Documento             | BOLETA DE VENTA ELECTRONICA   |
+	| Serie                 | B104                          |
+	| Correlativo           | 00000010                      |
+	| Fecha de emisión      | 04/03/2026                    |
+	| Proveedor             | 10759012017                   |
+	| Información Adicional | Boleta Exitosa                |
 
 	And Se selecciona el tipo de entrega 'Inmediata'
 	And Se configuran los datos de 'Entrega':
@@ -185,10 +200,13 @@ Scenario: Registro Adquisicion Pago Crédito Transferencia en Cuenta
 	And Entro al submódulo específico de 'Nueva Adquisición'
 	
 	When Se configuran los datos de 'Facturación':
-	| Campo                | Valor                    |
-	| Documento            | NOTA DE COMPRA (INTERNA) |
-	| Proveedor            | 10759012017              |
-	| Información Adicional | Nota Crédito Exitosa     |
+	| Campo                 | Valor                         |
+	| Documento             | BOLETA DE VENTA ELECTRONICA   |
+	| Serie                 | B105                          |
+	| Correlativo           | 00000010                      |
+	| Fecha de emisión      | 04/03/2026                    |
+	| Proveedor             | 10759012017                   |
+	| Información Adicional | Boleta Exitosa                |
 
 	And Se selecciona el tipo de entrega 'Inmediata'
 	And Se configuran los datos de 'Entrega':
@@ -222,10 +240,13 @@ Scenario: Registro Adquisicion Pago Crédito Deposito en Cuenta
 	And Entro al submódulo específico de 'Nueva Adquisición'
 	
 	When Se configuran los datos de 'Facturación':
-	| Campo                | Valor                    |
-	| Documento            | NOTA DE COMPRA (INTERNA) |
-	| Proveedor            | 10759012017              |
-	| Información Adicional | Nota Crédito Exitosa     |
+	| Campo                 | Valor                         |
+	| Documento             | BOLETA DE VENTA ELECTRONICA   |
+	| Serie                 | B106                          |
+	| Correlativo           | 00000010                      |
+	| Fecha de emisión      | 04/03/2026                    |
+	| Proveedor             | 10759012017                   |
+	| Información Adicional | Boleta Exitosa                |
 
 	And Se selecciona el tipo de entrega 'Inmediata'
 	And Se configuran los datos de 'Entrega':

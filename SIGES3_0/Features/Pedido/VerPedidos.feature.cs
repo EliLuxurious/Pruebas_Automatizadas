@@ -30,8 +30,8 @@ namespace SIGES3_0.Features.Pedido
         private static string[] featureTags = new string[] {
                 "Pedido"};
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Pedido", "VerPedidos", ("Como usuario del sistema\r\nQuiero registrar pedidos\r\nPara gestionar pedidos de cli" +
-                "entes"), global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Pedido", "VerPedidos", "Como usuario del sistema\r\nQuiero registrar pedidos\r\nPara gestionar pedidos de cli" +
+                "entes", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
 #line 1 "VerPedidos.feature"
 #line hidden
@@ -89,12 +89,12 @@ namespace SIGES3_0.Features.Pedido
 #line 8
 #line hidden
 #line 9
- await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                    "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                    "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 10
- await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                    "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                    "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 11
  await testRunner.AndAsync("el usuario accede al módulo \'Pedidos\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -234,16 +234,16 @@ this.ScenarioInitialize(scenarioInfo);
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 43
- await testRunner.GivenAsync(("existe un pedido en estado registrado para invalidar con familia \'Gaseosa\' concep" +
-                        "to \'7753234003320\' cantidad \'10\' cliente \'75971755\' entrega \'inmediata\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("existe un pedido en estado registrado para invalidar con familia \'Gaseosa\' concep" +
+                        "to \'7753234003320\' cantidad \'10\' cliente \'75971755\' entrega \'inmediata\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 44
  await testRunner.WhenAsync("el usuario selecciona la opción \'Editar pedido\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 45
- await testRunner.AndAsync(string.Format(("el usuario actualiza el pedido con familia \'{0}\' concepto \'{1}\' cantidad \'{2}\' ig" +
+ await testRunner.AndAsync(string.Format("el usuario actualiza el pedido con familia \'{0}\' concepto \'{1}\' cantidad \'{2}\' ig" +
                             "v \'{3}\' detUnif \'{4}\' descuento \'{5}\' tipoDescuento \'{6}\' modoDescuento \'{7}\' va" +
-                            "lorDescuento \'{8}\' cliente \'{9}\' entrega \'{10}\'"), familia, concepto, cantidad, igv, detUnif, descuentoActivo, tipoDescuento, modoDescuento, valorDescuento, cliente, tipoEntrega), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+                            "lorDescuento \'{8}\' cliente \'{9}\' entrega \'{10}\'", familia, concepto, cantidad, igv, detUnif, descuentoActivo, tipoDescuento, modoDescuento, valorDescuento, cliente, tipoEntrega), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 46
  await testRunner.AndAsync("el usuario guarda la edición del pedido", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -289,8 +289,8 @@ this.ScenarioInitialize(scenarioInfo);
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 59
- await testRunner.GivenAsync(("existe un pedido en estado registrado para invalidar con familia \'Gaseosa\' concep" +
-                        "to \'7753234003320\' cantidad \'10\' cliente \'75971755\' entrega \'inmediata\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("existe un pedido en estado registrado para invalidar con familia \'Gaseosa\' concep" +
+                        "to \'7753234003320\' cantidad \'10\' cliente \'75971755\' entrega \'inmediata\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 60
  await testRunner.WhenAsync("el usuario selecciona la opción \'Invalidar pedido\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
@@ -316,8 +316,8 @@ await this.FeatureBackgroundAsync();
         [NUnit.Framework.TestCaseAttribute("3", "false", "Azúcar", "7751234001115", "10", "20542245671", "diferida", "factura electronica", "NA", "20542245671", "diferida", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Pedido confirmado correctamente", null)]
         [NUnit.Framework.TestCaseAttribute("4", "false", "Azúcar", "7751234001115", "10", "20542245671", "diferida", "factura electronica", "NA", "20542245671", "inmediata", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "false", "Monto insuficiente", null)]
         [NUnit.Framework.TestCaseAttribute("5", "true", "Gaseosa", "7753234003320", "110", "00000000", "inmediata", "boleta de venta electronica", "B004", "75971635", "diferida", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Pedido confirmado correctamente", null)]
-        [NUnit.Framework.TestCaseAttribute("6", "false", "Azúcar", "7751234001115", "10", "00000000", "diferida", "boleta de venta electronica", "B002", "00000000", "inmediata", "true", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", ("Boton de guia de remision inhabilitado Para guia de remision Necesita identificar" +
-            " al cliente con RUC o DNI"), null)]
+        [NUnit.Framework.TestCaseAttribute("6", "false", "Azúcar", "7751234001115", "10", "00000000", "diferida", "boleta de venta electronica", "B002", "00000000", "inmediata", "true", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Boton de guia de remision inhabilitado Para guia de remision Necesita identificar" +
+            " al cliente con RUC o DNI", null)]
         [NUnit.Framework.TestCaseAttribute("7", "true", "Gaseosa", "7753234003320", "110", "00000000", "inmediata", "boleta de venta electronica", "B002", "00000000", "inmediata", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Es necesario identificar al cliente, el total es mayor a S/.700", null)]
         [NUnit.Framework.TestCaseAttribute("8", "false", "Azúcar", "7751234001115", "10", "20542245671", "diferida", "nota de venta", "NA", "75971755", "diferida", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Pedido confirmado correctamente", null)]
         [NUnit.Framework.TestCaseAttribute("9", "false", "Azúcar", "7751234001115", "10", "20542245671", "diferida", "nota de venta", "NA", "20602945589", "inmediata", "false", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "true", "Pedido confirmado correctamente", null)]
@@ -399,8 +399,8 @@ this.ScenarioInitialize(scenarioInfo);
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 76
- await testRunner.GivenAsync(string.Format(("existe un pedido base registrado para confirmar con total mayor a 700 \'{0}\' famil" +
-                            "ia \'{1}\' concepto \'{2}\' cantidad \'{3}\' cliente \'{4}\' entrega \'{5}\'"), total_Mayor_700, familia_Base, concepto_Base, cantidad_Base, cliente_Base, entrega_Base), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync(string.Format("existe un pedido base registrado para confirmar con total mayor a 700 \'{0}\' famil" +
+                            "ia \'{1}\' concepto \'{2}\' cantidad \'{3}\' cliente \'{4}\' entrega \'{5}\'", total_Mayor_700, familia_Base, concepto_Base, cantidad_Base, cliente_Base, entrega_Base), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 77
  await testRunner.WhenAsync("el usuario selecciona la opción \'Confirmar pedido\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
@@ -412,8 +412,8 @@ await this.FeatureBackgroundAsync();
  await testRunner.AndAsync(string.Format("el usuario configura la entrega \'{0}\' \'{1}\'", tipo_Entrega, guia_Remision), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 80
- await testRunner.AndAsync(string.Format(("el usuario completa la guia de remision \'{0}\' \'{1}\' \'{2}\' \'{3}\' \'{4}\' \'{5}\' \'{6}\'" +
-                            " \'{7}\' \'{8}\' \'{9}\' \'{10}\' \'{11}\'"), guia_Remision, fecha_De_Inicio_Traslado, peso_Bruto, cantidad_Bultos, tipo_Transporte, transportista_Ruc, numero_Licencia, numero_Placa, direccion_Origen, detalle_Origen, direccion_Destino, detalle_Destino), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario completa la guia de remision \'{0}\' \'{1}\' \'{2}\' \'{3}\' \'{4}\' \'{5}\' \'{6}\'" +
+                            " \'{7}\' \'{8}\' \'{9}\' \'{10}\' \'{11}\'", guia_Remision, fecha_De_Inicio_Traslado, peso_Bruto, cantidad_Bultos, tipo_Transporte, transportista_Ruc, numero_Licencia, numero_Placa, direccion_Origen, detalle_Origen, direccion_Destino, detalle_Destino), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 81
  await testRunner.AndAsync(string.Format("el usuario configura el pago \'efectivo\' \'{0}\'", monto_Cubre_Total), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -514,8 +514,8 @@ this.ScenarioInitialize(scenarioInfo);
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 102
- await testRunner.GivenAsync(string.Format(("existe un pedido base registrado para confirmar con total mayor a 700 \'{0}\' famil" +
-                            "ia \'{1}\' concepto \'{2}\' cantidad \'{3}\' cliente \'{4}\' entrega \'{5}\'"), total_Mayor_700, familia_Base, concepto_Base, cantidad_Base, cliente_Base, entrega_Base), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync(string.Format("existe un pedido base registrado para confirmar con total mayor a 700 \'{0}\' famil" +
+                            "ia \'{1}\' concepto \'{2}\' cantidad \'{3}\' cliente \'{4}\' entrega \'{5}\'", total_Mayor_700, familia_Base, concepto_Base, cantidad_Base, cliente_Base, entrega_Base), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 103
  await testRunner.WhenAsync("el usuario selecciona la opción \'Confirmar pedido\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
@@ -527,12 +527,12 @@ await this.FeatureBackgroundAsync();
  await testRunner.AndAsync(string.Format("el usuario configura la entrega \'{0}\' \'false\'", tipo_Entrega), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 106
- await testRunner.AndAsync(("el usuario completa la guia de remision \'false\' \'NA\' \'NA\' \'NA\' \'NA\' \'NA\' \'NA\' \'NA" +
-                        "\' \'NA\' \'NA\' \'NA\' \'NA\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("el usuario completa la guia de remision \'false\' \'NA\' \'NA\' \'NA\' \'NA\' \'NA\' \'NA\' \'NA" +
+                        "\' \'NA\' \'NA\' \'NA\' \'NA\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 107
- await testRunner.AndAsync(string.Format(("el usuario configura los medios de pago \'{0}\' \'{1}\' \'{2}\' \'{3}\' \'{4}\' \'{5}\' \'{6}\'" +
-                            " \'{7}\' \'{8}\' \'{9}\'"), tipo_Pago, multipago, medio_Pago, banco, tarjeta, cuenta_Bancaria, nro_Operacion, monto_Por_Medio, nro_Cuotas, monto_Inicial_Credito), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("el usuario configura los medios de pago \'{0}\' \'{1}\' \'{2}\' \'{3}\' \'{4}\' \'{5}\' \'{6}\'" +
+                            " \'{7}\' \'{8}\' \'{9}\'", tipo_Pago, multipago, medio_Pago, banco, tarjeta, cuenta_Bancaria, nro_Operacion, monto_Por_Medio, nro_Cuotas, monto_Inicial_Credito), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 108
  await testRunner.AndAsync("el usuario confirma el pedido preparado", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

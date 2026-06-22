@@ -2,6 +2,9 @@ using Reqnroll;
 using OpenQA.Selenium;
 using System;
 using OpenQA.Selenium.Support.UI;
+using System.Threading;
+using SIGES3_0.Pages.Items;
+using SIGES3_0.Pages.Items.NewItem;
 using SIGES3_0.Pages.Adquisicion;
 
 namespace SIGES3_0.StepDefinitions.AdquisicionStepDefinitions
@@ -11,40 +14,38 @@ namespace SIGES3_0.StepDefinitions.AdquisicionStepDefinitions
     {
         private readonly IWebDriver driver;
         private readonly NuevaAdquisicionPage nuevaAdquisicionPage;
+        private readonly NewItemsPage conceptosPage;
 
-        // Constructor para inyectar el WebDriver e inicializar el PageObject
         public NuevaAdquicisionStepDefinitions(IWebDriver driver)
         {
             this.driver = driver;
             nuevaAdquisicionPage = new NuevaAdquisicionPage(driver);
+            conceptosPage = new NewItemsPage(driver);
         }
 
-        // ===================== GIVEN (Inicio de Sesión) =====================
 
         [Given(@"Inicio de sesión en el módulo de Adquisición con usuario '(.*)' y contraseña '(.*)' en '(.*)'")]
         public void GivenInicioDeSesionEnAdquisicion(string usuario, string password, string url)
         {
-            // 1. Navegar
+            
             nuevaAdquisicionPage.OpenToApplication(url);
 
-            // 2. Login (Asegúrate que este método en el Page tenga el WebDriverWait para el logo)
+           
             nuevaAdquisicionPage.LoginToApplication(usuario, password);
         }
-        // ===================== GIVEN (Navegación Única) =====================
+      
 
         [Given(@"Navego al módulo de 'Adquisición'")]
         public void GivenNavegoAlModuloDeAdquisicion()
         {
-            // Llamamos al método que arreglamos, el cual gestiona ambos clics (módulo y submódulo)
-            // de forma segura esperando a que termine la animación.
+            
             nuevaAdquisicionPage.NavegarANuevaAdquisicion();
         }
 
         [Given(@"Entro al submódulo específico de 'Nueva Adquisición'")]
         public void GivenEntroAlSubmoduloEspecificoDeNuevaAdquisicion()
         {
-            // Lo dejamos vacío intencionalmente porque el clic ya se realizó en el paso anterior.
-            // Sirve para mantener la lectura natural y semántica en el archivo .feature.
+
         }
         // ===================== WHEN =====================
 
@@ -148,6 +149,35 @@ namespace SIGES3_0.StepDefinitions.AdquisicionStepDefinitions
         {
             // Llamamos al método de la página que crearemos a continuación
             nuevaAdquisicionPage.SeleccionarTipoCompra(tipoCompra);
+        }
+
+        // ===================== STEPS DEL MODAL DE NUEVO CONCEPTO =====================
+
+        [When(@"Se abre el modal de '(.*)' en la sección de productos")]
+        public void WhenSeAbreElModalDeEnLaSeccionDeProductos(string nombreModal)
+        {
+            nuevaAdquisicionPage.AbrirModalNuevoConcepto();
+        }
+
+        [When(@"Se registran los datos del nuevo concepto en el modal:")]
+        public void WhenSeRegistranLosDatosDelNuevoConceptoEnElModal(DataTable dataTable)
+        {
+            var row = dataTable.Rows[0];
+
+            conceptosPage.SeleccionarFamilia(row["familia"]);
+            conceptosPage.IngresarCodigoDeBarra(row["codigo"]);
+            conceptosPage.AgregarSufijo(row["sufijo"]);
+            conceptosPage.SeleccionarMarca(row["marca"]);
+            conceptosPage.SeleccionarPresentacion(row["presentacion"]);
+            conceptosPage.SeleccionarTarifa(row["tarifa"]);
+            conceptosPage.IngresarPrecio(row["precio"]);
+        }
+
+        [When(@"Se guarda el concepto desde el modal")]
+        public void WhenSeGuardaElConceptoDesdeElModal()
+        {
+            conceptosPage.GuardarConcepto();
+            System.Threading.Thread.Sleep(4000);
         }
 
         [When(@"Se selecciona y configura el producto a adquirir:")]
@@ -309,6 +339,8 @@ namespace SIGES3_0.StepDefinitions.AdquisicionStepDefinitions
             Assert.IsTrue(mensajeActual.Contains(mensajeEsperado, StringComparison.OrdinalIgnoreCase),
                 $"❌ El sistema mostró una alerta, pero no era la esperada. \nEsperaba: '{mensajeEsperado}' \nMostró: '{mensajeActual}'");
         }
+
+        
 
     }
 }

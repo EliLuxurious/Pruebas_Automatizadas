@@ -25,8 +25,8 @@ Then Guardar concepto
 
 Examples:
 
-| rol | familia | codigo | sufijo | umcomercial | ummedida | modulo | marca | presentacion | cantidad | tarifa | precio |
-| Insumo | HISOPO | INS0001 | Para uso médico |  |  | MOD0001 | TextilPeru | SP |  | POR UNIDAD | 15 |
+| rol    | familia | codigo  | sufijo          | umcomercial | ummedida  | modulo  | marca      | presentacion | cantidad | tarifa     |  precio actual |
+| Insumo | HISOPO  | INS0001 | Para uso médico |             |           | MOD0006 | TextilPeru | SP           |          | POR UNIDAD | 10     |
 | Item Comercial | SILLA | IC0001 | Ergonómica |  |  | MOD0001 |  | CAJA | 15 | PORMA | 60 |
 | Insumo | Harina | HA0001 | Refinada | KG | KG | MOD0001 |  | SP |  | POR UNIDAD | 45 |
 | Item Comercial | Cuaderno | CU0001 | Triple renglón |  |  | MOD0001 |  | SP |  | POR UNIDAD | 5 |

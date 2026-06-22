@@ -7,11 +7,14 @@ Scenario: Registro exitoso con Descuento por Item
 	And Navego al módulo de 'Adquisición'
 	And Entro al submódulo específico de 'Nueva Adquisición'
 	
-	When Se configuran los datos de 'Facturación':
-	| Campo                 | Valor                         |
-	| Documento             | NOTA DE COMPRA (INTERNA)      |
-	| Proveedor             | 10759012017                   |
-	| Información Adicional | Nota Exitosa                  |
+    When Se configuran los datos de 'Facturación':
+    |  Campo                | Valor                         |
+    | Documento             | BOLETA DE VENTA ELECTRONICA   |
+    | Serie                 | B005                          |
+    | Correlativo           | 00000014                      |
+    | Fecha de emisión      | 04/03/2026                    |
+    | Proveedor             | 75901201                      |
+    | Información Adicional | Boleta Exitosa                |
 
 	And Se selecciona el tipo de entrega 'Diferida'
 	And Se configuran los datos de 'Entrega':

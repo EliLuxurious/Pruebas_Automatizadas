@@ -28,7 +28,8 @@ namespace SIGES3_0.Features.Items.ChecklistAndPartEquivalenceAnalyBoundary_Items
         
         private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Items/Checklist and PartEquivalence AnalyBoundary-Items/RegisterItemData", "RegisterItemDataFeature", "Registro de Datos de Concepto ", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Items/Checklist and PartEquivalence AnalyBoundary-Items/RegisterItemData" +
+                "", "RegisterItemDataFeature", "Registro de Datos de Concepto ", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
 #line 1 "RegisterItemDataFeature.feature"
 #line hidden
@@ -99,12 +100,12 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 7
-await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 8
-await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 9
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -155,12 +156,12 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 21
-await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 22
-await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 23
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -200,14 +201,14 @@ await testRunner.ThenAsync("se guarda el registro", ((string)(null)), ((global::
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute(("Registro inválido de Familia por el no cumplimiento de campos obligatorios -  Por" +
-            "centaje de detracción faltante, Categoria faltante"))]
+        [NUnit.Framework.DescriptionAttribute("Registro inválido de Familia por el no cumplimiento de campos obligatorios -  Por" +
+            "centaje de detracción faltante, Categoria faltante")]
         public async System.Threading.Tasks.Task RegistroInvalidoDeFamiliaPorElNoCumplimientoDeCamposObligatorios_PorcentajeDeDetraccionFaltanteCategoriaFaltante()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo(("Registro inválido de Familia por el no cumplimiento de campos obligatorios -  Por" +
-                    "centaje de detracción faltante, Categoria faltante"), null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro inválido de Familia por el no cumplimiento de campos obligatorios -  Por" +
+                    "centaje de detracción faltante, Categoria faltante", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 36
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -219,12 +220,12 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 37
-await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 38
-await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 39
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -275,12 +276,12 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 52
-await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 53
-await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 54
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -325,12 +326,12 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 65
-await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 66
-await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 67
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -355,14 +356,14 @@ await testRunner.ThenAsync("se guarda el registro", ((string)(null)), ((global::
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute(("Registro inválido de Categoría por el no cumplimiento de campos obligatorios - De" +
-            "scripción faltante"))]
+        [NUnit.Framework.DescriptionAttribute("Registro inválido de Categoría por el no cumplimiento de campos obligatorios - De" +
+            "scripción faltante")]
         public async System.Threading.Tasks.Task RegistroInvalidoDeCategoriaPorElNoCumplimientoDeCamposObligatorios_DescripcionFaltante()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo(("Registro inválido de Categoría por el no cumplimiento de campos obligatorios - De" +
-                    "scripción faltante"), null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro inválido de Categoría por el no cumplimiento de campos obligatorios - De" +
+                    "scripción faltante", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 76
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -374,12 +375,12 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 77
-await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 78
-await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 79
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -421,12 +422,12 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 89
-await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 90
-await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 91
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -444,8 +445,8 @@ await testRunner.AndAsync("el usuario ingresa el codigo de presentación \"PRE01
 await testRunner.AndAsync("el usuario ingresa el nombre de presentación \"Blister\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 96
-await testRunner.AndAsync(("el usuario ingresa la descripcion de presentación \"Presentación en empaque plásti" +
-                        "co sellado\""), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+await testRunner.AndAsync("el usuario ingresa la descripcion de presentación \"Presentación en empaque plásti" +
+                        "co sellado\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 97
 await testRunner.ThenAsync("se guarda el registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
@@ -455,14 +456,14 @@ await testRunner.ThenAsync("se guarda el registro", ((string)(null)), ((global::
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute(("Registro exitoso de Característica Propia por el cumplimiento de campos obligator" +
-            "ios"))]
+        [NUnit.Framework.DescriptionAttribute("Registro exitoso de Característica Propia por el cumplimiento de campos obligator" +
+            "ios")]
         public async System.Threading.Tasks.Task RegistroExitosoDeCaracteristicaPropiaPorElCumplimientoDeCamposObligatorios()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo(("Registro exitoso de Característica Propia por el cumplimiento de campos obligator" +
-                    "ios"), null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro exitoso de Característica Propia por el cumplimiento de campos obligator" +
+                    "ios", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 101
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -474,12 +475,12 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 102
-await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 103
-await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 104
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -510,14 +511,14 @@ await testRunner.ThenAsync("se guarda el registro", ((string)(null)), ((global::
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute(("Registro inválido de Característica Propia por el no cumplimiento de campos oblig" +
-            "atorios - Tipo de Texto faltante"))]
+        [NUnit.Framework.DescriptionAttribute("Registro inválido de Característica Propia por el no cumplimiento de campos oblig" +
+            "atorios - Tipo de Texto faltante")]
         public async System.Threading.Tasks.Task RegistroInvalidoDeCaracteristicaPropiaPorElNoCumplimientoDeCamposObligatorios_TipoDeTextoFaltante()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo(("Registro inválido de Característica Propia por el no cumplimiento de campos oblig" +
-                    "atorios - Tipo de Texto faltante"), null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro inválido de Característica Propia por el no cumplimiento de campos oblig" +
+                    "atorios - Tipo de Texto faltante", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 115
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -529,12 +530,12 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 116
-await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 117
-await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 118
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -562,14 +563,14 @@ await testRunner.ThenAsync("no se guarda el registro", ((string)(null)), ((globa
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute(("Registro exitoso de Característica Común por el cumplimiento de campos obligatori" +
-            "os"))]
+        [NUnit.Framework.DescriptionAttribute("Registro exitoso de Característica Común por el cumplimiento de campos obligatori" +
+            "os")]
         public async System.Threading.Tasks.Task RegistroExitosoDeCaracteristicaComunPorElCumplimientoDeCamposObligatorios()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo(("Registro exitoso de Característica Común por el cumplimiento de campos obligatori" +
-                    "os"), null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro exitoso de Característica Común por el cumplimiento de campos obligatori" +
+                    "os", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 128
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -581,12 +582,12 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 129
-await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 130
-await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 131
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -628,12 +629,12 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 141
-await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 142
-await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 143
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -678,12 +679,12 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 154
-await testRunner.GivenAsync(("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
-                        "uth/login\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+await testRunner.GivenAsync("el usuario ingresa al ambiente \'https://sigesdev.newfrontdev-qa.sigesonline.com/a" +
+                        "uth/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 155
-await testRunner.WhenAsync(("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
-                        "d\'"), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await testRunner.WhenAsync("el usuario inicia sesión con usuario \'pamela.tone@recsa.com\' y contraseña \'calida" +
+                        "d\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 156
 await testRunner.AndAsync("el usuario accede al módulo Conceptos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
