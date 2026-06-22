@@ -50,8 +50,8 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             _reportesPage.SeleccionarComprobanteSerie(valor);
         }
 
-        [When("selecciona el punto de venta {string}")]
-        public void WhenSeleccionaElPuntoDeVenta(string puntoVenta)
+        [When("selecciona el punto de venta en reporte {string}")]
+        public void WhenSeleccionaElPuntoDeVentaEnReporte(string puntoVenta)
         {
             _reportesPage.SeleccionarPuntoVenta(puntoVenta);
         }
@@ -62,14 +62,15 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             _reportesPage.SeleccionarFamilia(familia);
         }
 
-        [When("selecciona la característica {string} en la tarjeta {string}")]
+        [When("selecciona la caracterÃ­stica {string} en la tarjeta {string}")]
+        [When("selecciona la caracteristica {string} en la tarjeta {string}")]
         public void WhenSeleccionaLaCaracteristicaEnLaTarjeta(string caracteristica, string tarjeta)
         {
             _reportesPage.SeleccionarCaracteristica(caracteristica, tarjeta);
         }
 
-        [When("selecciona el vendedor {string}")]
-        public void WhenSeleccionaElVendedor(string vendedor)
+        [When("selecciona el vendedor en reporte {string}")]
+        public void WhenSeleccionaElVendedorEnReporte(string vendedor)
         {
             _reportesPage.SeleccionarVendedor(vendedor);
         }
@@ -120,7 +121,7 @@ namespace SIGES3_0.StepDefinitions.VentasStep
         [Then("el sistema genera el reporte exitosamente")]
         public void ThenElSistemaGeneraElReporteExitosamente()
         {
-            Assert.IsTrue(_reportesPage.VerificarReporteGenerado(), "El reporte no se genero exitosamente.");
+            _reportesPage.ValidarReporteGeneradoConContenidoYFechas();
         }
     }
 }

@@ -1,4 +1,4 @@
-using SIGES3_0.Utility;
+﻿using SIGES3_0.Utility;
 using AventStack.ExtentReports;
 using AventStack.ExtentReports.Gherkin.Model;
 using OpenQA.Selenium;
@@ -57,13 +57,7 @@ namespace SIGES3_0.Hooks
         public void FirstBeforeScenario(ScenarioContext scenarioContext)
         {
 
-            var options = new ChromeOptions();
-            options.AddArgument("--start-maximized");
-            IWebDriver driver = new ChromeDriver(options);
-
-            //IWebDriver driver = CreateChromeDriver();
-            //driver.Manage().Window.Maximize();
-            _ = CreateChromeDriver();
+            IWebDriver driver = CreateChromeDriver();
             driver.Manage().Window.Maximize();
 
 
@@ -156,28 +150,28 @@ namespace SIGES3_0.Hooks
             }
         }
 
-        private static IWebDriver CreateChromeDriver()
-        {
-            var chromeOptions = new ChromeOptions();
-            var chromeBinary = ResolveChromeBinary();
-            if (!string.IsNullOrEmpty(chromeBinary))
-            {
-                chromeOptions.BinaryLocation = chromeBinary;
-            }
+        //private static IWebDriver CreateChromeDriver()
+        //{
+        //    var chromeOptions = new ChromeOptions();
+        //    var chromeBinary = ResolveChromeBinary();
+        //    if (!string.IsNullOrEmpty(chromeBinary))
+        //    {
+        //        chromeOptions.BinaryLocation = chromeBinary;
+        //    }
 
-            chromeOptions.AddArgument("--disable-search-engine-choice-screen");
-            chromeOptions.AddArgument("--no-first-run");
-            chromeOptions.AddArgument("--disable-dev-shm-usage");
+        //    chromeOptions.AddArgument("--disable-search-engine-choice-screen");
+        //    chromeOptions.AddArgument("--no-first-run");
+        //    chromeOptions.AddArgument("--disable-dev-shm-usage");
 
-            var driverDirectory = ResolveChromeDriverDirectory();
-            if (!string.IsNullOrEmpty(driverDirectory))
-            {
-                var service = ChromeDriverService.CreateDefaultService(driverDirectory);
-                return new ChromeDriver(service, chromeOptions);
-            }
+        //    var driverDirectory = ResolveChromeDriverDirectory();
+        //    if (!string.IsNullOrEmpty(driverDirectory))
+        //    {
+        //        var service = ChromeDriverService.CreateDefaultService(driverDirectory);
+        //        return new ChromeDriver(service, chromeOptions);
+        //    }
 
-            return new ChromeDriver(chromeOptions);
-        }
+        //    return new ChromeDriver(chromeOptions);
+        //}
 
         private static string ResolveChromeBinary()
         {

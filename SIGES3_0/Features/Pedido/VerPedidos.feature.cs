@@ -152,9 +152,8 @@ await this.FeatureBackgroundAsync();
 #line 50
  await testRunner.AndAsync("el usuario selecciona la opción \'Nuevo Pedido\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 51
- await testRunner.AndAsync(string.Format("el usuario prepara producto para pedido con familia \'{0}\' concepto \'{1}\' cantidad" +
-                            " \'{2}\' resultado \'{3}\'", familia, concepto, cantidad, resultado_Esperado), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 22
+ await testRunner.AndAsync(string.Format("el usuario ingresa la cantidad \'{0}\'", cantidad), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 52
  await testRunner.AndAsync(string.Format("el usuario activa IGV \'{0}\'", igv), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
