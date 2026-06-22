@@ -25,7 +25,18 @@ namespace FLOTA_VEHICULAR.Pages.Helpers
 
         public void EnterText(By _path, string _field)
         {
-            driver.FindElement(_path).SendKeys(_field);
+            var element = driver.FindElement(_path);
+
+            
+            element.Clear();
+
+           
+            element.SendKeys(Keys.Control + "a");
+            element.SendKeys(Keys.Backspace);
+
+           
+            element.SendKeys(_field);
+
             Thread.Sleep(4000);
         }
 
