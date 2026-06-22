@@ -27,17 +27,16 @@ namespace FLOTA_VEHICULAR.Pages.Helpers
         {
             var element = driver.FindElement(_path);
 
-            // 1. Intentamos el borrado normal
+            
             element.Clear();
 
-            // 2. Truco letal para Angular: Seleccionar todo (Ctrl+A) y borrar (Backspace)
+           
             element.SendKeys(Keys.Control + "a");
             element.SendKeys(Keys.Backspace);
 
-            // 3. Escribimos el nuevo texto
+           
             element.SendKeys(_field);
 
-            // Mantenemos tus 4 segundos de espera
             Thread.Sleep(4000);
         }
 

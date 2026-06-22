@@ -27,4 +27,10 @@
     <Folder Include="Support\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestData\factura.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

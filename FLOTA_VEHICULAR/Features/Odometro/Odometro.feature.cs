@@ -116,53 +116,53 @@ namespace FLOTA_VEHICULAR.Features.Odometro
 #line 16
         await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table1 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table26 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table1.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "PLACA",
                             "ONO123"});
-                table1.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "AREA ASIGNADA",
                             "DPAM"});
-                table1.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "PROPIETARIO",
                             "MIMP"});
-                table1.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "MARCA",
                             "DAEWOO"});
-                table1.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "MODELO",
                             "TICO SL"});
-                table1.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "AÑO",
                             "2026"});
-                table1.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "TIPO DE VEHICULO",
                             "AUTOMOVIL"});
-                table1.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "CLASIFICADOR",
                             "ALTA"});
-                table1.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "COLOR",
                             "ROJO"});
-                table1.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "NUMERO MOTOR",
                             "ENG998877"});
-                table1.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "TIPO COMBUSTIBLE",
                             "G-90"});
-                table1.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "TIPO MOTOR",
                             "COMBUSTIBLE"});
-                table1.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "RANGO CONSUMO",
                             "45"});
-                table1.AddRow(new string[] {
+                table26.AddRow(new string[] {
                             "NUMERO SERIE",
                             "ABCD123456789012A"});
 #line 18
-        await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table1, "When ");
+        await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table26, "When ");
 #line hidden
 #line 35
         await testRunner.ThenAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");

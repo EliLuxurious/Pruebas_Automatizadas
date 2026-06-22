@@ -116,53 +116,53 @@ this.ScenarioInitialize(scenarioInfo);
 #line 10
     await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table2 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table27 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table2.AddRow(new string[] {
+                table27.AddRow(new string[] {
                             "PLACA",
                             "ANTONI"});
-                table2.AddRow(new string[] {
+                table27.AddRow(new string[] {
                             "AREA ASIGNADA",
                             "DPAM"});
-                table2.AddRow(new string[] {
+                table27.AddRow(new string[] {
                             "PROPIETARIO",
                             "MIMP"});
-                table2.AddRow(new string[] {
+                table27.AddRow(new string[] {
                             "MARCA",
-                            "DAEWOO"});
-                table2.AddRow(new string[] {
+                            "KIA"});
+                table27.AddRow(new string[] {
                             "MODELO",
-                            "TICO SL"});
-                table2.AddRow(new string[] {
+                            "RIO"});
+                table27.AddRow(new string[] {
                             "AÑO",
                             "2026"});
-                table2.AddRow(new string[] {
+                table27.AddRow(new string[] {
                             "TIPO DE VEHICULO",
                             "AUTOMOVIL"});
-                table2.AddRow(new string[] {
+                table27.AddRow(new string[] {
                             "CLASIFICADOR",
                             "ALTA"});
-                table2.AddRow(new string[] {
+                table27.AddRow(new string[] {
                             "COLOR",
                             "ROJO"});
-                table2.AddRow(new string[] {
+                table27.AddRow(new string[] {
                             "NUMERO MOTOR",
                             "ENG998877"});
-                table2.AddRow(new string[] {
+                table27.AddRow(new string[] {
                             "TIPO COMBUSTIBLE",
                             "G-90"});
-                table2.AddRow(new string[] {
+                table27.AddRow(new string[] {
                             "TIPO MOTOR",
                             "COMBUSTIBLE"});
-                table2.AddRow(new string[] {
+                table27.AddRow(new string[] {
                             "RANGO CONSUMO",
                             "45"});
-                table2.AddRow(new string[] {
+                table27.AddRow(new string[] {
                             "NUMERO SERIE",
                             "ABCD123456789012A"});
 #line 12
-    await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table2, "When ");
+    await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table27, "When ");
 #line hidden
 #line 29
     await testRunner.ThenAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
@@ -180,7 +180,7 @@ this.ScenarioInitialize(scenarioInfo);
                     "BajaVehiculo"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de baja a un vehículo existente", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 33
+#line 34
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -190,31 +190,31 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 34
+#line 35
     await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
                         "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 35
+#line 36
     await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
                         "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 37
+#line 38
     await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 39
-    await testRunner.WhenAsync("Se busca el vehículo por placa \"HOLAAA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
 #line 40
-    await testRunner.AndAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.WhenAsync("Se busca el vehículo por placa \"EGM303\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 41
-    await testRunner.AndAsync("Se hace clic en dar de baja", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 42
+    await testRunner.AndAsync("Se hace clic en dar de baja", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 43
     await testRunner.AndAsync("Se ingresan las observaciones \"Vehículo en mal estado técnico, se procede a dar d" +
                         "e baja definitiva.\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 43
+#line 44
     await testRunner.ThenAsync("Se confirma la baja del vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -230,7 +230,7 @@ this.ScenarioInitialize(scenarioInfo);
                     "EditarVehiculo"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar un vehículo existente", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 47
+#line 48
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -240,73 +240,2243 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 48
+#line 49
         await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
                         "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 49
+#line 50
         await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
                         "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 51
+#line 52
         await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 54
-        await testRunner.WhenAsync("Se busca el vehículo por placa \"688IKJ\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
 #line 55
+        await testRunner.WhenAsync("Se busca el vehículo por placa \"EGG337\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 56
         await testRunner.AndAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 58
+#line 59
         await testRunner.AndAsync("Se hace clic en editar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-                global::Reqnroll.Table table3 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table28 = new global::Reqnroll.Table(new string[] {
                             "Campo",
                             "Valor"});
-                table3.AddRow(new string[] {
+                table28.AddRow(new string[] {
                             "AREA ASIGNADA",
-                            "UPE LIMA ESTE"});
-                table3.AddRow(new string[] {
+                            "DPAM"});
+                table28.AddRow(new string[] {
                             "PROPIETARIO",
                             "PCM"});
-                table3.AddRow(new string[] {
+                table28.AddRow(new string[] {
                             "MARCA",
                             "KIA"});
-                table3.AddRow(new string[] {
+                table28.AddRow(new string[] {
                             "MODELO",
                             "RIO"});
-                table3.AddRow(new string[] {
+                table28.AddRow(new string[] {
                             "AÑO",
                             "2025"});
-                table3.AddRow(new string[] {
+                table28.AddRow(new string[] {
                             "TIPO DE VEHICULO",
-                            "CAMIONETA RURAL"});
-                table3.AddRow(new string[] {
+                            "AUTOMOVIL"});
+                table28.AddRow(new string[] {
                             "CLASIFICADOR",
                             "MEDIA"});
-                table3.AddRow(new string[] {
+                table28.AddRow(new string[] {
                             "COLOR",
                             "AZUL"});
-                table3.AddRow(new string[] {
+                table28.AddRow(new string[] {
                             "NUMERO MOTOR",
                             "NUEVOENG123"});
-                table3.AddRow(new string[] {
+                table28.AddRow(new string[] {
                             "TIPO COMBUSTIBLE",
                             "G-95"});
-                table3.AddRow(new string[] {
+                table28.AddRow(new string[] {
                             "TIPO MOTOR",
                             "BI-COMBUSTIBLE"});
-                table3.AddRow(new string[] {
+                table28.AddRow(new string[] {
                             "RANGO CONSUMO",
                             "50"});
-                table3.AddRow(new string[] {
+                table28.AddRow(new string[] {
                             "NUMERO SERIE",
-                            "NUEVOSERIE98765A"});
-#line 61
-        await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table3, "When ");
+                            "NUEVOSERIE9876"});
+#line 62
+        await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table28, "When ");
 #line hidden
-#line 78
+#line 79
         await testRunner.ThenAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar nuevo vehículo con placa existente en estado DEBAJA")]
+        [NUnit.Framework.CategoryAttribute("FlujoCompletoPlacaDeBaja")]
+        public async System.Threading.Tasks.Task RegistrarNuevoVehiculoConPlacaExistenteEnEstadoDEBAJA()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "FlujoCompletoPlacaDeBaja"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo vehículo con placa existente en estado DEBAJA", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 83
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 85
+    await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 86
+    await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 87
+    await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 88
+    await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table29 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table29.AddRow(new string[] {
+                            "PLACA",
+                            "OLC009"});
+                table29.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table29.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table29.AddRow(new string[] {
+                            "MARCA",
+                            "DAEWOO"});
+                table29.AddRow(new string[] {
+                            "MODELO",
+                            "RIO"});
+                table29.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table29.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table29.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "ALTA"});
+                table29.AddRow(new string[] {
+                            "COLOR",
+                            "ROJO"});
+                table29.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "MOTOR-TEMP-01"});
+                table29.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table29.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table29.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "45"});
+                table29.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "SERIETEMP001FF"});
+#line 89
+    await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table29, "When ");
+#line hidden
+#line 105
+    await testRunner.AndAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 108
+    await testRunner.AndAsync("Se busca el vehículo por placa \"OLC009\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 109
+    await testRunner.AndAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 110
+    await testRunner.AndAsync("Se hace clic en dar de baja", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 111
+    await testRunner.AndAsync("Se ingresan las observaciones \"Baja técnica para probar reasignación de placa.\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 112
+    await testRunner.AndAsync("Se confirma la baja del vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 113
+    await testRunner.AndAsync("Se cierra la ventana de detalles", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 116
+    await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 117
+    await testRunner.WhenAsync("se ingresa la placa \"OLC009\" y se valida que no exista el error de duplicado", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+                global::Reqnroll.Table table30 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table30.AddRow(new string[] {
+                            "PLACA",
+                            "OLD009"});
+                table30.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table30.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table30.AddRow(new string[] {
+                            "MARCA",
+                            "HYUNDAI"});
+                table30.AddRow(new string[] {
+                            "MODELO",
+                            "SONATA"});
+                table30.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table30.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table30.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "MEDIA"});
+                table30.AddRow(new string[] {
+                            "COLOR",
+                            "BLANCO"});
+                table30.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "MTRNUEVO02"});
+                table30.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table30.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table30.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "405"});
+                table30.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "SERIE123456789"});
+#line 118
+    await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table30, "And ");
+#line hidden
+#line 135
+    await testRunner.ThenAsync("el botón GUARDAR debe estar habilitado para permitir la reasignación", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 136
+    await testRunner.AndAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("No permitir el registro de un vehículo con placa ya existente y ACTIVA")]
+        [NUnit.Framework.CategoryAttribute("ValidarPlacaDuplicadaActiva")]
+        public async System.Threading.Tasks.Task NoPermitirElRegistroDeUnVehiculoConPlacaYaExistenteYACTIVA()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "ValidarPlacaDuplicadaActiva"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("No permitir el registro de un vehículo con placa ya existente y ACTIVA", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 140
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 142
+    await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 143
+    await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 144
+    await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 145
+    await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table31 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table31.AddRow(new string[] {
+                            "PLACA",
+                            "ACT011"});
+                table31.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table31.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table31.AddRow(new string[] {
+                            "MARCA",
+                            "TOYOTA"});
+                table31.AddRow(new string[] {
+                            "MODELO",
+                            "RIO"});
+                table31.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table31.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table31.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "ALTA"});
+                table31.AddRow(new string[] {
+                            "COLOR",
+                            "NEGRO"});
+                table31.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "MOTOR-ACT-01"});
+                table31.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table31.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table31.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "50"});
+                table31.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "SERIEACT018888"});
+#line 146
+    await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table31, "When ");
+#line hidden
+#line 162
+    await testRunner.AndAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 165
+    await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 168
+    await testRunner.WhenAsync("se ingresa la placa \"ACT011\" y el sistema debe mostrar error de duplicado por est" +
+                        "ar ACTIVO", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 171
+    await testRunner.ThenAsync("el botón GUARDAR debe estar deshabilitado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar nuevo vehículo con número de motor de un vehículo dado de baja")]
+        [NUnit.Framework.CategoryAttribute("FlujoCompletoMotorDeBaja")]
+        public async System.Threading.Tasks.Task RegistrarNuevoVehiculoConNumeroDeMotorDeUnVehiculoDadoDeBaja()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "FlujoCompletoMotorDeBaja"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar nuevo vehículo con número de motor de un vehículo dado de baja", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 175
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 177
+    await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 178
+    await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 179
+    await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 180
+    await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table32 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table32.AddRow(new string[] {
+                            "PLACA",
+                            "REU558"});
+                table32.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table32.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table32.AddRow(new string[] {
+                            "MARCA",
+                            "DAEWOO"});
+                table32.AddRow(new string[] {
+                            "MODELO",
+                            "TICO SL"});
+                table32.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table32.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table32.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "ALTA"});
+                table32.AddRow(new string[] {
+                            "COLOR",
+                            "ROJO"});
+                table32.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "MOTOR-REUTILIZAR"});
+                table32.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table32.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table32.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "45"});
+                table32.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "SERIE9988776655AA"});
+#line 181
+    await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table32, "When ");
+#line hidden
+#line 197
+    await testRunner.AndAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 200
+    await testRunner.AndAsync("Se busca el vehículo por placa \"REU558\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 201
+    await testRunner.AndAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 202
+    await testRunner.AndAsync("Se hace clic en dar de baja", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 203
+    await testRunner.AndAsync("Se ingresan las observaciones \"Baja técnica para prueba de reutilización de motor" +
+                        ".\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 204
+    await testRunner.AndAsync("Se confirma la baja del vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 205
+    await testRunner.AndAsync("Se cierra la ventana de detalles", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 207
+    await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table33 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table33.AddRow(new string[] {
+                            "PLACA",
+                            "NVA999"});
+                table33.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table33.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "INCAUTADO"});
+                table33.AddRow(new string[] {
+                            "MARCA",
+                            "KIA"});
+                table33.AddRow(new string[] {
+                            "MODELO",
+                            "RIO"});
+                table33.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table33.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table33.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "MEDIA"});
+                table33.AddRow(new string[] {
+                            "COLOR",
+                            "AZUL"});
+                table33.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "MOTOR-REUTILIZAR"});
+                table33.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-95"});
+                table33.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table33.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "50"});
+                table33.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "SERIENUEVA1234"});
+#line 208
+    await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table33, "When ");
+#line hidden
+#line 224
+    await testRunner.ThenAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 225
+    await testRunner.AndAsync("El sistema valida que el motor \"MOTOR-REUTILIZAR\" es aceptado por estar DE BAJA", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar vehiculo con motor ya existente en estado ACTIVO")]
+        [NUnit.Framework.CategoryAttribute("ValidarMotorDuplicadoActivo")]
+        public async System.Threading.Tasks.Task RegistrarVehiculoConMotorYaExistenteEnEstadoACTIVO()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "ValidarMotorDuplicadoActivo"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar vehiculo con motor ya existente en estado ACTIVO", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 229
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 231
+    await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 232
+    await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 233
+    await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 234
+    await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table34 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table34.AddRow(new string[] {
+                            "PLACA",
+                            "BOL123"});
+                table34.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table34.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table34.AddRow(new string[] {
+                            "MARCA",
+                            "KIA"});
+                table34.AddRow(new string[] {
+                            "MODELO",
+                            "RIO"});
+                table34.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table34.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table34.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "MEDIA"});
+                table34.AddRow(new string[] {
+                            "COLOR",
+                            "NEGRO"});
+                table34.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "MTR999"});
+                table34.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table34.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table34.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "100"});
+                table34.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "1GNEK1234567890AB"});
+#line 235
+    await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table34, "When ");
+#line hidden
+#line 251
+    await testRunner.AndAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 254
+    await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table35 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table35.AddRow(new string[] {
+                            "PLACA",
+                            "XAZ557"});
+                table35.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table35.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table35.AddRow(new string[] {
+                            "MARCA",
+                            "KIA"});
+                table35.AddRow(new string[] {
+                            "MODELO",
+                            "RIO"});
+                table35.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table35.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table35.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "MEDIA"});
+                table35.AddRow(new string[] {
+                            "COLOR",
+                            "NEGRO"});
+                table35.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "MTR999"});
+                table35.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table35.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table35.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "100"});
+                table35.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "2GNEK0000000000XX"});
+#line 255
+    await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table35, "When ");
+#line hidden
+#line 271
+    await testRunner.ThenAsync("el botón GUARDAR debe permanecer inhabilitado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registro de  vehículo con motor ya existente en estado ACTIVO")]
+        [NUnit.Framework.CategoryAttribute("ValidarMotorDuplicadoActivo")]
+        public async System.Threading.Tasks.Task RegistroDeVehiculoConMotorYaExistenteEnEstadoACTIVO()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "ValidarMotorDuplicadoActivo"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registro de  vehículo con motor ya existente en estado ACTIVO", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 275
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 277
+    await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 278
+    await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 279
+    await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 280
+    await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table36 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table36.AddRow(new string[] {
+                            "PLACA",
+                            "MTR-116"});
+                table36.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table36.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table36.AddRow(new string[] {
+                            "MARCA",
+                            "NISSAN"});
+                table36.AddRow(new string[] {
+                            "MODELO",
+                            "RIO"});
+                table36.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table36.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table36.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "MEDIA"});
+                table36.AddRow(new string[] {
+                            "COLOR",
+                            "PLATA"});
+                table36.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "MOTOR-BLOQUEADO"});
+                table36.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table36.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table36.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "40"});
+                table36.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "SERIEUNICA0100"});
+#line 281
+    await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table36, "When ");
+#line hidden
+#line 297
+    await testRunner.AndAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 300
+    await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table37 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table37.AddRow(new string[] {
+                            "PLACA",
+                            "MTR-222"});
+                table37.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table37.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table37.AddRow(new string[] {
+                            "MARCA",
+                            "NISSAN"});
+                table37.AddRow(new string[] {
+                            "MODELO",
+                            "RIO"});
+                table37.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table37.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table37.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "MEDIA"});
+                table37.AddRow(new string[] {
+                            "COLOR",
+                            "PLATA"});
+                table37.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "MOTOR-BLOQUEADO"});
+                table37.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table37.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table37.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "40"});
+                table37.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "SERIEUNICA0001"});
+#line 301
+    await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table37, "And ");
+#line hidden
+#line 320
+    await testRunner.WhenAsync("se ingresa el motor \"MOTOR-BLOQUEADO\" y el sistema debe impedir el registro por e" +
+                        "star asociado a un vehículo ACTIVO", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 322
+    await testRunner.ThenAsync("el botón GUARDAR debe estar deshabilitado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar y luego validar que edición sin cambios mantenga el botón bloqueado")]
+        [NUnit.Framework.CategoryAttribute("ValidarEdicionCompleta")]
+        public async System.Threading.Tasks.Task RegistrarYLuegoValidarQueEdicionSinCambiosMantengaElBotonBloqueado()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "ValidarEdicionCompleta"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar y luego validar que edición sin cambios mantenga el botón bloqueado", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 326
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 328
+    await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 329
+    await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 330
+    await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 331
+    await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table38 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table38.AddRow(new string[] {
+                            "PLACA",
+                            "EAI77S"});
+                table38.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table38.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table38.AddRow(new string[] {
+                            "MARCA",
+                            "NISSAN"});
+                table38.AddRow(new string[] {
+                            "MODELO",
+                            "RIO"});
+                table38.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table38.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table38.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "MEDIA"});
+                table38.AddRow(new string[] {
+                            "COLOR",
+                            "NEGRO"});
+                table38.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "MTR-EDIT-99"});
+                table38.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table38.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table38.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "100"});
+                table38.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "SERIEYEDITT99HH"});
+#line 332
+    await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table38, "When ");
+#line hidden
+#line 348
+    await testRunner.AndAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 351
+    await testRunner.AndAsync("Se busca el vehículo por placa \"EAI77S\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 352
+    await testRunner.AndAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 353
+    await testRunner.AndAsync("Se hace clic en editar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 354
+    await testRunner.ThenAsync("el botón GUARDAR debe permanecer inhabilitado por falta de cambios", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Editar campos de vehiculo en estado ACTIVO")]
+        [NUnit.Framework.CategoryAttribute("EditarVehiculo_CP007")]
+        public async System.Threading.Tasks.Task EditarCamposDeVehiculoEnEstadoACTIVO()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "EditarVehiculo_CP007"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar campos de vehiculo en estado ACTIVO", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 357
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 358
+    await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 359
+    await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 360
+    await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 363
+    await testRunner.AndAsync("Se busca el vehículo por placa \"EAI77S\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 364
+    await testRunner.AndAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 365
+    await testRunner.AndAsync("Se hace clic en editar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table39 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table39.AddRow(new string[] {
+                            "COLOR",
+                            "BLANCO"});
+#line 368
+    await testRunner.WhenAsync("Se ingresan los datos del vehículo:", ((string)(null)), table39, "When ");
+#line hidden
+#line 373
+    await testRunner.ThenAsync("el botón GUARDAR debe habilitarse al detectar cambios en el formulario", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 374
+    await testRunner.AndAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Editar vehiculo con estado de registro ACTIVO y AVERIADO")]
+        [NUnit.Framework.CategoryAttribute("EditarVehiculoAveriado_CP014")]
+        public async System.Threading.Tasks.Task EditarVehiculoConEstadoDeRegistroACTIVOYAVERIADO()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "EditarVehiculoAveriado_CP014"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar vehiculo con estado de registro ACTIVO y AVERIADO", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 378
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 382
+  await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 383
+  await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 384
+  await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 385
+  await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table40 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table40.AddRow(new string[] {
+                            "PLACA",
+                            "AVEE77"});
+                table40.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table40.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table40.AddRow(new string[] {
+                            "MARCA",
+                            "TOYOTA"});
+                table40.AddRow(new string[] {
+                            "MODELO",
+                            "RIO"});
+                table40.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table40.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table40.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "ALTA"});
+                table40.AddRow(new string[] {
+                            "COLOR",
+                            "NEGRO"});
+                table40.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "MTR-AVEE-77"});
+                table40.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table40.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table40.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "50"});
+                table40.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "SERIEAVEEUU77X"});
+#line 386
+  await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table40, "And ");
+#line hidden
+#line 402
+  await testRunner.AndAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 407
+  await testRunner.AndAsync("Se busca el vehículo por placa \"AVEE77\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 408
+  await testRunner.AndAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 409
+  await testRunner.AndAsync("se hace clic en reportar avería", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 410
+  await testRunner.AndAsync("se ingresan las observaciones de avería \"Vehículo averiado para prueba de edición" +
+                        " CP014.\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 411
+  await testRunner.AndAsync("se confirma el reporte de la avería", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 412
+  await testRunner.AndAsync("Se cierra la ventana de detalles", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 417
+  await testRunner.WhenAsync("Se busca el vehículo por placa \"AVEE77\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 418
+  await testRunner.AndAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 420
+  await testRunner.AndAsync("Se hace clic en editar", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table41 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table41.AddRow(new string[] {
+                            "COLOR",
+                            "BLANCO"});
+#line 425
+  await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table41, "And ");
+#line hidden
+#line 428
+  await testRunner.ThenAsync("el botón GUARDAR debe habilitarse al detectar cambios en el formulario", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 429
+  await testRunner.AndAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Editar vehiculos con estado de registro DE BAJA")]
+        [NUnit.Framework.CategoryAttribute("SeguridadEstadoBaja_CP008")]
+        public async System.Threading.Tasks.Task EditarVehiculosConEstadoDeRegistroDEBAJA()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "SeguridadEstadoBaja_CP008"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar vehiculos con estado de registro DE BAJA", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 434
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 436
+    await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 437
+    await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 438
+    await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 439
+    await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table42 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table42.AddRow(new string[] {
+                            "PLACA",
+                            "BAJA01"});
+                table42.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table42.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table42.AddRow(new string[] {
+                            "MARCA",
+                            "NISSAN"});
+                table42.AddRow(new string[] {
+                            "MODELO",
+                            "RIO"});
+                table42.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table42.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table42.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "MEDIA"});
+                table42.AddRow(new string[] {
+                            "COLOR",
+                            "NEGRO"});
+                table42.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "MTR-EDIT-99"});
+                table42.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table42.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table42.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "100"});
+                table42.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "SERIEYEDITT99H"});
+#line 440
+    await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table42, "And ");
+#line hidden
+#line 457
+    await testRunner.AndAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 460
+    await testRunner.AndAsync("Se busca el vehículo por placa \"BAJA01\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 461
+    await testRunner.AndAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 462
+    await testRunner.AndAsync("Se hace clic en dar de baja", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 463
+    await testRunner.AndAsync("Se ingresan las observaciones \"Prueba de seguridad CP008.\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 464
+    await testRunner.AndAsync("Se confirma la baja del vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 465
+    await testRunner.AndAsync("Se cierra la ventana de detalles", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 468
+    await testRunner.AndAsync("Se busca el vehículo por placa \"BAJA01\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 469
+    await testRunner.AndAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 470
+    await testRunner.ThenAsync("el sistema no debe mostrar la opción de editar para vehículos con estado de baja", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Rertortar avería en vehiculo con estado operativo")]
+        [NUnit.Framework.CategoryAttribute("FlujoCompleto_ReportarAveria_CP009")]
+        public async System.Threading.Tasks.Task RertortarAveriaEnVehiculoConEstadoOperativo()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "FlujoCompleto_ReportarAveria_CP009"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Rertortar avería en vehiculo con estado operativo", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 476
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 478
+  await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 479
+  await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 480
+  await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 481
+  await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table43 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table43.AddRow(new string[] {
+                            "PLACA",
+                            "AVE008"});
+                table43.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table43.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table43.AddRow(new string[] {
+                            "MARCA",
+                            "KIA"});
+                table43.AddRow(new string[] {
+                            "MODELO",
+                            "RIO"});
+                table43.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table43.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table43.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "MEDIA"});
+                table43.AddRow(new string[] {
+                            "COLOR",
+                            "NEGRO"});
+                table43.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "MTRAVERIA005"});
+                table43.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table43.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table43.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "100"});
+                table43.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "SERIEAVE005XJJ"});
+#line 482
+  await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table43, "And ");
+#line hidden
+#line 498
+  await testRunner.AndAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 501
+  await testRunner.AndAsync("Se busca el vehículo por placa \"AVE008\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 502
+  await testRunner.ThenAsync("al buscar la placa \"AVE008\" en la bandeja, su estado debe ser \"OPERATIVO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 504
+  await testRunner.WhenAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 505
+  await testRunner.AndAsync("se hace clic en reportar avería", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 506
+  await testRunner.AndAsync("se ingresan las observaciones de avería \"Vehículo presenta fallas en el motor (Pr" +
+                        "ueba QA).\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 507
+  await testRunner.AndAsync("se confirma el reporte de la avería", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 508
+  await testRunner.AndAsync("Se cierra la ventana de detalles", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 510
+  await testRunner.AndAsync("Se busca el vehículo por placa \"AVE008\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 511
+  await testRunner.ThenAsync("al buscar la placa \"AVE008\" en la bandeja, su estado debe ser \"AVERIADO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar reparación y verificar cambio de estado de AVERIADO a OPERATIVO")]
+        [NUnit.Framework.CategoryAttribute("FlujoCompleto_Reparacion_CP010")]
+        public async System.Threading.Tasks.Task RegistrarReparacionYVerificarCambioDeEstadoDeAVERIADOAOPERATIVO()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "FlujoCompleto_Reparacion_CP010"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar reparación y verificar cambio de estado de AVERIADO a OPERATIVO", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 515
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 519
+  await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 520
+  await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 521
+  await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 522
+  await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table44 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table44.AddRow(new string[] {
+                            "PLACA",
+                            "REP201"});
+                table44.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table44.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table44.AddRow(new string[] {
+                            "MARCA",
+                            "TOYOTA"});
+                table44.AddRow(new string[] {
+                            "MODELO",
+                            "RIO"});
+                table44.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table44.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table44.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "ALTA"});
+                table44.AddRow(new string[] {
+                            "COLOR",
+                            "BLANCO"});
+                table44.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "MTR-REP-001"});
+                table44.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table44.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table44.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "50"});
+                table44.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "SERIEREP001XAA"});
+#line 523
+  await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table44, "And ");
+#line hidden
+#line 539
+  await testRunner.AndAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 544
+  await testRunner.AndAsync("Se busca el vehículo por placa \"REP201\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 545
+  await testRunner.AndAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 546
+  await testRunner.AndAsync("se hace clic en reportar avería", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 547
+  await testRunner.AndAsync("se ingresan las observaciones de avería \"Se reporta falla para iniciar prueba de " +
+                        "reparación.\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 548
+  await testRunner.AndAsync("se confirma el reporte de la avería", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 549
+  await testRunner.AndAsync("Se cierra la ventana de detalles", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 552
+  await testRunner.AndAsync("Se busca el vehículo por placa \"REP201\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 553
+  await testRunner.ThenAsync("al buscar la placa \"REP201\" en la bandeja, su estado debe ser \"AVERIADO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 558
+  await testRunner.WhenAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 559
+  await testRunner.AndAsync("se hace clic en registrar reparación", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 560
+  await testRunner.AndAsync("se ingresan las observaciones de avería \"Se arregló las fallas en el motor (Prueb" +
+                        "a QA).\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 561
+  await testRunner.AndAsync("se confirma el reporte de la avería", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 562
+  await testRunner.AndAsync("Se cierra la ventana de detalles", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 567
+  await testRunner.AndAsync("Se busca el vehículo por placa \"REP001\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 568
+  await testRunner.ThenAsync("al buscar la placa \"REP001\" en la bandeja, su estado debe ser \"OPERATIVO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar avería para vehículo DE BAJA y OPERATIVO")]
+        [NUnit.Framework.CategoryAttribute("BloqueoMantenimiento_VehiculoDeBaja_CP011")]
+        public async System.Threading.Tasks.Task RegistrarAveriaParaVehiculoDEBAJAYOPERATIVO()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "BloqueoMantenimiento_VehiculoDeBaja_CP011"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar avería para vehículo DE BAJA y OPERATIVO", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 573
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 575
+  await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 576
+  await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 577
+  await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 578
+  await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table45 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table45.AddRow(new string[] {
+                            "PLACA",
+                            "BAJA99"});
+                table45.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table45.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table45.AddRow(new string[] {
+                            "MARCA",
+                            "TOYOTA"});
+                table45.AddRow(new string[] {
+                            "MODELO",
+                            "RIO"});
+                table45.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table45.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table45.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "ALTA"});
+                table45.AddRow(new string[] {
+                            "COLOR",
+                            "NEGRO"});
+                table45.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "MTR-BAJA-999"});
+                table45.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table45.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table45.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "50"});
+                table45.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "SERIE0BAJA0999"});
+#line 579
+  await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table45, "And ");
+#line hidden
+#line 595
+  await testRunner.AndAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 597
+  await testRunner.AndAsync("Se busca el vehículo por placa \"BAJA99\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 598
+  await testRunner.AndAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 599
+  await testRunner.AndAsync("Se hace clic en dar de baja", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 600
+  await testRunner.AndAsync("Se ingresan las observaciones \"Baja técnica para prueba de bloqueo de mantenimien" +
+                        "to.\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 601
+  await testRunner.AndAsync("Se confirma la baja del vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 602
+  await testRunner.AndAsync("Se cierra la ventana de detalles", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 604
+  await testRunner.WhenAsync("Se busca el vehículo por placa \"BAJA99\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 605
+  await testRunner.AndAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 607
+  await testRunner.ThenAsync("no deben mostrarse ni habilitarse los botones de flujo de mantenimiento", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Registrar reparación en vehiculo con estado OPERATIVO y ACTIVO")]
+        [NUnit.Framework.CategoryAttribute("BloqueoReparacion_VehiculoOperativo_CP012")]
+        public async System.Threading.Tasks.Task RegistrarReparacionEnVehiculoConEstadoOPERATIVOYACTIVO()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "BloqueoReparacion_VehiculoOperativo_CP012"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Registrar reparación en vehiculo con estado OPERATIVO y ACTIVO", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 611
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 615
+  await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 616
+  await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 617
+  await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 618
+  await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table46 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table46.AddRow(new string[] {
+                            "PLACA",
+                            "OPER97"});
+                table46.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table46.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table46.AddRow(new string[] {
+                            "MARCA",
+                            "NISSAN"});
+                table46.AddRow(new string[] {
+                            "MODELO",
+                            "RIO"});
+                table46.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table46.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table46.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "MEDIA"});
+                table46.AddRow(new string[] {
+                            "COLOR",
+                            "PLATA"});
+                table46.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "MTR-OPER-99"});
+                table46.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table46.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table46.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "40"});
+                table46.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "SERIE7OPER799X"});
+#line 619
+  await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table46, "And ");
+#line hidden
+#line 635
+  await testRunner.AndAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 640
+  await testRunner.AndAsync("Se busca el vehículo por placa \"OPER97\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 641
+  await testRunner.AndAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 642
+  await testRunner.ThenAsync("no debe mostrarse el botón Registrar reparación y solo debe mostrarse Reportar av" +
+                        "ería", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Reportar avería para vehiculo en estado ACTIVO y AVERIADO")]
+        [NUnit.Framework.CategoryAttribute("BloqueoAveria_VehiculoAveriado_CP013")]
+        public async System.Threading.Tasks.Task ReportarAveriaParaVehiculoEnEstadoACTIVOYAVERIADO()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "BloqueoAveria_VehiculoAveriado_CP013"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Reportar avería para vehiculo en estado ACTIVO y AVERIADO", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 647
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 651
+  await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 652
+  await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 653
+  await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 654
+  await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table47 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table47.AddRow(new string[] {
+                            "PLACA",
+                            "AVER11"});
+                table47.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table47.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table47.AddRow(new string[] {
+                            "MARCA",
+                            "TOYOTA"});
+                table47.AddRow(new string[] {
+                            "MODELO",
+                            "RIO"});
+                table47.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table47.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table47.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "ALTA"});
+                table47.AddRow(new string[] {
+                            "COLOR",
+                            "AZUL"});
+                table47.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "MTR-AVER-11"});
+                table47.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table47.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table47.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "50"});
+                table47.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "SERIEAVER11XHH"});
+#line 655
+  await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table47, "And ");
+#line hidden
+#line 671
+  await testRunner.AndAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 676
+  await testRunner.AndAsync("Se busca el vehículo por placa \"AVER11\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 677
+  await testRunner.AndAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 678
+  await testRunner.AndAsync("se hace clic en reportar avería", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 679
+  await testRunner.AndAsync("se ingresan las observaciones de avería \"Se avería el vehículo para la prueba lóg" +
+                        "ica.\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 680
+  await testRunner.AndAsync("se confirma el reporte de la avería", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 681
+  await testRunner.AndAsync("Se cierra la ventana de detalles", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 686
+  await testRunner.WhenAsync("Se busca el vehículo por placa \"AVER11\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 687
+  await testRunner.AndAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 688
+  await testRunner.ThenAsync("no debe mostrarse el botón Reportar avería y solo debe mostrarse Registrar repara" +
+                        "ción", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Dar de baja vehiculo con estado de registro ACTIVO y OPERATIVO")]
+        [NUnit.Framework.CategoryAttribute("DarDeBaja_CP015")]
+        public async System.Threading.Tasks.Task DarDeBajaVehiculoConEstadoDeRegistroACTIVOYOPERATIVO()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "DarDeBaja_CP015"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de baja vehiculo con estado de registro ACTIVO y OPERATIVO", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 692
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 696
+  await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 697
+  await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 698
+  await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 699
+  await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table48 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table48.AddRow(new string[] {
+                            "PLACA",
+                            "CP0015"});
+                table48.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table48.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table48.AddRow(new string[] {
+                            "MARCA",
+                            "NISSAN"});
+                table48.AddRow(new string[] {
+                            "MODELO",
+                            "RIO"});
+                table48.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table48.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table48.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "MEDIA"});
+                table48.AddRow(new string[] {
+                            "COLOR",
+                            "GRIS"});
+                table48.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "MTR-CP015"});
+                table48.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table48.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table48.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "50"});
+                table48.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "SERIE99900008H"});
+#line 700
+  await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table48, "And ");
+#line hidden
+#line 716
+  await testRunner.AndAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 721
+  await testRunner.AndAsync("Se busca el vehículo por placa \"CP0015\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 722
+  await testRunner.ThenAsync("al buscar la placa \"CP0015\" en la bandeja, su estado debe ser \"OPERATIVO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 727
+  await testRunner.WhenAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 728
+  await testRunner.AndAsync("Se hace clic en dar de baja", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 729
+  await testRunner.AndAsync("Se ingresan las observaciones \"Dar de baja caso de prueba CP0015\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 730
+  await testRunner.AndAsync("Se confirma la baja del vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 731
+  await testRunner.AndAsync("Se cierra la ventana de detalles", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 737
+  await testRunner.AndAsync("Se busca el vehículo por placa \"CP0015\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 738
+  await testRunner.ThenAsync("al buscar la placa \"CP0015\" en la bandeja, su estado debe ser \"DE BAJA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Dar de baja vehiculo con estado de registro ACTIVO y AVERIADO")]
+        [NUnit.Framework.CategoryAttribute("DarDeBajaAveriado_CP016")]
+        public async System.Threading.Tasks.Task DarDeBajaVehiculoConEstadoDeRegistroACTIVOYAVERIADO()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "DarDeBajaAveriado_CP016"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Dar de baja vehiculo con estado de registro ACTIVO y AVERIADO", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 743
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 747
+  await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 748
+  await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 749
+  await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 750
+  await testRunner.AndAsync("Se selecciona \"+Nuevo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table49 = new global::Reqnroll.Table(new string[] {
+                            "Campo",
+                            "Valor"});
+                table49.AddRow(new string[] {
+                            "PLACA",
+                            "CP0016"});
+                table49.AddRow(new string[] {
+                            "AREA ASIGNADA",
+                            "DPAM"});
+                table49.AddRow(new string[] {
+                            "PROPIETARIO",
+                            "MIMP"});
+                table49.AddRow(new string[] {
+                            "MARCA",
+                            "TOYOTA"});
+                table49.AddRow(new string[] {
+                            "MODELO",
+                            "RIO"});
+                table49.AddRow(new string[] {
+                            "AÑO",
+                            "2026"});
+                table49.AddRow(new string[] {
+                            "TIPO DE VEHICULO",
+                            "AUTOMOVIL"});
+                table49.AddRow(new string[] {
+                            "CLASIFICADOR",
+                            "ALTA"});
+                table49.AddRow(new string[] {
+                            "COLOR",
+                            "PLATA"});
+                table49.AddRow(new string[] {
+                            "NUMERO MOTOR",
+                            "MTR-CP016"});
+                table49.AddRow(new string[] {
+                            "TIPO COMBUSTIBLE",
+                            "G-90"});
+                table49.AddRow(new string[] {
+                            "TIPO MOTOR",
+                            "COMBUSTIBLE"});
+                table49.AddRow(new string[] {
+                            "RANGO CONSUMO",
+                            "50"});
+                table49.AddRow(new string[] {
+                            "NUMERO SERIE",
+                            "SERIEYYUUCP016"});
+#line 751
+  await testRunner.AndAsync("Se ingresan los datos del vehículo:", ((string)(null)), table49, "And ");
+#line hidden
+#line 767
+  await testRunner.AndAsync("Se procede a \"GUARDAR\" el vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 772
+  await testRunner.AndAsync("Se busca el vehículo por placa \"CP0016\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 773
+  await testRunner.AndAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 774
+  await testRunner.AndAsync("se hace clic en reportar avería", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 775
+  await testRunner.AndAsync("se ingresan las observaciones de avería \"Reportar avería caso de prueba CP0016\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 776
+  await testRunner.AndAsync("se confirma el reporte de la avería", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 777
+  await testRunner.AndAsync("Se cierra la ventana de detalles", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 782
+  await testRunner.WhenAsync("Se busca el vehículo por placa \"CP0016\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 783
+  await testRunner.AndAsync("Se hace clic en ver vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 785
+  await testRunner.AndAsync("Se hace clic en dar de baja", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 791
+  await testRunner.AndAsync("Se ingresan las observaciones \"Dar de baja caso de prueba CP016\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 792
+  await testRunner.AndAsync("Se confirma la baja del vehículo", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 793
+  await testRunner.AndAsync("Se cierra la ventana de detalles", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 798
+  await testRunner.AndAsync("Se busca el vehículo por placa \"CP0016\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 799
+  await testRunner.ThenAsync("al buscar la placa \"CP0016\" en la bandeja, su estado debe ser \"DE BAJA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Listar vehiculo con estado OPERATIVO")]
+        [NUnit.Framework.CategoryAttribute("Filtros_VehiculoOperativo")]
+        public async System.Threading.Tasks.Task ListarVehiculoConEstadoOPERATIVO()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "Filtros_VehiculoOperativo"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Listar vehiculo con estado OPERATIVO", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 805
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 807
+  await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 808
+  await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 809
+  await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 812
+  await testRunner.WhenAsync("se desmarcan los filtros adicionales dejando solo el estado de vehículo OPERATIVO" +
+                        "", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 813
+  await testRunner.AndAsync("se hace clic en el botón Buscar de la sección de filtros", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 816
+  await testRunner.ThenAsync("la grilla debe mostrar unicamente vehiculos con estado \"OPERATIVO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Listar vehiculos con estado AVERIADO")]
+        [NUnit.Framework.CategoryAttribute("Filtros_VehiculoAveriado")]
+        public async System.Threading.Tasks.Task ListarVehiculosConEstadoAVERIADO()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "Filtros_VehiculoAveriado"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Listar vehiculos con estado AVERIADO", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 821
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 823
+  await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 824
+  await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 825
+  await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 828
+  await testRunner.WhenAsync("se desmarcan los filtros adicionales dejando solo el estado de vehículo AVERIADO", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 829
+  await testRunner.AndAsync("se hace clic en el botón Buscar de la sección de filtros", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 832
+  await testRunner.ThenAsync("la grilla debe mostrar unicamente vehiculos con estado \"AVERIADO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Filtrar bandeja para listar unicamente vehiculos en estado de registro ACTIVO")]
+        [NUnit.Framework.CategoryAttribute("Filtros_RegistroActivo")]
+        public async System.Threading.Tasks.Task FiltrarBandejaParaListarUnicamenteVehiculosEnEstadoDeRegistroACTIVO()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "Filtros_RegistroActivo"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Filtrar bandeja para listar unicamente vehiculos en estado de registro ACTIVO", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 837
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 838
+  await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 839
+  await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 840
+  await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 842
+  await testRunner.WhenAsync("se configuran los filtros dejando solo el estado de registro ACTIVO", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 843
+  await testRunner.AndAsync("se hace clic en el botón Buscar de la sección de filtros", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 845
+  await testRunner.ThenAsync("la grilla debe mostrar unicamente vehiculos con estado de registro \"ACTIVO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Filtrar bandeja para listar unicamente vehiculos en estado de registro DE BAJA")]
+        [NUnit.Framework.CategoryAttribute("Filtros_RegistroDeBaja")]
+        public async System.Threading.Tasks.Task FiltrarBandejaParaListarUnicamenteVehiculosEnEstadoDeRegistroDEBAJA()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "Filtros_RegistroDeBaja"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Filtrar bandeja para listar unicamente vehiculos en estado de registro DE BAJA", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 849
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 850
+  await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 851
+  await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 852
+  await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 854
+  await testRunner.WhenAsync("se configuran los filtros dejando solo el estado de registro DE BAJA", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 855
+  await testRunner.AndAsync("se hace clic en el botón Buscar de la sección de filtros", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 857
+  await testRunner.ThenAsync("la grilla debe mostrar unicamente vehiculos con estado de registro \"DE BAJA\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Exportar la lista a Excel con vehiculos en estado OPERATIVO")]
+        [NUnit.Framework.CategoryAttribute("ExportarExcel_Vehiculos")]
+        public async System.Threading.Tasks.Task ExportarLaListaAExcelConVehiculosEnEstadoOPERATIVO()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "ExportarExcel_Vehiculos"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Exportar la lista a Excel con vehiculos en estado OPERATIVO", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 861
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 862
+  await testRunner.GivenAsync("el usuario ingresa al ambiente \"https://sigesoas.mimp-qa.sigesonline.com/#/public" +
+                        "\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 863
+  await testRunner.WhenAsync("el usuario inicia sesión con usuario \"ADMIN-GLOBAL\" y contraseña \"Admin2023Global" +
+                        "*\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 864
+  await testRunner.AndAsync("Se ingresa al módulo \"Vehículo\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 867
+  await testRunner.WhenAsync("se desmarcan los filtros adicionales dejando solo el estado de vehículo OPERATIVO" +
+                        "", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 868
+  await testRunner.AndAsync("se hace clic en el botón Buscar de la sección de filtros", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 869
+  await testRunner.ThenAsync("la grilla debe mostrar unicamente vehiculos con estado \"OPERATIVO\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 872
+  await testRunner.WhenAsync("se hace clic en el botón Exportar a Excel", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 873
+  await testRunner.ThenAsync("el sistema debe descargar un archivo Excel exitosamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
