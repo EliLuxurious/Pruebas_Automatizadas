@@ -60,12 +60,16 @@ namespace SIGES3_0.Hooks
             IWebDriver driver = CreateChromeDriver();
             driver.Manage().Window.Maximize();
 
-
             _container.RegisterInstanceAs<IWebDriver>(driver);
 
-            var feature = _feature ?? throw new InvalidOperationException("El feature actual no fue inicializado.");
-            _scenario = feature.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
+            var feature = _feature
+                ?? throw new InvalidOperationException(
+                    "El feature actual no fue inicializado.");
+
+            _scenario = feature.CreateNode<Scenario>(
+                scenarioContext.ScenarioInfo.Title);
         }
+
 
         [AfterScenario]
         public void AfterScenario(ScenarioContext scenarioContext)
