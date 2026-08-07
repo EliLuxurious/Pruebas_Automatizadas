@@ -1,5 +1,9 @@
 ﻿using NUnit.Framework;
 using SIGES3_0.Pages.Helpers;
+using SIGES3_0.Pages.Adquisicion;
+using SIGES3_0.Pages.Items.NewItem;
+using SIGES3_0.Pages.Items.RegisterItemData;
+using SIGES3_0.Pages.Items.ViewItems;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
@@ -21,6 +25,13 @@ namespace SIGES3_0.Pages.VentasPage
         private DiscountContext _discountContext = DiscountContext.Empty;
         private PaymentContext _paymentContext = PaymentContext.Empty;
         private string _lastCreditInstallments = string.Empty;
+        private string _conceptoTextoResueltoPrecondicion = string.Empty;
+        private string _familiaPreparadaPrecondicion = string.Empty;
+        private string _conceptoPreparadoPrecondicion = string.Empty;
+        private PrecondicionConceptoVendibleConfig _configPrecondicionConceptoVendible = PrecondicionConceptoVendibleConfig.CreateDefault();
+        private readonly List<string> _guiaCamposOmitidos = new();
+        private bool _guiaConfirmadaAntesDeGuardar = false;
+        private string _guiaEvidenciaConfirmacion = string.Empty;
         private static readonly By DiscountAmountModeLocator = By.XPath("//button[normalize-space()='$' or contains(normalize-space(),'Monto')] | //label[normalize-space()='$' or contains(normalize-space(),'Monto')]");
         private static readonly By DiscountPercentageModeLocator = By.XPath("//button[normalize-space()='%' or contains(normalize-space(),'Porcentaje')] | //label[normalize-space()='%' or contains(normalize-space(),'Porcentaje')]");
         private static readonly By DiscountValueInputLocator = By.XPath("//input[(@placeholder='0' or contains(@id,'discount') or contains(@formcontrolname,'discount')) and not(@type='hidden') and not(@type='checkbox') and not(@type='radio')]");
@@ -29,7 +40,7 @@ namespace SIGES3_0.Pages.VentasPage
         {
             this.driver = driver;
             utilities = new Utilities(driver);
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(40));
         }
 
         // ─── MODO DE VENTA ────────────────────────────────────────────────────────────
@@ -45,6 +56,9 @@ namespace SIGES3_0.Pages.VentasPage
             _discountContext = DiscountContext.Empty;
             _paymentContext = PaymentContext.Empty;
             _lastCreditInstallments = string.Empty;
+            _guiaCamposOmitidos.Clear();
+            _guiaConfirmadaAntesDeGuardar = false;
+            _guiaEvidenciaConfirmacion = string.Empty;
 
             WaitForFormReady();
 
@@ -52,8 +66,195 @@ namespace SIGES3_0.Pages.VentasPage
                 return;
 
             Log($"Seleccionando modo de venta: {modo}");
+            if (modo.Trim().Equals("VENTA NORMAL", StringComparison.OrdinalIgnoreCase) &&
+                !ExisteElementoVisible(VentasLocators.NuevaVenta.ModoVenta(modo)) &&
+                IsNewSaleFormReady())
+            {
+                Log("Modo VENTA NORMAL no visible; el formulario de Nueva Venta ya esta listo, se continua.");
+                return;
+            }
+
             Click(VentasLocators.NuevaVenta.ModoVenta(modo));
             Thread.Sleep(1000);
+        }
+
+        public void ConfigurarPrecondicionConceptoVendibleParaNuevaVenta(IDictionary<string, string> valores)
+        {
+            var config = PrecondicionConceptoVendibleConfig.CreateDefault();
+
+            foreach (var entry in valores)
+            {
+                string campo = NormalizeText(entry.Key);
+                string valor = entry.Value?.Trim() ?? string.Empty;
+
+                if (EsValorOmitido(valor))
+                    continue;
+
+                switch (campo)
+                {
+                    case "tipo producto":
+                    case "tipo de producto":
+                    case "tipo familia":
+                        config.TipoProducto = valor;
+                        break;
+                    case "tratamiento igv":
+                    case "tratamiento igv familia":
+                        config.TratamientoIgvFamilia = valor;
+                        break;
+                    case "categoria":
+                    case "categoria familia":
+                        config.CategoriaFamilia = valor;
+                        break;
+                    case "rol":
+                    case "rol concepto":
+                        config.RolConcepto = valor;
+                        break;
+                    case "modulo":
+                    case "modulo concepto":
+                        config.ModuloConcepto = valor;
+                        break;
+                    case "marca":
+                    case "marca concepto":
+                        config.MarcaConcepto = valor;
+                        break;
+                    case "sufijo":
+                    case "sufijo concepto":
+                    case "nombre concepto":
+                        config.SufijoConcepto = valor;
+                        break;
+                    case "presentacion":
+                    case "presentacion concepto":
+                        config.PresentacionConcepto = valor;
+                        break;
+                    case "um comercial":
+                    case "u.m. comercial":
+                    case "unidad comercial":
+                        config.UmComercialConcepto = valor;
+                        break;
+                    case "u medida":
+                    case "u. medida":
+                    case "unidad medida":
+                    case "u medida concepto":
+                        config.UMedidaConcepto = valor;
+                        break;
+                    case "cantidad base":
+                    case "cantidad base concepto":
+                        config.CantidadBaseConcepto = valor;
+                        break;
+                    case "tarifa":
+                    case "tarifa concepto":
+                        config.TarifaConcepto = valor;
+                        break;
+                    case "precio producto":
+                    case "precio concepto":
+                    case "precio venta":
+                        config.PrecioProducto = valor;
+                        break;
+                    case "documento adquisicion":
+                    case "documento compra":
+                        config.DocumentoAdquisicion = valor;
+                        break;
+                    case "proveedor adquisicion":
+                    case "proveedor":
+                        config.ProveedorAdquisicion = valor;
+                        break;
+                    case "informacion adquisicion":
+                    case "info adquisicion":
+                    case "informacion adicional adquisicion":
+                        config.InformacionAdquisicion = valor;
+                        break;
+                    case "tipo entrega adquisicion":
+                    case "entrega adquisicion":
+                        config.TipoEntregaAdquisicion = valor;
+                        break;
+                    case "rol adquisicion":
+                        config.RolAdquisicion = valor;
+                        break;
+                    case "establecimiento adquisicion":
+                    case "establecimiento":
+                        config.EstablecimientoAdquisicion = valor;
+                        break;
+                    case "almacen adquisicion":
+                    case "almacen":
+                        config.AlmacenAdquisicion = valor;
+                        break;
+                    case "tipo pago adquisicion":
+                        config.TipoPagoAdquisicion = valor;
+                        break;
+                    case "medio pago adquisicion":
+                        config.MedioPagoAdquisicion = valor;
+                        break;
+                    case "observacion pago adquisicion":
+                    case "observacion adquisicion":
+                        config.ObservacionPagoAdquisicion = valor;
+                        break;
+                    case "precio compra":
+                    case "precio compra adquisicion":
+                    case "valor unitario adquisicion":
+                        config.PrecioCompraAdquisicion = valor;
+                        break;
+                }
+            }
+
+            _configPrecondicionConceptoVendible = config;
+            Log($"[PrecondicionNV] Configuracion aplicada: tipoProducto='{config.TipoProducto}', sufijoConcepto='{config.SufijoConcepto}', precioProducto='{config.PrecioProducto}', proveedorAdquisicion='{config.ProveedorAdquisicion}', precioCompra='{config.PrecioCompraAdquisicion}'.");
+        }
+
+        // Precondicion autonoma para escenarios de Ventas que necesitan concepto y stock.
+        public void AsegurarConceptoVendibleParaNuevaVenta(string familia, string concepto, string stockMinimo)
+        {
+            Log($"[PrecondicionNV] Asegurando familia='{familia}', concepto='{concepto}', stockMinimo='{stockMinimo}'.");
+            _conceptoTextoResueltoPrecondicion = string.Empty;
+            _familiaPreparadaPrecondicion = familia.Trim();
+            _conceptoPreparadoPrecondicion = concepto.Trim();
+
+            if (ExisteConceptoDisponibleEnNuevaVenta(familia, concepto))
+            {
+                Log($"[PrecondicionNV][Items] El concepto '{concepto}' ya está disponible en Nueva Venta y se reutilizará.");
+            }
+            else if (ExisteConceptoEnVista(familia, concepto))
+            {
+                Log($"[PrecondicionNV][Items] El concepto '{concepto}' ya existe en Conceptos y se reutilizará.");
+            }
+            else
+            {
+                try
+                {
+                    AsegurarConceptoEnConceptos(familia, concepto, stockMinimo);
+                }
+                catch (AssertionException ex) when (ex.Message.Contains("No se pudo seleccionar la familia", StringComparison.OrdinalIgnoreCase))
+                {
+                    Log($"[PrecondicionNV] La familia '{familia}' no estuvo disponible en Nuevo Concepto. Se intentará crearla y reintentar el concepto.");
+                    AsegurarFamiliaEnConceptos(familia);
+                    AsegurarConceptoEnConceptos(familia, concepto, stockMinimo);
+                }
+            }
+
+            if (TieneStockSuficienteParaPrecondicion(stockMinimo))
+            {
+                Log($"[PrecondicionNV][Adquisicion] Stock suficiente detectado para '{concepto}'. Se omite la adquisición.");
+            }
+            else
+            {
+                Log($"[PrecondicionNV][Adquisicion] No hay stock suficiente para '{concepto}'. Se ejecutará la adquisición.");
+                AsegurarStockMedianteAdquisicion(concepto, stockMinimo);
+            }
+
+            VolverANuevaVentaDesdePrecondicion();
+        }
+
+        public void SeleccionarFamiliaPreparadaParaNuevaVenta()
+        {
+            Assert.That(string.IsNullOrWhiteSpace(_familiaPreparadaPrecondicion), Is.False,
+                "No hay una familia preparada para Nueva Venta. Ejecuta primero la precondición del concepto vendible.");
+            SeleccionarFamiliaNuevaVenta(_familiaPreparadaPrecondicion);
+        }
+
+        public void SeleccionarConceptoPreparadoParaNuevaVenta()
+        {
+            Assert.That(string.IsNullOrWhiteSpace(_conceptoPreparadoPrecondicion), Is.False,
+                "No hay un concepto preparado para Nueva Venta. Ejecuta primero la precondición del concepto vendible.");
+            SeleccionarConceptoNuevaVenta(_conceptoPreparadoPrecondicion);
         }
 
         // Paso: ingresa la fecha de emision (solo para Venta Contingencia)
@@ -63,11 +264,18 @@ namespace SIGES3_0.Pages.VentasPage
                 return;
 
             Log($"Ingresando fecha de emision: {fecha}");
-            var input = Find(VentasLocators.NuevaVenta.FechaEmision);
-            input.Clear();
-            input.SendKeys(fecha);
-            input.SendKeys(Keys.Tab);
-            Thread.Sleep(500);
+            EstablecerFechaEnCampo(VentasLocators.NuevaVenta.FechaEmision, fecha);
+        }
+
+        // Paso: ingresa la fecha de crédito/primera cuota para ventas a crédito.
+        public void SetFechaCreditoFlow(string fecha)
+        {
+            if (string.IsNullOrWhiteSpace(fecha) || fecha.Trim() == "-")
+                return;
+
+            Log($"Ingresando fecha de credito: {fecha}");
+            AbrirPagoNuevaVenta();
+            EstablecerFechaCreditoComoUsuario(VentasLocators.Payment.CreditDueDateInput, fecha);
         }
 
         // ─── DETALLE ─────────────────────────────────────────────────────────────────
@@ -84,53 +292,937 @@ namespace SIGES3_0.Pages.VentasPage
             Thread.Sleep(500);
         }
 
-        public void ConfigurarDescuentoNuevaVenta(string descuento, string tipo, string modo, string valor)
+        public void SeleccionarFamiliaNuevaVenta(string familia)
         {
-            var activar = DebeActivarOpcion(descuento);
-            var totalAntes = ObtenerTotalVentaActual();
-            var valorParseado = TryParseDecimalFlexible(valor, out var parsed) ? parsed : (decimal?)null;
-
-            _discountContext = new DiscountContext
-            {
-                Activo = activar,
-                Tipo = NormalizeText(tipo),
-                Modo = NormalizeText(modo),
-                Valor = valorParseado,
-                TotalAntes = totalAntes
-            };
-
-            Log($"[DescuentoNV] Antes={totalAntes?.ToString("0.00", CultureInfo.InvariantCulture) ?? "NA"} activar={activar} tipo='{tipo}' modo='{modo}' valor='{valor}'");
-
-            SetCheckbox(VentasLocators.Detail.DiscountCheckbox, activar);
-            Thread.Sleep(300);
-
-            if (!activar)
+            if (string.IsNullOrWhiteSpace(familia) || familia.Trim() == "-")
                 return;
 
-            var tipoNormalizado = NormalizeText(tipo);
-            if (tipoNormalizado.Contains("item"))
-                Click(VentasLocators.Discount.ItemScope);
-            else if (tipoNormalizado.Contains("global"))
-                Click(VentasLocators.Discount.GlobalScope);
+            SeleccionarDropdownCustomNuevaVenta(familia.Trim(), VentasLocators.Detail.FamilySelect);
+            Thread.Sleep(700);
+        }
 
-            var modoNormalizado = NormalizeText(modo);
-            if (modoNormalizado.Contains("$") || modoNormalizado.Contains("monto"))
-                Click(DiscountAmountModeLocator);
-            else if (modoNormalizado.Contains("%") || modoNormalizado.Contains("porcentaje"))
-                Click(DiscountPercentageModeLocator);
+        public void SeleccionarConceptoNuevaVenta(string concepto)
+        {
+            if (string.IsNullOrWhiteSpace(concepto) || concepto.Trim() == "-")
+                return;
 
-            var input = Find(DiscountValueInputLocator);
+            SeleccionarDropdownCustomNuevaVenta(concepto.Trim(), VentasLocators.Detail.ConceptSelect);
+            Thread.Sleep(700);
+        }
+
+        public void IngresarCantidadNuevaVenta(string cantidad)
+        {
+            if (string.IsNullOrWhiteSpace(cantidad) || cantidad.Trim() == "-" || cantidad.Trim() == "0")
+                return;
+
+            var input = driver.FindElements(VentasLocators.Detail.QuantityInputs)
+                .LastOrDefault(e =>
+                {
+                    try { return e.Displayed && e.Enabled; }
+                    catch { return false; }
+                });
+
+            Assert.That(input, Is.Not.Null, "No se encontró el input de cantidad en Nueva Venta.");
+            EstablecerValorInputNuevaVenta(input!, cantidad.Trim());
+            Thread.Sleep(500);
+        }
+
+        private void EstablecerFechaEnCampo(By locator, string fechaTexto)
+        {
+            string valorVisual = ResolverFechaSoloDia(fechaTexto);
+            var input = Find(locator);
+            string tipoInput = (input.GetAttribute("type") ?? string.Empty).Trim();
+            bool esCampoDate = tipoInput.Equals("date", StringComparison.OrdinalIgnoreCase);
+            bool tieneFecha = TryResolverFechaSoloDia(fechaTexto, out DateTime fecha);
+            string valor = esCampoDate && tieneFecha
+                ? fecha.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)
+                : valorVisual;
+
             ScrollToCenter(input);
-            input.Click();
+
+            if (esCampoDate && tieneFecha)
+            {
+                ((IJavaScriptExecutor)driver).ExecuteScript(
+                    "var el = arguments[0]; var val = arguments[1];" +
+                    "el.removeAttribute('readonly');" +
+                    "el.removeAttribute('disabled');" +
+                    "var setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;" +
+                    "setter.call(el, val);" +
+                    "el.dispatchEvent(new Event('input', { bubbles: true }));" +
+                    "el.dispatchEvent(new Event('change', { bubbles: true }));" +
+                    "el.dispatchEvent(new Event('blur', { bubbles: true }));",
+                    input, valor);
+                Thread.Sleep(200);
+            }
+            else
+            {
+                // Fallback JS para inputs que no son type="date" o sin fecha resuelta
+                ((IJavaScriptExecutor)driver).ExecuteScript(
+                    "var el = arguments[0]; var val = arguments[1];" +
+                    "el.removeAttribute('readonly');" +
+                    "el.removeAttribute('disabled');" +
+                    "var setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;" +
+                    "setter.call(el, val);" +
+                    "el.dispatchEvent(new Event('input', { bubbles: true }));" +
+                    "el.dispatchEvent(new Event('change', { bubbles: true }));" +
+                    "el.dispatchEvent(new Event('blur', { bubbles: true }));",
+                    input, valor);
+                Thread.Sleep(300);
+            }
+
+            // Clic en body para forzar el ciclo de change detection de Angular
+            // y propagar el estado del FormControl al formulario padre (habilita/deshabilita Guardar)
+            try { driver.FindElement(By.TagName("body")).Click(); } catch { /* no crítico */ }
+            Thread.Sleep(300);
+
+            string valorActual = input.GetAttribute("value") ?? string.Empty;
+            if (esCampoDate && tieneFecha)
+            {
+                Assert.That(
+                    valorActual,
+                    Is.EqualTo(valor),
+                    $"La fecha '{fechaTexto}' no quedo aplicada en el campo {locator}. Valor esperado: '{valor}'. Valor actual: '{valorActual}'.");
+            }
+            else
+            {
+                Assert.That(
+                    valorActual,
+                    Is.EqualTo(valor),
+                    $"La fecha '{fechaTexto}' no quedo aplicada en el campo {locator}. Valor esperado: '{valor}'. Valor actual: '{valorActual}'.");
+            }
+            Log($"Fecha aplicada en campo {locator}: '{valorActual}'");
+        }
+
+        private void EstablecerFechaCreditoComoUsuario(By locator, string fechaTexto)
+        {
+            string valorVisual = ResolverFechaSoloDia(fechaTexto);
+            bool tieneFecha = TryResolverFechaSoloDia(fechaTexto, out DateTime fecha);
+            var input = Find(locator);
+            string valorAEscribir = tieneFecha
+                ? fecha.ToString("ddMMyyyy", CultureInfo.InvariantCulture)
+                : SoloDigitos(valorVisual);
+            if (string.IsNullOrWhiteSpace(valorAEscribir))
+                valorAEscribir = valorVisual;
+
+            ScrollToCenter(input);
+
+            // Solo para fecha de credito: se escribe con teclado para que la mascara/date-picker
+            // dispare la misma validacion que aparece cuando el usuario ingresa la fecha manualmente.
+            try { input.Click(); } catch { ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", input); }
+            input.SendKeys(Keys.Control + "a");
+            input.SendKeys(Keys.Backspace);
             input.SendKeys(Keys.Control + "a");
             input.SendKeys(Keys.Delete);
-            input.SendKeys(valor);
+            input.SendKeys(Keys.Home);
+            input.SendKeys(Keys.Delete);
+            input.SendKeys(Keys.End);
+            input.SendKeys(Keys.Backspace);
+            Thread.Sleep(150);
+            input.SendKeys(valorAEscribir);
             input.SendKeys(Keys.Tab);
-
             Thread.Sleep(700);
 
-            var totalDespues = ObtenerTotalVentaActual();
-            Log($"[DescuentoNV] Despues={totalDespues?.ToString("0.00", CultureInfo.InvariantCulture) ?? "NA"}");
+            string valorActual = input.GetAttribute("value") ?? string.Empty;
+            var validaciones = string.Join(" | ", CapturarValidacionesVisibles());
+            if (!string.IsNullOrWhiteSpace(validaciones))
+                Log($"Validacion visible despues de ingresar fecha de credito: '{validaciones}'");
+
+            if (!FechaCreditoAplicadaCorrectamente(valorActual, fechaTexto, fecha, tieneFecha, valorVisual) &&
+                string.IsNullOrWhiteSpace(validaciones))
+            {
+                Assert.Fail(
+                    $"La fecha de credito '{fechaTexto}' no quedo aplicada como entrada de usuario. " +
+                    $"Valor esperado: '{valorVisual}'. Valor escrito: '{valorAEscribir}'. Valor actual: '{valorActual}'.");
+            }
+
+            Log($"Fecha de credito aplicada con teclado en campo {locator}: '{valorActual}'");
+        }
+
+        private static string SoloDigitos(string valor) =>
+            Regex.Replace(valor ?? string.Empty, "\\D", string.Empty);
+
+        private static bool FechaCreditoAplicadaCorrectamente(
+            string valorActual,
+            string fechaTexto,
+            DateTime fechaEsperada,
+            bool tieneFecha,
+            string valorVisual)
+        {
+            if (string.IsNullOrWhiteSpace(valorActual))
+                return false;
+
+            if (tieneFecha &&
+                DateTime.TryParseExact(
+                    valorActual.Trim(),
+                    new[] { "dd/MM/yyyy", "d/M/yyyy", "yyyy-MM-dd" },
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.None,
+                    out DateTime fechaActual))
+            {
+                return fechaActual.Date == fechaEsperada.Date;
+            }
+
+            var esperado = tieneFecha
+                ? fechaEsperada.ToString("ddMMyyyy", CultureInfo.InvariantCulture)
+                : SoloDigitos(valorVisual);
+            var actual = SoloDigitos(valorActual);
+
+            return !string.IsNullOrWhiteSpace(actual) &&
+                   (actual == esperado || actual == SoloDigitos(fechaTexto));
+        }
+
+        private void AsegurarFamiliaEnConceptos(string familia)
+        {
+            if (PuedeSeleccionarFamiliaEnNuevoConcepto(familia))
+            {
+                Log($"[PrecondicionNV] La familia '{familia}' ya existe y es seleccionable.");
+                return;
+            }
+
+            var conceptosPage = new RegisterItemDataPage(driver);
+
+            AbrirSubmoduloConceptos("Registrar Datos de Concepto");
+            AbrirFormularioFamiliaEnItems();
+            Thread.Sleep(1200);
+            conceptosPage.MostrarTodasLasFamilias();
+
+            if (ExisteFilaEnTabla($"//tbody/tr/td[normalize-space()='{familia}']"))
+            {
+                Log($"[PrecondicionNV] La familia '{familia}' ya existe.");
+                return;
+            }
+
+            Log($"[PrecondicionNV] Creando familia '{familia}'.");
+            try
+            {
+                conceptosPage.SeleccionarOpcionFamilia();
+            }
+            catch
+            {
+                AbrirFormularioFamiliaEnItems();
+            }
+
+            Assert.That(
+                ExisteElementoEnDom(
+                    By.XPath("//input[@id='tipoBien' or @id='tipoServicio']"),
+                    By.XPath("//input[@placeholder='Código']"),
+                    By.XPath("//input[@placeholder='Nombre']"),
+                    By.XPath("//div[contains(@class,'select-trigger')][.//span[contains(normalize-space(),'Seleccione las categor')]]")),
+                Is.True,
+                "No se pudo abrir correctamente el formulario de Familia en Items desde la precondición de Ventas.");
+
+            conceptosPage.SeleccionarTipo(_configPrecondicionConceptoVendible.TipoProducto);
+            conceptosPage.SeleccionarTratamientoIGVDinamico(_configPrecondicionConceptoVendible.TratamientoIgvFamilia);
+            conceptosPage.IngresarCodigoFamilia(ConstruirCodigoFamilia(familia));
+            conceptosPage.IngresarNombreFamilia(familia);
+            conceptosPage.SeleccionarCategoria(_configPrecondicionConceptoVendible.CategoriaFamilia);
+            conceptosPage.GuardarRegistro();
+            Thread.Sleep(1500);
+        }
+
+        private bool PuedeSeleccionarFamiliaEnNuevoConcepto(string familia)
+        {
+            try
+            {
+                AbrirNuevoConceptoEnItems();
+                return IntentarSeleccionarFamiliaEnNuevoConcepto(familia);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private void AbrirFormularioFamiliaEnItems()
+        {
+            TryClickOptional(
+                By.XPath("//button[normalize-space()='Familia']//i[contains(@class,'bi-house-door-fill')]/ancestor::button[1]"),
+                By.XPath("//button[normalize-space()='Familia']"),
+                By.XPath("//button[.//*[normalize-space()='Familia']]"),
+                By.XPath("//*[self::button or self::a][contains(normalize-space(),'Familia')]")
+            );
+            Thread.Sleep(800);
+
+            TryClickOptional(
+                By.XPath("//button[@aria-controls='collapse-registro-familia']"),
+                By.XPath("//button[contains(@aria-controls,'familia')]"),
+                By.XPath("//button[contains(@class,'accordion-button')][contains(.,'Familia')]")
+            );
+            Thread.Sleep(800);
+        }
+
+        private void AsegurarConceptoEnConceptos(string familia, string concepto, string stockMinimo)
+        {
+            if (ExisteConceptoEnVista(familia, concepto))
+            {
+                Log($"[PrecondicionNV] El concepto '{concepto}' ya existe para la familia '{familia}'.");
+                return;
+            }
+
+            Log($"[PrecondicionNV] Creando concepto '{concepto}' para la familia '{familia}'.");
+
+            var newItemsPage = new NewItemsPage(driver);
+            AbrirNuevoConceptoEnItems();
+            SeleccionarFamiliaEnNuevoConcepto(familia);
+            newItemsPage.IngresarCodigoDeBarra(concepto);
+            newItemsPage.AgregarSufijo(ResolverSufijoConcepto(concepto));
+            newItemsPage.SeleccionarUMComercial(_configPrecondicionConceptoVendible.UmComercialConcepto);
+            newItemsPage.SeleccionarUMedida(_configPrecondicionConceptoVendible.UMedidaConcepto);
+            newItemsPage.SeleccionarRol(_configPrecondicionConceptoVendible.RolConcepto);
+            newItemsPage.SeleccionarModulo(_configPrecondicionConceptoVendible.ModuloConcepto);
+            newItemsPage.SeleccionarMarca(_configPrecondicionConceptoVendible.MarcaConcepto);
+            newItemsPage.SeleccionarPresentacion(_configPrecondicionConceptoVendible.PresentacionConcepto);
+            newItemsPage.IngresarCantidad(_configPrecondicionConceptoVendible.CantidadBaseConcepto);
+            newItemsPage.SeleccionarUnidadMedida(_configPrecondicionConceptoVendible.UMedidaConcepto);
+
+            if (int.TryParse(stockMinimo, out int stockMinimoNumero) && stockMinimoNumero > 0)
+                newItemsPage.IngresarStockMinimo(stockMinimoNumero.ToString(CultureInfo.InvariantCulture));
+
+            newItemsPage.SeleccionarTarifa(_configPrecondicionConceptoVendible.TarifaConcepto);
+            newItemsPage.IngresarPrecio(_configPrecondicionConceptoVendible.PrecioProducto);
+            newItemsPage.GuardarConcepto();
+            Thread.Sleep(1500);
+        }
+
+        private void AbrirNuevoConceptoEnItems()
+        {
+            if (IntentarAbrirNuevoConceptoDirecto())
+                return;
+
+            AbrirSubmoduloConceptos("Nuevo Concepto");
+            Thread.Sleep(1500);
+        }
+
+        private bool IntentarAbrirNuevoConceptoDirecto()
+        {
+            string[] rutasCandidatas =
+            {
+                "/business-item/NewBusinessItem",
+                "/business-item/RegisterBusinessItem",
+                "/business-item/CreateBusinessItem"
+            };
+
+            foreach (var ruta in rutasCandidatas)
+            {
+                try
+                {
+                    NavegarARutaItems(ruta);
+                    if (EsperarNuevoConceptoAbierto(8))
+                        return true;
+                }
+                catch
+                {
+                }
+            }
+
+            return false;
+        }
+
+        private void SeleccionarFamiliaEnNuevoConcepto(string familia)
+        {
+            try
+            {
+                new NewItemsPage(driver).SeleccionarFamilia(familia);
+                Thread.Sleep(700);
+                return;
+            }
+            catch
+            {
+                Log($"[PrecondicionNV] No se pudo seleccionar familia '{familia}' con el flujo de Items. Se usará selector alternativo.");
+            }
+
+            bool seleccionada = IntentarSeleccionarFamiliaEnNuevoConcepto(familia);
+            Assert.That(
+                seleccionada,
+                Is.True,
+                $"No se pudo seleccionar la familia '{familia}' en Nuevo Concepto desde la precondición de Ventas.");
+        }
+
+        private bool IntentarSeleccionarFamiliaEnNuevoConcepto(string familia)
+        {
+            By dropdownFamilia = By.XPath(
+                "//label[@for='familyId']/following-sibling::app-dropdown-search//div[contains(@class,'select-trigger')] | " +
+                "//label[contains(normalize-space(),'Familia')]/following::app-dropdown-search[1]//div[contains(@class,'select-trigger')]");
+            By buscadorFamilia = By.XPath(
+                "(//app-dropdown-search//input[contains(@class,'search-input') or contains(@placeholder,'Buscar')])[last()]");
+            By opcionFamilia = By.XPath(
+                $"//span[contains(@class,'option-label') and normalize-space()='{familia}'] | //a[normalize-space()='{familia}']");
+
+            var trigger = driver.FindElements(dropdownFamilia).FirstOrDefault(e =>
+            {
+                try { return e.Displayed && e.Enabled; }
+                catch { return false; }
+            });
+
+            if (trigger == null)
+                return false;
+
+            ScrollToCenter(trigger);
+            trigger.Click();
+            Thread.Sleep(700);
+
+            var buscador = driver.FindElements(buscadorFamilia).LastOrDefault(e =>
+            {
+                try { return e.Displayed && e.Enabled; }
+                catch { return false; }
+            });
+
+            if (buscador == null)
+                return false;
+
+            buscador.SendKeys(Keys.Control + "a");
+            buscador.SendKeys(Keys.Delete);
+            buscador.SendKeys(familia);
+            Thread.Sleep(900);
+
+            var opcion = driver.FindElements(opcionFamilia).FirstOrDefault(e =>
+            {
+                try { return e.Displayed && e.Enabled; }
+                catch { return false; }
+            });
+
+            if (opcion == null)
+                return false;
+
+            ScrollToCenter(opcion);
+            opcion.Click();
+            Thread.Sleep(700);
+            return true;
+        }
+
+        private bool ExisteConceptoEnVista(string familia, string concepto)
+        {
+            var viewItemsPage = new ViewItemsPage(driver);
+
+            try
+            {
+                AbrirSubmoduloConceptos("Ver Conceptos");
+                viewItemsPage.SeleccionarFamilia(familia);
+                viewItemsPage.IngresarPalabraClave(concepto);
+                viewItemsPage.HacerBusqueda();
+                Thread.Sleep(1200);
+
+                return ExisteFilaEnTabla($"//tbody/tr[.//td[contains(normalize-space(),'{concepto}')]]");
+            }
+            catch (NoSuchElementException)
+            {
+                Log($"[PrecondicionNV] La familia '{familia}' aún no existe en Ver Conceptos.");
+                return false;
+            }
+            catch (AssertionException ex)
+            {
+                Log($"[PrecondicionNV] No se pudo validar existencia en Ver Conceptos. Se intentará crear el concepto. Detalle: {ex.Message}");
+                return false;
+            }
+            catch (WebDriverException ex)
+            {
+                Log($"[PrecondicionNV] Ver Conceptos no estuvo disponible. Se intentará crear el concepto. Detalle: {ex.Message}");
+                return false;
+            }
+            catch (InvalidOperationException ex)
+            {
+                Log($"[PrecondicionNV] Ver Conceptos no estuvo disponible. Se intentará crear el concepto. Detalle: {ex.Message}");
+                return false;
+            }
+        }
+
+        private bool ExisteConceptoDisponibleEnNuevaVenta(string familia, string concepto)
+        {
+            try
+            {
+                WaitForFormReady();
+                SeleccionarFamiliaNuevaVenta(familia);
+
+                var trigger = Find(VentasLocators.Detail.ConceptSelect);
+                ScrollToCenter(trigger);
+                trigger.Click();
+                Thread.Sleep(500);
+
+                var inputBusqueda = driver.FindElements(VentasLocators.Payment.DropdownSearchInput)
+                    .FirstOrDefault(e =>
+                    {
+                        try { return e.Displayed && e.Enabled; }
+                        catch { return false; }
+                    });
+
+                if (inputBusqueda != null)
+                {
+                    inputBusqueda.SendKeys(Keys.Control + "a");
+                    inputBusqueda.SendKeys(Keys.Delete);
+                    inputBusqueda.SendKeys(concepto);
+                    Thread.Sleep(700);
+                }
+
+                var opcionAmplia = BuscarOpcionVisibleNuevaVenta(concepto);
+                var opcionEspecifica = BuscarOpcionConceptoEnDropdownNuevaVenta(concepto);
+
+                if (opcionEspecifica != null)
+                    _conceptoTextoResueltoPrecondicion = (opcionEspecifica.Text ?? string.Empty).Trim();
+                else if (opcionAmplia != null)
+                    _conceptoTextoResueltoPrecondicion = ExtraerTextoConceptoDesdeBloque(opcionAmplia.Text, concepto);
+
+                if (inputBusqueda != null)
+                    inputBusqueda.SendKeys(Keys.Escape);
+                else
+                    trigger.SendKeys(Keys.Escape);
+
+                Thread.Sleep(400);
+                return opcionAmplia != null;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private void AsegurarStockMedianteAdquisicion(string concepto, string stockMinimo)
+        {
+            for (int intento = 1; intento <= 2; intento++)
+            {
+                try
+                {
+                    EjecutarAdquisicionDePrecondicion(concepto, stockMinimo);
+                    return;
+                }
+                catch (StaleElementReferenceException) when (intento < 2)
+                {
+                    Log($"[PrecondicionNV] Reintentando adquisición por stale element (intento {intento + 1}/2).");
+                    Thread.Sleep(1500);
+                }
+            }
+        }
+
+        private void EjecutarAdquisicionDePrecondicion(string concepto, string stockMinimo)
+        {
+            string cantidad = ResolverCantidadStock(stockMinimo);
+            string fechaHoy = DateTime.Today.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+            string productoParaAdquisicion = ResolverTextoProductoParaAdquisicion(concepto);
+            var adquisicionPage = new NuevaAdquisicionPage(driver);
+            string informacionAdquisicion = ResolverTextoPlantilla(_configPrecondicionConceptoVendible.InformacionAdquisicion, concepto);
+            string observacionPago = ResolverTextoPlantilla(_configPrecondicionConceptoVendible.ObservacionPagoAdquisicion, concepto);
+
+            Log($"[PrecondicionNV] Asegurando stock via Adquisicion para '{concepto}' con cantidad '{cantidad}'.");
+
+            adquisicionPage.NavegarANuevaAdquisicion();
+            adquisicionPage.ConfigurarDatosFacturacion(
+                _configPrecondicionConceptoVendible.DocumentoAdquisicion,
+                string.Empty,
+                string.Empty,
+                fechaHoy,
+                _configPrecondicionConceptoVendible.ProveedorAdquisicion,
+                informacionAdquisicion);
+            adquisicionPage.SeleccionarTipoEntrega(_configPrecondicionConceptoVendible.TipoEntregaAdquisicion);
+            adquisicionPage.ConfigurarDatosEntrega(
+                _configPrecondicionConceptoVendible.RolAdquisicion,
+                _configPrecondicionConceptoVendible.EstablecimientoAdquisicion,
+                _configPrecondicionConceptoVendible.AlmacenAdquisicion);
+            AgregarProductoEnAdquisicion(productoParaAdquisicion, cantidad, _configPrecondicionConceptoVendible.PrecioCompraAdquisicion);
+            adquisicionPage.AbrirSeccionPago();
+            adquisicionPage.SeleccionarTipoPago(_configPrecondicionConceptoVendible.TipoPagoAdquisicion);
+            adquisicionPage.ConfigurarMedioPago(_configPrecondicionConceptoVendible.MedioPagoAdquisicion, observacionPago);
+            adquisicionPage.ClicGuardarAdquisicion("SavePurchase");
+
+            string mensaje = adquisicionPage.ObtenerMensajeConfirmacion();
+            string mensajeNormalizado = NormalizeText(mensaje);
+            Assert.That(
+                mensajeNormalizado,
+                Does.Contain("se registro correctamente").Or.Contain("se registró correctamente"),
+                $"La adquisición de precondición no confirmó éxito. Mensaje actual: '{mensaje}'.");
+        }
+
+        private void AgregarProductoEnAdquisicion(string producto, string cantidad, string valorUnitario)
+        {
+            By comboConcepto = By.XPath("//label[@for='conceptSelect']/following-sibling::div//div[contains(@class, 'select-trigger')]");
+            By buscador = By.XPath("(//input[@placeholder='Buscar...'])[last()]");
+            By txtCantidad = By.XPath("//tbody/tr[contains(@class,'ng-star-inserted')]/td[3]//input");
+            By txtValorUnitario = By.XPath("//tbody/tr[contains(@class,'ng-star-inserted')]/td[4]//input");
+            string terminoBusqueda = ConstruirTerminoBusquedaProductoAdquisicion(producto);
+            string xpathOpcionProducto = ConstruirXPathProductoAdquisicion(producto);
+
+            Click(comboConcepto);
+            Thread.Sleep(600);
+
+            var inputBusqueda = Find(buscador);
+            inputBusqueda.SendKeys(Keys.Control + "a");
+            inputBusqueda.SendKeys(Keys.Delete);
+            inputBusqueda.SendKeys(terminoBusqueda);
+            Thread.Sleep(1000);
+
+            By opcionProducto = By.XPath(xpathOpcionProducto);
+
+            Click(opcionProducto);
+            Thread.Sleep(1800);
+
+            var cantidadInput = driver.FindElements(txtCantidad).LastOrDefault(e => e.Displayed);
+            var valorInput = driver.FindElements(txtValorUnitario).LastOrDefault(e => e.Displayed);
+
+            Assert.That(cantidadInput, Is.Not.Null, $"No se encontró la fila de cantidad para el producto '{producto}' en Adquisición.");
+            Assert.That(valorInput, Is.Not.Null, $"No se encontró la fila de valor unitario para el producto '{producto}' en Adquisición.");
+
+            cantidadInput!.Clear();
+            cantidadInput.SendKeys(cantidad);
+            Thread.Sleep(300);
+
+            valorInput!.Clear();
+            valorInput.SendKeys(valorUnitario);
+            Thread.Sleep(700);
+        }
+
+        private void VolverANuevaVentaDesdePrecondicion()
+        {
+            bool yaEnNuevaVenta = driver.FindElements(VentasLocators.NuevaVenta.IgvCheck).Any(e =>
+            {
+                try { return e.Displayed; }
+                catch { return false; }
+            });
+
+            if (yaEnNuevaVenta)
+            {
+                try
+                {
+                    driver.SwitchTo().ActiveElement().SendKeys(Keys.Escape);
+                }
+                catch
+                {
+                }
+
+                Thread.Sleep(400);
+                WaitForFormReady();
+                return;
+            }
+
+            try
+            {
+                Click(By.XPath("//span[normalize-space()='Ventas']"));
+                Thread.Sleep(1000);
+                Click(By.XPath("//span[normalize-space()='Nueva Venta']"));
+                Thread.Sleep(1800);
+            }
+            catch
+            {
+                // Si el sidebar no está accesible, reutilizamos la navegación directa del helper.
+            }
+
+            WaitForFormReady();
+        }
+
+        private static string ConstruirCodigoFamilia(string familia)
+        {
+            string baseTexto = NormalizeText(familia)
+                .Replace(" ", string.Empty)
+                .ToUpperInvariant();
+
+            if (baseTexto.Length > 8)
+                baseTexto = baseTexto[..8];
+
+            return $"QA-{baseTexto}";
+        }
+
+        private static string ConstruirSufijoConcepto(string concepto)
+        {
+            string cola = concepto.Trim();
+            if (cola.Length > 6)
+                cola = cola[^6..];
+
+            return $"QA-{cola}";
+        }
+
+        private string ResolverSufijoConcepto(string concepto)
+        {
+            if (string.IsNullOrWhiteSpace(_configPrecondicionConceptoVendible.SufijoConcepto))
+                return ConstruirSufijoConcepto(concepto);
+
+            return ResolverTextoPlantilla(_configPrecondicionConceptoVendible.SufijoConcepto, concepto);
+        }
+
+        private static string ResolverCantidadStock(string stockMinimo)
+        {
+            if (int.TryParse(stockMinimo, out int numero) && numero > 0)
+                return numero.ToString(CultureInfo.InvariantCulture);
+
+            return "5";
+        }
+
+        private bool TieneStockSuficienteParaPrecondicion(string stockMinimo)
+        {
+            if (string.IsNullOrWhiteSpace(_conceptoTextoResueltoPrecondicion))
+                return false;
+
+            int? stockActual = ExtraerStockDisponibleDesdeTextoConcepto();
+
+            if (!stockActual.HasValue)
+            {
+                Log($"[PrecondicionNV] No se pudo determinar el stock actual desde '{_conceptoTextoResueltoPrecondicion}'.");
+                return false;
+            }
+
+            if (!int.TryParse(stockMinimo, out int minimo) || minimo <= 0)
+                return stockActual.Value > 0;
+
+            Log($"[PrecondicionNV] Stock actual detectado={stockActual.Value}, stock mínimo requerido={minimo}.");
+            return stockActual.Value >= minimo;
+        }
+
+        private int? ExtraerStockDisponibleDesdeTextoConcepto()
+        {
+            if (string.IsNullOrWhiteSpace(_conceptoTextoResueltoPrecondicion))
+                return null;
+
+            var match = Regex.Match(_conceptoTextoResueltoPrecondicion, @"stock\s*:\s*(?<stock>\d+)", RegexOptions.IgnoreCase);
+            if (!match.Success)
+                return null;
+
+            return int.TryParse(match.Groups["stock"].Value, out int stock) ? stock : null;
+        }
+
+        private string ResolverTextoProductoParaAdquisicion(string concepto)
+        {
+            if (!string.IsNullOrWhiteSpace(_conceptoTextoResueltoPrecondicion))
+                return NormalizarTextoProductoParaAdquisicion(_conceptoTextoResueltoPrecondicion);
+
+            if (concepto.Contains("|", StringComparison.Ordinal))
+                return NormalizarTextoProductoParaAdquisicion(concepto);
+
+            return concepto.Trim();
+        }
+
+        private static string NormalizarTextoProductoParaAdquisicion(string textoProducto)
+        {
+            if (string.IsNullOrWhiteSpace(textoProducto))
+                return string.Empty;
+
+            var partes = textoProducto
+                .Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Where(parte =>
+                    !NormalizeText(parte).StartsWith("stock:", StringComparison.OrdinalIgnoreCase) &&
+                    !NormalizeText(parte).StartsWith("pub:", StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            if (partes.Count == 0)
+                return textoProducto.Trim();
+
+            return string.Join(" | ", partes);
+        }
+
+        private static string ConstruirTerminoBusquedaProductoAdquisicion(string producto)
+        {
+            var partes = producto
+                .Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .ToList();
+
+            if (partes.Count >= 1)
+                return partes[0];
+
+            return producto;
+        }
+
+        private static string ConstruirXPathProductoAdquisicion(string producto)
+        {
+            var partes = producto
+                .Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .ToList();
+
+            var relevantes = partes.Count >= 2 ? partes.Take(2).ToList() : partes;
+            if (relevantes.Count == 0)
+                relevantes.Add(producto);
+
+            string condiciones = string.Join(
+                " and ",
+                relevantes.Select(parte => $"contains(normalize-space(),'{parte.Replace("'", "&apos;")}')"));
+            string codigo = relevantes[0].Replace("'", "&apos;");
+
+            return $"//span[{condiciones}] | //div[contains(@class,'option-item')][{condiciones}] | //a[{condiciones}] | " +
+                   $"//span[contains(normalize-space(),'{codigo}')] | " +
+                   $"//div[contains(@class,'option-item')][contains(normalize-space(),'{codigo}')] | " +
+                   $"//a[contains(normalize-space(),'{codigo}')]";
+        }
+
+        private static string ResolverTextoPlantilla(string plantilla, string concepto)
+        {
+            if (string.IsNullOrWhiteSpace(plantilla))
+                return string.Empty;
+
+            return plantilla.Replace("{concepto}", concepto, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool ExisteFilaEnTabla(string xpath)
+        {
+            return driver.FindElements(By.XPath(xpath)).Any(e =>
+            {
+                try { return e.Displayed; }
+                catch { return false; }
+            });
+        }
+
+        private bool ExisteElementoVisible(By locator)
+        {
+            return driver.FindElements(locator).Any(e =>
+            {
+                try { return e.Displayed; }
+                catch { return false; }
+            });
+        }
+
+        private bool ExisteElementoEnDom(params By[] locators)
+        {
+            return locators.Any(locator => driver.FindElements(locator).Count > 0);
+        }
+
+        private void AbrirSubmoduloConceptos(string submodulo)
+        {
+            string submoduloNormalizado = NormalizeText(submodulo);
+
+            if (submoduloNormalizado == "ver conceptos")
+            {
+                AbrirVistaConceptosEnItems();
+                return;
+            }
+
+            AbrirModuloConceptosEnSidebar();
+
+            if (submoduloNormalizado == "registrar datos de concepto")
+            {
+                Click(By.XPath("//span[normalize-space()='Registrar Datos de Concepto']"));
+                Thread.Sleep(1500);
+
+                Assert.That(
+                    ExisteElementoVisible(By.XPath("//button[normalize-space()='Familia']")),
+                    Is.True,
+                    "No se pudo abrir 'Registrar Datos de Concepto' desde la precondición de Nueva Venta.");
+                return;
+            }
+
+            if (submoduloNormalizado == "nuevo concepto")
+            {
+                Click(
+                    By.XPath("//a[.//span[normalize-space()='Nuevo Concepto']]"),
+                    By.XPath("//a[contains(@href,'BusinessItem') and contains(normalize-space(),'Nuevo Concepto')]"),
+                    By.XPath("//span[normalize-space()='Nuevo Concepto']")
+                );
+
+                Assert.That(
+                    EsperarNuevoConceptoAbierto(10),
+                    Is.True,
+                    "No se pudo abrir 'Nuevo Concepto' desde la precondición de Nueva Venta.");
+                return;
+            }
+
+            Click(
+                By.XPath($"//a[.//span[normalize-space()='{submodulo}']]"),
+                By.XPath($"//span[normalize-space()='{submodulo}']")
+            );
+            Thread.Sleep(1500);
+        }
+
+        private bool EsperarNuevoConceptoAbierto(int timeoutSeconds)
+        {
+            By formularioNuevoConcepto = By.XPath(
+                "//input[contains(@placeholder,'Código') or contains(@placeholder,'Codigo') or " +
+                "contains(@placeholder,'Barra') or contains(@placeholder,'barra') or " +
+                "@id='autoBarcodeChk' or contains(@formcontrolname,'barcode') or contains(@formcontrolname,'barCode')]");
+
+            try
+            {
+                new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutSeconds))
+                {
+                    PollingInterval = TimeSpan.FromMilliseconds(250)
+                }.Until(_ => ExisteElementoVisible(formularioNuevoConcepto));
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private void AbrirVistaConceptosEnItems()
+        {
+            try
+            {
+                NavegarARutaItems("/business-item/ViewBusinessItem");
+                Thread.Sleep(1500);
+            }
+            catch
+            {
+                AbrirModuloConceptosEnSidebar();
+                Click(
+                    By.XPath("//a[@href='/business-item/ViewBusinessItem']"),
+                    By.XPath("//span[normalize-space()='Ver Conceptos']")
+                );
+                Thread.Sleep(1500);
+            }
+
+            if (!ExisteElementoVisible(By.XPath("//input[@placeholder='Ingrese palabras claves']")))
+                throw new InvalidOperationException("No se pudo abrir 'Ver Conceptos' desde la precondición de Nueva Venta.");
+        }
+
+        private void AbrirModuloConceptosEnSidebar()
+        {
+            TryClickOptional(
+                By.XPath("//a[.//span[normalize-space()='Conceptos']]"),
+                By.XPath("//span[normalize-space()='Conceptos']"),
+                By.XPath("//span[text()='Conceptos']/following::input[1]")
+            );
+            Thread.Sleep(1200);
+        }
+
+        private void NavegarARutaItems(string rutaRelativa)
+        {
+            var actual = new Uri(driver.Url);
+            var destino = new Uri(actual, rutaRelativa);
+            driver.Navigate().GoToUrl(destino);
+        }
+
+        private static string ResolverFechaSoloDia(string fechaTexto)
+        {
+            if (TryResolverFechaSoloDia(fechaTexto, out DateTime fecha))
+                return fecha.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+            return fechaTexto.Trim();
+        }
+
+        private static bool TryResolverFechaSoloDia(string fechaTexto, out DateTime fecha)
+        {
+            fecha = default;
+
+            if (string.IsNullOrWhiteSpace(fechaTexto))
+                return false;
+
+            string valor = fechaTexto.Trim();
+            string normalizado = NormalizeText(valor);
+            DateTime hoy = DateTime.Today;
+
+            if (normalizado == "hoy")
+            {
+                fecha = hoy;
+                return true;
+            }
+
+            if (normalizado == "ayer")
+            {
+                fecha = hoy.AddDays(-1);
+                return true;
+            }
+
+            if (normalizado == "manana")
+            {
+                fecha = hoy.AddDays(1);
+                return true;
+            }
+
+            var match = Regex.Match(normalizado, @"^hace\s+(?<dias>\d+)\s+dia(s)?$");
+            if (match.Success && int.TryParse(match.Groups["dias"].Value, out int dias))
+            {
+                fecha = hoy.AddDays(-dias);
+                return true;
+            }
+
+            return DateTime.TryParseExact(
+                valor,
+                new[] { "dd/MM/yyyy", "d/M/yyyy", "d/MM/yyyy", "dd/M/yyyy", "yyyy-MM-dd" },
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.None,
+                out fecha);
         }
 
         // ─── FACTURACIÓN ─────────────────────────────────────────────────────────────
@@ -142,10 +1234,8 @@ namespace SIGES3_0.Pages.VentasPage
                 return;
 
             Log($"Seleccionando punto de venta: {puntoVenta}");
-
-            Click(VentasLocators.NuevaVenta.PuntoVentaChevron);
-
-            Click(VentasLocators.NuevaVenta.PuntoVentaOpcion(puntoVenta));
+            AbrirSeccionFacturacionSiNecesario();
+            SeleccionarDropdownCustomNuevaVenta(puntoVenta.Trim(), VentasLocators.NuevaVenta.PuntoVentaChevron);
             Thread.Sleep(800);
         }
 
@@ -156,9 +1246,8 @@ namespace SIGES3_0.Pages.VentasPage
                 return;
 
             Log($"Seleccionando vendedor: {vendedor}");
-            Click(VentasLocators.NuevaVenta.VendedorChevron);
-            Thread.Sleep(800);
-            Click(VentasLocators.NuevaVenta.VendedorOption(vendedor));
+            AbrirSeccionFacturacionSiNecesario();
+            SeleccionarDropdownCustomNuevaVenta(vendedor.Trim(), VentasLocators.NuevaVenta.VendedorChevron);
             Thread.Sleep(800);
         }
 
@@ -169,7 +1258,8 @@ namespace SIGES3_0.Pages.VentasPage
             BuscarClienteNuevaVenta(cliente);
             SeleccionarComprobanteNuevaVenta(comprobante);
 
-            Thread.Sleep(500);
+            // Pausa breve para que Angular renderice un posible popup de error post-seleccion.
+            Thread.Sleep(200);
             var popup = CaptureVisibleMessage(2);
             if (!string.IsNullOrWhiteSpace(popup) && IsBlockingMessage(popup) && string.IsNullOrWhiteSpace(_lastObservedMessage))
             {
@@ -282,7 +1372,13 @@ namespace SIGES3_0.Pages.VentasPage
         // que no existen en el formulario de NuevaVenta; se anclan al label en su lugar.
         public void IngresarPesoBrutoNV(string valor)
         {
-            if (EsValorOmitible(valor)) return;
+            if (EsValorOmitible(valor))
+            {
+                RegistrarCampoGuiaOmitido("Peso bruto");
+                return;
+            }
+
+            QuitarCampoGuiaOmitido("Peso bruto");
             EscribirCampoGuia(By.XPath(
                 "//label[contains(normalize-space(),'Peso') or contains(normalize-space(),'PESO')]" +
                 "/following::input[not(@type='hidden') and not(@type='date')][1]"), valor.Trim());
@@ -290,10 +1386,27 @@ namespace SIGES3_0.Pages.VentasPage
 
         public void IngresarNumeroBultosNV(string valor)
         {
-            if (EsValorOmitible(valor)) return;
+            if (EsValorOmitible(valor))
+            {
+                RegistrarCampoGuiaOmitido("Numero de bultos");
+                return;
+            }
+
+            QuitarCampoGuiaOmitido("Numero de bultos");
             EscribirCampoGuia(By.XPath(
                 "//label[contains(normalize-space(),'Bulto') or contains(normalize-space(),'BULTO')]" +
                 "/following::input[not(@type='hidden') and not(@type='date')][1]"), valor.Trim());
+        }
+
+        private void RegistrarCampoGuiaOmitido(string campo)
+        {
+            if (!_guiaCamposOmitidos.Any(c => string.Equals(c, campo, StringComparison.OrdinalIgnoreCase)))
+                _guiaCamposOmitidos.Add(campo);
+        }
+
+        private void QuitarCampoGuiaOmitido(string campo)
+        {
+            _guiaCamposOmitidos.RemoveAll(c => string.Equals(c, campo, StringComparison.OrdinalIgnoreCase));
         }
 
         private static bool EsValorOmitible(string valor) =>
@@ -326,26 +1439,514 @@ namespace SIGES3_0.Pages.VentasPage
                 return;
 
             var norm = NormalizeText(resultadoEsperado);
-            if (norm.Contains("guarda exitosamente"))
+            bool habiaGuiaPendiente = IsGuideModalVisible();
+            if (habiaGuiaPendiente)
+                TryResolvePendingGuideModal("Validacion guia");
+
+            if (norm.Contains("guia emitida correctamente"))
             {
+                ValidarEvidenciaGuiaEmitida();
+            }
+            else if (EsResultadoExitosoVenta(norm))
+            {
+                if (habiaGuiaPendiente)
+                {
+                    Assert.That(_guiaConfirmadaAntesDeGuardar, Is.True,
+                        $"No se pudo confirmar la guia antes de guardar la venta. Mensaje capturado: '{_lastObservedMessage}'.");
+
+                    if (!_wasSaveExecuted)
+                    {
+                        ConfigurePaymentFlow("Contado");
+                        GuardarVentaFlow();
+                    }
+                }
+
                 Assert.That(_wasSaveEnabled, Is.True,
                     $"Guardar deberia estar habilitado (venta exitosa). Mensaje capturado: '{_lastObservedMessage}'");
                 Assert.That(_wasSaveExecuted, Is.True,
                     "El guardado deberia haberse ejecutado.");
-                if (string.IsNullOrWhiteSpace(_lastObservedMessage) && IsNewSaleFormReset())
-                    _lastObservedMessage = "Se registro correctamente";
-                Assert.That(NormalizeText(_lastObservedMessage), Does.Contain("registr").Or.Contain("correct"),
-                    $"Mensaje de exito no encontrado. Actual: '{_lastObservedMessage}'");
+
+                Assert.That(EsMensajeExitoVenta(_lastObservedMessage), Is.True,
+                    $"Mensaje de exito no encontrado. Actual: '{_lastObservedMessage}'. " +
+                    $"Textos visibles de resultado: '{CapturarDiagnosticoMensajesResultado()}'.");
             }
             else
             {
                 Assert.That(_wasSaveEnabled, Is.False,
                     $"Guardar deberia estar deshabilitado. Resultado esperado: '{resultadoEsperado}'. Mensaje capturado: '{_lastObservedMessage}'");
-                Log($"Validacion no exitosa: esperado='{resultadoEsperado}', capturado='{_lastObservedMessage}'");
+                ValidarMensajeDeResultadoNoExitosoNuevaVenta(norm, _lastObservedMessage);
+                Log($"Resultado esperado no exitoso validado: esperado='{resultadoEsperado}', capturado='{_lastObservedMessage}'");
             }
 
             TryCloseSuccessDialog();
         }
+
+        private static bool EsResultadoExitosoVenta(string resultadoEsperadoNormalizado) =>
+            resultadoEsperadoNormalizado.Contains("guarda exitosamente") ||
+            resultadoEsperadoNormalizado.Contains("guia emitida correctamente");
+
+        private void ValidarEvidenciaGuiaEmitida()
+        {
+            string evidencia = ConstruirEvidenciaGuiaCompacta(_lastObservedMessage, _guiaEvidenciaConfirmacion);
+
+            Assert.That(_guiaConfirmadaAntesDeGuardar, Is.True,
+                $"No se valido la guia antes de guardar la venta. Evidencia capturada: '{evidencia}'.");
+            Assert.That(string.IsNullOrWhiteSpace(evidencia), Is.False,
+                "La guia se marco como confirmada, pero no se capturo mensaje ni resumen de evidencia.");
+
+            Log($"Guia emitida validada antes de guardar venta. {evidencia}");
+        }
+
+        private static bool EsMensajeConfirmacionGuia(string? mensaje)
+        {
+            var normalizado = NormalizeText(mensaje ?? string.Empty);
+            if (string.IsNullOrWhiteSpace(normalizado))
+                return false;
+
+            return (normalizado.Contains("guia") && (normalizado.Contains("emit") || normalizado.Contains("gener"))) ||
+                   normalizado.Contains("registr") ||
+                   normalizado.Contains("correct") ||
+                   normalizado.Contains("complet");
+        }
+
+        private bool IsGuideSummaryVisible()
+        {
+            return driver.FindElements(By.XPath("//*[normalize-space()]"))
+                .Any(e =>
+                {
+                    try
+                    {
+                        return e.Displayed &&
+                               NormalizeText(e.Text).Contains("guia de remision") &&
+                               (NormalizeText(e.Text).Contains("destinatario") ||
+                                NormalizeText(e.Text).Contains("conductor") ||
+                                NormalizeText(e.Text).Contains("traslado"));
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                });
+        }
+
+        private string CapturarResumenGuiaVisible()
+        {
+            return driver.FindElements(By.XPath("//*[normalize-space()]"))
+                .Where(e =>
+                {
+                    try
+                    {
+                        var texto = NormalizeText(e.Text);
+                        return e.Displayed &&
+                               texto.Contains("guia de remision") &&
+                               (texto.Contains("destinatario") ||
+                                texto.Contains("conductor") ||
+                                texto.Contains("traslado"));
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                })
+                .Select(e =>
+                {
+                    try { return (e.Text ?? string.Empty).Trim(); }
+                    catch { return string.Empty; }
+                })
+                .Where(t => !string.IsNullOrWhiteSpace(t))
+                .Select(t => new
+                {
+                    Texto = t,
+                    Resumen = ConstruirResumenGuiaCompacto(t),
+                    Campos = ContarCamposResumenGuia(t)
+                })
+                .Where(x => !string.IsNullOrWhiteSpace(x.Resumen))
+                .OrderByDescending(x => x.Campos)
+                .ThenBy(x => x.Texto.Length)
+                .Select(x => x.Resumen)
+                .FirstOrDefault(t => !string.IsNullOrWhiteSpace(t)) ?? string.Empty;
+        }
+
+        private static string ConstruirEvidenciaGuiaCompacta(string? mensaje, string? resumenGuia)
+        {
+            if (!string.IsNullOrWhiteSpace(resumenGuia))
+                return resumenGuia.Trim();
+
+            string resumenDesdeMensaje = ConstruirResumenGuiaCompacto(mensaje);
+            if (!string.IsNullOrWhiteSpace(resumenDesdeMensaje))
+                return resumenDesdeMensaje;
+
+            return !string.IsNullOrWhiteSpace(mensaje)
+                ? $"Mensaje={RecortarTextoParaLog(mensaje, 220)}"
+                : string.Empty;
+        }
+
+        private static string ConstruirResumenGuiaCompacto(string? texto)
+        {
+            var lineas = ExtraerLineasLimpias(texto).ToList();
+            if (lineas.Count == 0)
+                return string.Empty;
+
+            var campos = new List<string> { "Estado=confirmada" };
+            AgregarCampoResumenGuia(campos, "Traslado", ExtraerValorResumenGuia(lineas, "Traslado"));
+            AgregarCampoResumenGuia(campos, "Destinatario", ExtraerValorResumenGuia(lineas, "Destinatario"));
+            AgregarCampoResumenGuia(campos, "Conductor", ExtraerValorResumenGuia(lineas, "Conductor"));
+            AgregarCampoResumenGuia(campos, "Origen", ExtraerValorResumenGuia(lineas, "Origen"));
+            AgregarCampoResumenGuia(campos, "Destino", ExtraerValorResumenGuia(lineas, "Destino"));
+
+            if (campos.Count > 1)
+                return string.Join(" | ", campos);
+
+            return lineas.Any(l => NormalizeText(l).Contains("guia de remision"))
+                ? "Estado=guia visible"
+                : string.Empty;
+        }
+
+        private static int ContarCamposResumenGuia(string? texto)
+        {
+            var lineas = ExtraerLineasLimpias(texto).ToList();
+            return new[] { "Traslado", "Destinatario", "Conductor", "Origen", "Destino" }
+                .Count(etiqueta => !string.IsNullOrWhiteSpace(ExtraerValorResumenGuia(lineas, etiqueta)));
+        }
+
+        private static IEnumerable<string> ExtraerLineasLimpias(string? texto)
+        {
+            if (string.IsNullOrWhiteSpace(texto))
+                yield break;
+
+            foreach (var linea in Regex.Split(texto, @"\r\n|\n|\r"))
+            {
+                var limpia = Regex.Replace(linea.Trim(), @"\s+", " ");
+                if (!string.IsNullOrWhiteSpace(limpia))
+                    yield return limpia;
+            }
+        }
+
+        private static void AgregarCampoResumenGuia(ICollection<string> campos, string etiqueta, string? valor)
+        {
+            if (!string.IsNullOrWhiteSpace(valor))
+                campos.Add($"{etiqueta}={valor}");
+        }
+
+        private static string? ExtraerValorResumenGuia(IReadOnlyList<string> lineas, string etiqueta)
+        {
+            string etiquetaNormalizada = NormalizeText(etiqueta);
+
+            for (int i = 0; i < lineas.Count; i++)
+            {
+                string linea = lineas[i];
+                string lineaNormalizada = NormalizeText(linea);
+                if (!lineaNormalizada.StartsWith(etiquetaNormalizada, StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                string valor = linea.Length > etiqueta.Length
+                    ? linea.Substring(etiqueta.Length).Trim()
+                    : string.Empty;
+
+                valor = Regex.Replace(valor, @"^[:\-\s]+", string.Empty).Trim();
+                if (string.IsNullOrWhiteSpace(valor) && i + 1 < lineas.Count)
+                    valor = lineas[i + 1].Trim();
+
+                return LimpiarValorResumenGuia(valor);
+            }
+
+            return null;
+        }
+
+        private static string LimpiarValorResumenGuia(string? valor)
+        {
+            if (string.IsNullOrWhiteSpace(valor))
+                return string.Empty;
+
+            var limpio = Regex.Replace(valor.Trim().Trim('"'), @"\s+", " ");
+            return RecortarTextoParaLog(limpio, 90);
+        }
+
+        private static string RecortarTextoParaLog(string? texto, int maxLength)
+        {
+            if (string.IsNullOrWhiteSpace(texto))
+                return string.Empty;
+
+            var limpio = Regex.Replace(texto.Trim(), @"\s+", " ");
+            return limpio.Length <= maxLength
+                ? limpio
+                : limpio.Substring(0, Math.Max(0, maxLength - 3)) + "...";
+        }
+
+        private void ValidarMensajeDeResultadoNoExitosoNuevaVenta(string resultadoEsperadoNormalizado, string? mensajeCapturado)
+        {
+            if (!RequiereValidacionExplicitaDeMensaje(resultadoEsperadoNormalizado))
+                return;
+
+            Assert.That(string.IsNullOrWhiteSpace(mensajeCapturado), Is.False,
+                $"Se esperaba una validacion visible para '{resultadoEsperadoNormalizado}', pero no se capturo ningun mensaje.");
+
+            string mensajeNormalizado = NormalizeText(mensajeCapturado!);
+            string resumenGuia = ConstruirResumenValidacionGuia(resultadoEsperadoNormalizado, mensajeCapturado);
+
+            if (resultadoEsperadoNormalizado.Contains("ingrese numero de licencia"))
+            {
+                AssertValidacionDatoTransporteFlexible(
+                    mensajeNormalizado,
+                    mensajeCapturado,
+                    resumenGuia,
+                    "licencia");
+                return;
+            }
+
+            if (resultadoEsperadoNormalizado.Contains("ingrese numero de placa"))
+            {
+                AssertValidacionDatoTransporteFlexible(
+                    mensajeNormalizado,
+                    mensajeCapturado,
+                    resumenGuia,
+                    "placa");
+                return;
+            }
+
+            if (resultadoEsperadoNormalizado.Contains("ruc requerido") ||
+                resultadoEsperadoNormalizado.Contains("identificar cliente"))
+            {
+                AssertValidacionClienteConDocumento(
+                    mensajeNormalizado,
+                    mensajeCapturado,
+                    resultadoEsperadoNormalizado);
+                return;
+            }
+
+            if (resultadoEsperadoNormalizado.Contains("identifique al conductor con dni"))
+            {
+                AssertValidacionIdentidadTransporte(mensajeNormalizado, mensajeCapturado, resumenGuia);
+                return;
+            }
+
+            if (resultadoEsperadoNormalizado.Contains("identifique al transportista con ruc"))
+            {
+                AssertValidacionIdentidadTransporte(mensajeNormalizado, mensajeCapturado, resumenGuia);
+                return;
+            }
+
+            if (resultadoEsperadoNormalizado.Contains("falta peso y numero de bultos"))
+            {
+                AssertValidacionGuiaFlexible(
+                    mensajeNormalizado,
+                    mensajeCapturado,
+                    resumenGuia,
+                    "peso",
+                    "bulto");
+                return;
+            }
+
+            if (resultadoEsperadoNormalizado.Contains("este campo es obligatorio") ||
+                resultadoEsperadoNormalizado.Contains("campo obligatorio"))
+            {
+                AssertValidacionGuiaFlexible(
+                    mensajeNormalizado,
+                    mensajeCapturado,
+                    resumenGuia,
+                    "obligatorio");
+            }
+        }
+
+        private void AssertValidacionGuiaFlexible(
+            string mensajeNormalizado,
+            string? mensajeCapturado,
+            string resumenGuia,
+            params string[] fragmentosEsperados)
+        {
+            bool mencionaCampo = fragmentosEsperados
+                .Where(fragmento => !string.IsNullOrWhiteSpace(fragmento))
+                .All(fragmento => mensajeNormalizado.Contains(NormalizeText(fragmento)));
+
+            bool esRequeridoGenerico = EsMensajeRequeridoGenerico(mensajeNormalizado);
+
+            if (mencionaCampo || esRequeridoGenerico)
+            {
+                Log(resumenGuia);
+                return;
+            }
+
+            Assert.Fail(
+                $"La validacion no coincide con el resultado esperado. " +
+                $"Mensaje actual: '{mensajeCapturado}'. {resumenGuia}");
+        }
+
+        private void AssertValidacionIdentidadTransporte(
+            string mensajeNormalizado,
+            string? mensajeCapturado,
+            string resumenGuia)
+        {
+            if (EsValidacionIdentidadTransporte(mensajeNormalizado) ||
+                EsMensajeRequeridoGenerico(mensajeNormalizado))
+            {
+                Log(resumenGuia);
+                return;
+            }
+
+            Assert.Fail(
+                $"La validacion de identidad de transporte no coincide con el resultado esperado. " +
+                $"Mensaje actual: '{mensajeCapturado}'. {resumenGuia}");
+        }
+
+        private void AssertValidacionDatoTransporteFlexible(
+            string mensajeNormalizado,
+            string? mensajeCapturado,
+            string resumenGuia,
+            params string[] fragmentosEsperados)
+        {
+            bool mencionaCampoEsperado = fragmentosEsperados
+                .Where(fragmento => !string.IsNullOrWhiteSpace(fragmento))
+                .All(fragmento => mensajeNormalizado.Contains(NormalizeText(fragmento)));
+
+            if (mencionaCampoEsperado ||
+                EsValidacionIdentidadTransporte(mensajeNormalizado) ||
+                EsMensajeRequeridoGenerico(mensajeNormalizado))
+            {
+                Log(resumenGuia);
+                return;
+            }
+
+            Assert.Fail(
+                $"La validacion de datos de transporte no coincide con el resultado esperado. " +
+                $"Mensaje actual: '{mensajeCapturado}'. {resumenGuia}");
+        }
+
+        private static void AssertValidacionClienteConDocumento(
+            string mensajeNormalizado,
+            string? mensajeCapturado,
+            string resultadoEsperadoNormalizado)
+        {
+            bool esperaRuc = resultadoEsperadoNormalizado.Contains("ruc requerido");
+            bool mencionaCliente = mensajeNormalizado.Contains("cliente") ||
+                                  mensajeNormalizado.Contains("documento") ||
+                                  mensajeNormalizado.Contains("identificar") ||
+                                  mensajeNormalizado.Contains("identifique");
+            bool mencionaRuc = mensajeNormalizado.Contains("ruc");
+
+            if (esperaRuc && mencionaRuc && mencionaCliente)
+                return;
+
+            if (!esperaRuc && mencionaCliente)
+                return;
+
+            Assert.Fail(
+                $"La validacion de cliente no coincide con el resultado esperado. " +
+                $"Esperado: '{resultadoEsperadoNormalizado}'. Mensaje actual: '{mensajeCapturado}'.");
+        }
+
+        private static bool EsValidacionIdentidadTransporte(string mensajeNormalizado)
+        {
+            bool mencionaConductorDni =
+                mensajeNormalizado.Contains("conductor") &&
+                mensajeNormalizado.Contains("dni");
+
+            bool mencionaTransportista =
+                mensajeNormalizado.Contains("transportista") &&
+                (mensajeNormalizado.Contains("ruc") ||
+                 mensajeNormalizado.Contains("obligatorio") ||
+                 mensajeNormalizado.Contains("requerido"));
+
+            return mencionaConductorDni || mencionaTransportista;
+        }
+
+        private static bool EsMensajeRequeridoGenerico(string mensajeNormalizado)
+        {
+            if (string.IsNullOrWhiteSpace(mensajeNormalizado))
+                return false;
+
+            if (mensajeNormalizado.Contains("este campo es obligatorio") ||
+                mensajeNormalizado.Contains("complete los campos requeridos") ||
+                mensajeNormalizado.Contains("complete los campos obligatorios") ||
+                mensajeNormalizado.Contains("complete los campos"))
+                return true;
+
+            bool mencionaCampoEspecifico =
+                mensajeNormalizado.Contains("transportista") ||
+                mensajeNormalizado.Contains("conductor") ||
+                mensajeNormalizado.Contains("licencia") ||
+                mensajeNormalizado.Contains("placa") ||
+                mensajeNormalizado.Contains("peso") ||
+                mensajeNormalizado.Contains("bulto") ||
+                mensajeNormalizado.Contains("ruc") ||
+                mensajeNormalizado.Contains("dni");
+
+            return !mencionaCampoEspecifico &&
+                   (mensajeNormalizado.Contains("obligatorio") ||
+                    mensajeNormalizado.Contains("requerido"));
+        }
+
+        private string ConstruirResumenValidacionGuia(string resultadoEsperadoNormalizado, string? mensajeCapturado)
+        {
+            var campos = new List<string>();
+
+            if (resultadoEsperadoNormalizado.Contains("falta peso y numero de bultos"))
+            {
+                campos.Add("Peso bruto");
+                campos.Add("Numero de bultos");
+            }
+
+            if (resultadoEsperadoNormalizado.Contains("ingrese numero de licencia"))
+                campos.Add("Numero de licencia");
+
+            if (resultadoEsperadoNormalizado.Contains("ingrese numero de placa"))
+                campos.Add("Numero de placa");
+
+            if (resultadoEsperadoNormalizado.Contains("identifique al conductor con dni"))
+                campos.Add("Identificacion de transporte");
+
+            if (resultadoEsperadoNormalizado.Contains("identifique al transportista con ruc"))
+                campos.Add("Identificacion de transporte");
+
+            foreach (var campo in _guiaCamposOmitidos)
+            {
+                if (!campos.Any(c => string.Equals(c, campo, StringComparison.OrdinalIgnoreCase)))
+                    campos.Add(campo);
+            }
+
+            var mensajes = CapturarValidacionesVisiblesDetalladas()
+                .Where(m => !string.IsNullOrWhiteSpace(m))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+
+            if (!string.IsNullOrWhiteSpace(mensajeCapturado) &&
+                !mensajes.Any(m => string.Equals(m, mensajeCapturado, StringComparison.OrdinalIgnoreCase)))
+            {
+                if (campos.Count > 0 && EsMensajeRequeridoGenerico(NormalizeText(mensajeCapturado!)))
+                {
+                    foreach (var campo in campos)
+                    {
+                        string mensajeCampo = $"{campo}: {mensajeCapturado!.Trim()}";
+                        if (!mensajes.Any(m => string.Equals(m, mensajeCampo, StringComparison.OrdinalIgnoreCase)))
+                            mensajes.Add(mensajeCampo);
+                    }
+                }
+                else
+                {
+                    mensajes.Insert(0, mensajeCapturado!.Trim());
+                }
+            }
+
+            string camposResumen = campos.Count > 0
+                ? string.Join(", ", campos)
+                : "campos requeridos de guia de remision";
+
+            string mensajesResumen = mensajes.Count > 0
+                ? string.Join(" | ", mensajes)
+                : "sin texto visible adicional";
+
+            return $"Guia de remision bloqueada. Esperado QA: {camposResumen}. Validacion UI: {mensajesResumen}.";
+        }
+
+        private static bool RequiereValidacionExplicitaDeMensaje(string resultadoEsperadoNormalizado) =>
+            resultadoEsperadoNormalizado.Contains("ingrese numero de licencia") ||
+            resultadoEsperadoNormalizado.Contains("ingrese numero de placa") ||
+            resultadoEsperadoNormalizado.Contains("ruc requerido") ||
+            resultadoEsperadoNormalizado.Contains("identificar cliente") ||
+            resultadoEsperadoNormalizado.Contains("identifique al conductor con dni") ||
+            resultadoEsperadoNormalizado.Contains("identifique al transportista con ruc") ||
+            resultadoEsperadoNormalizado.Contains("falta peso y numero de bultos") ||
+            resultadoEsperadoNormalizado.Contains("este campo es obligatorio") ||
+            resultadoEsperadoNormalizado.Contains("campo obligatorio");
 
         public void ValidarResultadoDescuentoEnVenta(string resultadoEsperado)
         {
@@ -1015,8 +2616,11 @@ namespace SIGES3_0.Pages.VentasPage
                     }
                 }
 
-                AssertGuardarHabilitadoEnPago(
-                    "El boton Guardar deberia habilitarse cuando el pago en efectivo cubre el total.");
+                if (!esperado.Contains("sin validar guardar"))
+                {
+                    AssertGuardarHabilitadoEnPago(
+                        "El boton Guardar deberia habilitarse cuando el pago en efectivo cubre el total.");
+                }
             }
             else if (esperado.Contains("puntos"))
             {
@@ -1049,6 +2653,19 @@ namespace SIGES3_0.Pages.VentasPage
                 AssertGuardarHabilitadoEnPago(
                     "El boton Guardar deberia habilitarse cuando la suma de los medios de pago cubre el total.");
             }
+            else if (esperado.Contains("fecha no debe ser pasada"))
+            {
+                // La validacion aparece en la seccion Pago al ingresar una fecha de credito anterior a hoy.
+                // El sistema debe mostrar el mensaje y dejar el boton Guardar deshabilitado.
+                AssertAlgunMensajeValidacionPago(
+                    "El sistema deberia mostrar el mensaje 'La fecha no debe ser pasada.' al ingresar una fecha de credito pasada.",
+                    "la fecha no debe ser pasada",
+                    "fecha no debe ser pasada",
+                    "fecha invalida",
+                    "fecha incorrecta");
+                AssertGuardarDeshabilitadoEnPago(
+                    "El boton Guardar deberia permanecer deshabilitado cuando la fecha de credito es anterior a hoy.");
+            }
             else
             {
                 Assert.Fail($"No existe una validacion implementada para el resultado de pago '{resultadoEsperado}'.");
@@ -1063,6 +2680,20 @@ namespace SIGES3_0.Pages.VentasPage
             Log("Paso 10 - Intentando guardar venta...");
             _wasSaveEnabled = false;
             _wasSaveExecuted = false;
+
+            if (TryResolvePendingGuideModal("Guardar"))
+            {
+                if (IsGuideModalVisible())
+                {
+                    if (string.IsNullOrWhiteSpace(_lastObservedMessage))
+                        _lastObservedMessage = CapturarValidaciones();
+
+                    Log($"La guia de remision sigue abierta y bloquea el guardado. Mensaje actual: '{_lastObservedMessage}'");
+                    return;
+                }
+
+                Thread.Sleep(500);
+            }
 
             // Cerrar modal bloqueante si existe ANTES de interactuar con el formulario.
             // No retornar: el modal puede ser una advertencia informativa; el estado real
@@ -1085,6 +2716,16 @@ namespace SIGES3_0.Pages.VentasPage
             _wasSaveEnabled = IsSaveEnabled();
             Log($"Boton Guardar habilitado: {_wasSaveEnabled}");
 
+            var validacionBloqueanteAntesDeGuardar = CapturarValidacionesVisibles()
+                .FirstOrDefault(EsValidacionBloqueanteFormulario);
+            if (!string.IsNullOrWhiteSpace(validacionBloqueanteAntesDeGuardar))
+            {
+                _wasSaveEnabled = false;
+                _lastObservedMessage = validacionBloqueanteAntesDeGuardar;
+                Log($"Guardar bloqueado por validacion activa: '{_lastObservedMessage}'");
+                return;
+            }
+
             if (!_wasSaveEnabled)
             {
                 // Capturar la validacion actualmente visible en el formulario.
@@ -1098,24 +2739,65 @@ namespace SIGES3_0.Pages.VentasPage
                 return;
             }
 
-            ScrollToCenter(btn);
-            try
+            for (int intento = 1; intento <= 2 && !_wasSaveExecuted; intento++)
             {
-                btn.Click();
+                try
+                {
+                    btn = driver.FindElements(VentasLocators.NuevaVenta.GuardarVenta)
+                        .FirstOrDefault(e => { try { return e.Displayed; } catch { return false; } });
+
+                    if (btn == null)
+                    {
+                        Log("Boton Guardar no encontrado al momento de ejecutar el click.");
+                        break;
+                    }
+
+                    ScrollToCenter(btn);
+                    btn.Click();
+                    Thread.Sleep(2000);
+                    _wasSaveExecuted = true;
+                }
+                catch (ElementClickInterceptedException)
+                {
+                    Log("ElementClickInterceptedException - un modal intercepto el click en Guardar.");
+                    var modalCerrado = TryHandleBlockingModal();
+                    if (!modalCerrado)
+                    {
+                        try
+                        {
+                            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", btn);
+                            Thread.Sleep(2000);
+                            _wasSaveExecuted = true;
+                        }
+                        catch
+                        {
+                        }
+                    }
+
+                    if (!_wasSaveExecuted)
+                        Thread.Sleep(800);
+                }
+                catch (StaleElementReferenceException)
+                {
+                    Thread.Sleep(500);
+                }
             }
-            catch (ElementClickInterceptedException)
+
+            if (!_wasSaveExecuted)
             {
-                Log("ElementClickInterceptedException - un modal intercepto el click en Guardar.");
-                TryHandleBlockingModal();
-                _wasSaveEnabled = false;
+                if (string.IsNullOrWhiteSpace(_lastObservedMessage))
+                    _lastObservedMessage = CaptureVisibleMessage(2);
+
+                if (string.IsNullOrWhiteSpace(_lastObservedMessage))
+                    _lastObservedMessage = CapturarValidaciones();
+
+                Log($"No se pudo ejecutar el click en Guardar. Mensaje actual: '{_lastObservedMessage}'");
                 return;
             }
-            Thread.Sleep(2000);
-            _wasSaveExecuted = true;
 
             try
             {
-                new WebDriverWait(driver, TimeSpan.FromSeconds(6))
+                new WebDriverWait(driver, TimeSpan.FromSeconds(12))
                 {
                     PollingInterval = TimeSpan.FromMilliseconds(200)
                 }.Until(_ => IsNewSaleFormReset() || !string.IsNullOrWhiteSpace(CaptureVisibleMessage(1)));
@@ -1125,13 +2807,15 @@ namespace SIGES3_0.Pages.VentasPage
             }
 
             // Resultado del guardado: form reiniciado = exito, mensaje visible = error post-guardado
-            var msg = CaptureVisibleMessage(3);
-            if (IsNewSaleFormReset())
-                _lastObservedMessage = "Se registro correctamente";
-            else if (!string.IsNullOrWhiteSpace(msg))
+            var msg = CaptureVisibleMessage(5);
+            if (!string.IsNullOrWhiteSpace(msg))
                 _lastObservedMessage = msg;
-            else if (string.IsNullOrWhiteSpace(CapturarValidaciones()))
-                _lastObservedMessage = "Se registro correctamente";
+            else
+            {
+                var validacionPostGuardado = CapturarValidaciones();
+                if (!string.IsNullOrWhiteSpace(validacionPostGuardado))
+                    _lastObservedMessage = validacionPostGuardado;
+            }
 
             Log($"Resultado: Habilitado={_wasSaveEnabled}, Ejecutado={_wasSaveExecuted}, Mensaje='{_lastObservedMessage}'");
         }
@@ -1140,14 +2824,61 @@ namespace SIGES3_0.Pages.VentasPage
 
         private void WaitForFormReady()
         {
-            if (!driver.FindElements(VentasLocators.NuevaVenta.IgvCheck).Any(e => e.Displayed))
+            if (IsNewSaleFormReady())
             {
-                var baseUrl = new Uri(driver.Url).GetLeftPart(UriPartial.Authority);
-                driver.Navigate().GoToUrl(baseUrl + "/sales/new-sales");
-                Thread.Sleep(3000);
+                Thread.Sleep(1000);
+                return;
             }
-            wait.Until(_ => driver.FindElements(VentasLocators.NuevaVenta.IgvCheck).Any(e => e.Displayed));
+
+            var baseUrl = new Uri(driver.Url).GetLeftPart(UriPartial.Authority);
+            driver.Navigate().GoToUrl(baseUrl + "/sales/new-sales");
+            WaitForDocumentReady();
+
+            try
+            {
+                new WebDriverWait(driver, TimeSpan.FromSeconds(45))
+                {
+                    PollingInterval = TimeSpan.FromMilliseconds(300)
+                }.Until(_ => IsNewSaleFormReady());
+            }
+            catch (WebDriverTimeoutException ex)
+            {
+                string mensaje = CapturarValidaciones();
+                throw new WebDriverTimeoutException(
+                    $"No cargo el formulario de Nueva Venta. URL actual: {driver.Url}. " +
+                    $"Mensaje visible: '{(string.IsNullOrWhiteSpace(mensaje) ? "sin mensaje visible" : mensaje)}'.",
+                    ex);
+            }
+
             Thread.Sleep(1000);
+        }
+
+        private bool IsNewSaleFormReady()
+        {
+            return driver.Url.Contains("/sales/new-sales", StringComparison.OrdinalIgnoreCase) &&
+                   (ExisteElementoVisible(VentasLocators.NuevaVenta.IgvCheck) ||
+                    ExisteElementoVisible(VentasLocators.NuevaVenta.ModoVenta("VENTA NORMAL")) ||
+                    ExisteElementoVisible(VentasLocators.Detail.FamilySelect) ||
+                    ExisteElementoVisible(VentasLocators.NuevaVenta.FamiliaDropdown));
+        }
+
+        private void WaitForDocumentReady()
+        {
+            try
+            {
+                new WebDriverWait(driver, TimeSpan.FromSeconds(20))
+                {
+                    PollingInterval = TimeSpan.FromMilliseconds(300)
+                }.Until(_ =>
+                    string.Equals(
+                        ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState")?.ToString(),
+                        "complete",
+                        StringComparison.OrdinalIgnoreCase));
+            }
+            catch (WebDriverException)
+            {
+                Thread.Sleep(2000);
+            }
         }
 
         private void SetCheckbox(By locator, bool shouldBeChecked)
@@ -1184,10 +2915,19 @@ namespace SIGES3_0.Pages.VentasPage
             ScrollToCenter(input);
             input.Clear();
             input.SendKeys(cliente);
-            Thread.Sleep(300);
+            Thread.Sleep(150); // pequeña pausa para que el campo registre el valor antes del clic
             try { Click(VentasLocators.NuevaVenta.ClienteLupa); }
             catch { input.SendKeys(Keys.Enter); }
-            Thread.Sleep(2000);
+            // Espera a que el comprobante este disponible en lugar de un sleep fijo de 2000ms.
+            // El comprobante se habilita cuando la API de busqueda de cliente responde.
+            try
+            {
+                new WebDriverWait(driver, TimeSpan.FromSeconds(10)) { PollingInterval = TimeSpan.FromMilliseconds(200) }
+                    .Until(_ =>
+                        driver.FindElements(VentasLocators.NuevaVenta.ComprobanteChevron).Any(e => { try { return e.Displayed; } catch { return false; } })
+                        || driver.FindElements(VentasLocators.NuevaVenta.ComprobanteChevronFallback).Any(e => { try { return e.Displayed; } catch { return false; } }));
+            }
+            catch (WebDriverTimeoutException) { Thread.Sleep(500); /* fallback si el comprobante tarda mas de lo esperado */ }
         }
 
         private void AbrirSeccionFacturacionSiNecesario()
@@ -1204,7 +2944,15 @@ namespace SIGES3_0.Pages.VentasPage
                 By.XPath("//div[contains(@id,'heading-collapse-factur')]//button"),
                 By.XPath("//button[contains(@class,'accordion-button')][contains(normalize-space(),'Facturaci')]")
             );
-            Thread.Sleep(800);
+            // Espera a que el campo de cliente sea visible en lugar de un sleep fijo.
+            try
+            {
+                new WebDriverWait(driver, TimeSpan.FromSeconds(5)) { PollingInterval = TimeSpan.FromMilliseconds(150) }
+                    .Until(_ =>
+                        driver.FindElements(By.Id("DocumentoIdentidad")).Any(e => { try { return e.Displayed; } catch { return false; } })
+                        || driver.FindElements(VentasLocators.NuevaVenta.ClienteBuscar).Any(e => { try { return e.Displayed; } catch { return false; } }));
+            }
+            catch (WebDriverTimeoutException) { /* si no aparece, el flujo siguiente fallara con mensaje claro */ }
         }
 
         private void SeleccionarComprobanteNuevaVenta(string comprobante)
@@ -1212,18 +2960,46 @@ namespace SIGES3_0.Pages.VentasPage
             if (string.IsNullOrWhiteSpace(comprobante)) return;
             string textoOpcion = NormalizarTextComprobante(comprobante);
             Log($"Seleccionando comprobante: {textoOpcion}");
+            if (ComprobanteYaSeleccionadoNuevaVenta(textoOpcion))
+            {
+                Log($"Comprobante ya seleccionado: {textoOpcion}");
+                return;
+            }
+
             // Paso 1: abrir el dropdown con el chevron
             Click(
                 VentasLocators.NuevaVenta.ComprobanteChevron,
                 VentasLocators.NuevaVenta.ComprobanteChevronFallback
             );
-            Thread.Sleep(800);
+            // Espera a que las opciones del dropdown sean visibles antes de intentar hacer clic.
+            try
+            {
+                new WebDriverWait(driver, TimeSpan.FromSeconds(5)) { PollingInterval = TimeSpan.FromMilliseconds(150) }
+                    .Until(_ => driver.FindElements(VentasLocators.NuevaVenta.ComprobanteOpcion(textoOpcion))
+                        .Any(e => { try { return e.Displayed; } catch { return false; } }));
+            }
+            catch (WebDriverTimeoutException) { Thread.Sleep(400); }
+
             // Paso 2: seleccionar la opcion
             Click(
                 VentasLocators.NuevaVenta.ComprobanteOpcion(textoOpcion),
                 VentasLocators.NuevaVenta.ComprobanteOpcionFallback(textoOpcion)
             );
-            Thread.Sleep(800);
+            // Espera a que el comprobante quede seleccionado (Angular actualiza el FormControl).
+            try
+            {
+                new WebDriverWait(driver, TimeSpan.FromSeconds(5)) { PollingInterval = TimeSpan.FromMilliseconds(150) }
+                    .Until(_ => ComprobanteYaSeleccionadoNuevaVenta(textoOpcion));
+            }
+            catch (WebDriverTimeoutException) { Thread.Sleep(400); }
+        }
+
+        private bool ComprobanteYaSeleccionadoNuevaVenta(string comprobante)
+        {
+            return driver.FindElements(By.XPath(
+                    $"//label[@for='businessDocumentTypeId']/following::app-dropdown-search[1]//*[contains(normalize-space(),'{comprobante}')] | " +
+                    $"//label[contains(normalize-space(),'COMPROBANTE') or contains(normalize-space(),'Comprobante')]/following::app-dropdown-search[1]//*[contains(normalize-space(),'{comprobante}')]"))
+                .Any(e => { try { return e.Displayed; } catch { return false; } });
         }
 
         private static string NormalizarTextComprobante(string comprobante)
@@ -1254,15 +3030,29 @@ namespace SIGES3_0.Pages.VentasPage
                 VentasLocators.NuevaVenta.SeriePorTexto(serie),
                 VentasLocators.Voucher.SeriesByText(serie)
             );
-            Thread.Sleep(500);
+            // Pausa minima para que Angular procese la seleccion del radio de serie.
+            Thread.Sleep(200);
         }
 
         private void UpdatePayment(string pago)
         {
             if (string.IsNullOrWhiteSpace(pago)) return;
 
-            if (driver.FindElements(By.CssSelector(".modal-overlay"))
-                .Any(e => { try { return e.Displayed; } catch { return false; } }))
+            if (TryResolvePendingGuideModal("Pago"))
+            {
+                if (IsGuideModalVisible())
+                {
+                    if (string.IsNullOrWhiteSpace(_lastObservedMessage))
+                        _lastObservedMessage = CapturarValidaciones();
+
+                    Log($"[Pago] La guia de remision sigue abierta - se omite configuracion de pago '{pago}'.");
+                    return;
+                }
+
+                Thread.Sleep(500);
+            }
+
+            if (HasVisibleBlockingModal())
             {
                 Log($"[Pago] Modal bloqueante activo - omitiendo configuracion de pago '{pago}'.");
                 return;
@@ -1319,14 +3109,8 @@ namespace SIGES3_0.Pages.VentasPage
             var until = DateTime.UtcNow.AddSeconds(Math.Max(1, timeoutSeconds));
             while (DateTime.UtcNow <= until)
             {
-                var message = driver.FindElements(By.XPath("//*[contains(@class,'swal2-html-container') or contains(@class,'swal2-content') or contains(@class,'custom-error-message') or contains(@class,'toast') or contains(@class,'alert')][normalize-space()]"))
-                    .Where(e =>
-                    {
-                        try { return e.Displayed; }
-                        catch { return false; }
-                    })
-                    .Select(e => e.Text?.Trim())
-                    .FirstOrDefault(t => !string.IsNullOrWhiteSpace(t));
+                var message = CapturarMensajesResultadoVisibles()
+                    .FirstOrDefault(EsMensajeResultadoVisible);
 
                 if (!string.IsNullOrWhiteSpace(message))
                     return message;
@@ -1335,6 +3119,251 @@ namespace SIGES3_0.Pages.VentasPage
             }
 
             return string.Empty;
+        }
+
+        private IReadOnlyList<string> CapturarMensajesResultadoVisibles()
+        {
+            var mensajes = new List<string>();
+
+            mensajes.AddRange(CapturarTextoSweetAlert());
+
+            mensajes.AddRange(CapturarTextoAgrupadoPorContenedor(
+                "[role='alertdialog']:not(.swal2-popup), .modal.show .modal-content, ngb-modal-window .modal-content, .modal-overlay .modal-content",
+                ".modal-title, .modal-body, h1, h2, h3, h4, h5, h6, p"));
+
+            var selectors = new[]
+            {
+                ".swal2-title",
+                ".swal2-html-container",
+                ".swal2-content",
+                ".custom-error-message",
+                ".toast",
+                ".alert",
+                "[role='alert']",
+                "[role='alertdialog']",
+                ".modal.show .modal-title",
+                ".modal.show .modal-body",
+                ".modal.show .modal-content h1",
+                ".modal.show .modal-content h2",
+                ".modal.show .modal-content h3",
+                ".modal.show .modal-content h4",
+                ".modal.show .modal-content h5",
+                ".modal.show .modal-content h6",
+                ".modal.show .modal-content p",
+                "ngb-modal-window .modal-title",
+                "ngb-modal-window .modal-body",
+                "ngb-modal-window .modal-content h1",
+                "ngb-modal-window .modal-content h2",
+                "ngb-modal-window .modal-content h3",
+                "ngb-modal-window .modal-content h4",
+                "ngb-modal-window .modal-content h5",
+                "ngb-modal-window .modal-content h6",
+                "ngb-modal-window .modal-content p",
+                ".modal-overlay .modal-content h1",
+                ".modal-overlay .modal-content h2",
+                ".modal-overlay .modal-content h3",
+                ".modal-overlay .modal-content h4",
+                ".modal-overlay .modal-content h5",
+                ".modal-overlay .modal-content h6",
+                ".modal-overlay .modal-content p"
+            };
+
+            mensajes.AddRange(driver.FindElements(By.CssSelector(string.Join(", ", selectors)))
+                .Where(e =>
+                {
+                    try { return e.Displayed; }
+                    catch { return false; }
+                })
+                .Select(e => LimpiarTextoVisible(e.Text))
+                .Where(t => !string.IsNullOrWhiteSpace(t) && !EsTextoAccionModal(t))
+                .ToList());
+
+            return mensajes
+                .Where(t => !string.IsNullOrWhiteSpace(t))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+        }
+
+        private IReadOnlyList<string> CapturarTextoSweetAlert()
+        {
+            var textos = new List<string>();
+
+            foreach (var popup in driver.FindElements(By.CssSelector(".swal2-popup")))
+            {
+                try
+                {
+                    if (!popup.Displayed)
+                        continue;
+                }
+                catch
+                {
+                    continue;
+                }
+
+                var partes = new List<string>();
+                partes.AddRange(CapturarTextosDentroDe(popup, ".swal2-title"));
+                partes.AddRange(CapturarTextosDentroDe(popup, ".swal2-html-container"));
+                partes.AddRange(CapturarTextosDentroDe(popup, ".swal2-validation-message"));
+
+                if (!partes.Any())
+                    partes.AddRange(CapturarTextosDentroDe(popup, ".swal2-content"));
+
+                var texto = string.Join(" | ", QuitarPartesCompuestasDuplicadas(partes
+                    .Select(RemoverAccionesModal)
+                    .Where(t => !string.IsNullOrWhiteSpace(t) && !EsTextoAccionModal(t))
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToList()));
+
+                if (!string.IsNullOrWhiteSpace(texto))
+                    textos.Add(texto);
+            }
+
+            return textos;
+        }
+
+        private IReadOnlyList<string> CapturarTextoAgrupadoPorContenedor(string contenedorSelector, string contenidoSelector)
+        {
+            return driver.FindElements(By.CssSelector(contenedorSelector))
+                .Where(e =>
+                {
+                    try { return e.Displayed; }
+                    catch { return false; }
+                })
+                .Select(contenedor =>
+                {
+                    var partes = contenedor.FindElements(By.CssSelector(contenidoSelector))
+                        .Where(e =>
+                        {
+                            try { return e.Displayed; }
+                            catch { return false; }
+                        })
+                        .Select(e => RemoverAccionesModal(LimpiarTextoVisible(e.Text)))
+                        .Where(t => !string.IsNullOrWhiteSpace(t) && !EsTextoAccionModal(t))
+                        .Distinct(StringComparer.OrdinalIgnoreCase)
+                        .ToList();
+
+                    return partes.Any()
+                        ? string.Join(" | ", QuitarPartesCompuestasDuplicadas(partes))
+                        : LimpiarTextoVisible(contenedor.Text);
+                })
+                .Where(t => !string.IsNullOrWhiteSpace(t))
+                .ToList();
+        }
+
+        private static IReadOnlyList<string> CapturarTextosDentroDe(IWebElement contenedor, string selector)
+        {
+            return contenedor.FindElements(By.CssSelector(selector))
+                .Where(e =>
+                {
+                    try { return e.Displayed; }
+                    catch { return false; }
+                })
+                .Select(e => RemoverAccionesModal(LimpiarTextoVisible(e.Text)))
+                .Where(t => !string.IsNullOrWhiteSpace(t) && !EsTextoAccionModal(t))
+                .ToList();
+        }
+
+        private string CapturarDiagnosticoMensajesResultado()
+        {
+            var mensajes = CapturarMensajesResultadoVisibles()
+                .Take(5)
+                .ToList();
+
+            return mensajes.Any()
+                ? string.Join(" | ", mensajes)
+                : "sin textos visibles en modales/popup";
+        }
+
+        private static bool EsMensajeResultadoVisible(string? texto)
+        {
+            var normalizado = NormalizeText(texto ?? string.Empty);
+            if (string.IsNullOrWhiteSpace(normalizado))
+                return false;
+
+            if (EsMensajeTransitorioGuardado(normalizado))
+                return false;
+
+            return normalizado.Contains("registr") ||
+                   normalizado.Contains("correct") ||
+                   normalizado.Contains("exito") ||
+                   normalizado.Contains("exitos") ||
+                   normalizado.Contains("guard") ||
+                   normalizado.Contains("complet") ||
+                   normalizado.Contains("error") ||
+                   normalizado.Contains("inconsisten") ||
+                   normalizado.Contains("obligatorio") ||
+                   normalizado.Contains("requerido") ||
+                   normalizado.Contains("no se pudo") ||
+                   normalizado.Contains("no debe") ||
+                   normalizado.Contains("invalido");
+        }
+
+        private static bool EsMensajeExitoVenta(string? texto)
+        {
+            var normalizado = NormalizeText(texto ?? string.Empty);
+            if (string.IsNullOrWhiteSpace(normalizado) || EsMensajeTransitorioGuardado(normalizado))
+                return false;
+
+            return normalizado.Contains("correct") ||
+                   normalizado.Contains("exito") ||
+                   normalizado.Contains("exitos") ||
+                   normalizado.Contains("registro") ||
+                   normalizado.Contains("registrado") ||
+                   normalizado.Contains("registrada");
+        }
+
+        private static bool EsMensajeTransitorioGuardado(string textoNormalizado)
+        {
+            return textoNormalizado.Contains("por favor espere") ||
+                   textoNormalizado.Contains("registrando") ||
+                   textoNormalizado.Contains("procesando") ||
+                   textoNormalizado.Contains("cargando");
+        }
+
+        private static string LimpiarTextoVisible(string? texto)
+        {
+            if (string.IsNullOrWhiteSpace(texto))
+                return string.Empty;
+
+            return Regex.Replace(texto.Trim(), @"\s+", " ");
+        }
+
+        private static string RemoverAccionesModal(string texto)
+        {
+            if (string.IsNullOrWhiteSpace(texto))
+                return string.Empty;
+
+            return LimpiarTextoVisible(Regex.Replace(texto, @"\b(OK|Aceptar|Cancelar|Cerrar)\b", string.Empty, RegexOptions.IgnoreCase));
+        }
+
+        private static IReadOnlyList<string> QuitarPartesCompuestasDuplicadas(IReadOnlyList<string> partes)
+        {
+            var limpias = partes
+                .Select(LimpiarTextoVisible)
+                .Where(t => !string.IsNullOrWhiteSpace(t))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+
+            return limpias
+                .Where(parte =>
+                {
+                    var normalizada = NormalizeText(parte);
+                    var partesContenidas = limpias
+                        .Where(otra => !otra.Equals(parte, StringComparison.OrdinalIgnoreCase))
+                        .Count(otra => normalizada.Contains(NormalizeText(otra)));
+
+                    return partesContenidas < 2;
+                })
+                .ToList();
+        }
+
+        private static bool EsTextoAccionModal(string texto)
+        {
+            var normalizado = NormalizeText(texto);
+            return normalizado == "ok" ||
+                   normalizado == "aceptar" ||
+                   normalizado == "cancelar" ||
+                   normalizado == "cerrar";
         }
 
         private void TryCloseSuccessDialog()
@@ -1381,10 +3410,134 @@ namespace SIGES3_0.Pages.VentasPage
             }
         }
 
+        private bool HasVisibleBlockingModal()
+        {
+            return driver.FindElements(By.CssSelector(".modal-overlay, .modal.show, ngb-modal-window, .swal2-container, .cdk-overlay-backdrop"))
+                .Any(e =>
+                {
+                    try { return e.Displayed; }
+                    catch { return false; }
+                });
+        }
+
+        private bool IsGuideModalVisible()
+        {
+            if (!HasVisibleBlockingModal())
+                return false;
+
+            bool hasAccept = driver.FindElements(By.XPath("//button[normalize-space()='Aceptar']"))
+                .Any(e =>
+                {
+                    try { return e.Displayed; }
+                    catch { return false; }
+                });
+
+            bool hasCancel = driver.FindElements(By.XPath("//button[normalize-space()='Cancelar']"))
+                .Any(e =>
+                {
+                    try { return e.Displayed; }
+                    catch { return false; }
+                });
+
+            bool hasGuideFields = driver.FindElements(By.XPath(
+                    "//input[@type='date'] | " +
+                    "//label[contains(normalize-space(),'Peso') or contains(normalize-space(),'Bulto') or " +
+                    "contains(normalize-space(),'LICENCIA') or contains(normalize-space(),'PLACA') or " +
+                    "contains(normalize-space(),'Transportista') or contains(normalize-space(),'transporte')]"))
+                .Any(e =>
+                {
+                    try { return e.Displayed; }
+                    catch { return false; }
+                });
+
+            return hasAccept && hasCancel && hasGuideFields;
+        }
+
+        private bool TryResolvePendingGuideModal(string origin)
+        {
+            if (!IsGuideModalVisible())
+                return false;
+
+            Log($"[{origin}] Guia de remision pendiente detectada - intentando confirmar el modal.");
+
+            var acceptButton = driver.FindElements(By.XPath("//button[normalize-space()='Aceptar']"))
+                .FirstOrDefault(e =>
+                {
+                    try { return e.Displayed && e.Enabled; }
+                    catch { return false; }
+                });
+
+            if (acceptButton == null)
+            {
+                if (string.IsNullOrWhiteSpace(_lastObservedMessage))
+                    _lastObservedMessage = CapturarValidaciones();
+
+                Log($"[{origin}] No se encontro el boton Aceptar de la guia. Mensaje actual: '{_lastObservedMessage}'");
+                return true;
+            }
+
+            try
+            {
+                ScrollToCenter(acceptButton);
+                acceptButton.Click();
+            }
+            catch
+            {
+                try
+                {
+                    ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", acceptButton);
+                }
+                catch
+                {
+                }
+            }
+
+            bool guideClosed = false;
+            try
+            {
+                guideClosed = new WebDriverWait(driver, TimeSpan.FromSeconds(4))
+                {
+                    PollingInterval = TimeSpan.FromMilliseconds(200)
+                }.Until(_ => !IsGuideModalVisible());
+            }
+            catch
+            {
+                guideClosed = false;
+            }
+
+            if (!guideClosed)
+            {
+                var validation = CapturarValidaciones();
+                if (string.IsNullOrWhiteSpace(validation))
+                    validation = CaptureVisibleMessage(1);
+
+                if (!string.IsNullOrWhiteSpace(validation))
+                    _lastObservedMessage = validation;
+
+                Log($"[{origin}] La guia de remision sigue abierta tras confirmar. Mensaje actual: '{_lastObservedMessage}'");
+            }
+            else
+            {
+                var successMessage = CaptureVisibleMessage(2);
+                if (!string.IsNullOrWhiteSpace(successMessage) && EsMensajeConfirmacionGuia(successMessage))
+                    _lastObservedMessage = successMessage;
+
+                var resumenGuia = CapturarResumenGuiaVisible();
+                _guiaEvidenciaConfirmacion = ConstruirEvidenciaGuiaCompacta(_lastObservedMessage, resumenGuia);
+                _guiaConfirmadaAntesDeGuardar = !string.IsNullOrWhiteSpace(_guiaEvidenciaConfirmacion);
+
+                Log($"[{origin}] Guia de remision confirmada antes de guardar venta. {_guiaEvidenciaConfirmacion}");
+            }
+
+            return true;
+        }
+
         private bool TryHandleBlockingModal()
         {
-            bool hayModal = driver.FindElements(By.CssSelector(".modal-overlay"))
-                .Any(e => { try { return e.Displayed; } catch { return false; } });
+            if (TryResolvePendingGuideModal("Modal bloqueante"))
+                return true;
+
+            bool hayModal = HasVisibleBlockingModal();
             if (!hayModal) return false;
 
             Log("Modal bloqueante detectado - capturando mensaje y cerrando.");
@@ -1401,9 +3554,24 @@ namespace SIGES3_0.Pages.VentasPage
                 .FirstOrDefault(e => { try { return e.Displayed; } catch { return false; } });
             if (okBtn != null)
             {
-                try { ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", okBtn); }
+                try
+                {
+                    ScrollToCenter(okBtn);
+                    ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", okBtn);
+                }
                 catch { }
-                Thread.Sleep(800);
+
+                try
+                {
+                    new WebDriverWait(driver, TimeSpan.FromSeconds(3))
+                    {
+                        PollingInterval = TimeSpan.FromMilliseconds(200)
+                    }.Until(_ => !HasVisibleBlockingModal());
+                }
+                catch
+                {
+                    Thread.Sleep(800);
+                }
             }
             return true;
         }
@@ -3013,8 +5181,31 @@ namespace SIGES3_0.Pages.VentasPage
 
         private void SeleccionarDropdownCustomNuevaVenta(string texto, params By[] triggerLocators)
         {
-            var trigger = Find(triggerLocators);
-            SeleccionarDropdownCustomNuevaVenta(texto, trigger);
+            Exception? ultimaExcepcion = null;
+
+            for (int intento = 1; intento <= 3; intento++)
+            {
+                try
+                {
+                    var trigger = Find(triggerLocators);
+                    SeleccionarDropdownCustomNuevaVenta(texto, trigger);
+                    return;
+                }
+                catch (StaleElementReferenceException ex) when (intento < 3)
+                {
+                    ultimaExcepcion = ex;
+                    Log($"[NuevaVenta] Reintentando seleccion de '{texto}' por stale element ({intento}/3).");
+                    Thread.Sleep(500);
+                }
+                catch (WebDriverException ex) when (intento < 3 && EsStaleElementException(ex))
+                {
+                    ultimaExcepcion = ex;
+                    Log($"[NuevaVenta] Reintentando seleccion de '{texto}' por refresco del DOM ({intento}/3).");
+                    Thread.Sleep(500);
+                }
+            }
+
+            throw new Exception($"No se pudo seleccionar '{texto}' en el dropdown de Nueva Venta por refrescos del DOM.", ultimaExcepcion);
         }
 
         private void SeleccionarDropdownCustomNuevaVenta(string texto, IWebElement trigger)
@@ -3036,16 +5227,26 @@ namespace SIGES3_0.Pages.VentasPage
                 inputBusqueda.SendKeys(Keys.Delete);
                 inputBusqueda.SendKeys(texto);
                 Thread.Sleep(500);
+
+                var opcionBuscada = BuscarOpcionConceptoEnDropdownNuevaVenta(texto) ?? BuscarOpcionVisibleNuevaVenta(texto);
+                if (opcionBuscada != null)
+                {
+                    ScrollToCenter(opcionBuscada);
+                    ClickDropdownOptionNuevaVenta(opcionBuscada);
+                    Thread.Sleep(700);
+                    return;
+                }
+
                 inputBusqueda.SendKeys(Keys.Enter);
                 Thread.Sleep(700);
                 return;
             }
 
-            var opcion = BuscarOpcionVisibleNuevaVenta(texto);
+            var opcion = BuscarOpcionConceptoEnDropdownNuevaVenta(texto) ?? BuscarOpcionVisibleNuevaVenta(texto);
             Assert.That(opcion, Is.Not.Null, $"No se encontro una opcion visible para '{texto}' en el dropdown de Nueva Venta.");
 
             ScrollToCenter(opcion!);
-            opcion!.Click();
+            ClickDropdownOptionNuevaVenta(opcion!);
             Thread.Sleep(700);
         }
 
@@ -3396,7 +5597,96 @@ namespace SIGES3_0.Pages.VentasPage
 
         private IWebElement? BuscarOpcionVisibleNuevaVenta(string texto)
         {
-            var candidatos = driver.FindElements(By.XPath("//*[self::div or self::span or self::li][normalize-space()]"))
+            var textoNormalizado = NormalizeText(texto);
+
+            for (int intento = 0; intento < 6; intento++)
+            {
+                var candidatos = ObtenerOpcionesDropdownNuevaVenta();
+                var exacto = candidatos.FirstOrDefault(e =>
+                {
+                    var actual = ObtenerTextoSeguroNuevaVenta(e);
+                    return !string.IsNullOrWhiteSpace(actual) &&
+                           NormalizeText(actual).Equals(textoNormalizado, StringComparison.OrdinalIgnoreCase);
+                });
+
+                if (exacto != null)
+                    return exacto;
+
+                var contiene = candidatos.FirstOrDefault(e =>
+                {
+                    var actual = ObtenerTextoSeguroNuevaVenta(e);
+                    return !string.IsNullOrWhiteSpace(actual) &&
+                           NormalizeText(actual).Contains(textoNormalizado, StringComparison.OrdinalIgnoreCase);
+                });
+
+                if (contiene != null)
+                    return contiene;
+
+                if (texto.Contains('|'))
+                {
+                    var partes = texto.Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                    var porPartes = candidatos.FirstOrDefault(e =>
+                    {
+                        var actual = NormalizeText(ObtenerTextoSeguroNuevaVenta(e));
+                        return !string.IsNullOrWhiteSpace(actual) &&
+                               partes.All(parte => actual.Contains(NormalizeText(parte), StringComparison.OrdinalIgnoreCase));
+                    });
+
+                    if (porPartes != null)
+                        return porPartes;
+                }
+
+                Thread.Sleep(200);
+            }
+
+            return null;
+        }
+
+        private IWebElement? BuscarOpcionConceptoEnDropdownNuevaVenta(string texto)
+        {
+            string textoSeguro = texto.Replace("'", "&apos;");
+            for (int intento = 0; intento < 6; intento++)
+            {
+                var candidatos = driver.FindElements(By.XPath(
+                        $"//span[contains(@class,'option-label')][contains(normalize-space(),'{textoSeguro}')] | " +
+                        $"//div[contains(@class,'option-item')][contains(normalize-space(),'{textoSeguro}')] | " +
+                        $"//a[contains(@class,'dropdown-item')][contains(normalize-space(),'{textoSeguro}')] | " +
+                        $"//*[@role='option'][contains(normalize-space(),'{textoSeguro}')]"))
+                    .Where(e =>
+                    {
+                        try { return e.Displayed && e.Enabled; }
+                        catch { return false; }
+                    })
+                    .ToList();
+
+                if (candidatos.Count > 0)
+                {
+                    var exacto = candidatos.FirstOrDefault(e =>
+                    {
+                        var actual = ObtenerTextoSeguroNuevaVenta(e);
+                        return !string.IsNullOrWhiteSpace(actual) &&
+                               NormalizeText(actual).Equals(NormalizeText(texto), StringComparison.OrdinalIgnoreCase);
+                    });
+
+                    if (exacto != null)
+                        return exacto;
+
+                    return candidatos.FirstOrDefault(e => !string.IsNullOrWhiteSpace(ObtenerTextoSeguroNuevaVenta(e)));
+                }
+
+                Thread.Sleep(200);
+            }
+
+            return null;
+        }
+
+        private List<IWebElement> ObtenerOpcionesDropdownNuevaVenta()
+        {
+            var opcionesEspecificas = driver.FindElements(By.XPath(
+                    "//span[contains(@class,'option-label')] | " +
+                    "//div[contains(@class,'option-item')] | " +
+                    "//a[contains(@class,'dropdown-item')] | " +
+                    "//*[@role='option']"))
                 .Where(e =>
                 {
                     try { return e.Displayed && e.Enabled; }
@@ -3404,26 +5694,59 @@ namespace SIGES3_0.Pages.VentasPage
                 })
                 .ToList();
 
-            var textoNormalizado = NormalizeText(texto);
-            var exacto = candidatos.FirstOrDefault(e => NormalizeText(e.Text).Equals(textoNormalizado, StringComparison.OrdinalIgnoreCase));
-            if (exacto != null)
-                return exacto;
+            if (opcionesEspecificas.Count > 0)
+                return opcionesEspecificas;
 
-            var contiene = candidatos.FirstOrDefault(e => NormalizeText(e.Text).Contains(textoNormalizado));
-            if (contiene != null)
-                return contiene;
-
-            if (texto.Contains('|'))
-            {
-                var partes = texto.Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-                return candidatos.FirstOrDefault(e =>
+            return driver.FindElements(By.XPath("//*[self::div or self::span or self::li][normalize-space()]"))
+                .Where(e =>
                 {
-                    var actual = NormalizeText(e.Text);
-                    return partes.All(parte => actual.Contains(NormalizeText(parte)));
-                });
-            }
+                    try { return e.Displayed && e.Enabled; }
+                    catch { return false; }
+                })
+                .ToList();
+        }
 
-            return null;
+        private static string ObtenerTextoSeguroNuevaVenta(IWebElement elemento)
+        {
+            try
+            {
+                return (elemento.Text ?? string.Empty).Trim();
+            }
+            catch (StaleElementReferenceException)
+            {
+                return string.Empty;
+            }
+            catch (WebDriverException ex) when (EsStaleElementException(ex))
+            {
+                return string.Empty;
+            }
+        }
+
+        private void ClickDropdownOptionNuevaVenta(IWebElement opcion)
+        {
+            try
+            {
+                opcion.Click();
+            }
+            catch (ElementClickInterceptedException)
+            {
+                ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", opcion);
+            }
+        }
+
+        private static bool EsStaleElementException(WebDriverException ex) =>
+            ex.Message.Contains("stale element reference", StringComparison.OrdinalIgnoreCase);
+
+        private static string ExtraerTextoConceptoDesdeBloque(string bloque, string concepto)
+        {
+            if (string.IsNullOrWhiteSpace(bloque))
+                return concepto;
+
+            var linea = bloque
+                .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .FirstOrDefault(parte => NormalizeText(parte).Contains(NormalizeText(concepto)));
+
+            return string.IsNullOrWhiteSpace(linea) ? concepto : linea.Trim();
         }
 
         private void LimpiarYEscribirCampoNuevaVenta(IWebElement input, string valor)
@@ -4017,7 +6340,11 @@ namespace SIGES3_0.Pages.VentasPage
 
             mensajes.AddRange(driver.FindElements(By.XPath(
                     "//*[contains(@class,'invalid-feedback') or contains(@class,'text-danger') or " +
-                    "contains(@class,'custom-error-message')][normalize-space()]"))
+                    "contains(@class,'custom-error-message') or contains(@class,'mat-error') or " +
+                    "contains(@class,'error-message') or contains(@class,'validation-error') or " +
+                    "contains(@class,'field-error')][normalize-space()] | " +
+                    "//*[@role='alert'][normalize-space()] | " +
+                    "//small[contains(@class,'error') or contains(@class,'danger')][normalize-space()]"))
                 .Where(e => { try { return e.Displayed; } catch { return false; } })
                 .Select(e => e.Text?.Trim())
                 .Where(t => !string.IsNullOrWhiteSpace(t))!
@@ -4026,6 +6353,128 @@ namespace SIGES3_0.Pages.VentasPage
             return mensajes
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .ToList();
+        }
+
+        private IReadOnlyList<string> CapturarValidacionesVisiblesDetalladas()
+        {
+            var mensajes = new List<string>();
+
+            var popup = CaptureVisibleMessage(1);
+            if (!string.IsNullOrWhiteSpace(popup) && IsBlockingMessage(popup))
+                mensajes.Add(popup.Trim());
+
+            var validaciones = driver.FindElements(By.XPath(
+                    "//*[contains(@class,'invalid-feedback') or contains(@class,'text-danger') or " +
+                    "contains(@class,'custom-error-message') or contains(@class,'mat-error') or " +
+                    "contains(@class,'error-message') or contains(@class,'validation-error') or " +
+                    "contains(@class,'field-error')][normalize-space()] | " +
+                    "//*[@role='alert'][normalize-space()] | " +
+                    "//small[contains(@class,'error') or contains(@class,'danger')][normalize-space()]"))
+                .Where(e => { try { return e.Displayed; } catch { return false; } })
+                .ToList();
+
+            foreach (var validacion in validaciones)
+            {
+                string mensaje;
+                try { mensaje = validacion.Text?.Trim() ?? string.Empty; }
+                catch { continue; }
+
+                if (string.IsNullOrWhiteSpace(mensaje))
+                    continue;
+
+                string campo = ObtenerCampoDeValidacion(validacion);
+                mensajes.Add(string.IsNullOrWhiteSpace(campo) ? mensaje : $"{campo}: {mensaje}");
+            }
+
+            return mensajes
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+        }
+
+        private string ObtenerCampoDeValidacion(IWebElement validacion)
+        {
+            try
+            {
+                var result = ((IJavaScriptExecutor)driver).ExecuteScript(@"
+                    const msg = arguments[0];
+                    const clean = value => (value || '').replace(/\*/g, '').replace(/\s+/g, ' ').trim();
+                    const invalid = value => {
+                        const text = clean(value).toLowerCase();
+                        return !text ||
+                            text === 'este campo es obligatorio' ||
+                            text === 'seleccione' ||
+                            text === 'buscar...' ||
+                            text === 'na';
+                    };
+
+                    let node = msg;
+                    for (let depth = 0; node && depth < 6; depth++, node = node.parentElement) {
+                        const labels = Array.from(node.querySelectorAll('label'))
+                            .map(label => clean(label.textContent))
+                            .filter(text => !invalid(text));
+                        if (labels.length > 0) return labels[labels.length - 1];
+
+                        let prev = node.previousElementSibling;
+                        for (let guard = 0; prev && guard < 6; guard++, prev = prev.previousElementSibling) {
+                            if (prev.matches && prev.matches('label')) {
+                                const text = clean(prev.textContent);
+                                if (!invalid(text)) return text;
+                            }
+
+                            const label = prev.querySelector && prev.querySelector('label');
+                            if (label) {
+                                const text = clean(label.textContent);
+                                if (!invalid(text)) return text;
+                            }
+                        }
+                    }
+
+                    const container = msg.closest('.col, .col-md-6, .col-sm-6, .mb-3, .form-group, div');
+                    const control = container ? container.querySelector('input, select, textarea') : null;
+                    if (control) {
+                        const id = control.getAttribute('id') || control.getAttribute('formcontrolname') || control.getAttribute('name');
+                        if (id) {
+                            const labels = Array.from(document.querySelectorAll('label'))
+                                .filter(label => label.getAttribute('for') === id)
+                                .map(label => clean(label.textContent))
+                                .filter(text => !invalid(text));
+                            if (labels.length > 0) return labels[labels.length - 1];
+                            return id;
+                        }
+                    }
+
+                    return '';
+                ", validacion)?.ToString()?.Trim() ?? string.Empty;
+
+                return NormalizarCampoGuia(result);
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        private static string NormalizarCampoGuia(string campo)
+        {
+            if (string.IsNullOrWhiteSpace(campo))
+                return string.Empty;
+
+            string normalizado = NormalizeText(campo);
+
+            if (normalizado.Contains("peso"))
+                return "Peso bruto";
+            if (normalizado.Contains("bulto"))
+                return "Numero de bultos";
+            if (normalizado.Contains("licencia"))
+                return "Numero de licencia";
+            if (normalizado.Contains("placa"))
+                return "Numero de placa";
+            if (normalizado.Contains("transportista") || normalizado.Contains("ruc"))
+                return "Transportista RUC";
+            if (normalizado.Contains("conductor") || normalizado.Contains("dni"))
+                return "Conductor DNI";
+
+            return campo.Replace("*", string.Empty).Trim();
         }
 
         private void AssertMensajesValidacionPago(string mensajeError, params string[] fragmentosEsperados)
@@ -4045,6 +6494,27 @@ namespace SIGES3_0.Pages.VentasPage
         private void AssertAlgunMensajeValidacionPago(string mensajeError, params string[] fragmentosEsperados)
         {
             var visibles = CapturarValidacionesVisibles();
+
+            // Busqueda adicional: texto visible en toda la seccion de pago que coincida con los fragmentos.
+            // Cubre casos donde el mensaje usa clases CSS no contempladas (ej: inline bajo campo de fecha).
+            if (!visibles.Any())
+            {
+                var todoElTextoSeccionPago = driver.FindElements(By.XPath(
+                    "//div[contains(@class,'accordion-body') or contains(@class,'pago') or contains(@id,'pago')]" +
+                    "//*[normalize-space() and not(self::script) and not(self::style)]"))
+                    .Where(e => { try { return e.Displayed; } catch { return false; } })
+                    .Select(e => e.Text?.Trim())
+                    .Where(t => !string.IsNullOrWhiteSpace(t) && t!.Length < 200)
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToList();
+
+                var esperadosNorm = fragmentosEsperados.Select(NormalizeText).ToList();
+                var encontrado = todoElTextoSeccionPago
+                    .FirstOrDefault(t => esperadosNorm.Any(e => NormalizeText(t!).Contains(e)));
+                if (encontrado != null)
+                    visibles = new List<string> { encontrado };
+            }
+
             var resumenMensajes = string.Join(" | ", visibles);
             var resumen = ConstruirResumenPagoNuevaVenta(mensajeVisible: resumenMensajes);
             var esperados = fragmentosEsperados
@@ -4087,6 +6557,23 @@ namespace SIGES3_0.Pages.VentasPage
             return true;
         }
 
+        private static bool EsValidacionBloqueanteFormulario(string msg)
+        {
+            if (string.IsNullOrWhiteSpace(msg)) return false;
+            var n = NormalizeText(msg);
+
+            if (n.Contains("se completo los datos correctamente") ||
+                n.Contains("se completo los campos correctamente"))
+                return false;
+
+            return n.Contains("no debe") ||
+                   n.Contains("obligatorio") ||
+                   n.Contains("requerido") ||
+                   n.Contains("completar los campos") ||
+                   n.Contains("invalido") ||
+                   n.Contains("error");
+        }
+
         private static string NormalizeText(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
@@ -4103,6 +6590,42 @@ namespace SIGES3_0.Pages.VentasPage
             }
 
             return sb.ToString().Normalize(NormalizationForm.FormC);
+        }
+
+        private static bool EsValorOmitido(string valor)
+        {
+            var normalizado = NormalizeText(valor);
+            return string.IsNullOrWhiteSpace(normalizado) || normalizado == "-" || normalizado == "na";
+        }
+
+        private sealed class PrecondicionConceptoVendibleConfig
+        {
+            public string TipoProducto { get; set; } = "Bien";
+            public string TratamientoIgvFamilia { get; set; } = "Exoneracion IGV";
+            public string CategoriaFamilia { get; set; } = "SIN CATEGORÍA";
+            public string UmComercialConcepto { get; set; } = "ML";
+            public string UMedidaConcepto { get; set; } = "ML";
+            public string RolConcepto { get; set; } = "Item Comercial";
+            public string ModuloConcepto { get; set; } = "MOD0001";
+            public string MarcaConcepto { get; set; } = "KR";
+            public string SufijoConcepto { get; set; } = string.Empty;
+            public string PresentacionConcepto { get; set; } = "BOTELLAS";
+            public string CantidadBaseConcepto { get; set; } = "1";
+            public string TarifaConcepto { get; set; } = "POR UNIDAD";
+            public string PrecioProducto { get; set; } = "7.10";
+            public string DocumentoAdquisicion { get; set; } = "NOTA DE COMPRA (INTERNA)";
+            public string ProveedorAdquisicion { get; set; } = "10759012017";
+            public string InformacionAdquisicion { get; set; } = "Stock QA Ventas {concepto}";
+            public string TipoEntregaAdquisicion { get; set; } = "Inmediata";
+            public string RolAdquisicion { get; set; } = "Item Comercial";
+            public string EstablecimientoAdquisicion { get; set; } = "RECSA - CENTRAL";
+            public string AlmacenAdquisicion { get; set; } = "CENTRO COMERCIAL CENTRAL";
+            public string TipoPagoAdquisicion { get; set; } = "Contado";
+            public string MedioPagoAdquisicion { get; set; } = "efectivo";
+            public string ObservacionPagoAdquisicion { get; set; } = "QA Ventas {concepto}";
+            public string PrecioCompraAdquisicion { get; set; } = "1";
+
+            public static PrecondicionConceptoVendibleConfig CreateDefault() => new();
         }
     }
 

@@ -74,6 +74,12 @@ namespace SIGES3_0.StepDefinitions.VentasStep
             verVentasPage.FiltrarVentasDiaDeHoy();
         }
 
+        [StepDefinition("filtra por tipo de documento {string}")]
+        public void FiltrarPorTipoDoc(string tipoDoc)
+        {
+            verVentasPage.FiltrarPorTipoDoc(tipoDoc);
+        }
+
         [StepDefinition("selecciona las primeras {int} notas de venta")]
         public void SeleccionarPrimerasNVs(int cantidad)
         {

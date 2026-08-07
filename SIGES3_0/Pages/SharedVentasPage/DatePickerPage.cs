@@ -62,10 +62,17 @@ namespace SIGES3_0.Pages.SharedVentasPage
             CerrarPicker();
 
             IWebElement input = _wait.Until(ExpectedConditions.ElementToBeClickable(inputLocator));
-            if (EsCampoConsultaVentas(input))
+            bool esCampoReportesVentas = EsCampoReportesVentas(input, labelCampo);
+
+            if (esCampoReportesVentas && EsCampoFinal(labelCampo) && FechaFinalEsMenorQueInicial(fecha))
             {
-                AsignarValorDirecto(input, esperado);
-                if (ValorCampo(inputLocator) == esperado)
+                Console.WriteLine($"[DatePicker] Fecha final invalida para reportes; se conserva el valor actual. Solicitado='{esperado}', actual='{ValorCampo(inputLocator)}'.");
+                return;
+            }
+
+            if (PuedeAsignarValorDirecto(input))
+            {
+                if (TryAsignarValorDirecto(input, inputLocator, esperado, fecha))
                     return;
             }
 
@@ -137,14 +144,14 @@ namespace SIGES3_0.Pages.SharedVentasPage
 
             try
             {
-                _wait.Until(d => ValorCampo(inputLocator) == esperado);
+                _wait.Until(d => ValorCampoCoincide(inputLocator, esperado, fecha));
             }
             catch
             {
             }
 
             string actual = ValorCampo(inputLocator);
-            if (actual != esperado)
+            if (!ValorCampoCoincide(inputLocator, esperado, fecha))
                 Assert.Fail($"La fecha no se asignó correctamente. Esperado: {esperado} / Actual: {actual}");
 
             CerrarPicker();
@@ -453,7 +460,7 @@ namespace SIGES3_0.Pages.SharedVentasPage
             string hora = fecha.ToString("hh");
             string fechaTexto = fecha.ToString("dd/MM/yyyy");
 
-            if (TrySeleccionarValorTiempo(0, hora, fechaTexto, inputLocator, $" {hora}:"))
+            if (TrySeleccionarValorTiempo(0, hora, fecha, inputLocator))
                 return;
 
             var columnas = GetColumns();
@@ -479,14 +486,14 @@ namespace SIGES3_0.Pages.SharedVentasPage
 
             try
             {
-                _wait.Until(d => ValorCampo(inputLocator).Contains($" {hora}:"));
+                _wait.Until(d => ValorCampoCoincideHastaMinuto(inputLocator, fecha, false));
             }
             catch
             {
             }
 
             string actual = ValorCampo(inputLocator);
-            if (!actual.StartsWith(fechaTexto) || !actual.Contains($" {hora}:"))
+            if (!ValorCampoCoincideHastaMinuto(inputLocator, fecha, false))
                 throw new Exception($"No se logró seleccionar la hora correcta. Esperado: {fechaTexto} {hora}:xx / Actual: {actual}");
         }
 
@@ -495,7 +502,7 @@ namespace SIGES3_0.Pages.SharedVentasPage
             string minuto = fecha.ToString("mm");
             string fechaTexto = fecha.ToString("dd/MM/yyyy");
 
-            if (TrySeleccionarValorTiempo(1, minuto, fechaTexto, inputLocator, $":{minuto}"))
+            if (TrySeleccionarValorTiempo(1, minuto, fecha, inputLocator))
                 return;
 
             var columnas = GetColumns();
@@ -521,18 +528,18 @@ namespace SIGES3_0.Pages.SharedVentasPage
 
             try
             {
-                _wait.Until(d => ValorCampo(inputLocator).Contains($":{minuto}"));
+                _wait.Until(d => ValorCampoCoincideHastaMinuto(inputLocator, fecha, true));
             }
             catch
             {
             }
 
             string actual = ValorCampo(inputLocator);
-            if (!actual.StartsWith(fechaTexto) || !actual.Contains($":{minuto}"))
+            if (!ValorCampoCoincideHastaMinuto(inputLocator, fecha, true))
                 throw new Exception($"No se logró seleccionar el minuto correcto. Esperado: {fechaTexto} xx:{minuto} / Actual: {actual}");
         }
 
-        private bool TrySeleccionarValorTiempo(int indiceColumna, string valorEsperado, string fechaTexto, By inputLocator, string fragmentoEsperado)
+        private bool TrySeleccionarValorTiempo(int indiceColumna, string valorEsperado, DateTime fecha, By inputLocator)
         {
             for (int intento = 0; intento < 3; intento++)
             {
@@ -564,14 +571,13 @@ namespace SIGES3_0.Pages.SharedVentasPage
 
                     try
                     {
-                        _wait.Until(d => ValorCampo(inputLocator).Contains(fragmentoEsperado));
+                        _wait.Until(d => ValorCampoCoincideHastaMinuto(inputLocator, fecha, indiceColumna == 1));
                     }
                     catch
                     {
                     }
 
-                    string actual = ValorCampo(inputLocator);
-                    if (actual.StartsWith(fechaTexto) && actual.Contains(fragmentoEsperado))
+                    if (ValorCampoCoincideHastaMinuto(inputLocator, fecha, indiceColumna == 1))
                         return true;
                 }
                 catch (StaleElementReferenceException)
@@ -586,6 +592,27 @@ namespace SIGES3_0.Pages.SharedVentasPage
             return false;
         }
 
+        private bool ValorCampoCoincideHastaMinuto(By inputLocator, DateTime fechaEsperada, bool validarMinuto)
+        {
+            string actual = ValorCampo(inputLocator);
+            if (!TryParseValorCampo(actual, out DateTime fechaActual))
+                return false;
+
+            if (fechaActual.Date != fechaEsperada.Date)
+                return false;
+
+            if (Hora12(fechaActual) != Hora12(fechaEsperada))
+                return false;
+
+            return !validarMinuto || fechaActual.Minute == fechaEsperada.Minute;
+        }
+
+        private static int Hora12(DateTime fecha)
+        {
+            int hora = fecha.Hour % 12;
+            return hora == 0 ? 12 : hora;
+        }
+
         private bool EsCampoConsultaVentas(IWebElement input)
         {
             string id = input.GetAttribute("id") ?? string.Empty;
@@ -596,17 +623,117 @@ namespace SIGES3_0.Pages.SharedVentasPage
                 .Any(EsVisible);
         }
 
-        private void AsignarValorDirecto(IWebElement input, string valor)
+        private bool PuedeAsignarValorDirecto(IWebElement input)
+        {
+            bool esConsultaVentas = EsCampoConsultaVentas(input);
+
+            if (!esConsultaVentas)
+                return false;
+
+            return true;
+        }
+
+        private bool EsCampoReportesVentas(IWebElement input, string labelCampo)
+        {
+            if (!EsCampoInicial(labelCampo) && !EsCampoFinal(labelCampo))
+                return false;
+
+            try
+            {
+                string url = _driver.Url ?? string.Empty;
+                if (url.Contains("/sales/report", StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            catch
+            {
+            }
+
+            string id = input.GetAttribute("id") ?? string.Empty;
+            if (id != "fechaInicio" && id != "fechaFin")
+                return false;
+
+            return _driver.FindElements(By.XPath(
+                    "//*[contains(@class,'active') and (contains(normalize-space(),'Reportes') or contains(normalize-space(),'REPORTES'))]"))
+                .Any(EsVisible);
+        }
+
+        private bool FechaFinalEsMenorQueInicial(DateTime fechaFinal)
+        {
+            try
+            {
+                string valorInicial = ValorCampo(InputPorLabel("Fecha y Hora Inicial"));
+                return TryParseValorCampo(valorInicial, out DateTime fechaInicial) && fechaFinal < fechaInicial;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private bool TryAsignarValorDirecto(IWebElement input, By inputLocator, string valor, DateTime fecha)
+        {
+            string valorOriginal = ValorCampo(inputLocator);
+
+            foreach (string valorControl in ValoresDirectosParaControl(fecha, valor))
+            {
+                AsignarValorDirectoEnControl(input, valorControl, true);
+
+                for (int intento = 0; intento < 8; intento++)
+                {
+                    if (ValorCampoCoincide(inputLocator, valor, fecha))
+                        return true;
+
+                    Thread.Sleep(100);
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(valorOriginal))
+                AsignarValorDirectoEnControl(input, valorOriginal, false);
+
+            Console.WriteLine($"[DatePicker] Asignacion directa no confirmada; se usara picker visual. Esperado='{valor}', actual='{ValorCampo(inputLocator)}'.");
+            return false;
+        }
+
+        private void AsignarValorDirectoEnControl(IWebElement input, string valor, bool dispararEventos)
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript(
-                "arguments[0].removeAttribute('readonly');" +
-                "arguments[0].value = arguments[1];" +
-                "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));" +
-                "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));" +
-                "arguments[0].dispatchEvent(new Event('blur', { bubbles: true }));",
+                @"
+                const el = arguments[0];
+                const value = arguments[1];
+                const fireEvents = arguments[2];
+                const proto = Object.getPrototypeOf(el);
+                const descriptor =
+                    Object.getOwnPropertyDescriptor(proto, 'value') ||
+                    Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
+
+                el.removeAttribute('readonly');
+                el.focus();
+                if (descriptor && descriptor.set) {
+                    descriptor.set.call(el, value);
+                } else {
+                    el.value = value;
+                }
+                el.defaultValue = value;
+                el.setAttribute('value', value);
+
+                if (fireEvents) {
+                    for (const eventName of ['input', 'keyup', 'change', 'blur']) {
+                        el.dispatchEvent(new Event(eventName, { bubbles: true, cancelable: true }));
+                    }
+                    el.dispatchEvent(new CustomEvent('ngModelChange', { detail: value, bubbles: true, cancelable: true }));
+                }
+                ",
                 input,
-                valor);
-            Thread.Sleep(400);
+                valor,
+                dispararEventos);
+        }
+
+        private static IEnumerable<string> ValoresDirectosParaControl(DateTime fecha, string valorVisible)
+        {
+            var culturaEn = new CultureInfo("en-US");
+            yield return fecha.ToString("MM/dd/yyyy hh:mm tt", culturaEn);
+            yield return fecha.ToString("yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture);
+            yield return valorVisible;
         }
 
         private void ClickAmPm(DateTime fecha, By inputLocator)
@@ -648,6 +775,60 @@ namespace SIGES3_0.Pages.SharedVentasPage
                 : "p. m.";
 
             return $"{fecha:dd/MM/yyyy hh:mm} {ampm}";
+        }
+
+        private static bool TryParseValorCampo(string valor, out DateTime fecha)
+        {
+            fecha = default;
+
+            if (string.IsNullOrWhiteSpace(valor))
+                return false;
+
+            string normalizado = Regex.Replace(valor.Trim(), @"\s+", " ")
+                .Replace("a. m.", "AM", StringComparison.OrdinalIgnoreCase)
+                .Replace("p. m.", "PM", StringComparison.OrdinalIgnoreCase)
+                .Replace("a.m.", "AM", StringComparison.OrdinalIgnoreCase)
+                .Replace("p.m.", "PM", StringComparison.OrdinalIgnoreCase);
+
+            string[] formatos =
+            {
+                "dd/MM/yyyy hh:mm tt", "d/MM/yyyy hh:mm tt",
+                "dd/M/yyyy hh:mm tt",  "d/M/yyyy hh:mm tt",
+                "dd/MM/yyyy h:mm tt",  "d/MM/yyyy h:mm tt",
+                "dd/M/yyyy h:mm tt",   "d/M/yyyy h:mm tt",
+                "MM/dd/yyyy hh:mm tt", "M/dd/yyyy hh:mm tt",
+                "MM/d/yyyy hh:mm tt",  "M/d/yyyy hh:mm tt",
+                "MM/dd/yyyy h:mm tt",  "M/dd/yyyy h:mm tt",
+                "MM/d/yyyy h:mm tt",   "M/d/yyyy h:mm tt",
+                "yyyy-MM-ddTHH:mm:ss", "yyyy-MM-ddTHH:mm"
+            };
+
+            return DateTime.TryParseExact(
+                normalizado,
+                formatos,
+                new CultureInfo("en-US"),
+                DateTimeStyles.None,
+                out fecha);
+        }
+
+        private bool ValorCampoCoincide(By inputLocator, string esperado, DateTime fechaEsperada)
+        {
+            string actual = ValorCampo(inputLocator);
+            if (actual.Equals(esperado, StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            if (!TryParseValorCampo(actual, out DateTime fechaActual))
+                return false;
+
+            var esperadaSinSegundos = new DateTime(
+                fechaEsperada.Year,
+                fechaEsperada.Month,
+                fechaEsperada.Day,
+                fechaEsperada.Hour,
+                fechaEsperada.Minute,
+                0);
+
+            return fechaActual == esperadaSinSegundos;
         }
 
         private List<List<IWebElement>> GetColumns()
