@@ -3,7 +3,7 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System;
 
-namespace SIGES3_0.Pages
+namespace SIGES3_0.Pages.Facturacion
 {
     public class OrdenDePagoPage
     {
@@ -326,7 +326,7 @@ namespace SIGES3_0.Pages
 
         public void SubirComprobante(string archivo)
         {
-            string ruta = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", archivo);
+            string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", archivo);
 
             var input = wait.Until(ExpectedConditions.ElementExists(inputFile));
             input.SendKeys(ruta);

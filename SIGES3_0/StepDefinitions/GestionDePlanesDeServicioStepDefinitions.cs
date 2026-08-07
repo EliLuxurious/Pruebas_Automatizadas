@@ -2,7 +2,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using Reqnroll;
-using SIGES3_0.Pages;
+using SIGES3_0.Pages.Facturacion;
 using System;
 
 namespace SIGES3_0.StepDefinitions

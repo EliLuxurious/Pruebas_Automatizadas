@@ -1,7 +1,7 @@
-using SIGES3_0.Pages;
 using OpenQA.Selenium;
 using Reqnroll;
 using System;
+using SIGES3_0.Pages.Facturacion;
 
 namespace SIGES3_0.StepDefinitions
 {

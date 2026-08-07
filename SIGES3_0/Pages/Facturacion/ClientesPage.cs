@@ -2,7 +2,7 @@
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace SIGES3_0.Pages
+namespace SIGES3_0.Pages.Facturacion
 {
     public class ClientesPage
     {
@@ -494,7 +494,7 @@ namespace SIGES3_0.Pages
                 try
                 {
                     var el = driver.FindElement(combo);
-                    return (el.Displayed && el.Enabled) ? el : null;
+                    return el.Displayed && el.Enabled ? el : null;
                 }
                 catch
                 {
@@ -1264,7 +1264,7 @@ namespace SIGES3_0.Pages
                 try
                 {
                     var input = contenedor.FindElements(By.XPath($".//input[@placeholder='{placeholder}']")).FirstOrDefault();
-                    return (input != null && input.Displayed) ? input : null;
+                    return input != null && input.Displayed ? input : null;
                 }
                 catch
                 {

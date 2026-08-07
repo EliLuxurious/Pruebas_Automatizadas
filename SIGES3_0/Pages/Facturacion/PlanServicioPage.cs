@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
 
-namespace SIGES3_0.Pages
+namespace SIGES3_0.Pages.Facturacion
 {
     public class PlanServicioPage
     {
@@ -21,7 +21,7 @@ namespace SIGES3_0.Pages
             
             this.driver = driver;
             utilities = new Utilities(driver);
-            this.wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15)); //esto de iguaal froma
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15)); //esto de iguaal froma
 
         }
         
@@ -290,11 +290,11 @@ namespace SIGES3_0.Pages
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
             var btnOk = wait.Until(
-                SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(btnOkModal)
+                ExpectedConditions.ElementIsVisible(btnOkModal)
             );
 
             wait.Until(
-                SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(btnOk)
+                ExpectedConditions.ElementToBeClickable(btnOk)
             ).Click();
         }
 

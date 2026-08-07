@@ -4,7 +4,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace SIGES3_0.Pages
+namespace SIGES3_0.Pages.Facturacion
 {
     public class AccessPage
     {

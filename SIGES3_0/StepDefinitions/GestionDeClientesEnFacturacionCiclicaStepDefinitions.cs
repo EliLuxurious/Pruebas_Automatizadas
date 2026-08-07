@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using SIGES3_0.Pages;
+using SIGES3_0.Pages.Facturacion;
 using System.Reactive.Joins;
 
 namespace SIGES3_0.StepDefinitions

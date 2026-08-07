@@ -2,7 +2,7 @@
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace SIGES3_0.Pages
+namespace SIGES3_0.Pages.Facturacion
 {
     internal class GestionCliente
     {
@@ -282,7 +282,7 @@ namespace SIGES3_0.Pages
                         try
                         {
                             var el = driver.FindElement(By.Id("pageSizeSelect"));
-                            return (el.Displayed && el.Enabled) ? el : null;
+                            return el.Displayed && el.Enabled ? el : null;
                         }
                         catch
                         {

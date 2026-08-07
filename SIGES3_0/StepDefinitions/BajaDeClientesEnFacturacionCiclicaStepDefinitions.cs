@@ -1,8 +1,8 @@
 using OpenQA.Selenium;
 using NUnit.Framework;
 using Reqnroll;
-using SIGES3_0.Pages;
 using System.Threading;
+using SIGES3_0.Pages.Facturacion;
 
 namespace SIGES3_0.StepDefinitions
 {
